@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Header from "@/components/layout/Header";
 
 export const metadata: Metadata = {
-  title: "Motion Landing Page",
+  title: "Motion Digitals",
   description: "A marketing site built with Next.js.",
 };
 
