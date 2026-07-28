@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+    <div className="min-h-screen  text-zinc-900">
       <Header />
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16">{children}</main>
+      <main>{children}</main>
     </div>
   );
 }
