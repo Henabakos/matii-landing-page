@@ -20,7 +20,7 @@ export function ServiceCard({
   bgImage = "/images/ai-automation.png",
 }: ServiceCardProps) {
   return (
-    <div className="relative bg-white border border-[#AEAEAE]/40 p-6 md:p-8 flex flex-col justify-between h-full min-h-[480px] lg:min-h-[560px] overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out hover:bg-[#292c2e]">
+    <div className="relative bg-white border border-[#AEAEAE]/40 p-6 md:p-8 flex flex-col justify-between h-full min-h-120 lg:min-h-140 overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out hover:bg-[#292c2e]">
       {/* Optional Background Image on Hover */}
       {bgImage && (
         <Image
@@ -35,7 +35,7 @@ export function ServiceCard({
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out pointer-events-none" />
 
       {/* Top Tag Badge */}
-      <div className="self-start bg-[#292c2e] group-hover:bg-[#f3f4f6] px-3 py-1.5 rounded-[2px] flex items-center gap-2.5 z-10 transition-colors duration-500 ease-in-out">
+      <div className="self-start bg-[#292c2e] group-hover:bg-[#f3f4f6] px-3 py-1.5 rounded-xs flex items-center gap-2.5 z-10 transition-colors duration-500 ease-in-out">
         <div className="bg-[#98ff03] size-3.5 shrink-0" />
         <span className="font-space font-normal text-xs md:text-sm text-white group-hover:text-[#292c2e] uppercase tracking-wider whitespace-nowrap transition-colors duration-500 ease-in-out">
           {title}
@@ -44,7 +44,7 @@ export function ServiceCard({
 
       {/* Optional Description Text (Shown on Hover or if available) */}
       {description && (
-        <p className="font-inter font-medium text-xs md:text-[13px] text-white/90 leading-relaxed z-10 max-w-[280px] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+        <p className="font-inter font-medium text-xs md:text-[13px] text-white/90 leading-relaxed z-10 max-w-70 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
           {description}
         </p>
       )}
