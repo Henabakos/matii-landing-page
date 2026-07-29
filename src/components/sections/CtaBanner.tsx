@@ -86,7 +86,7 @@ const bars = [
 
 export function CtaBanner() {
   return (
-    <section className="relative w-full py-12 md:py-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full pt-12 md:pt-20 px-4 md:px-8 overflow-hidden">
       <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] min-h-[480px] md:min-h-[603px] flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden">
         {/* <Image
           src="/images/cta-grid-bg.png"

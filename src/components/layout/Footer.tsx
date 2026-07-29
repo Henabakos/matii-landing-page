@@ -2,6 +2,7 @@
 
 import svgPaths from "@/lib/svgPaths";
 import Image from "next/image";
+import ContactForm from "../sections/contact/ContactForm";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -71,7 +72,6 @@ export function Footer() {
             />
           </div>
         </div>
-
         {/* Bottom Bar (Socials, Copyright, Back to Top) */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 p-8 border-t">
           {/* Social Channels & Copyright */}
