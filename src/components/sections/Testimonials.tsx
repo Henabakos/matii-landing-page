@@ -75,11 +75,11 @@ export function Testimonials() {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-6">
+          <CarouselContent className="p-0 gap-0">
             {testimonials.map((item, index) => (
               <CarouselItem
                 key={index}
-                className="pl-6 md:basis-1/2 flex flex-col"
+                className="md:basis-1/2 flex m-0 flex-col rounded-0"
               >
                 <TestimonialCard {...item} />
               </CarouselItem>

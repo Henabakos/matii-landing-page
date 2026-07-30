@@ -73,7 +73,7 @@ export function ProjectCard({
       />
 
       {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none z-[5]" />
+      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none z-[5]" /> */}
 
       {/* Smooth Magnetic Cursor-Following "View Project" Button */}
       <div

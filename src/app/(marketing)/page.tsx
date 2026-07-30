@@ -4,6 +4,7 @@ import SolutionsWeBuilt from "@/components/sections/SolutionsWeBuilt";
 import Services from "@/components/sections/Services";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import ToolsWeUse from "@/components/sections/ToolsWeUse";
+import Faq from "@/components/sections/Faq";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import CtaBanner from "@/components/sections/CtaBanner";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <Services />
       <ToolsWeUse />
       <WhyChooseUs />
+      <Faq />
       <Testimonials />
       <CtaBanner />
       <Contact />

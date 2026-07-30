@@ -13,6 +13,8 @@ import {
   CarouselDots,
 } from "@/components/ui/carousel";
 
+import Image from "next/image";
+
 const projects = [
   {
     title: "Liyana Care",
@@ -92,6 +94,14 @@ export function SolutionsWeBuilt() {
           }}
           className="w-full relative"
         >
+          <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 z-10">
+            <Image
+              src="/shapes/solution-shape.svg"
+              alt="hero-shape"
+              className="object-contain"
+              fill
+            />
+          </div>
           <CarouselContent>
             {projects.map((project, idx) => (
               <CarouselItem key={idx} className="basis-full">
