@@ -80,7 +80,16 @@ export function Header() {
                     href="/features"
                     className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
                   >
-                    Features
+                    Services
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/pricing"
+                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
+                  >
+                    About Us
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -168,15 +177,6 @@ export function Header() {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/pricing"
-                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
-                  >
-                    About Us
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -215,7 +215,7 @@ export function Header() {
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Features
+                Services
               </Link>
               <Link
                 href="/products/pro"
