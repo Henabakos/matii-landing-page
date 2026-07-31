@@ -77,7 +77,7 @@ export function Header() {
               <NavigationMenuList className="gap-2 lg:gap-6">
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    href="/features"
+                    href="/services"
                     className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
                   >
                     Services
@@ -86,7 +86,7 @@ export function Header() {
 
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    href="/pricing"
+                    href="/about"
                     className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
                   >
                     About Us
@@ -211,12 +211,21 @@ export function Header() {
           <div className="lg:hidden mt-2 bg-white border border-[rgba(174,174,174,0.3)] p-4 shadow-lg rounded-[4px]">
             <nav className="flex flex-col gap-2 font-space uppercase text-[14px] tracking-[0.1em] text-[#2a2a2b]">
               <Link
-                href="/features"
+                href="/services"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Services
               </Link>
+
+              <Link
+                href="/about"
+                className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                About Us
+              </Link>
+
               <Link
                 href="/products/pro"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
@@ -230,13 +239,6 @@ export function Header() {
                 onClick={() => setIsOpen(false)}
               >
                 Case Studies
-              </Link>
-              <Link
-                href="/pricing"
-                className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Pricing
               </Link>
               <div className="flex flex-col gap-2 pt-3 mt-2 border-t border-[rgba(174,174,174,0.2)] font-inter normal-case tracking-normal">
                 <Link

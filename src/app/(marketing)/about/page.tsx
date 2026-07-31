@@ -1,11 +1,10 @@
-export default function AboutPage() {
-  return (
-    <section className="rounded-3xl border border-zinc-200 bg-white p-10 shadow-sm">
-      <p className="text-sm font-medium uppercase tracking-[0.3em] text-zinc-500">Marketing</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950">About</h1>
-      <p className="mt-4 max-w-2xl text-lg text-zinc-600">
-        This page renders the About content.
-      </p>
-    </section>
-  );
+import AboutPage from "@/components/pages/AboutPage";
+
+export const metadata = {
+  title: "About Us | Motion Digitals",
+  description: "Senior engineering and design studio building scalable software, AI solutions, and digital products for modern startups and enterprises.",
+};
+
+export default function Page() {
+  return <AboutPage />;
 }
