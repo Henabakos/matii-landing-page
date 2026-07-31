@@ -2,33 +2,7 @@
 
 import ToolsTag from "./tools/ToolsTag";
 import ToolCard from "./tools/ToolCard";
-
-const row1Tools = [
-  { name: "Next.js", category: "Frontend Framework", icon: "N" },
-  { name: "React.js", category: "UI Library", icon: "R" },
-  { name: "TypeScript", category: "Language", icon: "TS" },
-  { name: "Tailwind CSS", category: "Styling", icon: "TW" },
-  { name: "Figma", category: "UI/UX Design", icon: "F" },
-  { name: "Node.js", category: "Runtime Environment", icon: "JS" },
-];
-
-const row2Tools = [
-  { name: "OpenAI", category: "AI Automation", icon: "AI" },
-  { name: "Docker", category: "Containerization", icon: "D" },
-  { name: "AWS", category: "Cloud Infrastructure", icon: "AWS" },
-  { name: "FastAPI", category: "High-Performance API", icon: "FA" },
-  { name: "Vercel", category: "Deployment & Hosting", icon: "V" },
-  { name: "Python", category: "AI & Data Science", icon: "PY" },
-];
-
-const row3Tools = [
-  { name: "Flutter", category: "Mobile Engineering", icon: "FL" },
-  { name: "GraphQL", category: "Data Query Language", icon: "GQL" },
-  { name: "Supabase", category: "Backend Service", icon: "SB" },
-  { name: "PostgreSQL", category: "Relational Database", icon: "PG" },
-  { name: "Vue.js", category: "Frontend Framework", icon: "VUE" },
-  { name: "Framer", category: "Interactive Design", icon: "FM" },
-];
+import { row1Tools, row2Tools, row3Tools } from "@/data/techStack";
 
 export function ToolsWeUse() {
   return (
@@ -104,7 +78,7 @@ export function ToolsWeUse() {
                     key={`r1-${idx}`}
                     name={tool.name}
                     category={tool.category}
-                    icon={tool.icon}
+                    iconName={tool.iconName}
                   />
                 ))}
               </div>
@@ -118,7 +92,7 @@ export function ToolsWeUse() {
                     key={`r2-${idx}`}
                     name={tool.name}
                     category={tool.category}
-                    icon={tool.icon}
+                    iconName={tool.iconName}
                   />
                 ))}
               </div>
@@ -132,7 +106,7 @@ export function ToolsWeUse() {
                     key={`r3-${idx}`}
                     name={tool.name}
                     category={tool.category}
-                    icon={tool.icon}
+                    iconName={tool.iconName}
                   />
                 ))}
               </div>
