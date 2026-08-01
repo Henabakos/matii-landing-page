@@ -77,7 +77,7 @@ export function Footer() {
           {/* Social Channels & Copyright */}
           <div className="flex flex-wrap items-center gap-8 md:gap-12 text-[#292c2e]">
             {/* Social Channels */}
-            <div className="flex items-center gap-6 font-inter font-medium text-base md:text-lg capitalize">
+            <div className="flex items-center gap-6 font-inter font-medium text-base capitalize">
               <a
                 href="https://instagram.com"
                 target="_blank"
