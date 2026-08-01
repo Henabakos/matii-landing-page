@@ -94,88 +94,30 @@ export function Header() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                  <NavigationMenuLink
+                    href="/products"
+                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
+                  >
                     Products
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[380px] gap-3 p-4 md:w-[460px] md:grid-cols-2 bg-white border border-[rgba(174,174,174,0.3)] shadow-lg rounded-[4px]">
-                      <li>
-                        <NavigationMenuLink
-                          href="/products/pro"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Pro
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Professional motion plan for creative teams
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink
-                          href="/products/enterprise"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Enterprise
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Custom solutions for high-scale organizations
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                  <NavigationMenuLink
+                    href="/case-studies"
+                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
+                  >
                     Case Studies
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[380px] gap-3 p-4 md:w-[460px] md:grid-cols-2 bg-white border border-[rgba(174,174,174,0.3)] shadow-lg rounded-[4px]">
-                      <li>
-                        <NavigationMenuLink
-                          href="/case-studies/one"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Study One
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Digital transformation showcase
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink
-                          href="/case-studies/two"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Study Two
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Brand identity & product launch
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink
-                          href="/case-studies/two"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Study Two
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Brand identity & product launch
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/contact"
+                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
+                  >
+                    Contact
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -206,9 +148,15 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {isOpen && (
-          <div className="lg:hidden mt-2 bg-white border border-[rgba(174,174,174,0.3)] p-4 shadow-lg rounded-[4px]">
+        {/* Mobile Navigation Drawer with Smooth Transition */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen
+              ? "max-h-[400px] opacity-100 mt-2 translate-y-0"
+              : "max-h-0 opacity-0 mt-0 -translate-y-2 pointer-events-none"
+          }`}
+        >
+          <div className="bg-white border border-[rgba(174,174,174,0.3)] p-4 shadow-lg rounded-[4px]">
             <nav className="flex flex-col gap-2 font-space uppercase text-[14px] tracking-[0.1em] text-[#2a2a2b]">
               <Link
                 href="/services"
@@ -227,41 +175,43 @@ export function Header() {
               </Link>
 
               <Link
-                href="/products/pro"
+                href="/products"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Products
               </Link>
+
               <Link
-                href="/case-studies/one"
+                href="/case-studies"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Case Studies
               </Link>
+
+              <Link
+                href="/contact"
+                className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+              </Link>
+
               <div className="flex flex-col gap-2 pt-3 mt-2 border-t border-[rgba(174,174,174,0.2)] font-inter normal-case tracking-normal">
                 <Link
-                  href="/login"
-                  className="px-3 py-2 text-center text-[14px] font-medium text-[#2a2a2b] hover:bg-[#f3f4f6] rounded-[4px]"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/contact"
+                  target="_blank"
+                  href="https://calendly.com/motiondigitals/30min"
                   className="font-inter text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] rounded-[4px] px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm"
                   onClick={() => setIsOpen(false)}
                 >
-                  <span>Contact Us</span>
-                  <div className="bg-[#98ff03] p-1 rounded-[2px] text-[#292c2e]">
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </div>
+                  <LineiconsGoogleMeet />
+                  <span>Book A Call</span>
                 </Link>
               </div>
             </nav>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );

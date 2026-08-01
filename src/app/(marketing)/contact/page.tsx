@@ -1,11 +1,21 @@
+import React from "react";
+import ContactSectionWhite from "@/components/sections/ContactSectionWhite";
+import Faq from "@/components/sections/Faq";
+
+export const metadata = {
+  title: "Contact Us | Motion Digitals",
+  description:
+    "Get in touch with Motion Digitals. Let's discuss your next digital product, software engineering, or AI automation project.",
+};
+
 export default function ContactPage() {
   return (
-    <section className="rounded-3xl border border-zinc-200 bg-white p-10 shadow-sm">
-      <p className="text-sm font-medium uppercase tracking-[0.3em] text-zinc-500">Marketing</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950">Contact</h1>
-      <p className="mt-4 max-w-2xl text-lg text-zinc-600">
-        This page renders the Contact content.
-      </p>
-    </section>
+    <main className="w-full min-h-screen">
+      {/* White Theme Contact Section */}
+      <ContactSectionWhite />
+
+      {/* FAQs Section */}
+      <Faq />
+    </main>
   );
 }

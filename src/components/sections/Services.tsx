@@ -5,7 +5,7 @@ import ServiceCard from "./services/ServiceCard";
 
 export function Services() {
   return (
-    <section className="relative w-full  py-16 md:py-24 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full py-16 md:py-24  overflow-hidden">
       <div className="relative max-w-[1380px] mx-auto py-16 flex flex-col items-center bg-white border-b border-[#AEAEAE]/40">
         <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px] z-10" />
         <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px] z-10" />

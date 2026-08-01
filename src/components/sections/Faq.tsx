@@ -8,49 +8,11 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-
-const faqItems = [
-  {
-    id: "item-1",
-    question: "Have an idea but don't know where to start?",
-    answer:
-      "That’s exactly where we come in. We help shape your idea, understand the problem, define the right solution, and turn it into a clear digital product.",
-  },
-  {
-    id: "item-2",
-    question: "What kind of projects do you work on?",
-    answer:
-      "We specialize in full-stack web applications, SaaS platforms, custom AI automation agents, and mobile applications for iOS & Android.",
-  },
-  {
-    id: "item-3",
-    question: "How do you start a project?",
-    answer:
-      "We begin with a discovery phase to align on goals, technical scope, and design strategy. From there, we work in rapid sprints with full transparency.",
-  },
-  {
-    id: "item-4",
-    question: "How long does a typical project take?",
-    answer:
-      "Initial MVPs and core web platforms typically take 4 to 8 weeks, depending on complexity and feature scope.",
-  },
-  {
-    id: "item-5",
-    question: "Do you provide post-launch support and scaling?",
-    answer:
-      "Yes, we offer continuous maintenance, cloud infrastructure monitoring, feature expansion, and performance scaling.",
-  },
-  {
-    id: "item-6",
-    question: "Can you integrate AI capabilities into existing platforms?",
-    answer:
-      "Absolutely. We build custom AI workflows, intelligent agents, and predictive integrations seamlessly into existing backend architectures.",
-  },
-];
+import { faqItems } from "@/data/faq-data";
 
 export function Faq() {
   return (
-    <section className="relative w-full py-12 md:py-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full py-12 md:py-20 overflow-hidden">
       {/* Hide Scrollbar Cross-Browser */}
       <style jsx global>{`
         .faq-scroll {
@@ -62,7 +24,7 @@ export function Faq() {
         }
       `}</style>
 
-      <div className="max-w-[1380px] mx-auto pt-10 md:pt-20 relative bg-white">
+      <div className="relative max-w-[1380px] mx-auto pt-10 md:pt-20 bg-white border border-[rgba(174,174,174,0.4)]">
         <div className="hidden md:block absolute top-0 left-0 w-32 h-26 lg:w-56 lg:h-48">
           <Image
             src="/shapes/faq-shape.svg"

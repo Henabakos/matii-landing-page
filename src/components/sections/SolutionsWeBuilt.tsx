@@ -66,7 +66,7 @@ export function SolutionsWeBuilt() {
   );
 
   return (
-    <section className="relative w-full py-12 md:py-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full py-12 md:py-20 overflow-hidden">
       <div className="max-w-[1380px] mx-auto border border-[rgba(174,174,174,0.4)] p-6 md:p-12 relative overflow-hidden">
         {/* Top Section Tag Badge */}
         <div className="flex justify-center mb-8">
