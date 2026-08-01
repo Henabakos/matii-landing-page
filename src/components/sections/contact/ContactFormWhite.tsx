@@ -69,7 +69,7 @@ export function ContactFormWhite() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full bg-white border border-[#AEAEAE]/40 p-8 md:p-12 flex flex-col gap-8 relative"
+      className="w-full h-full bg-white border border-[#AEAEAE]/40 p-8 md:p-12 flex flex-col justify-between gap-8 relative"
     >
       <h3 className="font-space font-bold text-xl md:text-2xl text-black uppercase tracking-tight">
         Send Us A Message

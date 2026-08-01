@@ -9,6 +9,7 @@ import AboutProcessStepper from "../sections/about/AboutProcessStepper";
 import AboutCaseHighlights from "../sections/about/AboutCaseHighlights";
 import AboutLeadership from "../sections/about/AboutLeadership";
 import AboutUs from "../common/AboutUs";
+import Testimonials from "../sections/Testimonials";
 
 export function AboutPage() {
   return (
@@ -20,26 +21,29 @@ export function AboutPage() {
         {/* Company Story & Mission & Vision */}
         <AboutStory />
 
+        {/* Testimonials */}
+        <Testimonials />
+
         {/* Core Values */}
-        <AboutCoreValues />
+        {/* <AboutCoreValues /> */}
 
         {/* Services & Expertise */}
-        <AboutServicesGrid />
+        {/* <AboutServicesGrid /> */}
 
         {/* Why Choose Us & Industries */}
-        <AboutWhyChooseUs />
+        {/* <AboutWhyChooseUs /> */}
 
         {/* Studio Atmosphere Culture Banner */}
-        <AboutCultureBanner />
+        {/* <AboutCultureBanner /> */}
 
         {/* 7-Step Development Process Stepper */}
-        <AboutProcessStepper />
+        {/* <AboutProcessStepper /> */}
 
         {/* Featured Case Highlights */}
-        <AboutCaseHighlights />
+        {/* <AboutCaseHighlights /> */}
 
         {/* Leadership Team */}
-        <AboutLeadership />
+        {/* <AboutLeadership /> */}
       </div>
     </div>
   );

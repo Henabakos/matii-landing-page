@@ -20,28 +20,28 @@ export function Footer() {
           <nav className="flex flex-wrap justify-between items-center w-full gap-6 md:gap-12 p-16">
             <a
               href="#about"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg md:text-2xl tracking-widest uppercase"
+              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
             >
               <span>About us</span>
             </a>
             <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
             <a
               href="#blogs"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg md:text-2xl tracking-widest uppercase"
+              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
             >
               <span>Blogs</span>
             </a>
             <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
             <a
               href="#services"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg md:text-2xl tracking-widest uppercase"
+              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
             >
               <span>Services</span>
             </a>
             <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
             <a
               href="#work"
-              className="text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg md:text-2xl tracking-widest uppercase"
+              className="text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
             >
               <span>Work examples</span>
             </a>

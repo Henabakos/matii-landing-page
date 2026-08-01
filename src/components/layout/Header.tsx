@@ -94,21 +94,88 @@ export function Header() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/products"
-                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
-                  >
+                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
                     Products
-                  </NavigationMenuLink>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[380px] gap-3 p-4 md:w-[460px] md:grid-cols-2 bg-white border border-[rgba(174,174,174,0.3)] shadow-lg rounded-[4px]">
+                      <li>
+                        <NavigationMenuLink
+                          href="/products/pro"
+                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
+                        >
+                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
+                            Pro
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
+                            Professional motion plan for creative teams
+                          </p>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink
+                          href="/products/enterprise"
+                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
+                        >
+                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
+                            Enterprise
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
+                            Custom solutions for high-scale organizations
+                          </p>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/case-studies"
-                    className="group/nmlink inline-flex h-9 w-max items-center justify-center rounded-none bg-transparent px-3 py-2 font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] transition-colors hover:text-black hover:font-normal focus:outline-none"
-                  >
+                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
                     Case Studies
-                  </NavigationMenuLink>
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[380px] gap-3 p-4 md:w-[460px] md:grid-cols-2 bg-white border border-[rgba(174,174,174,0.3)] shadow-lg rounded-[4px]">
+                      <li>
+                        <NavigationMenuLink
+                          href="/case-studies/one"
+                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
+                        >
+                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
+                            Study One
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
+                            Digital transformation showcase
+                          </p>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink
+                          href="/case-studies/two"
+                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
+                        >
+                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
+                            Study Two
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
+                            Brand identity & product launch
+                          </p>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink
+                          href="/case-studies/two"
+                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
+                        >
+                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
+                            Study Two
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
+                            Brand identity & product launch
+                          </p>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
