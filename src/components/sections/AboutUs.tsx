@@ -16,10 +16,10 @@ export function AboutUs() {
 
         {/* Headline and Description Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 lg:mb-16">
-          <h2 className="lg:col-span-6 font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black tracking-tight uppercase">
-            BUILT FROM HERE.
+          <h2 className="lg:col-span-6 font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black tracking-tight">
+            built from here.
             <br />
-            MADE FOR EVERYWHERE.
+            made for everywhere.
           </h2>
           <p className="lg:col-span-6 font-inter font-normal text-base md:text-[20px] leading-[1.4] text-[#444445] lg:pt-2">
             We build digital products, systems, and experiences that move ideas

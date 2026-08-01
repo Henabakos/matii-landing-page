@@ -10,20 +10,10 @@ export interface ToolCardProps {
 
 export function ToolCard({ name, category, iconName, icon }: ToolCardProps) {
   return (
-    <div className="relative bg-[#f3f4f6] border border-[rgba(174,174,174,0.3)] p-4 md:p-5 flex items-center gap-4 min-w-[200px] sm:min-w-[230px] rounded-[4px] shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md cursor-pointer group">
+    <div className="relative bg-[#f3f4f6] p-2.5 px-4 flex items-center justify-center transition-all duration-300 group shrink-0">
       {/* Icon Badge */}
-      <div className="bg-[#292c2e] size-11 shrink-0 rounded-[4px] flex items-center justify-center p-2 text-[#98ff03]">
-        <TechIcon name={iconName || name} className="size-6" />
-      </div>
-
-      {/* Tool Details */}
-      <div className="flex flex-col">
-        <span className="font-inter font-semibold text-base text-[#292c2e] leading-snug group-hover:text-black transition-colors">
-          {name}
-        </span>
-        <span className="font-inter font-normal text-xs text-[#797f8b] capitalize">
-          {category}
-        </span>
+      <div className="size-10 flex items-center justify-center text-[#292c2e]">
+        <TechIcon name={iconName || name} className="size-8 text-[#292c2e]" />
       </div>
     </div>
   );

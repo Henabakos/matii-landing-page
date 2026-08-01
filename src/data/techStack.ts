@@ -92,6 +92,36 @@ export const row1Tools: TechTool[] = [
     accentColor: '#336791',
     websiteUrl: 'https://www.postgresql.org',
     popularFor: 'Relational Database Engine'
+  },
+  {
+    id: 'prisma',
+    name: 'Prisma',
+    category: 'database',
+    iconName: 'prisma',
+    description: 'Next-generation ORM for Node.js & TypeScript.',
+    accentColor: '#2D3748',
+    websiteUrl: 'https://www.prisma.io',
+    popularFor: 'Type-safe Database Access'
+  },
+  {
+    id: 'rust',
+    name: 'Rust',
+    category: 'backend',
+    iconName: 'rust',
+    description: 'Empowering everyone to build reliable and efficient software.',
+    accentColor: '#000000',
+    websiteUrl: 'https://www.rust-lang.org',
+    popularFor: 'System Level Performance'
+  },
+  {
+    id: 'svelte',
+    name: 'Svelte',
+    category: 'frontend',
+    iconName: 'svelte',
+    description: 'Cybernetically enhanced web apps.',
+    accentColor: '#FF3E00',
+    websiteUrl: 'https://svelte.dev',
+    popularFor: 'Compiler-based UI'
   }
 ];
 
@@ -175,6 +205,36 @@ export const row2Tools: TechTool[] = [
     accentColor: '#BD34FE',
     websiteUrl: 'https://vite.dev',
     popularFor: 'Ultra-fast Frontend Bundler'
+  },
+  {
+    id: 'flutter',
+    name: 'Flutter',
+    category: 'frontend',
+    iconName: 'flutter',
+    description: 'Build apps for any screen.',
+    accentColor: '#02569B',
+    websiteUrl: 'https://flutter.dev',
+    popularFor: 'Cross-platform Mobile'
+  },
+  {
+    id: 'cloudflare',
+    name: 'Cloudflare',
+    category: 'devops',
+    iconName: 'cloudflare',
+    description: 'Global cloud platform that delivers security and performance.',
+    accentColor: '#F38020',
+    websiteUrl: 'https://www.cloudflare.com',
+    popularFor: 'CDN & Edge Network'
+  },
+  {
+    id: 'linear',
+    name: 'Linear',
+    category: 'design',
+    iconName: 'linear',
+    description: 'Linear is a purpose-built tool for planning and building products.',
+    accentColor: '#5E6AD2',
+    websiteUrl: 'https://linear.app',
+    popularFor: 'Product Tracking'
   }
 ];
 
@@ -258,6 +318,36 @@ export const row3Tools: TechTool[] = [
     accentColor: '#00ADD8',
     websiteUrl: 'https://go.dev',
     popularFor: 'High-Performance Microservices'
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    category: 'devops',
+    iconName: 'github',
+    description: 'Complete developer platform to build, scale, and deliver software.',
+    accentColor: '#181717',
+    websiteUrl: 'https://github.com',
+    popularFor: 'Source Code Hosting'
+  },
+  {
+    id: 'framer',
+    name: 'Framer',
+    category: 'design',
+    iconName: 'framer',
+    description: 'Design and publish web pages with ease.',
+    accentColor: '#0055FF',
+    websiteUrl: 'https://www.framer.com',
+    popularFor: 'Interactive Web Builder'
+  },
+  {
+    id: 'turborepo',
+    name: 'Turborepo',
+    category: 'devops',
+    iconName: 'turborepo',
+    description: 'High-performance build system for JavaScript and TypeScript monorepos.',
+    accentColor: '#EF4444',
+    websiteUrl: 'https://turbo.build',
+    popularFor: 'Monorepo Build System'
   }
 ];
 
