@@ -48,7 +48,7 @@ export function ToolsWeUse() {
         }
       `}</style>
 
-      <div className="max-w-[1380px] mx-auto py-6 md:py-12 relative bg-white overflow-hidden">
+      <div className="max-w-345 mx-auto py-6 md:py-12 relative bg-white overflow-hidden">
         {/* Top Section Tag Badge */}
         <div className="flex justify-center mb-8">
           <ToolsTag />

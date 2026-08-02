@@ -17,7 +17,7 @@ export function TestimonialCard({
   rating = 5,
 }: TestimonialCardProps) {
   return (
-    <div className="relative bg-[#f3f4f6] border border-[rgba(174,174,174,0.3)] p-6 md:p-10 flex flex-col justify-between h-full min-h-[320px] w-full">
+    <div className="relative bg-[#f3f4f6] border border-[rgba(174,174,174,0.3)] p-6 md:p-10 flex flex-col justify-between h-full min-h-80 w-full">
       {/* Corner Accent Dot */}
       <div className="absolute bg-[#292c2e] size-1.5 top-0 left-0" />
       <div className="absolute bg-[#292c2e] size-1.5 bottom-0 right-0" />
@@ -25,7 +25,7 @@ export function TestimonialCard({
       {/* Top Header: Quote Icon & Stars */}
       <div className="flex items-center justify-between gap-4 mb-6">
         {/* Dark Quote Icon Badge */}
-        <div className="bg-[#292c2e] size-12 shrink-0 rounded-[4px] flex items-center justify-center p-3 text-[#98ff03] shadow-sm">
+        <div className="bg-[#292c2e] size-12 shrink-0 flex items-center justify-center p-3 text-[#98ff03] shadow-sm">
           <svg
             className="block size-full"
             fill="currentColor"

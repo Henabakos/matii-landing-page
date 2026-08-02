@@ -6,7 +6,7 @@ import ContactFormWhite from "./contact/ContactFormWhite";
 export function ContactSectionWhite() {
   return (
     <section className="relative w-full py-12 md:py-20 overflow-hidden">
-      <div className="max-w-[1380px] mx-auto flex flex-col gap-12">
+      <div className="max-w-345 mx-auto flex flex-col gap-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* Direct Contact Info Column */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-8 h-full">
