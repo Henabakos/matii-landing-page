@@ -94,14 +94,19 @@ export function Header() {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
-                    Products
+                  <NavigationMenuTrigger
+                    className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent cursor-pointer"
+                    onClick={() => {
+                      window.location.href = "/projects";
+                    }}
+                  >
+                    Projects
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[380px] gap-3 p-4 md:w-[460px] md:grid-cols-2 bg-white border border-[rgba(174,174,174,0.3)] shadow-lg rounded-[4px]">
                       <li>
                         <NavigationMenuLink
-                          href="/products/pro"
+                          href="/projects/pro"
                           className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
                         >
                           <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
@@ -114,7 +119,7 @@ export function Header() {
                       </li>
                       <li>
                         <NavigationMenuLink
-                          href="/products/enterprise"
+                          href="/projects/enterprise"
                           className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
                         >
                           <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
@@ -129,8 +134,13 @@ export function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                {/* <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className="font-space text-[14px] font-light uppercase tracking-[0.1em] text-[#2a2a2b] hover:text-black bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent cursor-pointer"
+                    onClick={() => {
+                      window.location.href = "/case-studies";
+                    }}
+                  >
                     Case Studies
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -161,22 +171,9 @@ export function Header() {
                           </p>
                         </NavigationMenuLink>
                       </li>
-                      <li>
-                        <NavigationMenuLink
-                          href="/case-studies/two"
-                          className="block select-none space-y-1 rounded-[4px] p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f3f4f6]"
-                        >
-                          <div className="font-inter text-sm font-medium leading-none text-[#292c2e]">
-                            Study Two
-                          </div>
-                          <p className="line-clamp-2 text-xs leading-snug text-zinc-500 mt-1">
-                            Brand identity & product launch
-                          </p>
-                        </NavigationMenuLink>
-                      </li>
                     </ul>
                   </NavigationMenuContent>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
 
                 <NavigationMenuItem>
                   <NavigationMenuLink
@@ -242,20 +239,20 @@ export function Header() {
               </Link>
 
               <Link
-                href="/products"
+                href="/projects"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Products
+                Projects
               </Link>
 
-              <Link
+              {/* <Link
                 href="/case-studies"
                 className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Case Studies
-              </Link>
+              </Link> */}
 
               <Link
                 href="/contact"

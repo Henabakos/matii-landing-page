@@ -20,7 +20,7 @@ const projects = [
     title: "Liyana Care",
     description:
       "Before we build, we listen. We understand the problem, uncover what matters, and create thoughtful digital solutions designed to solve.",
-    bgImage: "/images/solutions-1.png",
+    bgImage: "/images/ai-automation.png",
     metrics: {
       stat1Value: "40%",
       stat1Label: "fast completion",
@@ -34,7 +34,7 @@ const projects = [
     title: "Nexis SaaS Platform",
     description:
       "Engineered an automated cloud workspace that streamlined internal operations and enhanced team collaboration across 10+ global locations.",
-    bgImage: "/images/about-illustration.png",
+    bgImage: "/images/ai-automation.png",
     metrics: {
       stat1Value: "60%",
       stat1Label: "speed increase",
