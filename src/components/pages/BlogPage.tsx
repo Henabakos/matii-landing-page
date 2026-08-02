@@ -56,7 +56,7 @@ export default function BlogPage() {
   const isFiltering = Boolean(searchQuery) || selectedCategory !== 'ALL'
 
   return (
-    <main className="w-full min-h-screen bg-white text-zinc-900 px-4 sm:px-6 lg:px-12 py-8 md:py-12">
+    <main className="w-full min-h-screen text-zinc-900 px-4 sm:px-6 lg:px-12 py-8 md:py-12">
       <div className="max-w-[1380px] mx-auto space-y-10">
         <BlogTopBar
           searchQuery={searchQuery}

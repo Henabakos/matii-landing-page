@@ -21,7 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'A practical framework for validating ideas quickly, reducing waste, and shipping what users actually need.',
     date: 'July 21, 2026',
     readTime: '7 min read',
-    image: '/images/project1.jpg',
+    image: '/images/about-illustration.png',
     isMainHero: true,
   },
   {
@@ -33,7 +33,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'How we structure tokens, components, and documentation to keep consistency without slowing delivery.',
     date: 'July 15, 2026',
     readTime: '6 min read',
-    image: '/images/project2.jpg',
+    image: '/images/ai-automation.png',
     isSideFeatured: true,
   },
   {
@@ -45,7 +45,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'From image strategy to route-level rendering decisions, this checklist helps keep pages fast and reliable.',
     date: 'July 10, 2026',
     readTime: '8 min read',
-    image: '/images/project3.jpg',
+    image: '/images/solutions-1.png',
     isSideFeatured: true,
   },
   {
@@ -57,7 +57,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'A milestone-by-milestone roadmap for teams that need to launch quickly while managing risk.',
     date: 'July 6, 2026',
     readTime: '5 min read',
-    image: '/images/project4.jpg',
+    image: '/images/faq-illustration.png',
     isSideFeatured: true,
   },
   {
@@ -69,7 +69,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'Patterns we bake into every UI to improve usability and compliance from day one.',
     date: 'June 29, 2026',
     readTime: '6 min read',
-    image: '/images/project5.jpg',
+    image: '/images/about-illustration.png',
   },
   {
     id: 'blog-6',
@@ -80,7 +80,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'How clear contracts between frontend and backend reduce regressions and unblock parallel work.',
     date: 'June 25, 2026',
     readTime: '7 min read',
-    image: '/images/project6.jpg',
+    image: '/images/ai-automation.png',
   },
   {
     id: 'blog-7',
@@ -91,7 +91,7 @@ export const BLOG_POSTS: BlogPost[] = [
       'A simple way to choose metrics that inform decisions instead of creating dashboard noise.',
     date: 'June 19, 2026',
     readTime: '5 min read',
-    image: '/images/project7.jpg',
+    image: '/images/solutions-1.png',
   },
   {
     id: 'blog-8',
@@ -102,6 +102,6 @@ export const BLOG_POSTS: BlogPost[] = [
       'A repeatable publishing workflow that improves quality and cadence without adding overhead.',
     date: 'June 13, 2026',
     readTime: '6 min read',
-    image: '/images/project8.jpg',
+    image: '/images/faq-illustration.png',
   },
 ]

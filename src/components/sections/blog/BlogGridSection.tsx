@@ -23,16 +23,16 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
           <Link
             key={post.id}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col justify-between space-y-4 p-4 rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-300 hover:shadow-lg transition-all duration-300"
+            className="group flex flex-col justify-between space-y-4 p-4 bg-white border border-zinc-200/80 hover:border-[#98ff03] transition-colors duration-300"
           >
             <div className="space-y-4">
-              <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-zinc-100 border border-zinc-100">
+              <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 border border-zinc-100 transition-colors group-hover:border-[#98ff03]">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover object-center"
                 />
               </div>
 
@@ -40,7 +40,7 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
                 <span className="font-space font-semibold text-[11px] text-zinc-500 uppercase tracking-wider block">
                   {post.category}
                 </span>
-                <h3 className="font-space font-bold text-lg text-zinc-950 group-hover:text-zinc-700 transition-colors leading-snug">
+                <h3 className="font-space font-bold text-lg text-zinc-950 transition-colors leading-snug group-hover:text-zinc-700">
                   {post.title}
                 </h3>
                 {post.excerpt ? (
@@ -57,7 +57,7 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
                 <span>•</span>
                 <span>{post.readTime}</span>
               </div>
-              <ArrowUpRight className="size-4 text-zinc-400 group-hover:text-zinc-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              <ArrowUpRight className="size-4 text-zinc-400 group-hover:text-[#98ff03] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
           </Link>
         ))}

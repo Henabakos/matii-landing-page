@@ -14,15 +14,12 @@ export function BlogTopBar({
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200/80 pb-6">
       <div>
-        <span className="font-space font-semibold text-xs tracking-widest text-zinc-500 uppercase">
-          INSIGHTS &amp; ARTICLES
-        </span>
         <h1 className="font-space font-bold text-2xl sm:text-3xl text-zinc-950 tracking-tight mt-0.5">
           Knowledge Hub
         </h1>
       </div>
 
-      <div className="relative w-full sm:w-[340px]">
+      {/* <div className="relative w-full sm:w-[340px]">
         <input
           type="text"
           value={searchQuery}
@@ -41,7 +38,7 @@ export function BlogTopBar({
         ) : (
           <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 size-4 text-zinc-400 pointer-events-none" />
         )}
-      </div>
+      </div> */}
     </div>
   )
 }
