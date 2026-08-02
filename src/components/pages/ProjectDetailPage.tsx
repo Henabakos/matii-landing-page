@@ -71,6 +71,7 @@ export function ProjectDetailPage({
               alt="shape"
               className="object-contain"
               fill
+              sizes="(max-width: 1024px) 128px, 224px"
             />
           </div>
           <Image

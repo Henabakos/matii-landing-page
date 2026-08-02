@@ -31,6 +31,7 @@ export function ServiceCard({
             src={bgImage}
             alt={title}
             fill
+            sizes="(max-width: 1200px) 100vw, 400px"
             className="object-cover size-full opacity-0 group-hover:opacity-50 transition-opacity duration-500 ease-in-out pointer-events-none"
           />
         )}
