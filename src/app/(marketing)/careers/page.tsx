@@ -1,11 +1,15 @@
+import React from "react";
+import CareersSection from "@/components/sections/careers/CareersSection";
+
+export const metadata = {
+  title: "Careers | Motion Digitals",
+  description: "Join our team of senior software engineers, AI specialists, and UI product designers.",
+};
+
 export default function CareersPage() {
   return (
-    <section className="rounded-3xl border border-zinc-200 bg-white p-10 shadow-sm">
-      <p className="text-sm font-medium uppercase tracking-[0.3em] text-zinc-500">Marketing</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950">Careers</h1>
-      <p className="mt-4 max-w-2xl text-lg text-zinc-600">
-        This page renders the Careers content.
-      </p>
-    </section>
+    <main className="w-full">
+      <CareersSection />
+    </main>
   );
 }
