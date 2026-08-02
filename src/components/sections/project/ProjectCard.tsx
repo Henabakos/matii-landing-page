@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface ProjectCardProps {
   id?: string;
@@ -11,6 +12,7 @@ export interface ProjectCardProps {
   description: string;
   statLabel: string;
   slug: string;
+  imageUrl?: string;
 }
 
 export function ProjectCard({
@@ -20,30 +22,38 @@ export function ProjectCard({
   description,
   statLabel,
   slug,
+  imageUrl = "/images/ai-automation.png",
 }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${slug}`}
-      className="group relative rounded-[4px] border border-zinc-200 bg-white overflow-hidden p-6 sm:p-8 flex flex-col justify-between min-h-[340px] hover:border-[#292c2e] shadow-sm hover:shadow-md transition-all block"
+      className="group relative border border-zinc-200 bg-white overflow-hidden flex flex-col justify-between min-h-[400px] hover:border-[#98ff03] block transition-all"
     >
-      <div className="flex justify-between items-center mb-6">
-        <div className="inline-flex items-center gap-2 bg-[#f3f4f6] border border-zinc-200 px-3 py-1 rounded-full text-[#292c2e] text-xs font-space font-medium">
-          <span className="size-1.5 rounded-full bg-[#98ff03]" />
-          <span>{category}</span>
-        </div>
-        <span className="font-mono text-xs text-zinc-400">{year}</span>
-      </div>
-
       <div>
-        <h3 className="font-space font-bold text-2xl sm:text-3xl text-[#292c2e] group-hover:text-black transition-colors mb-2">
-          {title}
-        </h3>
-        <p className="font-inter text-xs sm:text-sm text-zinc-600 leading-relaxed">
-          {description}
-        </p>
+        {/* Full-width Project Thumbnail Image */}
+        {imageUrl && (
+          <div className="relative w-full aspect-video border-b border-zinc-200 overflow-hidden">
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+            />
+          </div>
+        )}
+
+        <div className="p-3 sm:p-5">
+          <h3 className="font-space font-bold text-xl sm:text-2xl text-[#292c2e] group-hover:text-black transition-colors mb-2">
+            {title}
+          </h3>
+          <p className="font-inter text-xs sm:text-sm text-zinc-600 leading-relaxed">
+            {description}
+          </p>
+        </div>
       </div>
 
-      <div className="pt-6 border-t border-zinc-200 flex items-center justify-between text-xs font-space text-zinc-600">
+      <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-zinc-200 flex items-center justify-between text-xs font-space text-zinc-600">
         <span className="font-medium">{statLabel}</span>
         <span className="group-hover:translate-x-1 transition-transform text-[#292c2e] font-bold">
           View Project →

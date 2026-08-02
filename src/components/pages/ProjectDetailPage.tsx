@@ -39,27 +39,15 @@ export function ProjectDetailPage({
   return (
     <div className="w-full px-4 md:px-8 py-8 md:py-12 overflow-hidden ">
       <div className="max-w-[1380px] mx-auto relative overflow-hidden text-[#292c2e]">
-        {/* Background Decorative Graphic Shapes matching Landing Page */}
-        <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48 opacity-[0.06] pointer-events-none">
-          <Image
-            src="/shapes/white-shape.svg"
-            alt="shape"
-            className="object-contain"
-            fill
-          />
-        </div>
-        <div className="hidden md:block absolute bottom-0 left-0 w-32 h-26 lg:w-56 lg:h-48 opacity-[0.06] pointer-events-none">
-          <Image
-            src="/shapes/solution-shape.svg"
-            alt="shape"
-            className="object-contain"
-            fill
-          />
-        </div>
-
         {/* 1. TOP SECTION TAG & HERO HEADER */}
         <div className="mb-6">
-          <SectionTag title={formattedSlugTag} />
+          <div className="inline-flex gap-2.5 items-center bg-white px-2.5 py-1">
+            <div className="bg-[#98ff03] size-4 shrink-0" />
+            <span className="font-space font-normal text-base md:text-lg text-black uppercase tracking-wider whitespace-nowrap">
+              {formattedSlugTag}
+            </span>
+          </div>
+          {/* <SectionTag title={formattedSlugTag} /> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10 md:mb-14">
@@ -69,19 +57,28 @@ export function ProjectDetailPage({
             </h1>
           </div>
           <div className="lg:col-span-4 lg:pt-3">
-            <p className="font-inter font-normal text-sm sm:text-base md:text-[18px] leading-[1.5] text-zinc-600">
+            <p className="font-inter font-normal text-sm sm:text-base md:text-[18px] leading-normal text-zinc-600">
               {subtitle}
             </p>
           </div>
         </div>
 
         {/* MAIN HERO PROJECT COVER IMAGE */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-[4px] border border-zinc-200 overflow-hidden shadow-md mb-12">
+        <div className="relative w-full aspect-video md:aspect-21/9 border border-zinc-200 overflow-hidden mb-12">
+          <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 pointer-events-none z-20">
+            <Image
+              src="/shapes/solution-shape.svg"
+              alt="shape"
+              className="object-contain"
+              fill
+            />
+          </div>
           <Image
             src={coverImage}
             alt={title}
             fill
             priority
+            loading="eager"
             sizes="100vw"
             className="object-cover object-center"
             referrerPolicy="no-referrer"

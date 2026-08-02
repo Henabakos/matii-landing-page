@@ -9,7 +9,7 @@ import Image from "next/image";
 export function Hero() {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="relative max-w-[1380px] mx-auto pt-10 md:pt-16 pb-16 md:pb-24">
+      <div className="relative max-w-345 mx-auto pt-10 md:pt-16 pb-16 md:pb-24">
         <div className="hidden md:block absolute top-0 left-0 w-32 h-26 lg:w-56 lg:h-48">
           <Image
             src="/shapes/hero-shape.svg"

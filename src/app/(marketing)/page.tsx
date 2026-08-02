@@ -9,8 +9,8 @@ import Testimonials from "@/components/sections/Testimonials";
 
 export default function HomePage() {
   return (
-    <main className="w-full px-4 md:px-8 py-8">
-      <div className="max-w-[1380px] mx-auto space-y-16">
+    <main className="w-full px-4 md:px-8">
+      <div className="max-w-345 mx-auto space-y-16">
         <Hero />
         <AboutUs />
         <SolutionsWeBuilt />

@@ -15,6 +15,7 @@ const defaultRelatedProjects: ProjectCardProps[] = [
       "Next-gen mobile banking and web app platform crafted for lightning-fast digital asset transactions.",
     statLabel: "Conversion Lift: +65%",
     slug: "digital-wallet",
+    imageUrl: "/images/ai-automation.png",
   },
   {
     id: "2",
@@ -25,6 +26,7 @@ const defaultRelatedProjects: ProjectCardProps[] = [
       "Thoughtful digital clinical portal designed to solve patient communication bottlenecks efficiently.",
     statLabel: "User Retention: 98.4%",
     slug: "liyana-care",
+    imageUrl: "/images/solutions-1.png",
   },
 ];
 

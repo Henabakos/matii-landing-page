@@ -3,7 +3,6 @@
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import SolutionsTag from "./solutions/SolutionsTag";
-import ProjectCard from "./solutions/ProjectCard";
 import {
   Carousel,
   CarouselContent,
@@ -13,14 +12,16 @@ import {
   CarouselDots,
 } from "@/components/ui/carousel";
 
+import SolutionCard, { SolutionCardProps } from "./solutions/SolutionCard";
 import Image from "next/image";
 
-const projects = [
+const projects: SolutionCardProps[] = [
   {
     title: "Liyana Care",
     description:
       "Before we build, we listen. We understand the problem, uncover what matters, and create thoughtful digital solutions designed to solve.",
     bgImage: "/images/ai-automation.png",
+    projectUrl: "/projects/liyana-care",
     metrics: {
       stat1Value: "40%",
       stat1Label: "fast completion",
@@ -35,6 +36,7 @@ const projects = [
     description:
       "Engineered an automated cloud workspace that streamlined internal operations and enhanced team collaboration across 10+ global locations.",
     bgImage: "/images/ai-automation.png",
+    projectUrl: "/projects/nexis-saas-platform",
     metrics: {
       stat1Value: "60%",
       stat1Label: "speed increase",
@@ -49,6 +51,7 @@ const projects = [
     description:
       "Designed and deployed a modern mobile experience providing real-time analytics, secure transactions, and seamless user journeys.",
     bgImage: "/images/ai-automation.png",
+    projectUrl: "/projects/apex-mobile-app",
     metrics: {
       stat1Value: "100k+",
       stat1Label: "downloads",
@@ -67,7 +70,7 @@ export function SolutionsWeBuilt() {
 
   return (
     <section className="relative w-full py-12 md:py-20 overflow-hidden">
-      <div className="max-w-[1380px] mx-auto border border-[rgba(174,174,174,0.4)] p-6 md:p-12 relative overflow-hidden">
+      <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] p-6 md:p-12 relative overflow-hidden">
         {/* Top Section Tag Badge */}
         <div className="flex justify-center mb-8">
           <SolutionsTag />
@@ -105,7 +108,7 @@ export function SolutionsWeBuilt() {
           <CarouselContent>
             {projects.map((project, idx) => (
               <CarouselItem key={idx} className="basis-full">
-                <ProjectCard {...project} />
+                <SolutionCard {...project} />
               </CarouselItem>
             ))}
           </CarouselContent>

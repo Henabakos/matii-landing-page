@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import svgPaths from "@/lib/svgPaths";
 
-export interface ProjectCardProps {
+export interface SolutionCardProps {
   title: string;
   description: string;
   bgImage: string;
@@ -19,13 +19,13 @@ export interface ProjectCardProps {
   };
 }
 
-export function ProjectCard({
+export function SolutionCard({
   title,
   description,
   bgImage,
-  projectUrl = "https://calendly.com/motiondigitals/30min",
+  projectUrl = "/contact",
   metrics,
-}: ProjectCardProps) {
+}: SolutionCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
@@ -69,15 +69,15 @@ export function ProjectCard({
         src={bgImage}
         alt={title}
         fill
+        priority
+        loading="eager"
+        sizes="(max-width: 1380px) 100vw, 1380px"
         className="object-cover size-full group-hover:scale-105 transition-transform duration-700 pointer-events-none"
       />
 
-      {/* Dark Gradient Overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none z-[5]" /> */}
-
       {/* Smooth Magnetic Cursor-Following "View Project" Button */}
       <div
-        className="hidden md:flex absolute top-0 left-0 z-30 pointer-events-none bg-[#292c2e] text-white px-4 py-2 rounded-[2px] items-center gap-2 text-xs md:text-sm font-space uppercase tracking-wider shadow-2xl border border-white/20 transition-[transform,opacity] duration-300 ease-out"
+        className="hidden md:flex absolute top-0 left-0 z-30 pointer-events-none bg-[#292c2e] text-white px-4 py-2 rounded-xs items-center gap-2 text-xs md:text-sm font-space uppercase tracking-wider shadow-2xl border border-white/20 transition-[transform,opacity] duration-300 ease-out"
         style={{
           transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(${isHovered ? 1 : 0.7})`,
           opacity: isHovered ? 1 : 0,
@@ -98,7 +98,7 @@ export function ProjectCard({
       </div>
 
       {/* Mobile/Touch Fallback Static Button (Top Right) */}
-      <div className="md:hidden absolute top-4 right-4 z-20 bg-[#292c2e] text-white px-3 py-1.5 rounded-[2px] flex items-center gap-2 text-xs font-space uppercase tracking-wider shadow-lg border border-white/10 pointer-events-none">
+      <div className="md:hidden absolute top-4 right-4 z-20 bg-[#292c2e] text-white px-3 py-1.5 flex items-center gap-2 text-xs font-space uppercase tracking-wider shadow-lg border border-white/10 pointer-events-none">
         <span>View project</span>
         <div className="size-3.5 relative shrink-0">
           <svg className="block size-full" fill="none" viewBox="0 0 16 16">
@@ -114,7 +114,7 @@ export function ProjectCard({
       </div>
 
       {/* Bottom-Left Overlay Box matching Group28 / Group30 */}
-      <div className="absolute bottom-0 left-0 md:right-auto max-w-[540px] bg-[#292c2e]/75 p-6 md:p-8 border border-white/10 backdrop-blur-md z-20 shadow-2xl pointer-events-none">
+      <div className="absolute bottom-0 left-0 md:right-auto max-w-135 bg-[#292c2e]/75 p-6 md:p-8 border border-white/10 backdrop-blur-md z-20 shadow-2xl pointer-events-none">
         {/* Project Title */}
         <h3 className="font-space font-bold text-2xl sm:text-4xl text-white tracking-tight capitalize mb-2">
           {title}
@@ -165,4 +165,4 @@ export function ProjectCard({
   );
 }
 
-export default ProjectCard;
+export default SolutionCard;
