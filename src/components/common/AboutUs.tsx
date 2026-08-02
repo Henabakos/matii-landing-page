@@ -8,7 +8,7 @@ import MetricCard from "../sections/about-us/MetricCard";
 export function AboutUs() {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="max-w-[1380px] mx-auto bg-white py-16 md:py-24 px-4 md:px-8">
+      <div className="max-w-345 mx-auto bg-white py-16 md:py-24 px-4 md:px-8">
         {/* Top Tag Badge */}
         <div className="mb-8">
           <AboutTag />

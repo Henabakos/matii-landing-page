@@ -92,7 +92,7 @@ export function ProjectsSection() {
       : allProjects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section className="relative w-full pt-12 md:pt-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full pt-12 md:pt-16 px-4 md:px-8 overflow-hidden">
       <div className="max-w-345 mx-auto relative">
         <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48">
           <Image

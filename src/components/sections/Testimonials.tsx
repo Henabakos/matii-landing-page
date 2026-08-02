@@ -54,7 +54,7 @@ export function Testimonials() {
   );
 
   return (
-    <section className="relative w-full py-12 md:py-20 overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] p-6 md:p-12 relative bg-white overflow-hidden">
         {/* Top Tag Badge */}
         <div className="flex items-center justify-center mb-6">

@@ -6,7 +6,7 @@ import { row1Tools, row2Tools, row3Tools } from "@/data/techStack";
 
 export function ToolsWeUse() {
   return (
-    <section className="relative w-full py-12 md:py-20 overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       {/* Custom Marquee Keyframe Animations */}
       <style jsx>{`
         @keyframes marqueeLeft {

@@ -12,7 +12,7 @@ import { faqItems } from "@/data/faq-data";
 
 export function Faq() {
   return (
-    <section className="relative w-full py-12 md:py-20 overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       {/* Hide Scrollbar Cross-Browser */}
       <style jsx global>{`
         .faq-scroll {
