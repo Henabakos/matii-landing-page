@@ -13,7 +13,7 @@ export function BlogHeroSection({
   sideFeaturedPosts,
 }: BlogHeroSectionProps) {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-zinc-200/80">
+    <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12">
       <div className="lg:col-span-7 flex flex-col justify-between group">
         <Link href={`/blog/${mainHeroPost.slug}`} className="block space-y-5">
           <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 border border-zinc-200/80 shadow-md transition-colors group-hover:border-[#98ff03]">

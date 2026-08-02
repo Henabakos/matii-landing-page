@@ -12,10 +12,10 @@ export function BlogTopBar({
   onClearSearch,
 }: BlogTopBarProps) {
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200/80 pb-6">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6">
       <div>
         <h1 className="font-space font-bold text-2xl sm:text-3xl text-zinc-950 tracking-tight mt-0.5">
-          Knowledge Hub
+          Blogs
         </h1>
       </div>
 
