@@ -116,7 +116,7 @@ export function SolutionCard({
       {/* Bottom-Left Overlay Box matching Group28 / Group30 */}
       <div className="absolute bottom-0 left-0 md:right-auto max-w-135 bg-[#292c2e]/75 p-6 md:p-8 border border-white/10 backdrop-blur-md z-20 shadow-2xl pointer-events-none">
         {/* Project Title */}
-        <h3 className="font-space font-bold text-2xl sm:text-4xl text-white tracking-tight capitalize mb-2">
+        <h3 className="font-urbanist font-medium text-2xl sm:text-4xl text-white tracking-tight capitalize mb-2">
           {title}
         </h3>
 

@@ -1,0 +1,209 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. KPI Metrics
+model Kpi {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  label       String
+  value       String   // e.g. "50+", "10+", "∞", "99.9%"
+  unit        String?  // e.g. "%", "+", "x"
+  description String
+  category    String   @default("HERO_ABOUT") // HERO_ABOUT, SOLUTIONS_CAROUSEL, GENERAL
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 2. Trusted Partners
+model Partner {
+  id         String   @id @default(cuid())
+  name       String
+  logoUrl    String?  // Image file or external URL
+  svgContent String?  // Embedded raw SVG or path data
+  websiteUrl String?
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// 3. Projects & Case Studies
+model Project {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  title               String
+  subtitle            String
+  category            String   // AI Automation, Healthcare SaaS, Cloud Operations, etc.
+  year                String   @default("2025")
+  clientName          String?
+  clientLogoText      String?
+  liveUrl             String?
+  timeline            String?
+  services            String?  // e.g. "NLP Solutions • AI Automation • Integration"
+  coverImage          String   @default("/images/ai-automation.png")
+  challenge           String   // JSON string array of paragraphs
+  solution            String   // JSON string array of paragraphs
+  gallery             String   // JSON string array of { id, title, imageUrl }
+  metrics             String   // JSON object with stat labels & numbers
+  isFeatured          Boolean  @default(false)
+  isSolutionsBuilt    Boolean  @default(false) // Whether it displays on homepage carousel
+  order               Int      @default(0)
+  seoTitle            String?
+  seoDescription      String?
+  seoKeywords         String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// 4. Blog Posts
+model BlogPost {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  category        String   // Product, Design, Engineering, Strategy, Growth, Marketing
+  excerpt         String
+  content         String   // Rich markdown / article body
+  authorName      String   @default("Matii Engineering Team")
+  authorAvatar    String?  @default("/images/about-illustration.png")
+  authorRole      String?  @default("Core Architect")
+  coverImage      String   @default("/images/about-illustration.png")
+  readTime        String   @default("5 min read")
+  publishedAt     DateTime @default(now())
+  isMainHero      Boolean  @default(false)
+  isSideFeatured  Boolean  @default(false)
+  isPublished     Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// 5. News & Press Releases
+model NewsArticle {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  category        String   @default("Company News") // Company News, Press Release, Milestone, Product Update
+  excerpt         String
+  content         String   // Detailed news story / press release
+  source          String?  @default("Matii Press Room")
+  sourceUrl       String?
+  coverImage      String   @default("/images/solutions-1.png")
+  readTime        String   @default("3 min read")
+  publishedAt     DateTime @default(now())
+  isFeatured      Boolean  @default(false)
+  isPublished     Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// 6. Contact Inquiries (from public forms)
+model ContactInquiry {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  company     String?
+  service     String?
+  budget      String?
+  message     String
+  status      String   @default("NEW") // NEW, READ, REPLIED, ARCHIVED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 7. Client Testimonials
+model Testimonial {
+  id          String   @id @default(cuid())
+  quote       String
+  authorName  String
+  authorRole  String
+  avatarUrl   String   @default("/avatars/avatar-1.png")
+  rating      Int      @default(5)
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 8. Dynamic Navigation Mega Menus
+model NavMenu {
+  id             String   @id @default(cuid())
+  key            String   @unique // "services", "projects", "careers", "resources"
+  label          String   // "Services", "Projects", etc.
+  href           String   @default("#")
+  order          Int      @default(0)
+  isActive       Boolean  @default(true)
+  footerLabel    String?
+  footerHref     String?
+  footerCtaLabel String?
+  footerCtaHref  String?
+  categories     String   // JSON string array of MegaMenuCategory objects
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// 9. Career Job Openings
+model JobPosition {
+  id               String           @id @default(cuid())
+  slug             String           @unique
+  title            String
+  department       String           // Engineering, AI & Data, Design, Product, etc.
+  location         String           // e.g. "Addis Ababa, Ethiopia / Remote"
+  type             String           // e.g. "Full-Time", "Contract", "Part-Time"
+  experience       String           // e.g. "5+ Years"
+  salary           String           // e.g. "Competitive + Equity"
+  shortDescription String
+  content          String           // Semantic HTML rich-text formatted by TipTap RichTextEditor
+  order            Int              @default(0)
+  isActive         Boolean          @default(true)
+  isFeatured       Boolean          @default(false)
+  seoTitle         String?
+  seoDescription   String?
+  seoKeywords      String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  applications     JobApplication[]
+}
+
+// 10. Job Applications submitted from site
+model JobApplication {
+  id           String       @id @default(cuid())
+  jobId        String?
+  jobTitle     String
+  job          JobPosition? @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  fullName     String
+  email        String
+  phone        String?
+  resumeUrl    String?      // File URL or uploaded document
+  portfolioUrl String?
+  linkedinUrl  String?
+  coverNote    String?
+  status       String       @default("NEW") // NEW, REVIEWING, INTERVIEW, OFFER, REJECTED, ARCHIVED
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+// 11. Dynamic Project Categories
+model ProjectCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique // e.g. "AI Automation"
+  slug        String   @unique // e.g. "ai-automation"
+  description String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

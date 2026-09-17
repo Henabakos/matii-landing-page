@@ -36,10 +36,10 @@ export function ProjectExploreMore() {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
-          <h2 className="font-space font-medium text-3xl sm:text-4xl md:text-[48px] text-[#292c2e] tracking-tight leading-tight">
+          <h2 className="font-space font-medium text-3xl sm:text-4xl md:text-[48px] text-[#292c2e] dark:text-white tracking-tight leading-tight">
             Explore More Work
           </h2>
-          <p className="font-inter text-xs sm:text-sm md:text-base text-zinc-600 max-w-xl mt-2">
+          <p className="font-inter text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-400 max-w-xl mt-2">
             Browse additional work focused on strategy, automation, and scalable
             design built to improve clarity and performance.
           </p>
@@ -47,7 +47,7 @@ export function ProjectExploreMore() {
 
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 bg-[#292c2e] hover:bg-black text-white transition-all px-5 py-3 text-xs font-space font-semibold tracking-wider uppercase shrink-0 group shadow-sm"
+          className="inline-flex items-center gap-2 bg-[#292c2e] dark:bg-white dark:text-[#292c2e] hover:bg-black dark:hover:bg-zinc-200 text-white transition-all px-5 py-3 text-xs font-space font-semibold tracking-wider uppercase shrink-0 group shadow-sm"
         >
           <span>More Projects</span>
           <div className="bg-[#98ff03] p-1 text-[#292c2e] transition-transform group-hover:translate-x-0.5">

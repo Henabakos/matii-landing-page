@@ -9,8 +9,8 @@ import Image from "next/image";
 export function WhyChooseUs() {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] relative py-16">
-        <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48">
+      <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white dark:bg-[#161819] relative py-16 transition-colors duration-200">
+        <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
           <Image
             src="/shapes/white-shape.svg"
             alt="hero-shape"
@@ -19,8 +19,8 @@ export function WhyChooseUs() {
           />
         </div>
 
-        <div className="absolute bg-[#292c2e] size-1.5 bottom-0 -right-1" />
-        <div className="absolute bg-[#292c2e] size-1.5 bottom-0 -left-1" />
+        <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 -right-1" />
+        <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 -left-1" />
 
         {/* Headline and Description Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-8 p-6 md:px-12">
@@ -30,11 +30,11 @@ export function WhyChooseUs() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-12 lg:mb-16 p-6 md:p-12">
           <div className="flex flex-col mb-8s">
-            <h2 className="font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] tracking-tight lowercase">
+            <h2 className="font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] dark:text-white tracking-tight lowercase transition-colors">
               Built to Solve. Designed to Move.
             </h2>
           </div>
-          <p className="font-inter font-normal text-base md:text-[20px] leading-[1.4] text-black lowercase">
+          <p className="font-urbanist font-normal text-base md:text-[18px] leading-[1.4] text-[#444445] dark:text-zinc-300 lg:pt-2 transition-colors">
             We combine strategic thinking, intuitive design, and engineering
             precision to build digital products that move businesses forward.
           </p>
@@ -42,9 +42,9 @@ export function WhyChooseUs() {
 
         {/* 4 Cards Grid */}
         <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
-          <div className="absolute bg-[#292c2e] size-1.5 top-0 -right-1" />
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 -right-1" />
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 -left-1" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 -right-1" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 -right-1" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 -left-1" />
 
           <WhyUsCard
             iconPath={svgPaths.p4a047c0}

@@ -14,8 +14,9 @@ import {
 
 import SolutionCard, { SolutionCardProps } from "./solutions/SolutionCard";
 import Image from "next/image";
+import type { ParsedProject } from "@/lib/services/project.service";
 
-const projects: SolutionCardProps[] = [
+const defaultProjects: SolutionCardProps[] = [
   {
     title: "Liyana Care",
     description:
@@ -63,28 +64,55 @@ const projects: SolutionCardProps[] = [
   },
 ];
 
-export function SolutionsWeBuilt() {
+interface SolutionsWeBuiltProps {
+  projects?: ParsedProject[];
+}
+
+export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 6000, stopOnInteraction: true }),
   );
 
+  const displayProjects: SolutionCardProps[] =
+    projects && projects.length > 0
+      ? projects.map((p) => ({
+        title: p.title,
+        description: p.subtitle,
+        bgImage: p.coverImage || "/images/ai-automation.png",
+        projectUrl: `/projects/${p.slug}`,
+        metrics: {
+          stat1Value:
+            p.metrics.stat1Value ||
+            (p.metrics.demoClickGrowth ? `+${p.metrics.demoClickGrowth}x` : "40%"),
+          stat1Label: p.metrics.stat1Label || "growth",
+          stat2Value:
+            p.metrics.stat2Value ||
+            (p.metrics.higherEngagement ? `${p.metrics.higherEngagement}%` : "98%"),
+          stat2Label: p.metrics.stat2Label || "retention",
+          stat3Value:
+            p.metrics.stat3Value ||
+            (p.metrics.qualifiedLeads ? `${p.metrics.qualifiedLeads}%` : "4.9"),
+          stat3Label: p.metrics.stat3Label || "satisfaction",
+        },
+      }))
+      : defaultProjects;
+
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] p-6 md:p-12 relative overflow-hidden">
+      <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white dark:bg-[#161819] p-6 md:p-12 relative overflow-hidden transition-colors duration-200">
         {/* Top Section Tag Badge */}
         <div className="flex justify-center mb-8">
           <SolutionsTag />
         </div>
 
         {/* Headline and Description Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12 lg:mb-16">
-          <h2 className="lg:col-span-6 font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] tracking-tight lowercase">
-            Every solution we build starts with a deep understanding of Problems
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 lg:mb-16">
+          <h2 className="lg:col-span-6 font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black dark:text-white tracking-tight transition-colors">
+            Understanding Needs.
+            <br /> Driving Progress.
           </h2>
-          <p className="lg:col-span-6 font-inter font-normal text-base md:text-[20px] leading-[1.4] text-black lowercase lg:pt-2">
-            Before we build, we listen. We understand the problem, uncover what
-            matters, and create thoughtful digital solutions designed to solve
-            it properly.
+          <p className="lg:col-span-6 font-urbanist font-normal text-base md:text-[18px] leading-[1.4] text-[#444445] dark:text-zinc-300 lg:pt-2 transition-colors">
+            We understand your priorities and challenges, then build practical solutions that create measurable impact and lasting progress.
           </p>
         </div>
 
@@ -97,7 +125,7 @@ export function SolutionsWeBuilt() {
           }}
           className="w-full relative"
         >
-          <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 z-10">
+          <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 z-10 dark:opacity-80">
             <Image
               src="/shapes/solution-shape.svg"
               alt="hero-shape"
@@ -106,7 +134,7 @@ export function SolutionsWeBuilt() {
             />
           </div>
           <CarouselContent>
-            {projects.map((project, idx) => (
+            {displayProjects.map((project, idx) => (
               <CarouselItem key={idx} className="basis-full">
                 <SolutionCard {...project} />
               </CarouselItem>
@@ -114,7 +142,7 @@ export function SolutionsWeBuilt() {
           </CarouselContent>
 
           {/* Navigation Controls Bar matching template layout */}
-          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[rgba(174,174,174,0.3)]">
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[rgba(174,174,174,0.3)] dark:border-white/10">
             <CarouselDots />
             <div className="flex items-center gap-3">
               <CarouselPrevious />

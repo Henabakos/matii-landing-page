@@ -7,30 +7,30 @@ import { Compass, Target, CheckCircle2, Award, Users, Zap } from "lucide-react";
 export function AboutStory() {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="max-w-[1380px] mx-auto border border-[#AEAEAE]/40 relative pt-12 md:pt-20">
+      <div className="max-w-[1380px] mx-auto border border-[#AEAEAE]/40 dark:border-white/10 bg-white dark:bg-[#161819] relative pt-12 md:pt-20 transition-colors duration-200">
         {/* Section Tag Badge */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex gap-2.5 items-center bg-white px-2.5 py-1 ">
+          <div className="inline-flex gap-2.5 items-center bg-white dark:bg-white/5 border border-transparent dark:border-white/10 px-2.5 py-1 transition-colors">
             <div className="bg-[#98ff03] size-4 shrink-0" />
-            <span className="font-space font-normal text-base md:text-lg text-black uppercase tracking-wider whitespace-nowrap">
+            <span className="font-space font-normal text-base md:text-lg text-black dark:text-white uppercase tracking-wider whitespace-nowrap">
               OUR ORIGIN & PURPOSE
             </span>
           </div>
         </div>
 
         {/* Main Title */}
-        <h2 className="lg:col-span-6 font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black tracking-tight max-w-4xl mx-auto text-center mb-12 sm:mb-16">
-          built on craftsmanship, Transparency, & uncompromising standards.
+        <h2 className="lg:col-span-6 font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black dark:text-white tracking-tight max-w-4xl mx-auto text-center mb-12 sm:mb-16 transition-colors">
+          Engineering core systems, powering progress.
         </h2>
 
         {/* 2-Column Main Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch mb-12 p-6 md:p-8">
           {/* Left Column: Image & Highlight Stats */}
-          <div className="lg:col-span-6 flex flex-col justify-between border border-[#AEAEAE]/30 p-6 md:p-8 bg-white relative">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px] z-10" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px] z-10" />
+          <div className="lg:col-span-6 flex flex-col justify-between border border-[#AEAEAE]/30 dark:border-white/10 p-6 md:p-8 bg-white dark:bg-white/5 relative transition-colors">
+            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px] z-10 transition-colors" />
+            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px] z-10 transition-colors" />
 
-            <div className="relative w-full h-64 sm:h-80 overflow-hidden mb-6 group border border-[#AEAEAE]/30">
+            <div className="relative w-full h-64 sm:h-80 overflow-hidden mb-6 group border border-[#AEAEAE]/30 dark:border-white/10">
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80"
                 alt="Engineering Team Collaboration"
@@ -47,28 +47,28 @@ export function AboutStory() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#AEAEAE]/30">
+            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#AEAEAE]/30 dark:border-white/10">
               <div className="flex flex-col">
-                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e]">
+                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
                   8+
                 </span>
-                <span className="font-inter text-xs text-[#797F8B] uppercase tracking-wider mt-1">
+                <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
                   Years Active
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e]">
+                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
                   100%
                 </span>
-                <span className="font-inter text-xs text-[#797F8B] uppercase tracking-wider mt-1">
+                <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
                   Senior Team
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e]">
+                <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
                   50+
                 </span>
-                <span className="font-inter text-xs text-[#797F8B] uppercase tracking-wider mt-1">
+                <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
                   Products Shipped
                 </span>
               </div>
@@ -76,38 +76,33 @@ export function AboutStory() {
           </div>
 
           {/* Right Column: Story Narrative */}
-          <div className="lg:col-span-6 border border-[#AEAEAE]/30 p-6 md:p-8 bg-[#fafafa] flex flex-col justify-between relative">
-            <div className="absolute bg-[#292c2e] size-1.5 -top-[3px] -right-[3px] z-10" />
-            <div className="absolute bg-[#292c2e] size-1.5 -bottom-[3px] -right-[3px] z-10" />
+          <div className="lg:col-span-6 border border-[#AEAEAE]/30 dark:border-white/10 p-6 md:p-8 bg-[#fafafa] dark:bg-white/5 flex flex-col justify-between relative transition-colors">
+            <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 -top-[3px] -right-[3px] z-10 transition-colors" />
+            <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 -bottom-[3px] -right-[3px] z-10 transition-colors" />
 
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2">
-                <span className="font-space text-xs uppercase tracking-widest text-[#797f8b]">
+                <span className="font-space text-xs uppercase tracking-widest text-[#797f8b] dark:text-zinc-400">
                   // THE JOURNEY
                 </span>
               </div>
 
-              <h3 className="font-inter font-semibold text-xl sm:text-2xl text-[#292c2e] leading-snug">
-                Why we started Motion Digitals.
+              <h3 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white leading-snug transition-colors">
+                Why we built Matii Technologies.
               </h3>
 
-              <div className="space-y-4 font-inter text-sm md:text-base text-[#555] leading-relaxed">
+              <div className="space-y-4 font-inter text-sm md:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
                 <p>
-                  We founded Motion Digitals after seeing too many ambitious
-                  teams struggle with slow agencies, bloated engineering
-                  overhead, and communication disconnects.
+                  Matii Technologies is a technology company engineering enterprise
+                  platforms, fintech infrastructures, BPO solutions, and data
+                  intelligence for organizations that cannot afford to fail.
                 </p>
                 <p>
-                  We set out to build a streamlined, senior-led engineering
-                  studio—one that treats every client project with the focus,
-                  transparency, and architectural rigor of an internal product
-                  team.
+                  Founded in Ethiopia and built to global standards, we deliver secure,
+                  scalable systems for enterprise, government, and financial institutions.
                 </p>
                 <p>
-                  Today, we collaborate with high-growth startups and
-                  enterprises globally, shipping custom full-stack web
-                  platforms, scalable mobile applications, and intelligent AI
-                  automation systems.
+                  We don&apos;t just write code—we build the infrastructure that powers progress.
                 </p>
               </div>
             </div>
@@ -115,50 +110,63 @@ export function AboutStory() {
         </div>
 
         {/* Mission & Vision Twin Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-8">
           {/* Mission Card */}
-          <div className="border border-[#AEAEAE]/40 p-8 bg-white relative flex flex-col justify-between">
+          <div className="border border-[#AEAEAE]/40 dark:border-white/10 p-8 bg-white dark:bg-white/5 relative flex flex-col justify-between transition-colors">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="p-3 bg-[#292c2e]">
+                <div className="p-3 bg-[#292c2e] dark:bg-[#222527] dark:border dark:border-white/10">
                   <Compass className="w-6 h-6 text-[#98ff03]" />
                 </div>
-                <span className="font-space text-xs text-[#797F8B] uppercase tracking-wider">
+                <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
                   01 // PURPOSE
                 </span>
               </div>
 
-              <h4 className="font-space font-bold text-xl sm:text-2xl text-[#292c2e] uppercase tracking-tight">
+              <h4 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white uppercase tracking-tight transition-colors">
                 OUR MISSION
               </h4>
 
-              <p className="font-inter text-sm sm:text-base text-[#555] leading-relaxed">
-                To help businesses turn ambitious ideas into reliable,
-                high-performing digital products through modern software
-                engineering and cutting-edge AI.
+              <p className="font-inter text-sm sm:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
+                To engineer the systems that power enterprise, government, and
+                finance, delivering technology that is reliable, secure, and built
+                to scale.
               </p>
+
+              <div className="pt-4 border-t border-[#AEAEAE]/20 dark:border-white/10 space-y-2">
+                <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We solve complex problems.
+                </p>
+                <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We deliver on time.
+                </p>
+                <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We build infrastructure.
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Vision Card */}
-          <div className="border border-[#AEAEAE]/40 p-8 bg-white relative flex flex-col justify-between">
+          <div className="border border-[#AEAEAE]/40 dark:border-white/10 p-8 bg-white dark:bg-white/5 relative flex flex-col justify-between transition-colors">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="p-3 bg-[#292c2e]">
+                <div className="p-3 bg-[#292c2e] dark:bg-[#222527] dark:border dark:border-white/10">
                   <Target className="w-6 h-6 text-[#98ff03]" />
                 </div>
-                <span className="font-space text-xs text-[#797F8B] uppercase tracking-wider">
+                <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
                   02 // FUTURE
                 </span>
               </div>
 
-              <h4 className="font-space font-bold text-xl sm:text-2xl text-[#292c2e] uppercase tracking-tight">
+              <h4 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white uppercase tracking-tight transition-colors">
                 OUR VISION
               </h4>
 
-              <p className="font-inter text-sm sm:text-base text-[#555] leading-relaxed">
-                To become the most trusted technology engineering partner for
-                growth startups and forward-thinking enterprises worldwide.
+              <p className="font-inter text-sm sm:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
+                Our ambition is to become one of the largest technology companies
+                and the backbone of emerging markets—a company whose platforms run
+                the systems that nations, institutions, and businesses depend on.
               </p>
             </div>
           </div>

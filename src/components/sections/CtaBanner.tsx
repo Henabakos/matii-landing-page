@@ -87,14 +87,7 @@ const bars = [
 export function CtaBanner() {
   return (
     <section className="relative w-full pt-12 md:pt-20 px-4 md:px-8 overflow-hidden">
-      <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] min-h-[480px] md:min-h-[603px] flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden">
-        {/* <Image
-          src="/images/cta-grid-bg.png"
-          alt="Grid Pattern"
-          fill
-          className="object-cover size-full opacity-10 pointer-events-none"
-        /> */}
-
+      <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white/40 dark:bg-[#161819]/40 min-h-[480px] md:min-h-[603px] flex flex-col items-center justify-center p-6 md:p-12 overflow-hidden transition-colors duration-200">
         <div className="absolute inset-x-0 bottom-0 hidden lg:flex items-end pointer-events-none opacity-90 z-0">
           {[...bars, ...bars].map((height, index) => {
             const reversedIndex = index >= bars.length ? 5 - index : index;
@@ -109,26 +102,26 @@ export function CtaBanner() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center text-center max-w-[850px] mx-auto py-8">
-          <h2 className="font-space font-semibold text-3xl sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.15] tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#292c2e] via-[#484c4f] to-[#848e94] mb-10">
+          <h2 className="font-space font-semibold text-3xl sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.15] tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#292c2e] via-[#484c4f] to-[#848e94] dark:from-white dark:via-zinc-200 dark:to-zinc-400 mb-10 transition-colors">
             Have an Idea?
             <br />
             Let&apos;s Make It Move.
           </h2>
 
           <a
-            href="https://calendly.com/motiondigitals/30min"
+            href="https://calendly.com/Matiidigitals/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 bg-[#292c2e] text-white pl-5 pr-2 py-2 rounded-[12px] shadow-lg border border-white hover:bg-[#383b3e] transition-all duration-300 transform hover:-translate-y-0.5"
+            className="group inline-flex items-center gap-3 bg-[#292c2e] hover:bg-[#383b3e] text-white dark:bg-[#98ff03] dark:text-[#161819] dark:hover:bg-[#86e200] pl-5 pr-2 py-2 rounded-[12px] shadow-lg border border-white dark:border-[#98ff03] transition-all duration-300 transform hover:-translate-y-0.5"
           >
-            <span className="font-inter font-medium text-sm md:text-base whitespace-nowrap">
+            <span className="font-inter font-medium text-sm md:base whitespace-nowrap">
               Start Your Project
             </span>
-            <div className="bg-[#98ff03] p-2 rounded-[4px] border border-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-              <svg className="size-4 md:size-5" fill="none" viewBox="0 0 16 16">
+            <div className="bg-[#98ff03] dark:bg-[#161819] p-2 rounded-[4px] border border-white dark:border-[#161819] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <svg className="size-4 md:size-5 text-[#292C2E] dark:text-[#98ff03]" fill="none" viewBox="0 0 16 16">
                 <path
                   d={svgPaths.p159fbc80}
-                  stroke="#292C2E"
+                  stroke="currentColor"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="1.4"

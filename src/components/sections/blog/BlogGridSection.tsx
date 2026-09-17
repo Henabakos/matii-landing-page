@@ -23,10 +23,10 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
           <Link
             key={post.id}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col justify-between space-y-4 p-4 bg-white border border-zinc-200/80 hover:border-[#98ff03] transition-colors duration-300"
+            className="group flex flex-col justify-between space-y-4 p-4 bg-white dark:bg-[#161819] border border-zinc-200/80 dark:border-white/10 hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors duration-300"
           >
             <div className="space-y-4">
-              <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 border border-zinc-100 transition-colors group-hover:border-[#98ff03]">
+              <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 dark:bg-white/5 border border-zinc-100 dark:border-white/10 transition-colors group-hover:border-[#98ff03]">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -37,21 +37,21 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
               </div>
 
               <div className="space-y-2">
-                <span className="font-space font-semibold text-[11px] text-zinc-500 uppercase tracking-wider block">
+                <span className="font-space font-semibold text-[11px] text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
                   {post.category}
                 </span>
-                <h3 className="font-space font-bold text-lg text-zinc-950 transition-colors leading-snug group-hover:text-zinc-700">
+                <h3 className="font-space font-bold text-lg text-zinc-950 dark:text-white transition-colors leading-snug group-hover:text-zinc-700 dark:group-hover:text-[#98ff03]">
                   {post.title}
                 </h3>
                 {post.excerpt ? (
-                  <p className="font-inter text-xs sm:text-sm text-zinc-600 line-clamp-2 leading-relaxed">
+                  <p className="font-inter text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
                     {post.excerpt}
                   </p>
                 ) : null}
               </div>
             </div>
 
-            <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-inter text-zinc-400">
+            <div className="pt-3 border-t border-zinc-100 dark:border-white/10 flex items-center justify-between text-xs font-inter text-zinc-400 dark:text-zinc-500">
               <div className="flex items-center gap-2">
                 <span>{post.date}</span>
                 <span>•</span>

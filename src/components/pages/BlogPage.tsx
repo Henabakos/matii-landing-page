@@ -1,30 +1,52 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
-import { BLOG_POSTS } from "@/data/blogPosts";
+import { BLOG_POSTS, BlogPost } from "@/data/blogPosts";
 import { BlogCategoryFilters } from "@/components/sections/blog/BlogCategoryFilters";
 import { BlogEmptyState } from "@/components/sections/blog/BlogEmptyState";
 import { BlogGridSection } from "@/components/sections/blog/BlogGridSection";
 import { BlogHeroSection } from "@/components/sections/blog/BlogHeroSection";
 import { BlogTopBar } from "@/components/sections/blog/BlogTopBar";
-
+import PageHeader from "@/components/common/PageHeader";
 import Image from "next/image";
+import type { FormattedBlogPost } from "@/lib/services/blog.service";
 
-export default function BlogPage() {
+interface BlogPageProps {
+  initialPosts?: FormattedBlogPost[];
+}
+
+export default function BlogPage({ initialPosts }: BlogPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
+  const posts = useMemo(() => {
+    if (initialPosts && initialPosts.length > 0) {
+      return initialPosts.map((p) => ({
+        id: p.id,
+        slug: p.slug,
+        title: p.title,
+        category: p.category,
+        excerpt: p.excerpt,
+        date: p.date,
+        readTime: p.readTime,
+        image: p.coverImage || "/images/about-illustration.png",
+        isMainHero: p.isMainHero,
+        isSideFeatured: p.isSideFeatured,
+      }));
+    }
+    return BLOG_POSTS;
+  }, [initialPosts]);
+
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(
-      new Set(BLOG_POSTS.map((post) => post.category)),
+      new Set(posts.map((post) => post.category)),
     );
 
     return ["ALL", ...uniqueCategories];
-  }, []);
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
-    return BLOG_POSTS.filter((post) => {
+    return posts.filter((post) => {
       const normalizedQuery = searchQuery.toLowerCase();
 
       const matchesSearch =
@@ -37,15 +59,15 @@ export default function BlogPage() {
 
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [posts, searchQuery, selectedCategory]);
 
   const mainHeroPost = useMemo(() => {
-    return BLOG_POSTS.find((post) => post.isMainHero) || BLOG_POSTS[0];
-  }, []);
+    return posts.find((post) => post.isMainHero) || posts[0];
+  }, [posts]);
 
   const sideFeaturedPosts = useMemo(() => {
-    return BLOG_POSTS.filter((post) => post.isSideFeatured).slice(0, 3);
-  }, []);
+    return posts.filter((post) => post.isSideFeatured).slice(0, 3);
+  }, [posts]);
 
   const lowerGridPosts = useMemo(() => {
     if (searchQuery || selectedCategory !== "ALL") {
@@ -57,8 +79,9 @@ export default function BlogPage() {
       ...sideFeaturedPosts.map((post) => post.id),
     ]);
 
-    return BLOG_POSTS.filter((post) => !heroIds.has(post.id));
+    return posts.filter((post) => !heroIds.has(post.id));
   }, [
+    posts,
     filteredPosts,
     searchQuery,
     selectedCategory,
@@ -69,18 +92,30 @@ export default function BlogPage() {
   const isFiltering = Boolean(searchQuery) || selectedCategory !== "ALL";
 
   return (
-    <main className="w-full min-h-screen text-zinc-900 px-4 sm:px-6 lg:px-12 py-8 md:py-12">
+    <main className="w-full min-h-screen text-[#292c2e] dark:text-[#ededed] px-4 sm:px-6 lg:px-12 py-8 md:py-12 transition-colors">
       <div className="max-w-[1380px] mx-auto space-y-10">
-        <div className="relative bg-white ">
-          <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px] z-10" />
-          <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px] z-10" />
+        <PageHeader
+          tag="ENGINEERING & DESIGN JOURNAL"
+          title={
+            <>
+              Perspectives On Systems,
+              <br />
+              AI & Architecture.
+            </>
+          }
+          description="Explore actionable playbooks, engineering benchmarks, and product design methodologies from our core builders."
+        />
+
+        <div className="relative bg-white dark:bg-[#161819] border border-zinc-200/80 dark:border-white/10 transition-colors">
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px] z-10 transition-colors" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px] z-10 transition-colors" />
 
           <div className="p-6 md:p-8 space-y-10">
-            <div className="hidden md:block absolute -top-1 right-0 w-32 h-26 lg:w-56 lg:h-48">
+            <div className="hidden md:block absolute -top-1 right-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
               <Image
                 src="/shapes/faq-shape.svg"
                 alt="hero-shape"
-                className="object-contain "
+                className="object-contain"
                 fill
               />
             </div>
@@ -108,7 +143,7 @@ export default function BlogPage() {
               />
             ) : null}
 
-            {!isFiltering ? (
+            {!isFiltering && mainHeroPost ? (
               <BlogHeroSection
                 mainHeroPost={mainHeroPost}
                 sideFeaturedPosts={sideFeaturedPosts}

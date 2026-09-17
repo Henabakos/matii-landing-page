@@ -49,9 +49,9 @@ export function AboutWhyChooseUs() {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 			{/* Why Choose Us */}
-			<div className="lg:col-span-6 bg-white dark:bg-zinc-950 border border-[rgba(174,174,174,0.4)] rounded-2xl p-8 space-y-6 shadow-2xs">
+			<div className="lg:col-span-6 bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.4)] dark:border-white/10 rounded-2xl p-8 space-y-6 shadow-2xs transition-colors">
 				<div className="space-y-1">
-					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e]">
+					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] dark:bg-white/5 border border-transparent dark:border-white/10 text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e] dark:text-zinc-200">
 						<div className="w-2.5 h-2.5 bg-[#98ff03] rounded-xs" />
 						THE DIFFERENCE
 					</div>
@@ -64,7 +64,7 @@ export function AboutWhyChooseUs() {
 					{whyChooseUs.map((item, i) => (
 						<div key={i} className="flex items-start gap-3">
 							<div className="mt-0.5 w-5 h-5 rounded-full bg-[#98ff03]/20 flex items-center justify-center shrink-0">
-								<Check className="w-3.5 h-3.5 text-[#292c2e]" />
+								<Check className="w-3.5 h-3.5 text-[#292c2e] dark:text-[#98ff03]" />
 							</div>
 							<span className="text-sm font-inter text-[#292c2e] dark:text-zinc-300 font-medium">
 								{item}
@@ -75,9 +75,9 @@ export function AboutWhyChooseUs() {
 			</div>
 
 			{/* Industries Served */}
-			<div className="lg:col-span-6 bg-white dark:bg-zinc-950 border border-[rgba(174,174,174,0.4)] rounded-2xl p-8 space-y-6 shadow-2xs">
+			<div className="lg:col-span-6 bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.4)] dark:border-white/10 rounded-2xl p-8 space-y-6 shadow-2xs transition-colors">
 				<div className="space-y-1">
-					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e]">
+					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] dark:bg-white/5 border border-transparent dark:border-white/10 text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e] dark:text-zinc-200">
 						<div className="w-2.5 h-2.5 bg-[#98ff03] rounded-xs" />
 						DOMAINS
 					</div>
@@ -90,15 +90,15 @@ export function AboutWhyChooseUs() {
 					{industries.map((ind, i) => (
 						<div
 							key={i}
-							className="p-3.5 rounded-xl bg-[#f3f4f6] border border-[rgba(174,174,174,0.3)] space-y-1"
+							className="p-3.5 rounded-xl bg-[#f3f4f6] dark:bg-white/5 border border-[rgba(174,174,174,0.3)] dark:border-white/10 space-y-1 transition-colors"
 						>
 							<div className="flex items-center gap-2">
 								<span className="text-base">{ind.icon}</span>
-								<span className="text-sm font-space font-semibold text-[#292c2e]">
+								<span className="text-sm font-space font-semibold text-[#292c2e] dark:text-white">
 									{ind.name}
 								</span>
 							</div>
-							<p className="text-[11px] font-inter text-[#797f8b] line-clamp-2">
+							<p className="text-[11px] font-inter text-[#797f8b] dark:text-zinc-400 line-clamp-2">
 								{ind.desc}
 							</p>
 						</div>

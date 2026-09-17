@@ -2,45 +2,33 @@
 
 import React from 'react'
 import {
-	Sparkles,
-	ShieldCheck,
-	MessageSquare,
-	TrendingUp,
-	Target,
-	Zap,
+	Crosshair,
+	Fingerprint,
+	Orbit,
+	Compass,
 } from 'lucide-react'
 
 export function AboutCoreValues() {
 	const coreValues = [
 		{
-			title: 'Innovation',
-			desc: 'We continuously explore emerging paradigms like GenAI and modern edge architecture to solve complex problems.',
-			icon: Sparkles,
+			title: 'Execution Over Everything',
+			desc: 'We focus on high-impact delivery and results.',
+			icon: Crosshair,
 		},
 		{
-			title: 'Quality & Craft',
-			desc: 'We write clean, well-tested, maintainable code with strict type safety and high performance defaults.',
-			icon: ShieldCheck,
+			title: 'Built on Trust',
+			desc: 'Security, reliability, and integrity form the foundation of everything we build.',
+			icon: Fingerprint,
 		},
 		{
-			title: 'Transparency',
-			desc: 'Open channels, direct communication, and clear project tracking keep you informed at every milestone.',
-			icon: MessageSquare,
+			title: 'Relentless Learning',
+			desc: 'We continuously adapt, innovate, and master new technologies to stay ahead.',
+			icon: Orbit,
 		},
 		{
-			title: 'Customer Success',
-			desc: 'Your growth metrics and product uptime are our ultimate measure of technical success.',
-			icon: TrendingUp,
-		},
-		{
-			title: 'High Ownership',
-			desc: 'We take full responsibility for product architecture, design details, security, and long-term scalability.',
-			icon: Target,
-		},
-		{
-			title: 'Continuous Learning',
-			desc: 'Our engineering team stays ahead of technology shifts, constantly sharpening our technical stack.',
-			icon: Zap,
+			title: 'Africa Rooted, World Class',
+			desc: 'Our geography is our advantage; we build locally with a global standard of excellence.',
+			icon: Compass,
 		},
 	]
 
@@ -48,28 +36,28 @@ export function AboutCoreValues() {
 		<section className="space-y-6">
 			<div className="flex items-center justify-between">
 				<div className="space-y-1">
-					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e]">
+					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] dark:bg-white/5 border border-transparent dark:border-white/10 text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e] dark:text-zinc-200">
 						<div className="w-2.5 h-2.5 bg-[#98ff03] rounded-xs" />
 						OUR FOUNDATION
 					</div>
-					<h2 className="text-2xl sm:text-3xl font-inter font-medium text-[#292c2e] dark:text-white tracking-tight">
+					<h2 className="text-2xl sm:text-3xl font-urbanist font-medium text-[#292c2e] dark:text-white tracking-tight">
 						Core Values
 					</h2>
 				</div>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 				{coreValues.map((value, idx) => {
 					const VIcon = value.icon
 					return (
 						<div
 							key={idx}
-							className="p-6 rounded-xl bg-white dark:bg-zinc-950 border border-[rgba(174,174,174,0.3)] hover:border-[#292c2e] transition-all shadow-2xs group"
+							className="p-6 rounded-sm bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.3)] dark:border-white/10 hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-all shadow-2xs group"
 						>
-							<div className="w-10 h-10 rounded-lg bg-[#292c2e] flex items-center justify-center text-[#98ff03] mb-4 group-hover:bg-[#98ff03] group-hover:text-[#292c2e] transition-colors">
-								<VIcon className="w-5 h-5" />
+							<div className="w-10 h-10 rounded-sm bg-[#292c2e] dark:bg-white/10 flex items-center justify-center text-[#98ff03] mb-4 group-hover:bg-[#98ff03] group-hover:text-[#292c2e] transition-colors duration-200">
+								<VIcon className="w-5 h-5 transition-transform duration-200 group-hover:scale-105" strokeWidth={1.75} />
 							</div>
-							<h3 className="text-base font-space font-semibold text-[#292c2e] dark:text-white mb-2">
+							<h3 className="text-base font-urbanist font-medium text-[#292c2e] dark:text-white mb-2">
 								{value.title}
 							</h3>
 							<p className="text-xs font-inter text-[#797f8b] dark:text-zinc-400 leading-relaxed">

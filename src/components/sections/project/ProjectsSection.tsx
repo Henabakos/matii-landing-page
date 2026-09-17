@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import ProjectCard, {
   ProjectCardProps,
 } from "@/components/sections/project/ProjectCard";
-import Image from "next/image";
+import PageHeader from "@/components/common/PageHeader";
+import type { ParsedProject, FormattedProjectCategory } from "@/lib/services/project.service";
 
-const allProjects: ProjectCardProps[] = [
+interface ProjectsSectionProps {
+  initialProjects?: ParsedProject[];
+  initialCategories?: FormattedProjectCategory[];
+}
+
+const fallbackProjects: ProjectCardProps[] = [
   {
     id: "1",
     category: "AI Automation",
@@ -75,67 +82,161 @@ const allProjects: ProjectCardProps[] = [
   },
 ];
 
-const categories = [
-  "All",
-  "AI Automation",
-  "Healthcare SaaS",
-  "Cloud Operations",
-  "Fintech & Mobile",
-];
+function ProjectsContent({ initialProjects, initialCategories }: ProjectsSectionProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const paramCategory = searchParams.get("category");
 
-export function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const projectCards: ProjectCardProps[] = useMemo(() => {
+    if (initialProjects && initialProjects.length > 0) {
+      return initialProjects.map((p) => {
+        let statLabel = "Featured Solution";
+        if (p.metrics.stat1Value && p.metrics.stat1Label) {
+          statLabel = `${p.metrics.stat1Label}: ${p.metrics.stat1Value}`;
+        } else if (p.metrics.demoClickGrowth) {
+          statLabel = `Demo Clicks: +${p.metrics.demoClickGrowth}x`;
+        }
+
+        return {
+          id: p.id,
+          category: p.category,
+          year: p.year,
+          title: p.title,
+          description: p.subtitle,
+          statLabel,
+          slug: p.slug,
+          imageUrl: p.coverImage || "/images/ai-automation.png",
+        };
+      });
+    }
+    return fallbackProjects;
+  }, [initialProjects]);
+
+  // Dynamically compute categories with accurate counts
+  const categoriesList = useMemo(() => {
+    if (initialCategories && initialCategories.length > 0) {
+      return initialCategories.map((c) => {
+        const count = projectCards.filter(
+          (p) => p.category.toLowerCase() === c.name.toLowerCase()
+        ).length;
+        return {
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          count,
+        };
+      });
+    }
+
+    const uniqueCatNames = Array.from(new Set(projectCards.map((p) => p.category)));
+    return uniqueCatNames.map((name) => ({
+      id: name,
+      name,
+      slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      count: projectCards.filter((p) => p.category.toLowerCase() === name.toLowerCase()).length,
+    }));
+  }, [initialCategories, projectCards]);
+
+  // Sync selected category with URL query param
+  useEffect(() => {
+    if (paramCategory) {
+      const match = categoriesList.find(
+        (c) =>
+          c.slug.toLowerCase() === paramCategory.toLowerCase() ||
+          c.name.toLowerCase() === paramCategory.toLowerCase()
+      );
+      if (match) {
+        setSelectedCategory(match.name);
+      }
+    } else {
+      setSelectedCategory("All");
+    }
+  }, [paramCategory, categoriesList]);
+
+  const handleSelectCategory = (catName: string, catSlug?: string) => {
+    setSelectedCategory(catName);
+    const params = new URLSearchParams(searchParams.toString());
+    if (catName === "All" || !catSlug) {
+      params.delete("category");
+    } else {
+      params.set("category", catSlug);
+    }
+    const query = params.toString();
+    router.replace(`/projects${query ? `?${query}` : ""}`, { scroll: false });
+  };
 
   const filteredProjects =
     selectedCategory === "All"
-      ? allProjects
-      : allProjects.filter((p) => p.category === selectedCategory);
+      ? projectCards
+      : projectCards.filter(
+          (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
 
   return (
-    <section className="relative w-full pt-12 md:pt-16 px-4 md:px-8 overflow-hidden">
-      <div className="max-w-345 mx-auto relative">
-        <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48">
-          <Image
-            src="/shapes/project-shape.svg"
-            alt="hero-shape"
-            className="object-contain "
-            fill
-          />
-        </div>
+    <section className="relative w-full pt-8 md:pt-12 px-4 md:px-8 overflow-hidden">
+      <div className="max-w-345 mx-auto relative space-y-12">
+        <PageHeader
+          tag="OUR WORK & PROJECTS"
+          title={
+            <>
+              Solutions Built For
+              <br />
+              Forward-Thinking Teams.
+            </>
+          }
+          description="Explore our enterprise platforms, AI workflow agents, and high-performance applications engineered for institutions worldwide."
+        />
 
-        {/* Section Header Tag */}
-        <div className="mb-6">
-          <div className="inline-flex gap-2.5 items-center bg-white px-2.5 py-1">
-            <div className="bg-[#98ff03] size-4 shrink-0" />
-            <span className="font-space font-normal text-base md:text-lg text-black uppercase tracking-wider whitespace-nowrap">
-              OUR WORK & PROJECTS
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 lg:mb-16">
-          <h2 className="lg:col-span-6 font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black tracking-tight">
-            SOLUTIONS WE BUILT FOR
-            <br />
-            FORWARD-THINKING TEAMS.
-          </h2>
-        </div>
-        {/* Pill Category Filter */}
+        {/* Dynamic Pill Category Filter with Live Counts & URL Sync */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-12">
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat;
+          {/* ALL Pill */}
+          <button
+            type="button"
+            onClick={() => handleSelectCategory("All")}
+            className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+              selectedCategory === "All"
+                ? "bg-[#292c2e] text-white shadow-md border border-[#292c2e] dark:bg-[#98ff03] dark:text-[#161819] dark:border-[#98ff03]"
+                : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-transparent dark:border-white/10"
+            }`}
+          >
+            <span>All</span>
+            <span
+              className={`text-[11px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                selectedCategory === "All"
+                  ? "bg-white/20 dark:bg-black/20 text-white dark:text-[#161819]"
+                  : "bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400"
+              }`}
+            >
+              {projectCards.length}
+            </span>
+          </button>
+
+          {/* Dynamic Category Pills */}
+          {categoriesList.map((cat) => {
+            const isActive = selectedCategory.toLowerCase() === cat.name.toLowerCase();
             return (
               <button
-                key={cat}
+                key={cat.id}
                 type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                onClick={() => handleSelectCategory(cat.name, cat.slug)}
+                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   isActive
-                    ? "bg-[#292c2e] text-white shadow-md border border-[#292c2e]"
-                    : "bg-[#f3f4f6] text-[#292c2e] hover:bg-zinc-200 border border-transparent"
+                    ? "bg-[#292c2e] text-white shadow-md border border-[#292c2e] dark:bg-[#98ff03] dark:text-[#161819] dark:border-[#98ff03]"
+                    : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-transparent dark:border-white/10"
                 }`}
               >
-                {cat}
+                <span>{cat.name}</span>
+                <span
+                  className={`text-[11px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                    isActive
+                      ? "bg-white/20 dark:bg-black/20 text-white dark:text-[#161819]"
+                      : "bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400"
+                  }`}
+                >
+                  {cat.count}
+                </span>
               </button>
             );
           })}
@@ -146,9 +247,32 @@ export function ProjectsSection() {
           {filteredProjects.map((project) => (
             <ProjectCard key={project.id} {...project} />
           ))}
+
+          {filteredProjects.length === 0 && (
+            <div className="col-span-full py-16 text-center border border-dashed border-zinc-300 dark:border-white/10 rounded-[4px]">
+              <p className="font-space text-sm uppercase text-zinc-500 dark:text-zinc-400">
+                No projects found in this category yet.
+              </p>
+              <button
+                type="button"
+                onClick={() => handleSelectCategory("All")}
+                className="mt-3 text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e] dark:text-[#98ff03] hover:underline cursor-pointer"
+              >
+                Show all projects
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+export function ProjectsSection(props: ProjectsSectionProps) {
+  return (
+    <Suspense fallback={<div className="w-full py-20 text-center text-xs font-mono">Loading projects...</div>}>
+      <ProjectsContent {...props} />
+    </Suspense>
   );
 }
 

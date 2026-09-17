@@ -3,9 +3,9 @@ import ContactSectionWhite from "@/components/sections/ContactSectionWhite";
 import Faq from "@/components/sections/Faq";
 
 export const metadata = {
-  title: "Contact Us | Motion Digitals",
+  title: "Contact Us | Matii Digitals",
   description:
-    "Get in touch with Motion Digitals. Let's discuss your next digital product, software engineering, or AI automation project.",
+    "Get in touch with Matii Digitals. Let's discuss your next digital product, software engineering, or AI automation project.",
 };
 
 export default function ContactPage() {

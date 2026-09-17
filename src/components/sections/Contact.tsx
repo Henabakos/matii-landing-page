@@ -14,10 +14,10 @@ export function Contact() {
 
             <div className="flex flex-col gap-4 font-space font-bold text-2xl sm:text-3xl lg:text-[36px] leading-tight text-white tracking-tight">
               <a
-                href="mailto:contact@motiondigitals.com"
+                href="mailto:contact@Matiidigitals.com"
                 className="hover:text-[#98ff03] transition-colors break-all"
               >
-                contact@motiondigitals.com
+                contact@Matiidigitals.com
               </a>
               <a
                 href="tel:+251945014531"

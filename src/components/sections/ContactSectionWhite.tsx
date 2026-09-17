@@ -12,23 +12,18 @@ export function ContactSectionWhite() {
           <div className="lg:col-span-5 flex flex-col justify-between gap-8 h-full">
             <div className="flex flex-col gap-6">
               <div>
-                <div className="inline-flex gap-2.5 items-center bg-white px-2.5 py-1 border border-[#AEAEAE]/20">
+                <div className="inline-flex gap-2.5 items-center bg-white dark:bg-[#161819] px-2.5 py-1 border border-[#AEAEAE]/20 dark:border-white/10">
                   <div className="bg-[#98ff03] size-4 shrink-0" />
-                  <span className="font-space font-normal text-base md:text-lg text-black uppercase tracking-wider whitespace-nowrap">
+                  <span className="font-space font-normal text-base md:text-lg text-black dark:text-white uppercase tracking-wider whitespace-nowrap">
                     Contact
                   </span>
                 </div>
               </div>
 
               <div className="flex flex-col gap-4">
-                <h2 className="font-inter font-bold text-3xl sm:text-4xl text-black uppercase tracking-tight">
+                <h2 className="font-inter font-bold text-3xl sm:text-4xl text-black dark:text-white uppercase tracking-tight">
                   LET&apos;S TALK ABOUT YOUR NEXT BIG IDEA.
                 </h2>
-                {/* <p className="font-inter text-base text-[#555] leading-relaxed">
-                  Whether you need a full digital product design, backend
-                  architecture, or custom AI agent automation, we are ready to
-                  partner with you.
-                </p> */}
               </div>
             </div>
 
@@ -36,46 +31,46 @@ export function ContactSectionWhite() {
             <div className="flex flex-col gap-4">
               {/* Email Card */}
               <a
-                href="mailto:contact@motiondigitals.com"
-                className="group border border-[#AEAEAE]/40 p-6 bg-white flex items-center justify-between relative"
+                href="mailto:contact@Matiidigitals.com"
+                className="group border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex items-center justify-between relative hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors"
               >
                 <div className="flex flex-col gap-1">
-                  <span className="font-space text-xs text-[#797F8B] uppercase tracking-wider">
+                  <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
                     // Direct Email
                   </span>
-                  <span className="font-inter font-semibold text-lg text-black">
-                    contact@motiondigitals.com
+                  <span className="font-inter font-semibold text-lg text-black dark:text-white">
+                    contact@Matiidigitals.com
                   </span>
                 </div>
-                <div className="size-8 bg-[#f3f4f6] rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
-                  <span className="text-[#292c2e] font-bold">→</span>
+                <div className="size-8 bg-[#f3f4f6] dark:bg-white/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
+                  <span className="text-[#292c2e] dark:text-[#98ff03] font-bold">→</span>
                 </div>
               </a>
 
               {/* Phone Card */}
               <a
                 href="tel:+251945014531"
-                className="group border border-[#AEAEAE]/40 p-6 bg-white flex items-center justify-between relative"
+                className="group border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex items-center justify-between relative hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors"
               >
                 <div className="flex flex-col gap-1">
-                  <span className="font-space text-xs text-[#797F8B] uppercase tracking-wider">
+                  <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
                     // Phone / WhatsApp
                   </span>
-                  <span className="font-inter font-semibold text-lg text-black">
+                  <span className="font-inter font-semibold text-lg text-black dark:text-white">
                     +(251)-945-014-531
                   </span>
                 </div>
-                <div className="size-8 bg-[#f3f4f6] rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
-                  <span className="text-[#292c2e] font-bold">→</span>
+                <div className="size-8 bg-[#f3f4f6] dark:bg-white/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
+                  <span className="text-[#292c2e] dark:text-[#98ff03] font-bold">→</span>
                 </div>
               </a>
 
               {/* Office Location */}
-              <div className="border border-[#AEAEAE]/40 p-6 bg-white flex flex-col gap-1 relative">
-                <span className="font-space text-xs text-[#797F8B] uppercase tracking-wider">
+              <div className="border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex flex-col gap-1 relative">
+                <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
                   // Headquarter Location
                 </span>
-                <span className="font-inter font-semibold text-base text-black">
+                <span className="font-inter font-semibold text-base text-black dark:text-white">
                   Addis Ababa, Ethiopia
                 </span>
               </div>

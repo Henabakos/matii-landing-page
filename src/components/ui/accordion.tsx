@@ -99,8 +99,8 @@ export function AccordionItem({
     <AccordionItemContext.Provider value={{ value, isOpen }}>
       <div
         className={cn(
-          "relative bg-[#f3f4f6] border border-[rgba(174,174,174,0.3)] shadow-sm overflow-hidden transition-colors duration-200",
-          isOpen && "border-[#98ff03]",
+          "relative bg-[#f3f4f6] dark:bg-white/5 border border-[rgba(174,174,174,0.3)] dark:border-white/10 shadow-sm overflow-hidden transition-colors duration-200",
+          isOpen && "border-[#98ff03] dark:border-[#98ff03]",
           className,
         )}
         {...props}
@@ -125,7 +125,7 @@ export function AccordionTrigger({
       onClick={() => onValueChange?.(value)}
       aria-expanded={isOpen}
       className={cn(
-        "flex w-full items-center justify-between p-5 md:p-6 text-left font-inter font-semibold text-lg md:text-[20px] text-[#292c2e] transition-all hover:opacity-90 cursor-pointer",
+        "flex w-full items-center justify-between p-5 md:p-6 text-left font-urbanist font-medium text-lg md:text-[20px] text-[#292c2e] dark:text-white transition-all hover:opacity-90 cursor-pointer",
         className,
       )}
       {...props}
@@ -134,7 +134,7 @@ export function AccordionTrigger({
       {/* Dark Square Icon Badge matching template Frame73 & Frame77 */}
       <div
         className={cn(
-          "bg-[#292c2e] size-9 md:size-10 rounded-[6px] shrink-0 flex items-center justify-center p-2 text-[#98ff03] shadow-sm ml-4 transition-transform duration-300",
+          "bg-[#292c2e] dark:bg-[#222527] dark:border dark:border-white/10 size-9 md:size-10 rounded-[6px] shrink-0 flex items-center justify-center p-2 text-[#98ff03] shadow-sm ml-4 transition-transform duration-300",
           isOpen && "rotate-45",
         )}
       >
@@ -164,7 +164,7 @@ export function AccordionContent({
       <div className="overflow-hidden">
         <div
           className={cn(
-            "px-5 md:px-6 pb-6 pt-0 font-inter font-normal text-sm md:text-base text-[#797f8b] leading-relaxed",
+            "px-5 md:px-6 pb-6 pt-0 font-inter font-normal text-sm md:text-base text-[#797f8b] dark:text-zinc-400 leading-relaxed transition-colors",
             className,
           )}
         >

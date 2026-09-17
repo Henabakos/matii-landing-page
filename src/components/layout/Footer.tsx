@@ -2,6 +2,7 @@
 
 import svgPaths from "@/lib/svgPaths";
 import Image from "next/image";
+import Link from "next/link";
 import ContactForm from "../sections/contact/ContactForm";
 
 export function Footer() {
@@ -14,47 +15,61 @@ export function Footer() {
 
   return (
     <footer className="relative w-full">
-      <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] flex flex-col justify-between min-h-[300px] md:min-h-[400px]">
+      <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white/40 dark:bg-[#161819]/60 flex flex-col justify-between min-h-[300px] md:min-h-[400px] transition-colors duration-200">
         {/* Top Nav Links Row */}
-        <div className="border-b border-[rgba(174,174,174,0.3)]">
-          <nav className="flex flex-wrap justify-between items-center w-full gap-6 md:gap-12 p-16">
-            <a
-              href="#about"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
+        <div className="border-b border-[rgba(174,174,174,0.3)] dark:border-white/10">
+          <nav className="flex flex-wrap justify-between items-center w-full gap-6 md:gap-8 p-8 md:p-14">
+            <Link
+              href="/about"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
               <span>About us</span>
-            </a>
-            <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
-            <a
-              href="#blogs"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
+            </Link>
+            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
+            <Link
+              href="/projects"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>Blogs</span>
-            </a>
-            <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
-            <a
-              href="#services"
-              className="flex items-center gap-6 text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
+              <span>Projects</span>
+            </Link>
+            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
+            <Link
+              href="/services"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
               <span>Services</span>
-            </a>
-            <div className="hidden sm:block bg-[#292c2e] size-2 rounded-full" />
-            <a
-              href="#work"
-              className="text-[#292c2e] hover:text-[#98ff03] transition-colors font-space font-medium text-lg tracking-widest uppercase"
+            </Link>
+            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
+            <Link
+              href="/blog"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>Work examples</span>
-            </a>
+              <span>Blog</span>
+            </Link>
+            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
+            <Link
+              href="/news"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
+            >
+              <span>News</span>
+            </Link>
+            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
+            <Link
+              href="/careers"
+              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
+            >
+              <span>Careers</span>
+            </Link>
           </nav>
         </div>
 
         <div className="w-full relative h-[460px]">
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 left-0  z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 top-0 right-0  z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 top-0 left-0  z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 right-0 z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0  z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0  z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0  z-10" />
 
-          <div className="hidden md:block absolute top-0 left-0 w-32 h-26 lg:w-56 lg:h-48">
+          <div className="hidden md:block absolute top-0 left-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
             <Image
               src="/shapes/footer-shape.svg"
               alt="hero-shape"
@@ -63,7 +78,7 @@ export function Footer() {
             />
           </div>
 
-          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-26 lg:w-56 lg:h-48">
+          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
             <Image
               src="/shapes/footer-shape.svg"
               alt="hero-shape"
@@ -73,16 +88,16 @@ export function Footer() {
           </div>
         </div>
         {/* Bottom Bar (Socials, Copyright, Back to Top) */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 p-8 border-t">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 p-8 border-t border-[rgba(174,174,174,0.3)] dark:border-white/10">
           {/* Social Channels & Copyright */}
-          <div className="flex flex-wrap items-center gap-8 md:gap-12 text-[#292c2e]">
+          <div className="flex flex-wrap items-center gap-8 md:gap-12 text-[#292c2e] dark:text-zinc-300">
             {/* Social Channels */}
             <div className="flex items-center gap-6 font-inter font-medium text-base capitalize">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-black/60 transition-colors"
+                className="hover:text-black/60 dark:hover:text-white transition-colors"
               >
                 instagram
               </a>
@@ -90,7 +105,7 @@ export function Footer() {
                 href="https://t.me"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-black/60 transition-colors"
+                className="hover:text-black/60 dark:hover:text-white transition-colors"
               >
                 Telegram
               </a>
@@ -98,7 +113,7 @@ export function Footer() {
                 href="https://tiktok.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-black/60 transition-colors"
+                className="hover:text-black/60 dark:hover:text-white transition-colors"
               >
                 tiktok
               </a>
@@ -106,14 +121,14 @@ export function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-black/60 transition-colors"
+                className="hover:text-black/60 dark:hover:text-white transition-colors"
               >
                 youtube
               </a>
             </div>
 
             {/* Copyright */}
-            <div className="flex items-center gap-2 font-inter font-medium text-sm md:text-base text-[#444445]/70">
+            <div className="flex items-center gap-2 font-inter font-medium text-sm md:text-base text-[#444445]/70 dark:text-zinc-400">
               <div className="size-4 relative shrink-0">
                 <svg
                   className="block size-full"
@@ -122,19 +137,20 @@ export function Footer() {
                 >
                   <path
                     d={svgPaths.pbaf2440}
-                    fill="#444445"
+                    fill="currentColor"
+                    className="text-[#444445] dark:text-zinc-400"
                     fillOpacity="0.7"
                   />
                 </svg>
               </div>
-              <span>2026 Motions. All Rights Reserved</span>
+              <span>2026 Matiis. All Rights Reserved</span>
             </div>
           </div>
 
           {/* Back To Top Button */}
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-3 font-inter font-medium text-base md:text-lg text-[#292c2e] hover:text-[#98ff03] transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-3 font-inter font-medium text-base md:text-lg text-[#292c2e] dark:text-zinc-200 hover:text-[#98ff03] dark:hover:text-[#98ff03] transition-colors group cursor-pointer"
           >
             <span>
               Back <span className="lowercase">to top</span>

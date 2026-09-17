@@ -60,7 +60,7 @@ export function ContactFormWhite() {
 
   const onSubmit = (data: ContactFormValues) => {
     alert(
-      `Thank you, ${data.name}! Your message has been sent to Motion Digitals.`
+      `Thank you, ${data.name}! Your message has been sent to Matii Digitals.`
     );
     reset();
     setFile(null);
@@ -69,28 +69,27 @@ export function ContactFormWhite() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full h-full bg-white border border-[#AEAEAE]/40 p-8 md:p-12 flex flex-col justify-between gap-8 relative"
+      className="w-full h-full bg-white dark:bg-[#161819] border border-[#AEAEAE]/40 dark:border-white/10 p-8 md:p-12 flex flex-col justify-between gap-8 relative"
     >
-      <h3 className="font-space font-bold text-xl md:text-2xl text-black uppercase tracking-tight">
+      <h3 className="font-space font-bold text-xl md:text-2xl text-black dark:text-white uppercase tracking-tight">
         Send Us A Message
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Field 1: Name */}
         <div className="flex flex-col gap-2">
-          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] uppercase tracking-wide">
+          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
             Full Name *
           </label>
           <div
-            className={`border-b pb-2 transition-colors ${
-              errors.name ? "border-red-500" : "border-[#AEAEAE]"
-            }`}
+            className={`border-b pb-2 transition-colors ${errors.name ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
+              }`}
           >
             <input
               type="text"
               {...register("name")}
               placeholder="e.g. John Doe"
-              className="w-full bg-transparent font-inter text-sm md:text-base text-black placeholder-[#999] focus:outline-none"
+              className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
           {errors.name && (
@@ -102,19 +101,18 @@ export function ContactFormWhite() {
 
         {/* Field 2: Email */}
         <div className="flex flex-col gap-2">
-          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] uppercase tracking-wide">
+          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
             Email Address *
           </label>
           <div
-            className={`border-b pb-2 transition-colors ${
-              errors.email ? "border-red-500" : "border-[#AEAEAE]"
-            }`}
+            className={`border-b pb-2 transition-colors ${errors.email ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
+              }`}
           >
             <input
               type="email"
               {...register("email")}
               placeholder="e.g. john@example.com"
-              className="w-full bg-transparent font-inter text-sm md:text-base text-black placeholder-[#999] focus:outline-none"
+              className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
           {errors.email && (
@@ -128,19 +126,18 @@ export function ContactFormWhite() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Field 3: Phone */}
         <div className="flex flex-col gap-2">
-          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] uppercase tracking-wide">
+          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
             Phone Number
           </label>
           <div
-            className={`border-b pb-2 transition-colors ${
-              errors.phone ? "border-red-500" : "border-[#AEAEAE]"
-            }`}
+            className={`border-b pb-2 transition-colors ${errors.phone ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
+              }`}
           >
             <input
               type="tel"
               {...register("phone")}
               placeholder="e.g. +1 (555) 000-0000"
-              className="w-full bg-transparent font-inter text-sm md:text-base text-black placeholder-[#999] focus:outline-none"
+              className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
           {errors.phone && (
@@ -152,25 +149,24 @@ export function ContactFormWhite() {
 
         {/* Field 4: Service Interested In */}
         <div className="flex flex-col gap-2">
-          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] uppercase tracking-wide">
+          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
             Interested Service
           </label>
           <div
-            className={`border-b pb-2 transition-colors ${
-              errors.service ? "border-red-500" : "border-[#AEAEAE]"
-            }`}
+            className={`border-b pb-2 transition-colors ${errors.service ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
+              }`}
           >
             <select
               {...register("service")}
-              className="w-full bg-transparent font-inter text-sm md:text-base text-black focus:outline-none cursor-pointer"
+              className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white focus:outline-none cursor-pointer"
             >
-              <option value="Digital Products">Digital Products</option>
-              <option value="Full-Stack Development">
+              <option value="Digital Products" className="dark:bg-[#161819] dark:text-white">Digital Products</option>
+              <option value="Full-Stack Development" className="dark:bg-[#161819] dark:text-white">
                 Full-Stack Development
               </option>
-              <option value="AI Automation">AI Automation</option>
-              <option value="Mobile Development">Mobile Development</option>
-              <option value="Other">Other Inquiry</option>
+              <option value="AI Automation" className="dark:bg-[#161819] dark:text-white">AI Automation</option>
+              <option value="Mobile Development" className="dark:bg-[#161819] dark:text-white">Mobile Development</option>
+              <option value="Other" className="dark:bg-[#161819] dark:text-white">Other Inquiry</option>
             </select>
           </div>
           {errors.service && (
@@ -183,19 +179,18 @@ export function ContactFormWhite() {
 
       {/* Field 5: Message */}
       <div className="flex flex-col gap-2">
-        <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] uppercase tracking-wide">
+        <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
           Tell us about your project *
         </label>
         <div
-          className={`border-b pb-2 transition-colors ${
-            errors.message ? "border-red-500" : "border-[#AEAEAE]"
-          }`}
+          className={`border-b pb-2 transition-colors ${errors.message ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
+            }`}
         >
           <textarea
             rows={4}
             {...register("message")}
             placeholder="Briefly describe your project, goals, or scope..."
-            className="w-full bg-transparent font-inter text-sm md:text-base text-black placeholder-[#999] focus:outline-none resize-none"
+            className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none resize-none"
           />
         </div>
         {errors.message && (
@@ -216,9 +211,9 @@ export function ContactFormWhite() {
         <button
           type="button"
           onClick={handleAttachmentClick}
-          className="inline-flex items-center gap-2.5 text-[#292c2e] hover:text-[#98ff03] transition-colors cursor-pointer group"
+          className="inline-flex items-center gap-2.5 text-[#292c2e] dark:text-zinc-300 hover:text-[#98ff03] dark:hover:text-[#98ff03] transition-colors cursor-pointer group"
         >
-          <div className="size-6 relative shrink-0 p-1 bg-[#292c2e] group-hover:bg-[#98ff03] rounded-xs transition-colors">
+          <div className="size-6 relative shrink-0 p-1 bg-[#292c2e] dark:bg-white/10 group-hover:bg-[#98ff03] dark:group-hover:bg-[#98ff03] rounded-xs transition-colors">
             <svg className="block size-full" fill="none" viewBox="0 0 24 24">
               <path
                 d={svgPaths.p8e11300}
@@ -227,7 +222,7 @@ export function ContactFormWhite() {
               />
             </svg>
           </div>
-          <span className="font-inter font-medium text-sm text-[#292c2e]">
+          <span className="font-inter font-medium text-sm text-[#292c2e] dark:text-zinc-300">
             {file ? `Attached: ${file.name}` : "Attach Project Brief / Specs"}
           </span>
         </button>
@@ -235,15 +230,16 @@ export function ContactFormWhite() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-[#292c2e] hover:bg-[#1a1c1d] disabled:opacity-50 text-white font-inter font-medium text-sm md:text-base px-8 py-3.5 rounded-[12px] shadow-md inline-flex items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+          className="bg-[#292c2e] hover:bg-[#1a1c1d] dark:bg-[#98ff03] dark:hover:bg-[#86e200] disabled:opacity-50 text-white dark:text-[#161819] font-inter font-medium text-sm md:text-base px-8 py-3.5 rounded-[12px] shadow-md inline-flex items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer active:scale-[0.98]"
         >
           <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
-          <div className="bg-[#98ff03] p-1.5 rounded-[4px] flex items-center justify-center">
+          <div className="bg-[#98ff03] dark:bg-[#161819] p-1.5 rounded-[4px] flex items-center justify-center">
             <svg className="size-4" fill="none" viewBox="0 0 24 24">
               <path
                 clipRule="evenodd"
                 d={svgPaths.p127c5100}
-                fill="#292C2E"
+                fill="currentColor"
+                className="text-[#292C2E] dark:text-[#98ff03]"
                 fillRule="evenodd"
               />
             </svg>

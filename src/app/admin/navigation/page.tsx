@@ -1,0 +1,12 @@
+import React from "react";
+import { getAllNavMenus } from "@/lib/services/navigation.service";
+import NavigationClientManager from "./NavigationClientManager";
+
+export const metadata = {
+  title: "Navigation & Mega Menus | Matii CMS",
+};
+
+export default async function AdminNavigationPage() {
+  const menus = await getAllNavMenus();
+  return <NavigationClientManager initialMenus={menus} />;
+}

@@ -5,78 +5,82 @@ import ServiceCard from "./services/ServiceCard";
 
 export function Services() {
   return (
-    <section className="relative w-full ">
-      <div className="relative max-w-[1380px] mx-auto py-16 flex flex-col items-center bg-white border-b border-[#AEAEAE]/40">
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px] z-10" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px] z-10" />
+    <section className="relative w-full">
+      <div className="relative max-w-[1380px] mx-auto py-16 flex flex-col items-center bg-white dark:bg-[#161819] border-b border-[#AEAEAE]/40 dark:border-white/10 transition-colors duration-200">
+        <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px] z-10 transition-colors duration-200" />
+        <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px] z-10 transition-colors duration-200" />
         {/* Top Tag Badge */}
         <div className="mb-6">
           <ServicesTag />
         </div>
 
-        {/* Main Section Headline */}
-        <h2 className="font-inter font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black text-center uppercase tracking-tight mb-12 md:mb-16">
+        {/* Main Section Headline - Subheadline: Urbanist Medium */}
+        <h2 className="font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black dark:text-white text-center uppercase tracking-tight mb-12 md:mb-16 transition-colors">
           IDEAS DON&apos;T STAY STILL.
         </h2>
 
         {/* Services 4-Column Grid */}
-        <div className="relative">
-          <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px] z-10" />
-          <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px] z-10" />
-          <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px] z-10" />
-          <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px] z-10" />
+        <div className="relative w-full">
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px] z-10 transition-colors duration-200" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px] z-10 transition-colors duration-200" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px] z-10 transition-colors duration-200" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px] z-10 transition-colors duration-200" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full bg-orange-500">
-            {/* Card 01 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
+            {/* Card 01 - Enterprise Software */}
             <ServiceCard
               index="01"
-              title="DIGITAL PRODUCTS"
-              description="We design and build intuitive, user-centered digital products that deliver real business impact."
+              title="ENTERPRISE SOFTWARE"
+              description="Mission-critical platforms, core banking systems, and robust ERP architectures built for scale, resilience, and institutional compliance."
               items={[
-                "Product Strategy",
-                "UI/UX Design",
-                "SaaS Platforms",
-                "MVP Development",
+                "Core Banking & Fintech",
+                "Enterprise ERP Systems",
+                "Custom System Architecture",
+                "Secure API & Integrations",
               ]}
+              bgImage="/images/enterprise-software.jpg"
             />
 
-            {/* Card 02 */}
+            {/* Card 02 - BPO */}
             <ServiceCard
               index="02"
-              title="FULL-STACK DEVELOPMENT"
-              description="Robust, scalable web and system engineering designed for performance, speed, and security."
+              title="BPO SOLUTIONS"
+              description="High-efficiency business process outsourcing, dedicated tech-enabled back-office operations, and 24/7 multilingual customer support."
               items={[
-                "Frontend Development",
-                "Backend Development",
-                "Cloud & DevOps",
-                "System Integrations",
+                "Customer Experience & CX",
+                "Back-Office Operations",
+                "Data Processing & Annotation",
+                "Dedicated Talent Teams",
               ]}
+              bgImage="/images/bpo-solutions.jpg"
             />
 
-            {/* Card 03 */}
+            {/* Card 03 - AI & Data Platform */}
             <ServiceCard
               index="03"
-              title="AI AUTOMATION"
-              description="We use intelligent technology to simplify workflows, automate repetitive tasks, and create smarter ways to work."
+              title="AI & DATA PLATFORM"
+              description="Enterprise AI pipelines, automated intelligent agents, and centralized data architectures transforming telemetry into decisive action."
               items={[
-                "Workflow Automation",
-                "Custom AI Agents",
-                "Process Optimization",
-                "Smart Systems Integrations",
+                "Data Warehousing & ETL",
+                "Predictive Analytics & BI",
+                "Custom LLM & AI Agents",
+                "Intelligent Automation",
               ]}
+              bgImage="/images/ai-data-platform.jpg"
             />
 
-            {/* Card 04 */}
+            {/* Card 04 - Managed Cloud Services */}
             <ServiceCard
               index="04"
-              title="MOBILE DEVELOPMENT"
-              description="High-performance iOS and Android mobile apps crafted to engage users and scale effortlessly."
+              title="MANAGED CLOUD SERVICES"
+              description="End-to-end cloud infrastructure management, 24/7 SRE monitoring, automated CI/CD pipelines, and high-availability disaster recovery."
               items={[
-                "iOS Applications",
-                "Android Applications",
-                "Mobile MVPs",
-                "App Maintenance & Scaling",
+                "Cloud Migration & Architecture",
+                "24/7 SRE & Monitoring",
+                "DevOps & CI/CD Pipelines",
+                "Security & Compliance Audits",
               ]}
+              bgImage="/images/ai-automation.png"
             />
           </div>
         </div>

@@ -7,63 +7,22 @@ import { row1Tools, row2Tools, row3Tools } from "@/data/techStack";
 export function ToolsWeUse() {
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Custom Marquee Keyframe Animations */}
-      <style jsx>{`
-        @keyframes marqueeLeft {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        @keyframes marqueeRight {
-          0% {
-            transform: translateX(-50%);
-          }
-          100% {
-            transform: translateX(0%);
-          }
-        }
-
-        .animate-slide-left {
-          display: flex;
-          width: max-content;
-          animation: marqueeLeft 28s linear infinite;
-        }
-
-        .animate-slide-left:hover {
-          animation-play-state: paused;
-        }
-
-        .animate-slide-right {
-          display: flex;
-          width: max-content;
-          animation: marqueeRight 28s linear infinite;
-        }
-
-        .animate-slide-right:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
-      <div className="max-w-345 mx-auto py-6 md:py-12 relative bg-white overflow-hidden">
+      <div className="max-w-345 mx-auto py-6 md:py-12 relative bg-white dark:bg-transparent overflow-hidden transition-colors">
         {/* Top Section Tag Badge */}
         <div className="flex justify-center mb-8">
           <ToolsTag />
         </div>
 
         {/* 2-Column Section Layout matching @tools-we-use design system */}
-        <div className="relative w-full bg-white border border-[rgba(174,174,174,0.4)] overflow-hidden grid grid-cols-1 lg:grid-cols-12">
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 bottom-0 left-0 z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 top-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] size-1.5 top-0 left-0 z-10" />
+        <div className="relative w-full bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.4)] dark:border-white/10 overflow-hidden grid grid-cols-1 lg:grid-cols-12 transition-colors">
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 right-0 z-10 transition-colors" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0 z-10 transition-colors" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0 z-10 transition-colors" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0 z-10 transition-colors" />
 
           {/* Left Column: Smaller column containing text */}
-          <div className="lg:col-span-4 p-8 md:p-12 flex items-center justify-start border-b lg:border-b-0 lg:border-r border-[rgba(174,174,174,0.3)]">
-            <h2 className="font-inter font-medium text-3xl sm:text-4xl text-[#292c2e] leading-tight tracking-tight lowercase max-w-sm">
+          <div className="lg:col-span-4 p-8 md:p-12 flex items-center justify-start border-b lg:border-b-0 lg:border-r border-[rgba(174,174,174,0.3)] dark:border-white/10">
+            <h2 className="font-inter font-medium text-3xl sm:text-4xl text-[#292c2e] dark:text-white leading-tight tracking-tight lowercase max-w-sm transition-colors">
               tools we use to help your business
             </h2>
           </div>

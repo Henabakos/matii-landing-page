@@ -6,40 +6,28 @@ import { Code2, Layers, Cpu, Zap, Sparkles, Rocket } from 'lucide-react'
 export function AboutServicesGrid() {
 	const services = [
 		{
-			title: 'Custom Software Development',
-			desc: 'End-to-end engineered software solutions tailored specifically to your business workflows and scale requirements.',
-			tags: ['TypeScript', 'Full-stack', 'Microservices'],
+			title: 'Enterprise Software',
+			desc: 'Mission-critical enterprise platforms, core banking systems, and robust ERP architectures built for security, resilience, and scale.',
+			tags: ['Core Banking', 'ERP Systems', 'Microservices', 'Fintech'],
 			icon: Code2,
 		},
 		{
-			title: 'Web & Cloud Applications',
-			desc: 'Lightning-fast, accessible web platforms crafted with React, Next.js, and serverless edge backends.',
-			tags: ['React', 'Next.js', 'Tailwind CSS'],
+			title: 'BPO Solutions',
+			desc: 'Tech-enabled business process outsourcing, dedicated back-office operations, and 24/7 multilingual customer support teams.',
+			tags: ['Customer Experience', 'Back-Office Ops', 'Data Processing', 'Global Talent'],
 			icon: Layers,
 		},
 		{
-			title: 'AI Integration & Automation',
-			desc: 'Embed intelligent LLMs, custom agents, RAG workflows, and smart automation directly into your software.',
-			tags: ['Gemini API', 'OpenAI', 'Python', 'LangChain'],
+			title: 'AI & Data Platform',
+			desc: 'Centralized data pipelines, predictive intelligence, enterprise LLM agents, and automated smart workflows.',
+			tags: ['Data Pipelines', 'AI Agents', 'ETL', 'Analytics'],
 			icon: Cpu,
 		},
 		{
-			title: 'Cloud Solutions & DevOps',
-			desc: 'Scalable infrastructure design, automated CI/CD pipelines, containerization, and 99.99% reliability setup.',
-			tags: ['AWS', 'Docker', 'Kubernetes', 'CI/CD'],
+			title: 'Managed Cloud Services',
+			desc: 'High-availability cloud architecture, 24/7 SRE monitoring, automated CI/CD pipelines, and enterprise security compliance.',
+			tags: ['Cloud Ops', '24/7 SRE', 'DevOps CI/CD', 'Security Audits'],
 			icon: Zap,
-		},
-		{
-			title: 'UI/UX Design & Prototyping',
-			desc: 'User-centered visual systems, interactive prototypes, and accessible design tokens built for real human use.',
-			tags: ['Figma', 'Design Systems', 'User Research'],
-			icon: Sparkles,
-		},
-		{
-			title: 'Product Architecture & MVPs',
-			desc: 'Rapid product strategy, proof-of-concepts, and scalable foundations designed for fast time-to-market.',
-			tags: ['MVP Sprint', 'Scalable Schema', 'Postgres'],
-			icon: Rocket,
 		},
 	]
 
@@ -55,7 +43,7 @@ export function AboutServicesGrid() {
 				</h2>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 				{services.map((service, index) => {
 					const SIcon = service.icon
 					return (
