@@ -68,7 +68,10 @@ interface SolutionsWeBuiltProps {
   projects?: ParsedProject[];
 }
 
+import { useTranslations } from "next-intl";
+
 export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
+  const t = useTranslations("solutions");
   const plugin = React.useRef(
     Autoplay({ delay: 6000, stopOnInteraction: true }),
   );
@@ -108,11 +111,10 @@ export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
         {/* Headline and Description Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 lg:mb-16">
           <h2 className="lg:col-span-6 font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black dark:text-white tracking-tight transition-colors">
-            Understanding Needs.
-            <br /> Driving Progress.
+            {t("heading")}
           </h2>
           <p className="lg:col-span-6 font-urbanist font-normal text-base md:text-[18px] leading-[1.4] text-[#444445] dark:text-zinc-300 lg:pt-2 transition-colors">
-            We understand your priorities and challenges, then build practical solutions that create measurable impact and lasting progress.
+            {t("desc")}
           </p>
         </div>
 
@@ -125,10 +127,10 @@ export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
           }}
           className="w-full relative"
         >
-          <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 z-10 dark:opacity-80">
+          <div className="hidden md:block absolute -top-1 left-0 w-32 h-24 lg:w-56 lg:h-48 z-10 dark:opacity-80" style={{ position: "absolute" }}>
             <Image
               src="/shapes/solution-shape.svg"
-              alt="hero-shape"
+              alt="solution-shape"
               className="object-contain"
               fill
             />

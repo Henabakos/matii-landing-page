@@ -115,24 +115,24 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="relative bg-white border border-zinc-200/80 p-6 sm:p-8 shadow-sm">
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px]" />
+      <div className="relative bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-6 sm:p-8 shadow-sm">
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -right-[3px]" />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex gap-2 items-center bg-[#f3f4f6] px-2.5 py-0.5 border border-zinc-200 rounded-[2px] mb-3">
+            <div className="inline-flex gap-2 items-center bg-[#f3f4f6] dark:bg-white/10 px-2.5 py-0.5 border border-zinc-200 dark:border-white/10 rounded-[2px] mb-3">
               <div className="bg-[#98ff03] size-2.5 shrink-0" />
-              <span className="font-space font-semibold text-[11px] text-black uppercase tracking-wider">
+              <span className="font-space font-semibold text-[11px] text-black dark:text-zinc-200 uppercase tracking-wider">
                 CONTROL CENTER
               </span>
             </div>
-            <h2 className="font-space font-medium text-2xl sm:text-3xl text-[#292c2e] tracking-tight">
+            <h2 className="font-space font-medium text-2xl sm:text-3xl text-[#292c2e] dark:text-white tracking-tight">
               Matii Digital Studio CMS
             </h2>
-            <p className="font-inter text-xs sm:text-sm text-zinc-500 mt-1">
+            <p className="font-inter text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
               Live content updates instantly purge Next.js cached tags and update
               the public site without code deployments.
             </p>
@@ -141,14 +141,14 @@ export default async function AdminDashboardPage() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/admin/projects"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96]"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#86e200] text-white dark:text-black text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96]"
             >
-              <Plus className="size-3.5 text-[#98ff03]" />
+              <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
               <span>Add Project</span>
             </Link>
             <Link
               href="/admin/kpis"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-zinc-100 text-[#292c2e] border border-zinc-300 text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96]"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-zinc-100 dark:bg-white/5 dark:hover:bg-white/10 text-[#292c2e] dark:text-zinc-200 border border-zinc-300 dark:border-white/10 text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96]"
             >
               <TrendingUp className="size-3.5" />
               <span>Update KPIs</span>
@@ -165,30 +165,31 @@ export default async function AdminDashboardPage() {
             <Link
               key={idx}
               href={card.href}
-              className={`group p-6 bg-white border transition-all relative rounded-[4px] hover:border-[#292c2e] active:scale-[0.98] ${card.highlight
-                ? "border-[#98ff03] shadow-[0_0_15px_rgba(152,255,3,0.15)]"
-                : "border-zinc-200/80 shadow-sm"
-                }`}
+              className={`group p-6 bg-white dark:bg-[#16181b] border transition-all relative rounded-[4px] hover:border-[#292c2e] dark:hover:border-[#98ff03] active:scale-[0.98] ${
+                card.highlight
+                  ? "border-[#98ff03] shadow-[0_0_15px_rgba(152,255,3,0.15)]"
+                  : "border-zinc-200/80 dark:border-white/10 shadow-sm"
+              }`}
             >
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
-                  <span className="font-space text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                  <span className="font-space text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                     {card.label}
                   </span>
-                  <div className="font-space font-bold text-3xl sm:text-4xl text-[#292c2e] tabular-nums tracking-tight">
+                  <div className="font-space font-bold text-3xl sm:text-4xl text-[#292c2e] dark:text-white tabular-nums tracking-tight">
                     {card.value}
                   </div>
                 </div>
-                <div className="p-2.5 rounded-[4px] bg-[#f8f9fa] border border-zinc-200 text-[#292c2e] group-hover:bg-[#292c2e] group-hover:text-[#98ff03] transition-colors">
+                <div className="p-2.5 rounded-[4px] bg-[#f8f9fa] dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-[#292c2e] dark:text-zinc-300 group-hover:bg-[#292c2e] group-hover:text-[#98ff03] dark:group-hover:bg-[#98ff03] dark:group-hover:text-black transition-colors">
                   <Icon className="size-5" />
                 </div>
               </div>
 
-              <p className="font-inter text-xs text-zinc-500 mt-4 leading-normal">
+              <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400 mt-4 leading-normal">
                 {card.desc}
               </p>
 
-              <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs font-space text-zinc-400 group-hover:text-black transition-colors">
+              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-white/10 flex items-center justify-between text-xs font-space text-zinc-400 dark:text-zinc-500 group-hover:text-black dark:group-hover:text-[#98ff03] transition-colors">
                 <span>Manage {card.label}</span>
                 <ArrowUpRight className="size-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </div>
@@ -200,40 +201,40 @@ export default async function AdminDashboardPage() {
       {/* Recent Activity / Dual Column */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Latest Projects */}
-        <div className="bg-white border border-zinc-200/80 p-6 rounded-[4px] shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
+        <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-6 rounded-[4px] shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
             <div className="flex items-center gap-2">
-              <Briefcase className="size-4 text-[#292c2e]" />
-              <h3 className="font-space font-bold text-sm text-[#292c2e] uppercase tracking-wider">
+              <Briefcase className="size-4 text-[#292c2e] dark:text-[#98ff03]" />
+              <h3 className="font-space font-bold text-sm text-[#292c2e] dark:text-white uppercase tracking-wider">
                 Recent Projects
               </h3>
             </div>
             <Link
               href="/admin/projects"
-              className="text-xs font-space uppercase text-zinc-500 hover:text-black transition-colors"
+              className="text-xs font-space uppercase text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-[#98ff03] transition-colors"
             >
               View All
             </Link>
           </div>
 
-          <div className="divide-y divide-zinc-100">
+          <div className="divide-y divide-zinc-100 dark:divide-white/5">
             {recentProjects.map((p) => (
               <div
                 key={p.id}
                 className="py-3 flex items-center justify-between gap-4"
               >
                 <div>
-                  <h4 className="font-space font-semibold text-sm text-[#292c2e]">
+                  <h4 className="font-space font-semibold text-sm text-[#292c2e] dark:text-zinc-100">
                     {p.title}
                   </h4>
-                  <span className="text-xs text-zinc-500 font-inter">
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400 font-inter">
                     {p.category} • {p.year}
                   </span>
                 </div>
                 <Link
                   href={`/projects/${p.slug}`}
                   target="_blank"
-                  className="text-xs text-zinc-400 hover:text-black font-space flex items-center gap-1"
+                  className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-black dark:hover:text-[#98ff03] font-space flex items-center gap-1"
                 >
                   <span>View</span>
                   <ExternalLink className="size-3" />
@@ -244,23 +245,23 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Recent Inquiries */}
-        <div className="bg-white border border-zinc-200/80 p-6 rounded-[4px] shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
+        <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-6 rounded-[4px] shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
             <div className="flex items-center gap-2">
-              <Inbox className="size-4 text-[#292c2e]" />
-              <h3 className="font-space font-bold text-sm text-[#292c2e] uppercase tracking-wider">
+              <Inbox className="size-4 text-[#292c2e] dark:text-[#98ff03]" />
+              <h3 className="font-space font-bold text-sm text-[#292c2e] dark:text-white uppercase tracking-wider">
                 Latest Contact Submissions
               </h3>
             </div>
             <Link
               href="/admin/inquiries"
-              className="text-xs font-space uppercase text-zinc-500 hover:text-black transition-colors"
+              className="text-xs font-space uppercase text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-[#98ff03] transition-colors"
             >
               View All
             </Link>
           </div>
 
-          <div className="divide-y divide-zinc-100">
+          <div className="divide-y divide-zinc-100 dark:divide-white/5">
             {recentInquiries.length > 0 ? (
               recentInquiries.map((inq) => (
                 <div
@@ -268,25 +269,26 @@ export default async function AdminDashboardPage() {
                   className="py-3 flex items-center justify-between gap-4"
                 >
                   <div className="max-w-[70%]">
-                    <h4 className="font-space font-semibold text-sm text-[#292c2e]">
+                    <h4 className="font-space font-semibold text-sm text-[#292c2e] dark:text-zinc-100">
                       {inq.name}
                     </h4>
-                    <p className="text-xs text-zinc-500 font-inter truncate">
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 font-inter truncate">
                       {inq.email} • {inq.service || "General Inquiry"}
                     </p>
                   </div>
                   <span
-                    className={`text-[10px] font-space font-bold px-2 py-0.5 rounded-[2px] ${inq.status === "NEW"
-                      ? "bg-[#98ff03] text-black"
-                      : "bg-zinc-100 text-zinc-600"
-                      }`}
+                    className={`text-[10px] font-space font-bold px-2 py-0.5 rounded-[2px] ${
+                      inq.status === "NEW"
+                        ? "bg-[#98ff03] text-black"
+                        : "bg-zinc-100 dark:bg-white/10 text-zinc-600 dark:text-zinc-300"
+                    }`}
                   >
                     {inq.status}
                   </span>
                 </div>
               ))
             ) : (
-              <p className="text-xs text-zinc-400 py-6 text-center font-inter">
+              <p className="text-xs text-zinc-400 dark:text-zinc-500 py-6 text-center font-inter">
                 No new contact form submissions yet.
               </p>
             )}

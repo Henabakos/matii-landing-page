@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk, Inter, Urbanist } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,6 @@ const urbanist = Urbanist({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { GoogleTranslateScript } from "@/components/common/GoogleTranslateScript";
-
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com"),
   title: {
@@ -40,6 +38,9 @@ export const metadata: Metadata = {
     template: "%s | Matii Digitals",
   },
   description: "Transforming Ideas into Digital Momentum",
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({
@@ -49,11 +50,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${inter.variable} ${urbanist.variable} h-full antialiased bg-background text-foreground font-sans`}
+      translate="no"
+      className={`notranslate ${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${inter.variable} ${urbanist.variable} h-full antialiased bg-background text-foreground font-sans`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
+      <body translate="no" className="notranslate min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -61,10 +65,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <GoogleTranslateScript />
         </ThemeProvider>
       </body>
     </html>
   );
 }
-

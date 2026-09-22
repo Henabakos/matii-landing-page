@@ -1,0 +1,183 @@
+{
+  "common": {
+    "brandName": "Matii Digitals",
+    "startProject": "Start Project",
+    "exploreServices": "Explore Services",
+    "contactUs": "Contact Us",
+    "talkToEngineer": "Talk to an Engineer",
+    "trustedPartners": "OUR TRUSTED PARTNERS",
+    "allRightsReserved": "All rights reserved.",
+    "selectLanguage": "Select Language / Afaan",
+    "all": "All",
+    "readMore": "Read More",
+    "viewProject": "View Project",
+    "bookCall": "Book a Call",
+    "exploreAll": "Explore All"
+  },
+  "nav": {
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "careers": "Careers",
+    "blog": "Blog",
+    "news": "News",
+    "contact": "Contact",
+    "internships": "Internships",
+    "talentPool": "Talent Pool"
+  },
+  "hero": {
+    "badge": "POWERING AMBITIOUS IDEAS WITH PRECISION",
+    "headline": "Engineering Core Systems, Powering Progress.",
+    "subtitle": "From ambitious ideas to powerful digital products, we design and build experiences, systems, and technology that move businesses forward.",
+    "startProject": "Start Project",
+    "exploreServices": "Explore Services"
+  },
+  "officeShowcase": {
+    "badge": "GLOBAL STANDARD",
+    "title": "Software built to a global standard",
+    "subtitle": "From our studio in Addis Ababa, productive teams pair world-class engineering with care and craft delivering reliable, scalable software that businesses around the world rely on.",
+    "bookCall": "Book a Call",
+    "seeWork": "See Our Work"
+  },
+  "aboutUs": {
+    "tag": "WHO WE ARE & WHAT WE DO",
+    "aboutTag": "About Us",
+    "heading": "Engineering core systems, powering progress.",
+    "desc": "Matii Technologies is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
+    "stat1Value": "50+",
+    "stat1Desc": "Digital products designed and built across diverse industries.",
+    "stat2Value": "10+",
+    "stat2Desc": "Industries transformed through thoughtful design and technology.",
+    "stat3Value": "∞",
+    "stat3Desc": "Possibilities created by turning ambitious ideas into digital reality."
+  },
+  "aboutStory": {
+    "originTag": "OUR ORIGIN & PURPOSE",
+    "originHeading": "Engineering core systems, powering progress.",
+    "studioBadge": "Engineering & Design Studio",
+    "estYear": "Est. 2018",
+    "yearsActiveCount": "8+",
+    "yearsActiveLabel": "Years Active",
+    "seniorTeamCount": "100%",
+    "seniorTeamLabel": "Senior Team",
+    "productsShippedCount": "50+",
+    "productsShippedLabel": "Products Shipped",
+    "journeyTag": "// THE JOURNEY",
+    "journeyTitle": "Why we built Matii Technologies.",
+    "storyP1": "Matii Technologies is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
+    "storyP2": "Founded in Ethiopia and built to global standards, we deliver secure, scalable systems for enterprise, government, and financial institutions.",
+    "storyP3": "We don't just write code—we build the infrastructure that powers progress.",
+    "missionTag": "01 // PURPOSE",
+    "missionTitle": "OUR MISSION",
+    "missionDesc": "To engineer the systems that power enterprise, government, and finance, delivering technology that is reliable, secure, and built to scale.",
+    "missionPoint1": "We solve complex problems.",
+    "missionPoint2": "We deliver on time.",
+    "missionPoint3": "We build infrastructure.",
+    "visionTag": "02 // FUTURE",
+    "visionTitle": "OUR VISION",
+    "visionDesc": "Our ambition is to become one of the largest technology companies and the backbone of emerging markets—a company whose platforms run the systems that nations, institutions, and businesses depend on."
+  },
+  "aboutCoreValues": {
+    "tag": "OUR FOUNDATION",
+    "heading": "Core Values",
+    "value1Title": "Execution Over Everything",
+    "value1Desc": "We focus on high-impact delivery and results.",
+    "value2Title": "Built on Trust",
+    "value2Desc": "Security, reliability, and integrity form the foundation of everything we build.",
+    "value3Title": "Relentless Learning",
+    "value3Desc": "We continuously adapt, innovate, and master new technologies to stay ahead.",
+    "value4Title": "Africa Rooted, World Class",
+    "value4Desc": "Our geography is our advantage; we build locally with a global standard of excellence."
+  },
+  "solutions": {
+    "tag": "FEATURED SOLUTIONS",
+    "heading": "Understanding Needs. Driving Progress.",
+    "desc": "We understand your priorities and challenges, then build practical solutions that create measurable impact and lasting progress."
+  },
+  "services": {
+    "tag": "CORE CAPABILITIES",
+    "heading": "IDEAS DON'T STAY STILL."
+  },
+  "whyUs": {
+    "tag": "WHY MATII",
+    "heading": "Built to Solve. Designed to Move.",
+    "desc": "We combine strategic thinking, intuitive design, and engineering precision to build digital products that move businesses forward."
+  },
+  "testimonials": {
+    "tag": "TESTIMONIALS",
+    "heading": "WHAT OUR CLIENTS SAY"
+  },
+  "contactSection": {
+    "tag": "CONTACT",
+    "heading": "LET'S TALK ABOUT YOUR NEXT BIG IDEA.",
+    "directEmail": "Direct Email",
+    "phoneWhatsApp": "Phone / WhatsApp",
+    "headquarterLocation": "Headquarter Location",
+    "headquarterAddress": "Addis Ababa, Ethiopia",
+    "sendUsMessage": "Send Us A Message",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "e.g. John Doe",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "e.g. john@example.com",
+    "phoneNumber": "Phone Number (Optional)",
+    "phoneNumberPlaceholder": "e.g. +251 911 234 567",
+    "serviceNeeded": "Service Needed",
+    "projectDescription": "Project Description",
+    "projectPlaceholder": "Tell us about your project, timeline, and goals...",
+    "attachFile": "Attach Brief / Document (Optional)",
+    "submitMessage": "Send Message",
+    "submitting": "Sending...",
+    "successMessage": "Thank you! Your project inquiry has been logged with our engineering team."
+  },
+  "faq": {
+    "tag": "FREQUENTLY ASKED QUESTIONS",
+    "heading": "Questions? We Have Answers."
+  },
+  "pages": {
+    "about": {
+      "tag": "WHO WE ARE & WHAT WE DO",
+      "title": "Built With Precision. Powered By Momentum.",
+      "description": "From our studio in Addis Ababa, we pair world-class software engineering with deliberate care and craft to build digital systems organizations rely on."
+    },
+    "projects": {
+      "tag": "OUR WORK & PROJECTS",
+      "title": "Solutions Built For Forward-Thinking Teams.",
+      "description": "Explore our enterprise platforms, AI workflow agents, and high-performance applications engineered for institutions worldwide."
+    },
+    "services": {
+      "tag": "CAPABILITIES & SYSTEMS",
+      "title": "Turning Automation Into Real Growth.",
+      "description": "We help ambitious companies turn automation into practical systems that scale operations, improve execution, and drive measurable growth."
+    },
+    "careers": {
+      "tag": "CAREERS & OPEN ROLES",
+      "title": "Build The Future Of Digital Products & AI.",
+      "description": "Join an ambitious engineering and product studio solving difficult architectural challenges with craft, precision, and global standards."
+    },
+    "blog": {
+      "tag": "ENGINEERING & DESIGN JOURNAL",
+      "title": "Perspectives On Systems, AI & Architecture.",
+      "description": "Explore actionable playbooks, engineering benchmarks, and product design methodologies from our core builders."
+    },
+    "contact": {
+      "tag": "GET IN TOUCH",
+      "title": "Let's Engineer Something Exceptional Together.",
+      "description": "Have a complex challenge, a product roadmap, or a legacy system to transform? Talk directly with our senior engineering team."
+    }
+  },
+  "ctaBanner": {
+    "titlePrefix": "Want to talk to a",
+    "titleHighlight": "Matii",
+    "titleSuffix": "engineer?",
+    "description": "Book a strategic 30-minute consultation with our engineering leads to review your architecture, roadmap, or technical requirements.",
+    "scheduleMeeting": "Schedule a 30-min Google Meet"
+  },
+  "footer": {
+    "newsletterHeading": "STAY IN THE LOOP",
+    "newsletterSubtitle": "Engineering insights, architecture deep dives, and system benchmarks delivered straight to your inbox.",
+    "placeholderEmail": "Enter your email address...",
+    "subscribe": "Subscribe",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  }
+}

@@ -3,6 +3,7 @@ export interface MegaMenuItem {
   href: string;
   badge?: string;
   description?: string;
+  translations?: Record<string, { title?: string; badge?: string; description?: string }>;
 }
 
 export interface MegaMenuGroup {
@@ -10,6 +11,7 @@ export interface MegaMenuGroup {
   href?: string;
   iconName?: string;
   items: MegaMenuItem[];
+  translations?: Record<string, { title?: string }>;
 }
 
 export interface MegaMenuCategory {
@@ -17,6 +19,7 @@ export interface MegaMenuCategory {
   title: string;
   iconName: string;
   groups: MegaMenuGroup[];
+  translations?: Record<string, { title?: string }>;
 }
 
 export interface MegaMenuFooter {
@@ -35,6 +38,7 @@ export interface MegaMenuConfig {
   isActive: boolean;
   categories: MegaMenuCategory[];
   footer?: MegaMenuFooter;
+  translations?: Record<string, { label?: string; footerLabel?: string; footerCtaLabel?: string }>;
 }
 
 export const defaultNavMenus: MegaMenuConfig[] = [

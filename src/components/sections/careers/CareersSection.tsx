@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import PageHeader from "@/components/common/PageHeader";
 import {
   MapPin,
@@ -19,11 +19,14 @@ import {
 import { jobPositions } from "@/data/careers-data";
 import type { FormattedJobPosition } from "@/lib/services/career.service";
 
+import { useTranslations } from "next-intl";
+
 interface CareersSectionProps {
   initialJobs?: FormattedJobPosition[];
 }
 
 export function CareersSection({ initialJobs }: CareersSectionProps) {
+  const t = useTranslations("pages.careers");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
   const displayJobs = initialJobs && initialJobs.length > 0 ? initialJobs : jobPositions;
@@ -43,15 +46,9 @@ export function CareersSection({ initialJobs }: CareersSectionProps) {
     <section className="relative w-full pt-8 md:pt-12 px-4 md:px-8 overflow-hidden">
       <div className="max-w-345 mx-auto relative space-y-12">
         <PageHeader
-          tag="CAREERS & OPEN ROLES"
-          title={
-            <>
-              Build The Future Of
-              <br />
-              Digital Products & AI.
-            </>
-          }
-          description="Join an ambitious engineering and product studio solving difficult architectural challenges with craft, precision, and global standards."
+          tag={t("tag")}
+          title={t("title")}
+          description={t("description")}
         />
 
         {/* Perks / Culture Banner Grid */}
@@ -93,7 +90,7 @@ export function CareersSection({ initialJobs }: CareersSectionProps) {
           </div>
         </div>
 
-        {/* Department Filter Pills */}
+        {/* Department Filter Tabs */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-10">
           {departments.map((dept) => {
             const isActive = selectedDepartment === dept;
@@ -102,10 +99,10 @@ export function CareersSection({ initialJobs }: CareersSectionProps) {
                 key={dept}
                 type="button"
                 onClick={() => setSelectedDepartment(dept)}
-                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer active:scale-[0.96] ${
+                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-none transition-all duration-300 cursor-pointer active:scale-[0.96] ${
                   isActive
                     ? "bg-[#292c2e] text-white dark:bg-[#98ff03] dark:text-[#161819] shadow-md border border-[#292c2e] dark:border-[#98ff03]"
-                    : "bg-[#f3f4f6] dark:bg-white/5 text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-transparent dark:border-white/10"
+                    : "bg-[#f3f4f6] dark:bg-white/5 text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10"
                 }`}
               >
                 {dept}

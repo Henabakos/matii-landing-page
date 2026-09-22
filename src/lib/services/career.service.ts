@@ -18,6 +18,16 @@ export interface FormattedJobPosition {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  translations?: Record<string, {
+    title?: string;
+    department?: string;
+    location?: string;
+    type?: string;
+    experience?: string;
+    salary?: string;
+    shortDescription?: string;
+    content?: string;
+  }>;
   createdAt: Date;
   updatedAt: Date;
   applicationCount?: number;
@@ -55,13 +65,26 @@ function formatApplication(app: any): FormattedJobApplication {
   };
 }
 
+function parseJobPosition(job: any): FormattedJobPosition {
+  let translations: Record<string, any> = {};
+  try {
+    translations = job.translations ? (typeof job.translations === "string" ? JSON.parse(job.translations) : job.translations) : {};
+  } catch {
+    translations = {};
+  }
+  return {
+    ...job,
+    translations,
+  };
+}
+
 export const getAllJobPositions = unstable_cache(
   async (): Promise<FormattedJobPosition[]> => {
     const raw = await db.jobPosition.findMany({
       where: { isActive: true },
       orderBy: [{ order: "asc" }, { createdAt: "desc" }],
     });
-    return raw;
+    return raw.map(parseJobPosition);
   },
   ["careers-all"],
   { tags: ["careers"], revalidate: 3600 }
@@ -73,7 +96,7 @@ export const getJobPositionBySlug = unstable_cache(
       where: { slug },
     });
     if (!raw || !raw.isActive) return null;
-    return raw;
+    return parseJobPosition(raw);
   },
   ["career-by-slug"],
   { tags: ["career-by-slug"], revalidate: 3600 }
@@ -90,7 +113,7 @@ export async function getAdminAllJobPositions(): Promise<FormattedJobPosition[]>
   });
 
   return raw.map((job) => ({
-    ...job,
+    ...parseJobPosition(job),
     applicationCount: job._count?.applications || 0,
   }));
 }

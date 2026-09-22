@@ -1,19 +1,20 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar, ArrowUpRight } from "lucide-react";
 import { getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/services/blog.service";
 import { JsonLd, generateArticleSchema, generateBreadcrumbSchema } from "@/components/common/JsonLd";
 import { normalizeToHtml, sanitizeContent } from "@/lib/content";
+import { getLocalizedField } from "@/lib/i18n-helpers";
 import type { Metadata } from "next";
 
 type BlogDetailPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = await getBlogPostBySlug(slug);
 
   if (!post) {
@@ -23,10 +24,13 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
     };
   }
 
-  const title = post.seoTitle || `${post.title} | Matii Digitals Blog`;
-  const description = post.seoDescription || post.excerpt;
+  const localizedTitle = getLocalizedField(post, "title", locale);
+  const localizedExcerpt = getLocalizedField(post, "excerpt", locale);
+
+  const title = post.seoTitle || `${localizedTitle} | Matii Digitals Blog`;
+  const description = post.seoDescription || localizedExcerpt;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const url = `${siteUrl}/blog/${post.slug}`;
+  const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}blog/${post.slug}`;
 
   return {
     title,
@@ -47,7 +51,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
           url: post.coverImage,
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: localizedTitle,
         },
       ],
     },
@@ -61,20 +65,25 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
+  const localizedTitle = getLocalizedField(post, "title", locale);
+  const localizedExcerpt = getLocalizedField(post, "excerpt", locale);
+  const localizedContent = getLocalizedField(post, "content", locale);
+  const localizedCategory = getLocalizedField(post, "category", locale);
+
   const relatedPosts = await getRelatedBlogPosts(post.category, post.slug).catch(() => []);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const articleUrl = `${siteUrl}/blog/${post.slug}`;
+  const articleUrl = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}blog/${post.slug}`;
 
   const articleSchema = generateArticleSchema({
-    title: post.title,
-    description: post.excerpt,
+    title: localizedTitle,
+    description: localizedExcerpt,
     url: articleUrl,
     image: post.coverImage,
     datePublished: new Date(post.publishedAt).toISOString(),
@@ -85,11 +94,11 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: siteUrl },
     { name: "Blog", url: `${siteUrl}/blog` },
-    { name: post.title, url: articleUrl },
+    { name: localizedTitle, url: articleUrl },
   ]);
 
   // Normalize legacy markdown or structured HTML, then strictly sanitize
-  const normalizedHtml = normalizeToHtml(post.content);
+  const normalizedHtml = normalizeToHtml(localizedContent || post.content);
   const sanitizedHtml = sanitizeContent(normalizedHtml);
 
   return (
@@ -123,19 +132,19 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
               <div className="inline-flex gap-2.5 items-center bg-[#f3f4f6] dark:bg-white/5 px-3 py-1 border border-zinc-200 dark:border-white/10 rounded-[2px]">
                 <div className="bg-[#98ff03] size-3 shrink-0" />
                 <span className="font-space font-semibold text-xs text-black dark:text-white uppercase tracking-wider">
-                  {post.category}
+                  {localizedCategory || post.category}
                 </span>
               </div>
             </div>
 
             {/* Headline */}
             <h1 className="font-space font-medium text-3xl sm:text-5xl md:text-[54px] leading-[1.14] text-[#292c2e] dark:text-white tracking-tight mb-6">
-              {post.title}
+              {localizedTitle}
             </h1>
 
             {/* Excerpt */}
             <p className="font-inter text-base sm:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-3xl mb-10">
-              {post.excerpt}
+              {localizedExcerpt}
             </p>
 
             {/* Author bar & Date */}
@@ -180,7 +189,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           <div className="relative w-full aspect-video md:aspect-[21/9] border border-zinc-200 dark:border-white/10 overflow-hidden bg-zinc-100 dark:bg-zinc-800">
             <Image
               src={post.coverImage}
-              alt={post.title}
+              alt={localizedTitle}
               fill
               priority
               sizes="(max-width: 1080px) 100vw, 1080px"
@@ -201,7 +210,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
             <div className="pt-12 space-y-6">
               <div className="flex items-center justify-between border-b border-zinc-200 dark:border-white/10 pb-4">
                 <h3 className="font-space font-bold text-xl text-[#292c2e] dark:text-white uppercase tracking-wider">
-                  Related in {post.category}
+                  Related in {localizedCategory || post.category}
                 </h3>
                 <Link
                   href="/blog"
@@ -221,17 +230,17 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                     <div className="relative w-full aspect-video overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-100 dark:border-white/10">
                       <Image
                         src={related.coverImage}
-                        alt={related.title}
+                        alt={getLocalizedField(related, "title", locale)}
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover"
                       />
                     </div>
                     <span className="font-space text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-wider">
-                      {related.category}
+                      {getLocalizedField(related, "category", locale)}
                     </span>
                     <h4 className="font-space font-bold text-base text-[#292c2e] dark:text-white leading-snug group-hover:text-zinc-700 dark:group-hover:text-[#98ff03] transition-colors">
-                      {related.title}
+                      {getLocalizedField(related, "title", locale)}
                     </h4>
                     <div className="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-white/10 text-xs text-zinc-400 dark:text-zinc-500 font-inter">
                       <span>{related.readTime}</span>

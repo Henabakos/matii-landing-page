@@ -4,8 +4,11 @@ import React, { useState, useRef, useTransition } from "react";
 import svgPaths from "@/lib/svgPaths";
 import { submitContactInquiryAction } from "@/lib/actions/inquiry.actions";
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function ContactForm() {
+  const t = useTranslations("contactSection");
+  const tCommon = useTranslations("common");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -54,22 +57,22 @@ export function ContactForm() {
       {isSubmitted ? (
         <div className="p-4 bg-[#292c2e] border border-[#98ff03] text-[#98ff03] rounded-[8px] flex items-center gap-3 text-sm font-space">
           <Check className="size-5 shrink-0" />
-          <span>Thank you! Your project inquiry has been logged with our engineering team.</span>
+          <span>{t("successMessage")}</span>
         </div>
       ) : null}
 
       {/* Field 1: Your Name */}
       <div className="flex flex-col gap-3">
         <label className="font-inter font-normal text-sm md:text-base text-white uppercase tracking-wide">
-          // Your name
+          // {t("fullName")}
         </label>
         <div className="relative border-b border-[#797F8B] pb-2">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="enter your full name"
-            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none lowercase"
+            placeholder={t("fullNamePlaceholder")}
+            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none"
             required
           />
         </div>
@@ -78,15 +81,15 @@ export function ContactForm() {
       {/* Field 2: Your Email */}
       <div className="flex flex-col gap-3">
         <label className="font-inter font-normal text-sm md:text-base text-white uppercase tracking-wide">
-          // Your e-mail
+          // {t("emailAddress")}
         </label>
         <div className="relative border-b border-[#797F8B] pb-2">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="enter your e-mail"
-            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none lowercase"
+            placeholder={t("emailPlaceholder")}
+            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none"
             required
           />
         </div>
@@ -95,15 +98,15 @@ export function ContactForm() {
       {/* Field 3: Message */}
       <div className="flex flex-col gap-3">
         <label className="font-inter font-normal text-sm md:text-base text-white uppercase tracking-wide">
-          // Tell us more about the project
+          // {t("projectDescription")}
         </label>
         <div className="relative border-b border-[#797F8B] pb-2">
           <textarea
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Leave us message"
-            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none lowercase resize-none"
+            placeholder={t("projectPlaceholder")}
+            className="w-full bg-transparent font-inter font-normal text-sm md:text-base text-white placeholder-[#797f8b] focus:outline-none resize-none"
             required
           />
         </div>
@@ -125,8 +128,8 @@ export function ContactForm() {
             <path d={svgPaths.p8e11300} fill="#98FF03" />
           </svg>
         </div>
-        <span className="font-inter font-normal text-sm md:text-base text-white lowercase">
-          {file ? `Attached: ${file.name}` : "Add an Attachment"}
+        <span className="font-inter font-normal text-sm md:text-base text-white">
+          {file ? `Attached: ${file.name}` : t("attachFile")}
         </span>
       </div>
 
@@ -140,7 +143,7 @@ export function ContactForm() {
             "linear-gradient(-84.55deg, rgb(41, 44, 46) 33.1%, rgb(132, 142, 148) 148.5%)",
         }}
       >
-        {isPending ? "Sending Inquiry..." : "Start Your Project"}
+        {isPending ? t("submitting") : tCommon("startProject")}
       </button>
     </form>
   );

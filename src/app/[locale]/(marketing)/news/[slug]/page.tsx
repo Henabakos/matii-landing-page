@@ -1,19 +1,20 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar, ExternalLink } from "lucide-react";
 import { getNewsArticleBySlug } from "@/lib/services/news.service";
 import { JsonLd, generateNewsSchema, generateBreadcrumbSchema } from "@/components/common/JsonLd";
 import { normalizeToHtml, sanitizeContent } from "@/lib/content";
+import { getLocalizedField } from "@/lib/i18n-helpers";
 import type { Metadata } from "next";
 
 type NewsDetailPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const news = await getNewsArticleBySlug(slug);
 
   if (!news) {
@@ -23,10 +24,13 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
     };
   }
 
-  const title = news.seoTitle || `${news.title} | Matii Newsroom`;
-  const description = news.seoDescription || news.excerpt;
+  const localizedTitle = getLocalizedField(news, "title", locale);
+  const localizedExcerpt = getLocalizedField(news, "excerpt", locale);
+
+  const title = news.seoTitle || `${localizedTitle} | Matii Newsroom`;
+  const description = news.seoDescription || localizedExcerpt;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const url = `${siteUrl}/news/${news.slug}`;
+  const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}news/${news.slug}`;
 
   return {
     title,
@@ -46,7 +50,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
           url: news.coverImage,
           width: 1200,
           height: 630,
-          alt: news.title,
+          alt: localizedTitle,
         },
       ],
     },
@@ -60,19 +64,24 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
 }
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const news = await getNewsArticleBySlug(slug);
 
   if (!news) {
     notFound();
   }
 
+  const localizedTitle = getLocalizedField(news, "title", locale);
+  const localizedExcerpt = getLocalizedField(news, "excerpt", locale);
+  const localizedContent = getLocalizedField(news, "content", locale);
+  const localizedCategory = getLocalizedField(news, "category", locale);
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const newsUrl = `${siteUrl}/news/${news.slug}`;
+  const newsUrl = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}news/${news.slug}`;
 
   const newsSchema = generateNewsSchema({
-    title: news.title,
-    description: news.excerpt,
+    title: localizedTitle,
+    description: localizedExcerpt,
     url: newsUrl,
     image: news.coverImage,
     datePublished: new Date(news.publishedAt).toISOString(),
@@ -82,11 +91,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: siteUrl },
     { name: "Newsroom", url: `${siteUrl}/news` },
-    { name: news.title, url: newsUrl },
+    { name: localizedTitle, url: newsUrl },
   ]);
 
   // Normalize legacy markdown or structured HTML, then strictly sanitize
-  const normalizedHtml = normalizeToHtml(news.content);
+  const normalizedHtml = normalizeToHtml(localizedContent || news.content);
   const sanitizedHtml = sanitizeContent(normalizedHtml);
 
   return (
@@ -114,7 +123,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
             <div className="mb-6 flex flex-wrap items-center gap-3">
               <span className="font-space text-xs font-bold uppercase tracking-wider text-black bg-[#98ff03] px-2.5 py-0.5 rounded-[2px]">
-                {news.category}
+                {localizedCategory || news.category}
               </span>
               <span className="text-xs text-zinc-400 dark:text-zinc-500 font-inter">
                 Official Dispatch
@@ -122,11 +131,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
             </div>
 
             <h1 className="font-space font-medium text-3xl sm:text-5xl md:text-[52px] leading-[1.14] text-[#292c2e] dark:text-white tracking-tight mb-6">
-              {news.title}
+              {localizedTitle}
             </h1>
 
             <p className="font-inter text-base sm:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-3xl mb-8">
-              {news.excerpt}
+              {localizedExcerpt}
             </p>
 
             <div className="pt-6 border-t border-zinc-100 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-inter text-zinc-500 dark:text-zinc-400">
@@ -163,7 +172,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           <div className="relative w-full aspect-video md:aspect-[21/9] border border-zinc-200 dark:border-white/10 overflow-hidden bg-zinc-100 dark:bg-zinc-800">
             <Image
               src={news.coverImage}
-              alt={news.title}
+              alt={localizedTitle}
               fill
               priority
               sizes="(max-width: 1040px) 100vw, 1040px"

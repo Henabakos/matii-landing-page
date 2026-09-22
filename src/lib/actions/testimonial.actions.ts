@@ -13,13 +13,20 @@ export async function saveTestimonialAction(data: {
   rating: number;
   order: number;
   isActive: boolean;
+  translations?: Record<string, any> | string;
 }) {
   const isAuth = await isAdminAuthenticated();
   if (!isAuth) throw new Error("Unauthorized");
 
+  const translationsString = data.translations
+    ? typeof data.translations === "string"
+      ? data.translations
+      : JSON.stringify(data.translations)
+    : undefined;
+
   let testimonial;
   if (data.id) {
-    testimonial = await db.testimonial.update({
+    testimonial = await (db.testimonial as any).update({
       where: { id: data.id },
       data: {
         quote: data.quote,
@@ -29,10 +36,11 @@ export async function saveTestimonialAction(data: {
         rating: Number(data.rating || 5),
         order: Number(data.order || 0),
         isActive: data.isActive,
+        ...(translationsString !== undefined ? { translations: translationsString } : {}),
       },
     });
   } else {
-    testimonial = await db.testimonial.create({
+    testimonial = await (db.testimonial as any).create({
       data: {
         quote: data.quote,
         authorName: data.authorName,
@@ -41,6 +49,7 @@ export async function saveTestimonialAction(data: {
         rating: Number(data.rating || 5),
         order: Number(data.order || 0),
         isActive: data.isActive,
+        translations: translationsString || null,
       },
     });
   }

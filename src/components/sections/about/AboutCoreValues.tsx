@@ -7,27 +7,30 @@ import {
 	Orbit,
 	Compass,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function AboutCoreValues() {
+	const t = useTranslations('aboutCoreValues')
+
 	const coreValues = [
 		{
-			title: 'Execution Over Everything',
-			desc: 'We focus on high-impact delivery and results.',
+			title: t('value1Title'),
+			desc: t('value1Desc'),
 			icon: Crosshair,
 		},
 		{
-			title: 'Built on Trust',
-			desc: 'Security, reliability, and integrity form the foundation of everything we build.',
+			title: t('value2Title'),
+			desc: t('value2Desc'),
 			icon: Fingerprint,
 		},
 		{
-			title: 'Relentless Learning',
-			desc: 'We continuously adapt, innovate, and master new technologies to stay ahead.',
+			title: t('value3Title'),
+			desc: t('value3Desc'),
 			icon: Orbit,
 		},
 		{
-			title: 'Africa Rooted, World Class',
-			desc: 'Our geography is our advantage; we build locally with a global standard of excellence.',
+			title: t('value4Title'),
+			desc: t('value4Desc'),
 			icon: Compass,
 		},
 	]
@@ -38,10 +41,10 @@ export function AboutCoreValues() {
 				<div className="space-y-1">
 					<div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#f3f4f6] dark:bg-white/5 border border-transparent dark:border-white/10 text-xs font-space font-semibold uppercase tracking-wider text-[#292c2e] dark:text-zinc-200">
 						<div className="w-2.5 h-2.5 bg-[#98ff03] rounded-xs" />
-						OUR FOUNDATION
+						{t('tag')}
 					</div>
 					<h2 className="text-2xl sm:text-3xl font-urbanist font-medium text-[#292c2e] dark:text-white tracking-tight">
-						Core Values
+						{t('heading')}
 					</h2>
 				</div>
 			</div>
@@ -72,3 +75,4 @@ export function AboutCoreValues() {
 }
 
 export default AboutCoreValues
+

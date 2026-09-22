@@ -19,6 +19,12 @@ export interface FormattedNewsArticle {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  translations?: Record<string, {
+    title?: string;
+    excerpt?: string;
+    content?: string;
+    category?: string;
+  }>;
 }
 
 function formatNews(item: any): FormattedNewsArticle {
@@ -28,9 +34,17 @@ function formatNews(item: any): FormattedNewsArticle {
     year: "numeric",
   }).format(new Date(item.publishedAt));
 
+  let translations: Record<string, any> = {};
+  try {
+    translations = item.translations ? (typeof item.translations === "string" ? JSON.parse(item.translations) : item.translations) : {};
+  } catch {
+    translations = {};
+  }
+
   return {
     ...item,
     date: dateFormatted,
+    translations,
   };
 }
 

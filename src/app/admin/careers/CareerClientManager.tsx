@@ -30,6 +30,7 @@ import { FaLinkedin } from "react-icons/fa6";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { SeoMetaFields } from "@/components/admin/SeoMetaFields";
 import { normalizeToHtml } from "@/lib/content";
+import { LanguageTabSelector } from "@/components/admin/LanguageTabSelector";
 import {
   saveJobPositionAction,
   deleteJobPositionAction,
@@ -51,6 +52,7 @@ export default function CareerClientManager({
   const [jobs, setJobs] = useState<FormattedJobPosition[]>(initialJobs);
   const [applications, setApplications] = useState<FormattedJobApplication[]>(initialApplications);
   const [editingJob, setEditingJob] = useState<Partial<FormattedJobPosition> | null>(null);
+  const [activeLocale, setActiveLocale] = useState<string>("en");
   const [isNew, setIsNew] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -63,6 +65,7 @@ export default function CareerClientManager({
 
   // Role Form handlers
   const handleOpenNewJob = () => {
+    setActiveLocale("en");
     setEditingJob({
       title: "",
       slug: "",
@@ -107,6 +110,7 @@ export default function CareerClientManager({
   };
 
   const handleOpenEditJob = (job: FormattedJobPosition) => {
+    setActiveLocale("en");
     setEditingJob({
       ...job,
       content: normalizeToHtml(job.content),
@@ -118,6 +122,54 @@ export default function CareerClientManager({
   const handleCloseJobModal = () => {
     setEditingJob(null);
     setIsNew(false);
+    setActiveLocale("en");
+  };
+
+  const getCareerTranslatedField = (field: "title" | "department" | "shortDescription" | "content", locale: string): string => {
+    if (locale === "en") {
+      return (editingJob as any)?.[field] || "";
+    }
+    return editingJob?.translations?.[locale]?.[field] || "";
+  };
+
+  const setCareerTranslatedField = (field: "title" | "department" | "shortDescription" | "content", value: string, locale: string) => {
+    if (locale === "en") {
+      setEditingJob((prev) => (prev ? { ...prev, [field]: value } : null));
+      return;
+    }
+    setEditingJob((prev) => {
+      if (!prev) return null;
+      const currentLang = prev.translations?.[locale] || {};
+      return {
+        ...prev,
+        translations: {
+          ...(prev.translations || {}),
+          [locale]: {
+            ...currentLang,
+            [field]: value,
+          },
+        },
+      };
+    });
+  };
+
+  const handleCopyCareerFromSource = (targetLocale: string) => {
+    if (targetLocale === "en" || !editingJob) return;
+    setEditingJob((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        translations: {
+          ...(prev.translations || {}),
+          [targetLocale]: {
+            title: prev.title || "",
+            department: prev.department || "",
+            shortDescription: prev.shortDescription || "",
+            content: prev.content || "",
+          },
+        },
+      };
+    });
   };
 
   const handleSaveJob = (e: React.FormEvent) => {
@@ -153,6 +205,7 @@ export default function CareerClientManager({
           seoTitle: editingJob.seoTitle || undefined,
           seoDescription: editingJob.seoDescription || undefined,
           seoKeywords: editingJob.seoKeywords || undefined,
+          translations: editingJob.translations,
         });
 
         if (res.success) {
@@ -414,9 +467,9 @@ export default function CareerClientManager({
                     <button
                       type="button"
                       onClick={() => handleOpenEditJob(job)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase rounded-[4px] transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#86e200] text-white dark:text-[#161819] text-xs font-space font-bold uppercase rounded-[4px] transition-colors cursor-pointer"
                     >
-                      <Edit2 className="size-3.5 text-[#98ff03]" />
+                      <Edit2 className="size-3.5" />
                       <span>Edit</span>
                     </button>
                     <button
@@ -705,17 +758,51 @@ export default function CareerClientManager({
 
             {/* Modal Form Content */}
             <form onSubmit={handleSaveJob} className="p-6 space-y-6 overflow-y-auto flex-1">
+              {/* Multi-Language & AI Auto-Translation Switcher */}
+              <LanguageTabSelector
+                activeLocale={activeLocale}
+                onChangeLocale={setActiveLocale}
+                translations={editingJob.translations}
+                sourceTexts={{
+                  title: editingJob.title || "",
+                  department: editingJob.department || "",
+                  shortDescription: editingJob.shortDescription || "",
+                  content: editingJob.content || "",
+                }}
+                onCopyFromSource={handleCopyCareerFromSource}
+                onTranslated={(translations) => {
+                  setEditingJob((prev) =>
+                    prev
+                      ? {
+                          ...prev,
+                          translations: {
+                            ...(prev.translations || {}),
+                            ...translations,
+                          },
+                        }
+                      : null
+                  );
+                }}
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-1">
-                    Job Title *
+                  <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-1 flex items-center justify-between">
+                    <span>
+                      Job Title {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} *
+                    </span>
+                    {activeLocale !== "en" && (
+                      <span className="text-[10px] text-amber-600 dark:text-amber-400 font-normal">
+                        Translating into {activeLocale.toUpperCase()}
+                      </span>
+                    )}
                   </label>
                   <input
                     type="text"
-                    required
-                    placeholder="e.g. Senior Full-Stack Engineer"
-                    value={editingJob.title || ""}
-                    onChange={(e) => setEditingJob({ ...editingJob, title: e.target.value })}
+                    required={activeLocale === "en"}
+                    placeholder={activeLocale === "en" ? "e.g. Senior Full-Stack Engineer" : `Job Title in ${activeLocale.toUpperCase()}...`}
+                    value={getCareerTranslatedField("title", activeLocale)}
+                    onChange={(e) => setCareerTranslatedField("title", e.target.value, activeLocale)}
                     className="w-full px-3.5 py-2 bg-[#f8f9fa] dark:bg-white/5 border border-zinc-200 dark:border-white/10 font-inter text-xs sm:text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-[#98ff03]"
                   />
                 </div>
@@ -806,28 +893,33 @@ export default function CareerClientManager({
               </div>
 
               <div>
-                <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-1">
-                  Short Teaser Description (for cards and meta)
+                <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold mb-1 flex items-center justify-between">
+                  <span>
+                    Short Teaser Description {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`}
+                  </span>
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Brief 1-2 sentence overview of the opportunity..."
-                  value={editingJob.shortDescription || ""}
-                  onChange={(e) => setEditingJob({ ...editingJob, shortDescription: e.target.value })}
+                  placeholder={activeLocale === "en" ? "Brief 1-2 sentence overview of the opportunity..." : `Short Description in ${activeLocale.toUpperCase()}...`}
+                  value={getCareerTranslatedField("shortDescription", activeLocale)}
+                  onChange={(e) => setCareerTranslatedField("shortDescription", e.target.value, activeLocale)}
                   className="w-full px-3.5 py-2 bg-[#f8f9fa] dark:bg-white/5 border border-zinc-200 dark:border-white/10 font-inter text-xs sm:text-sm text-zinc-900 dark:text-white focus:outline-none"
                 />
               </div>
 
               {/* RICH TEXT EDITOR (TipTap) */}
               <div className="space-y-2">
-                <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold">
-                  Detailed Role Description &amp; Requirements (Rich Text) *
+                <label className="block font-space text-xs uppercase tracking-wider text-zinc-700 dark:text-zinc-300 font-semibold flex items-center justify-between">
+                  <span>
+                    Detailed Role Description &amp; Requirements (Rich Text) {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} *
+                  </span>
                 </label>
                 <div className="border border-zinc-200 dark:border-white/10 rounded-[4px] overflow-hidden">
                   <RichTextEditor
-                    content={editingJob.content || ""}
-                    onChange={(html) => setEditingJob({ ...editingJob, content: html })}
-                    placeholder="Write detailed responsibilities, qualifications, and benefits..."
+                    key={`career-editor-${activeLocale}`}
+                    content={getCareerTranslatedField("content", activeLocale)}
+                    onChange={(html) => setCareerTranslatedField("content", html, activeLocale)}
+                    placeholder={activeLocale === "en" ? "Write detailed responsibilities, qualifications, and benefits..." : `Role specs in ${activeLocale.toUpperCase()}...`}
                     minHeight="320px"
                   />
                 </div>

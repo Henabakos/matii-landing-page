@@ -21,6 +21,12 @@ export interface FormattedBlogPost {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  translations?: Record<string, {
+    title?: string;
+    excerpt?: string;
+    content?: string;
+    category?: string;
+  }>;
 }
 
 function formatBlogPost(post: any): FormattedBlogPost {
@@ -30,9 +36,17 @@ function formatBlogPost(post: any): FormattedBlogPost {
     year: "numeric",
   }).format(new Date(post.publishedAt));
 
+  let translations: Record<string, any> = {};
+  try {
+    translations = post.translations ? (typeof post.translations === "string" ? JSON.parse(post.translations) : post.translations) : {};
+  } catch {
+    translations = {};
+  }
+
   return {
     ...post,
     date: dateFormatted,
+    translations,
   };
 }
 

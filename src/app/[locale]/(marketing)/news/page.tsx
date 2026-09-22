@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowUpRight, Calendar, Clock, ExternalLink } from "lucide-react";
 import { getAllNewsArticles, getFeaturedNews } from "@/lib/services/news.service";
 import PageHeader from "@/components/common/PageHeader";

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
 import { Menu, X, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import svgPaths from "@/lib/svgPaths";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
@@ -44,6 +44,9 @@ interface HeaderProps {
 
 export function Header({ initialMenus }: HeaderProps = {}) {
   const pathname = usePathname();
+  const locale = useLocale();
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState<MegaMenuConfig[]>(
     initialMenus && initialMenus.length > 0 ? initialMenus : defaultNavMenus
@@ -109,10 +112,22 @@ export function Header({ initialMenus }: HeaderProps = {}) {
     }, 180);
   };
 
-  const activeMenu = menus.find((m) => m.key === activeMenuKey);
+  const getMenuLabel = (menu: MegaMenuConfig) => {
+    if (menu.translations?.[locale]?.label) {
+      return menu.translations[locale].label;
+    }
+    const validNavKeys = ["services", "projects", "about", "careers", "blog", "news", "contact", "internships", "talentPool"];
+    if (menu.key && validNavKeys.includes(menu.key)) {
+      try {
+        return tNav(menu.key as any);
+      } catch {
+        return menu.label;
+      }
+    }
+    return menu.label;
+  };
 
-  // Mega menu items vs direct links
-  const megaMenuKeys = ["services", "projects", "careers", "resources"];
+  const activeMenu = menus.find((m) => m.key === activeMenuKey);
 
   return (
     <header className="z-50 w-full pt-3 px-4 md:px-8 relative">
@@ -125,7 +140,6 @@ export function Header({ initialMenus }: HeaderProps = {}) {
           <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px] transition-colors duration-200" />
           <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px] transition-colors duration-200" />
 
-          {/* Logo Section */}
           <div className="flex items-center h-full pr-3.5 xl:pr-5 2xl:pr-6 border-r border-[rgba(174,174,174,0.2)] dark:border-white/10 relative transition-colors duration-200 shrink-0">
             <Link
               href="/"
@@ -153,6 +167,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                 .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
                 .map((menu) => {
                   const hasDropdown = Boolean(menu.categories && menu.categories.length > 0);
+                  const label = getMenuLabel(menu);
 
                   if (hasDropdown) {
                     return (
@@ -164,19 +179,17 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                       >
                         <Link
                           href={menu.href}
-                          className={`group inline-flex h-8 xl:h-9 items-center justify-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 2xl:px-3.5 py-1.5 font-space text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.03em] 2xl:tracking-[0.06em] whitespace-nowrap rounded-[3px] transition-colors ${
-                            activeMenuKey === menu.key
-                              ? "text-black dark:text-white font-medium bg-black/[0.03] dark:bg-white/[0.04]"
-                              : "text-[#2a2a2b] dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03] font-normal"
-                          }`}
-                        >
-                          <span>{menu.label}</span>
-                          <ChevronDown
-                            className={`size-2.5 xl:size-3 shrink-0 transition-transform duration-200 ${
-                              activeMenuKey === menu.key
-                                ? "rotate-180 text-black dark:text-[#98ff03]"
-                                : "text-zinc-400 group-hover:text-black dark:group-hover:text-white"
+                          className={`group inline-flex h-8 xl:h-9 items-center justify-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 2xl:px-3.5 py-1.5 font-space text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.03em] 2xl:tracking-[0.06em] whitespace-nowrap rounded-[3px] transition-colors ${activeMenuKey === menu.key
+                            ? "text-black dark:text-white font-medium bg-black/[0.03] dark:bg-white/[0.04]"
+                            : "text-[#2a2a2b] dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03] font-normal"
                             }`}
+                        >
+                          <span>{label}</span>
+                          <ChevronDown
+                            className={`size-2.5 xl:size-3 shrink-0 transition-transform duration-200 ${activeMenuKey === menu.key
+                              ? "rotate-180 text-black dark:text-[#98ff03]"
+                              : "text-zinc-400 group-hover:text-black dark:group-hover:text-white"
+                              }`}
                           />
                         </Link>
                       </li>
@@ -187,13 +200,12 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                     <li key={menu.key} className="shrink-0">
                       <Link
                         href={menu.href}
-                        className={`inline-flex h-8 xl:h-9 items-center justify-center px-2 xl:px-2.5 2xl:px-3.5 py-1.5 font-space text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.03em] 2xl:tracking-[0.06em] whitespace-nowrap rounded-[3px] transition-colors ${
-                          pathname === menu.href
-                            ? "text-black dark:text-white font-medium bg-black/[0.03] dark:bg-white/[0.04]"
-                            : "text-[#2a2a2b] dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03] font-normal"
-                        }`}
+                        className={`inline-flex h-8 xl:h-9 items-center justify-center px-2 xl:px-2.5 2xl:px-3.5 py-1.5 font-space text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.03em] 2xl:tracking-[0.06em] whitespace-nowrap rounded-[3px] transition-colors ${pathname === menu.href
+                          ? "text-black dark:text-white font-medium bg-black/[0.03] dark:bg-white/[0.04]"
+                          : "text-[#2a2a2b] dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03] font-normal"
+                          }`}
                       >
-                        {menu.label}
+                        {label}
                       </Link>
                     </li>
                   );
@@ -205,14 +217,15 @@ export function Header({ initialMenus }: HeaderProps = {}) {
           <div className="hidden xl:flex items-center gap-2 xl:gap-2.5 2xl:gap-3 pl-3.5 xl:pl-4 2xl:pl-6 border-l border-[rgba(174,174,174,0.2)] dark:border-white/10 h-full relative transition-colors duration-200 shrink-0">
             <LanguageSelector />
             <ThemeToggle />
-            <Link
+            <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://calendly.com/Matiidigitals/30min"
               className="font-inter text-xs xl:text-[13px] 2xl:text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] h-[36px] xl:h-[38px] px-2.5 xl:px-3.5 2xl:px-4 inline-flex items-center gap-1.5 xl:gap-2 shadow-sm transition-all border border-[#292c2e] dark:border-white cursor-pointer active:scale-[0.96] whitespace-nowrap shrink-0"
             >
               <LineiconsGoogleMeet className="size-4 shrink-0" />
-              <span className="whitespace-nowrap">Book A Call</span>
-            </Link>
+              <span className="whitespace-nowrap">{tCommon("bookCall")}</span>
+            </a>
             <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px] transition-colors duration-200" />
             <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px] transition-colors duration-200" />
           </div>
@@ -264,6 +277,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                 .map((menu) => {
                   const hasDropdown = Boolean(menu.categories && menu.categories.length > 0);
                   const isExpanded = mobileExpandedSection === menu.key;
+                  const label = getMenuLabel(menu);
 
                   if (!hasDropdown) {
                     return (
@@ -273,7 +287,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                         className="px-3 py-2 rounded-[4px] hover:bg-[#f3f4f6] dark:hover:bg-white/5 transition-colors font-medium"
                         onClick={() => setIsOpen(false)}
                       >
-                        {menu.label}
+                        {label}
                       </Link>
                     );
                   }
@@ -289,7 +303,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                           className="px-3 py-2 font-medium hover:text-black dark:hover:text-white"
                           onClick={() => setIsOpen(false)}
                         >
-                          {menu.label}
+                          {label}
                         </Link>
                         <button
                           type="button"
@@ -299,45 +313,50 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                             )
                           }
                           className="p-2 text-zinc-500 hover:text-black dark:hover:text-white cursor-pointer"
-                          aria-label={`Toggle ${menu.label} sub-items`}
+                          aria-label={`Toggle ${label} sub-items`}
                         >
                           <ChevronDown
-                            className={`size-4 transition-transform duration-200 ${
-                              isExpanded ? "rotate-180 text-[#98ff03]" : ""
-                            }`}
+                            className={`size-4 transition-transform duration-200 ${isExpanded ? "rotate-180 text-[#98ff03]" : ""
+                              }`}
                           />
                         </button>
                       </div>
 
                       {isExpanded && (
                         <div className="pl-3 pr-2 py-2 space-y-3 normal-case tracking-normal animate-in fade-in duration-200">
-                          {menu.categories.map((category) => (
-                            <div key={category.id} className="space-y-1.5">
-                              <span className="font-space text-xs font-semibold text-[#161819] dark:text-white uppercase tracking-wider block">
-                                {category.title}
-                              </span>
-                              <div className="grid grid-cols-1 gap-1 pl-2 text-xs text-zinc-600 dark:text-zinc-400">
-                                {category.groups.flatMap((g) => g.items).slice(0, 4).map((item, idx) => (
-                                  <Link
-                                    key={idx}
-                                    href={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="py-1 hover:text-black dark:hover:text-[#98ff03] transition-colors flex items-center justify-between"
-                                  >
-                                    <span>{item.title}</span>
-                                    <ArrowRight className="size-3 opacity-40" />
-                                  </Link>
-                                ))}
+                          {menu.categories.map((category) => {
+                            const categoryTitle = category.translations?.[locale]?.title || category.title;
+                            return (
+                              <div key={category.id} className="space-y-1.5">
+                                <span className="font-space text-xs font-semibold text-[#161819] dark:text-white uppercase tracking-wider block">
+                                  {categoryTitle}
+                                </span>
+                                <div className="grid grid-cols-1 gap-1 pl-2 text-xs text-zinc-600 dark:text-zinc-400">
+                                  {category.groups.flatMap((g) => g.items).slice(0, 4).map((item, idx) => {
+                                    const itemTitle = item.translations?.[locale]?.title || item.title;
+                                    return (
+                                      <Link
+                                        key={idx}
+                                        href={item.href}
+                                        onClick={() => setIsOpen(false)}
+                                        className="py-1 hover:text-black dark:hover:text-[#98ff03] transition-colors flex items-center justify-between"
+                                      >
+                                        <span>{itemTitle}</span>
+                                        <ArrowRight className="size-3 opacity-40" />
+                                      </Link>
+                                    );
+                                  })}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
 
                           <Link
                             href={menu.href}
                             onClick={() => setIsOpen(false)}
                             className="inline-flex items-center gap-1.5 text-xs font-space font-semibold uppercase text-black dark:text-[#98ff03] pt-1"
                           >
-                            <span>Explore All {menu.label} →</span>
+                            <span>{tCommon("exploreAll")} {label} →</span>
                           </Link>
                         </div>
                       )}
@@ -347,15 +366,16 @@ export function Header({ initialMenus }: HeaderProps = {}) {
 
               {/* Call to Action */}
               <div className="flex flex-col gap-2 pt-3 mt-2 border-t border-[rgba(174,174,174,0.2)] dark:border-white/10 font-inter normal-case tracking-normal">
-                <Link
+                <a
                   target="_blank"
-                  href="https://calendly.com/Matiidigitals/30min"
+                  rel="noopener noreferrer"
+                  href=""
                   className="font-inter text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm transition-colors border border-[#292c2e] dark:border-white"
                   onClick={() => setIsOpen(false)}
                 >
                   <LineiconsGoogleMeet />
-                  <span>Book A Call</span>
-                </Link>
+                  <span>{tCommon("bookCall")}</span>
+                </a>
               </div>
             </nav>
           </div>

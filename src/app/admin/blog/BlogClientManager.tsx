@@ -10,6 +10,7 @@ import { CloudinaryUploadButton } from "@/components/admin/CloudinaryUploadButto
 import { SeoMetaFields } from "@/components/admin/SeoMetaFields";
 import { normalizeToHtml, getWordAndCharStats } from "@/lib/content";
 import { AddToNavbarSelector, AddToNavbarConfig } from "@/components/admin/AddToNavbarSelector";
+import { LanguageTabSelector } from "@/components/admin/LanguageTabSelector";
 
 interface BlogClientManagerProps {
   initialPosts: FormattedBlogPost[];
@@ -18,6 +19,7 @@ interface BlogClientManagerProps {
 export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
   const [posts, setPosts] = useState<FormattedBlogPost[]>(initialPosts);
   const [editingPost, setEditingPost] = useState<Partial<FormattedBlogPost> | null>(null);
+  const [activeLocale, setActiveLocale] = useState<string>("en");
   const [isNew, setIsNew] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -33,6 +35,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
   const [originalSlug, setOriginalSlug] = useState<string>("");
 
   const handleOpenEdit = (post: FormattedBlogPost) => {
+    setActiveLocale("en");
     setEditingPost({
       ...post,
       content: normalizeToHtml(post.content),
@@ -51,6 +54,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
   };
 
   const handleOpenNew = () => {
+    setActiveLocale("en");
     setOriginalSlug("");
     setEditingPost({
       slug: "",
@@ -85,6 +89,53 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
     setEditingPost(null);
     setIsNew(false);
     setOriginalSlug("");
+    setActiveLocale("en");
+  };
+
+  const getBlogTranslatedField = (field: "title" | "excerpt" | "content", locale: string): string => {
+    if (locale === "en") {
+      return (editingPost as any)?.[field] || "";
+    }
+    return editingPost?.translations?.[locale]?.[field] || "";
+  };
+
+  const setBlogTranslatedField = (field: "title" | "excerpt" | "content", value: string, locale: string) => {
+    if (locale === "en") {
+      setEditingPost((prev) => (prev ? { ...prev, [field]: value } : null));
+      return;
+    }
+    setEditingPost((prev) => {
+      if (!prev) return null;
+      const currentLang = prev.translations?.[locale] || {};
+      return {
+        ...prev,
+        translations: {
+          ...(prev.translations || {}),
+          [locale]: {
+            ...currentLang,
+            [field]: value,
+          },
+        },
+      };
+    });
+  };
+
+  const handleCopyBlogFromSource = (targetLocale: string) => {
+    if (targetLocale === "en" || !editingPost) return;
+    setEditingPost((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        translations: {
+          ...(prev.translations || {}),
+          [targetLocale]: {
+            title: prev.title || "",
+            excerpt: prev.excerpt || "",
+            content: prev.content || "",
+          },
+        },
+      };
+    });
   };
 
   const handleSave = (e: React.FormEvent) => {
@@ -114,6 +165,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
           seoTitle: editingPost.seoTitle || undefined,
           seoDescription: editingPost.seoDescription || undefined,
           seoKeywords: editingPost.seoKeywords || undefined,
+          translations: editingPost.translations,
           navbarIntegration: navbarConfig.enabled ? navbarConfig : undefined,
         });
 
@@ -143,17 +195,17 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 border border-zinc-200/80 shadow-sm relative">
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px]" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#16181b] p-6 border border-zinc-200/80 dark:border-white/10 shadow-sm relative">
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -right-[3px]" />
 
         <div>
-          <h2 className="font-space font-medium text-xl text-[#292c2e] tracking-tight">
-            Blog Articles & Editorial Studio
+          <h2 className="font-space font-medium text-xl text-[#292c2e] dark:text-white tracking-tight">
+            Blog Articles &amp; Editorial Studio
           </h2>
-          <p className="font-inter text-xs text-zinc-500 mt-1">
+          <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Write rich technical playbooks, manage Cloudinary media, and configure Google SERP metadata.
           </p>
         </div>
@@ -161,25 +213,25 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
         <button
           type="button"
           onClick={handleOpenNew}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] transition-all active:scale-[0.96] shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#86e200] text-white dark:text-zinc-950 text-xs font-space font-bold uppercase tracking-wider rounded-[4px] transition-all active:scale-[0.96] shadow-sm cursor-pointer"
         >
-          <Plus className="size-4 text-[#98ff03]" />
+          <Plus className="size-4 text-[#98ff03] dark:text-black" />
           <span>Write Article</span>
         </button>
       </div>
 
       {feedback ? (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-inter rounded-[4px] flex items-center gap-2">
-          <Check className="size-4 text-emerald-600" />
+        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-inter rounded-[4px] flex items-center gap-2">
+          <Check className="size-4 text-emerald-600 dark:text-emerald-400" />
           <span>{feedback}</span>
         </div>
       ) : null}
 
       {/* Blog Posts Table */}
-      <div className="bg-white border border-zinc-200/80 rounded-[4px] shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 rounded-[4px] shadow-sm overflow-hidden">
         <table className="w-full text-left border-collapse font-inter text-xs">
           <thead>
-            <tr className="bg-[#f8f9fa] border-b border-zinc-200 font-space text-[11px] font-bold text-zinc-600 uppercase tracking-wider">
+            <tr className="bg-[#f8f9fa] dark:bg-white/[0.02] border-b border-zinc-200 dark:border-white/10 font-space text-[11px] font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
               <th className="p-4">Article Title</th>
               <th className="p-4">Category</th>
               <th className="p-4">Author</th>
@@ -188,26 +240,26 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
               <th className="p-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-100">
+          <tbody className="divide-y divide-zinc-100 dark:divide-white/5">
             {posts.map((post) => (
-              <tr key={post.id} className="hover:bg-zinc-50/70 transition-colors">
+              <tr key={post.id} className="hover:bg-zinc-50/70 dark:hover:bg-white/[0.02] transition-colors">
                 <td className="p-4">
-                  <div className="font-space font-bold text-sm text-[#292c2e]">
+                  <div className="font-space font-bold text-sm text-[#292c2e] dark:text-zinc-100">
                     {post.title}
                   </div>
-                  <div className="font-mono text-[11px] text-zinc-400">
+                  <div className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
                     /blog/{post.slug}
                   </div>
                 </td>
                 <td className="p-4">
-                  <span className="text-[10px] font-space font-semibold uppercase px-2 py-0.5 rounded-[2px] bg-zinc-100 text-zinc-700">
+                  <span className="text-[10px] font-space font-semibold uppercase px-2 py-0.5 rounded-[2px] bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-zinc-300">
                     {post.category}
                   </span>
                 </td>
-                <td className="p-4 font-inter text-zinc-700">
+                <td className="p-4 font-inter text-zinc-700 dark:text-zinc-300">
                   {post.authorName}
                 </td>
-                <td className="p-4 text-zinc-500 font-space tabular-nums">
+                <td className="p-4 text-zinc-500 dark:text-zinc-400 font-space tabular-nums">
                   {post.readTime}
                 </td>
                 <td className="p-4">
@@ -216,11 +268,11 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                       Main Hero
                     </span>
                   ) : post.isSideFeatured ? (
-                    <span className="text-[10px] font-space font-bold uppercase px-2 py-0.5 rounded-[2px] bg-zinc-200 text-zinc-800">
+                    <span className="text-[10px] font-space font-bold uppercase px-2 py-0.5 rounded-[2px] bg-zinc-200 dark:bg-white/10 text-zinc-800 dark:text-zinc-200">
                       Side Feature
                     </span>
                   ) : (
-                    <span className="text-[10px] font-space text-zinc-400">Standard Grid</span>
+                    <span className="text-[10px] font-space text-zinc-400 dark:text-zinc-500">Standard Grid</span>
                   )}
                 </td>
                 <td className="p-4 text-right">
@@ -228,7 +280,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                     <Link
                       href={`/blog/${post.slug}`}
                       target="_blank"
-                      className="p-1.5 text-zinc-400 hover:text-black rounded-[3px] transition-colors"
+                      className="p-1.5 text-zinc-400 hover:text-black dark:hover:text-white rounded-[3px] transition-colors"
                       title="View Public Article"
                     >
                       <ExternalLink className="size-3.5" />
@@ -236,7 +288,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                     <button
                       type="button"
                       onClick={() => handleOpenEdit(post)}
-                      className="p-1.5 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-[3px] transition-colors"
+                      className="p-1.5 text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px] transition-colors"
                       title="Edit Article"
                     >
                       <Edit2 className="size-3.5" />
@@ -244,7 +296,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                     <button
                       type="button"
                       onClick={() => handleDelete(post.id)}
-                      className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-[3px] transition-colors"
+                      className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-[3px] transition-colors"
                       title="Delete Article"
                     >
                       <Trash2 className="size-3.5" />
@@ -259,52 +311,83 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
 
       {/* Edit / Create Blog Post Modal */}
       {editingPost ? (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-          <div className="bg-white border border-zinc-300 w-full max-w-4xl p-6 sm:p-8 rounded-[4px] shadow-2xl relative my-6 max-h-[92vh] overflow-y-auto">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px]" />
+        <div className="fixed inset-0 z-50 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div className="bg-white dark:bg-[#16181b] border border-zinc-300 dark:border-white/10 w-full max-w-4xl p-6 sm:p-8 rounded-[4px] shadow-2xl relative my-6 max-h-[92vh] overflow-y-auto">
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -right-[3px]" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-4 mb-6">
               <div>
-                <h3 className="font-space font-medium text-xl text-[#292c2e]">
+                <h3 className="font-space font-medium text-xl text-[#292c2e] dark:text-white">
                   {isNew ? "Write New Blog Article" : `Edit Article: ${editingPost.title}`}
                 </h3>
-                <p className="font-inter text-xs text-zinc-400 mt-0.5">
-                  Publish to the official Matii Digitals engineering & design blog.
+                <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
+                  Publish to the official Matii Digitals engineering &amp; design blog.
                 </p>
               </div>
               <button
                 onClick={handleClose}
                 type="button"
-                className="p-1.5 text-zinc-400 hover:text-black rounded-[3px] hover:bg-zinc-100 transition-colors"
+                className="p-1.5 text-zinc-400 hover:text-black dark:hover:text-white rounded-[3px] hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors"
               >
                 <X className="size-5" />
               </button>
             </div>
 
             <form onSubmit={handleSave} className="space-y-6 font-inter text-xs">
+              {/* Multi-Language & AI Auto-Translation Switcher */}
+              <LanguageTabSelector
+                activeLocale={activeLocale}
+                onChangeLocale={setActiveLocale}
+                translations={editingPost.translations}
+                sourceTexts={{
+                  title: editingPost.title || "",
+                  excerpt: editingPost.excerpt || "",
+                  content: editingPost.content || "",
+                }}
+                onCopyFromSource={handleCopyBlogFromSource}
+                onTranslated={(translations) => {
+                  setEditingPost((prev) =>
+                    prev
+                      ? {
+                          ...prev,
+                          translations: {
+                            ...(prev.translations || {}),
+                            ...translations,
+                          },
+                        }
+                      : null
+                  );
+                }}
+              />
+
               {/* Basic Details: Title & Slug */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
-                    Article Title
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300 flex items-center justify-between">
+                    <span>
+                      Article Title {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} *
+                    </span>
+                    {activeLocale !== "en" && (
+                      <span className="text-[10px] text-amber-600 dark:text-amber-400 font-normal">
+                        Translating into {activeLocale.toUpperCase()}
+                      </span>
+                    )}
                   </label>
                   <input
                     type="text"
-                    required
-                    value={editingPost.title || ""}
-                    onChange={(e) =>
-                      setEditingPost({ ...editingPost, title: e.target.value })
-                    }
-                    placeholder="e.g. Modernizing Microservices with High-Speed Go and Next.js"
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-sm font-bold text-[#292c2e] focus:border-[#292c2e] outline-none"
+                    required={activeLocale === "en"}
+                    value={getBlogTranslatedField("title", activeLocale)}
+                    onChange={(e) => setBlogTranslatedField("title", e.target.value, activeLocale)}
+                    placeholder={activeLocale === "en" ? "e.g. Modernizing Microservices with High-Speed Go and Next.js" : `Article Title in ${activeLocale.toUpperCase()}...`}
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-sm font-bold text-[#292c2e] dark:text-white focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     URL Slug
                   </label>
                   <input
@@ -318,7 +401,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                       })
                     }
                     placeholder="e.g. modernizing-microservices-nextjs"
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
               </div>
@@ -326,7 +409,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
               {/* Meta: Category, Author, Read Time, Author Role */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Category
                   </label>
                   <input
@@ -339,12 +422,12 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         category: e.target.value,
                       })
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Author Name
                   </label>
                   <input
@@ -357,12 +440,12 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         authorName: e.target.value,
                       })
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Author Role
                   </label>
                   <input
@@ -375,12 +458,12 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         authorRole: e.target.value,
                       })
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Read Time
                   </label>
                   <input
@@ -393,30 +476,29 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         readTime: e.target.value,
                       })
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
               </div>
 
               {/* Excerpt */}
               <div className="space-y-1">
-                <label className="font-space text-[11px] uppercase font-bold text-zinc-700">
-                  Article Excerpt / Lead Summary
+                <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300 flex items-center justify-between">
+                  <span>
+                    Article Excerpt / Lead Summary {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`}
+                  </span>
                 </label>
                 <textarea
                   rows={2}
-                  required
-                  value={editingPost.excerpt || ""}
-                  onChange={(e) =>
-                    setEditingPost({ ...editingPost, excerpt: e.target.value })
-                  }
-                  placeholder="Concise, compelling teaser shown on blog archive cards and hero sections..."
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] text-xs text-zinc-800 focus:border-[#292c2e] outline-none leading-relaxed"
+                  value={getBlogTranslatedField("excerpt", activeLocale)}
+                  onChange={(e) => setBlogTranslatedField("excerpt", e.target.value, activeLocale)}
+                  placeholder={activeLocale === "en" ? "Concise, compelling teaser shown on blog archive cards and hero sections..." : `Excerpt in ${activeLocale.toUpperCase()}...`}
+                  className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none leading-relaxed"
                 />
               </div>
 
               {/* Cloudinary Media: Cover Image & Author Avatar */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-zinc-50/50 p-4 border border-zinc-200/80 rounded-[4px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-zinc-50/50 dark:bg-white/[0.02] p-4 border border-zinc-200/80 dark:border-white/10 rounded-[4px]">
                 <CloudinaryUploadButton
                   label="Article Hero Cover Image"
                   hint="High-resolution banner displayed in header and social cards"
@@ -438,16 +520,19 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
 
               {/* Rich Text Editor for Article Body */}
               <div className="space-y-1.5">
-                <label className="font-space text-[11px] uppercase font-bold text-zinc-700 flex items-center justify-between">
-                  <span>Article Body (Rich Text Editor)</span>
-                  <span className="text-[10px] font-normal text-zinc-400">
+                <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300 flex items-center justify-between">
+                  <span>
+                    Article Body (Rich Text Editor) {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`}
+                  </span>
+                  <span className="text-[10px] font-normal text-zinc-400 dark:text-zinc-500">
                     Supports H2-H4, Code blocks, Lists, Links, Quotes, and Cloudinary Images
                   </span>
                 </label>
                 <RichTextEditor
-                  content={editingPost.content || ""}
-                  onChange={(html) => setEditingPost({ ...editingPost, content: html })}
-                  placeholder="Start writing the full story, including architecture breakdowns, embedded media, and code snippets..."
+                  key={`blog-editor-${activeLocale}`}
+                  content={getBlogTranslatedField("content", activeLocale)}
+                  onChange={(html) => setBlogTranslatedField("content", html, activeLocale)}
+                  placeholder={activeLocale === "en" ? "Start writing the full story..." : `Article content in ${activeLocale.toUpperCase()}...`}
                 />
               </div>
 
@@ -467,7 +552,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
               />
 
               {/* Add to Navigation Mega Menu */}
-              <div className="border-t border-zinc-100 pt-3">
+              <div className="border-t border-zinc-100 dark:border-white/10 pt-3">
                 <AddToNavbarSelector
                   slug={editingPost.slug || ""}
                   title={editingPost.title || ""}
@@ -479,7 +564,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
               </div>
 
               {/* Placement & Status Toggles */}
-              <div className="flex flex-wrap items-center gap-6 pt-2 border-t border-zinc-100">
+              <div className="flex flex-wrap items-center gap-6 pt-2 border-t border-zinc-100 dark:border-white/10">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
@@ -490,9 +575,9 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         isMainHero: e.target.checked,
                       })
                     }
-                    className="size-4 text-[#292c2e] rounded-[2px]"
+                    className="size-4 text-[#292c2e] dark:accent-[#98ff03] rounded-[2px]"
                   />
-                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Featured as Main Blog Hero
                   </span>
                 </label>
@@ -507,9 +592,9 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         isSideFeatured: e.target.checked,
                       })
                     }
-                    className="size-4 text-[#292c2e] rounded-[2px]"
+                    className="size-4 text-[#292c2e] dark:accent-[#98ff03] rounded-[2px]"
                   />
-                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Side Featured List
                   </span>
                 </label>
@@ -524,27 +609,27 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                         isPublished: e.target.checked,
                       })
                     }
-                    className="size-4 text-[#292c2e] rounded-[2px]"
+                    className="size-4 text-[#292c2e] dark:accent-[#98ff03] rounded-[2px]"
                   />
-                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700">
+                  <span className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Published Live
                   </span>
                 </label>
               </div>
 
               {/* Actions Footer */}
-              <div className="pt-4 flex items-center justify-end gap-3 border-t border-zinc-100">
+              <div className="pt-4 flex items-center justify-end gap-3 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-space text-xs uppercase font-medium rounded-[3px] transition-colors cursor-pointer"
+                  className="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-white/10 dark:hover:bg-white/20 text-zinc-700 dark:text-zinc-200 font-space text-xs uppercase font-medium rounded-[3px] transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="px-6 py-2.5 bg-[#292c2e] hover:bg-black text-white font-space text-xs uppercase font-semibold rounded-[3px] active:scale-[0.96] shadow-sm disabled:opacity-50 transition-all cursor-pointer"
+                  className="px-6 py-2.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#86e200] text-white dark:text-zinc-950 font-space text-xs uppercase font-bold rounded-[3px] active:scale-[0.96] shadow-sm disabled:opacity-50 transition-all cursor-pointer"
                 >
                   {isPending ? "Saving Article..." : "Save & Publish Article"}
                 </button>

@@ -46,8 +46,11 @@ import {
   Eye,
   Sliders,
   ArrowRight,
+  Loader2,
   LucideIcon,
 } from "lucide-react";
+
+import { AutoTranslateButton } from "@/components/admin/AutoTranslateButton";
 
 // Available Icon Options for Categories
 const ICON_OPTIONS: { name: string; icon: LucideIcon }[] = [
@@ -91,6 +94,14 @@ export default function NavigationClientManager({
   const [isJsonMode, setIsJsonMode] = useState<boolean>(false);
   const [editingConfigJson, setEditingConfigJson] = useState<string>("");
   const [saving, setSaving] = useState<boolean>(false);
+  const [batchTranslating, setBatchTranslating] = useState<boolean>(false);
+  
+  // Translation tab states for modals
+  const [activeMenuTranslationLocale, setActiveMenuTranslationLocale] = useState<string>("om");
+  const [activeCatTranslationLocale, setActiveCatTranslationLocale] = useState<string>("om");
+  const [activeGrpTranslationLocale, setActiveGrpTranslationLocale] = useState<string>("om");
+  const [activeNavTranslationLocale, setActiveNavTranslationLocale] = useState<string>("om");
+  
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(
     null
   );
@@ -251,6 +262,152 @@ export default function NavigationClientManager({
     }
   };
 
+  // Helper to batch translate a single menu tree into Oromo, Amharic, German, and Polish
+  const translateMenuTree = async (menuToTranslate: MegaMenuConfig): Promise<MegaMenuConfig> => {
+    const sourceTexts: Record<string, string> = {};
+
+    if (menuToTranslate.label) sourceTexts["menu_label"] = menuToTranslate.label;
+    if (menuToTranslate.footer?.label) sourceTexts["footer_label"] = menuToTranslate.footer.label;
+    if (menuToTranslate.footer?.ctaLabel) sourceTexts["footer_cta"] = menuToTranslate.footer.ctaLabel;
+
+    (menuToTranslate.categories || []).forEach((cat, cIdx) => {
+      if (cat.title) sourceTexts[`cat_${cIdx}_title`] = cat.title;
+
+      (cat.groups || []).forEach((grp, gIdx) => {
+        if (grp.title) sourceTexts[`grp_${cIdx}_${gIdx}_title`] = grp.title;
+
+        (grp.items || []).forEach((itm, iIdx) => {
+          if (itm.title) sourceTexts[`itm_${cIdx}_${gIdx}_${iIdx}_title`] = itm.title;
+          if (itm.badge) sourceTexts[`itm_${cIdx}_${gIdx}_${iIdx}_badge`] = itm.badge;
+          if (itm.description) sourceTexts[`itm_${cIdx}_${gIdx}_${iIdx}_desc`] = itm.description;
+        });
+      });
+    });
+
+    if (Object.keys(sourceTexts).length === 0) return menuToTranslate;
+
+    const targetLangs = ["om", "am", "de", "pl"];
+    const res = await fetch("/api/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sourceTexts,
+        sourceLang: "en",
+        targetLangs,
+      }),
+    });
+
+    const data = await res.json();
+    if (!data.success || !data.translations) {
+      throw new Error(data.error || "Batch translation failed");
+    }
+
+    const translationsByLang = data.translations as Record<string, Record<string, string>>;
+    const updatedMenu: MegaMenuConfig = JSON.parse(JSON.stringify(menuToTranslate));
+    if (!updatedMenu.translations) updatedMenu.translations = {};
+
+    targetLangs.forEach((lang) => {
+      const langData = translationsByLang[lang] || {};
+      if (!updatedMenu.translations![lang]) updatedMenu.translations![lang] = {};
+
+      if (langData["menu_label"]) updatedMenu.translations![lang].label = langData["menu_label"];
+      if (langData["footer_label"]) updatedMenu.translations![lang].footerLabel = langData["footer_label"];
+      if (langData["footer_cta"]) updatedMenu.translations![lang].footerCtaLabel = langData["footer_cta"];
+    });
+
+    (updatedMenu.categories || []).forEach((cat, cIdx) => {
+      if (!cat.translations) cat.translations = {};
+      targetLangs.forEach((lang) => {
+        const langData = translationsByLang[lang] || {};
+        if (!cat.translations![lang]) cat.translations![lang] = {};
+        if (langData[`cat_${cIdx}_title`]) {
+          cat.translations![lang].title = langData[`cat_${cIdx}_title`];
+        }
+      });
+
+      (cat.groups || []).forEach((grp, gIdx) => {
+        if (!grp.translations) grp.translations = {};
+        targetLangs.forEach((lang) => {
+          const langData = translationsByLang[lang] || {};
+          if (!grp.translations![lang]) grp.translations![lang] = {};
+          if (langData[`grp_${cIdx}_${gIdx}_title`]) {
+            grp.translations![lang].title = langData[`grp_${cIdx}_${gIdx}_title`];
+          }
+        });
+
+        (grp.items || []).forEach((itm, iIdx) => {
+          if (!itm.translations) itm.translations = {};
+          targetLangs.forEach((lang) => {
+            const langData = translationsByLang[lang] || {};
+            if (!itm.translations![lang]) itm.translations![lang] = {};
+            if (langData[`itm_${cIdx}_${gIdx}_${iIdx}_title`]) {
+              itm.translations![lang].title = langData[`itm_${cIdx}_${gIdx}_${iIdx}_title`];
+            }
+            if (langData[`itm_${cIdx}_${gIdx}_${iIdx}_badge`]) {
+              itm.translations![lang].badge = langData[`itm_${cIdx}_${gIdx}_${iIdx}_badge`];
+            }
+            if (langData[`itm_${cIdx}_${gIdx}_${iIdx}_desc`]) {
+              itm.translations![lang].description = langData[`itm_${cIdx}_${gIdx}_${iIdx}_desc`];
+            }
+          });
+        });
+      });
+    });
+
+    return updatedMenu;
+  };
+
+  // Batch translate active menu
+  const handleBatchTranslateCurrentMenu = async () => {
+    if (!currentMenu) return;
+    setBatchTranslating(true);
+    setFeedback(null);
+    try {
+      const translated = await translateMenuTree(currentMenu);
+      await handleSaveMenu(translated);
+      setFeedback({
+        type: "success",
+        message: `Successfully translated "${translated.label}" and all child categories/links into Oromo, Amharic, German & Polish!`,
+      });
+      setTimeout(() => setFeedback(null), 5000);
+    } catch (err: any) {
+      setFeedback({ type: "error", message: err.message || "Failed to batch translate menu" });
+    } finally {
+      setBatchTranslating(false);
+    }
+  };
+
+  // Batch translate all menus
+  const handleBatchTranslateAllMenus = async () => {
+    if (!confirm("This will AI auto-translate ALL navbar menus, categories, groups and links into 4 languages. Proceed?")) return;
+    setBatchTranslating(true);
+    setFeedback(null);
+    try {
+      for (const menu of menus) {
+        const translated = await translateMenuTree(menu);
+        await fetch("/api/navigation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(translated),
+        });
+      }
+      const res = await fetch("/api/navigation");
+      const data = await res.json();
+      if (data.success && Array.isArray(data.data)) {
+        setMenus(data.data);
+      }
+      setFeedback({
+        type: "success",
+        message: "Successfully AI-translated all navigation menus and child links into 4 languages!",
+      });
+      setTimeout(() => setFeedback(null), 5000);
+    } catch (err: any) {
+      setFeedback({ type: "error", message: err.message || "Failed to translate all menus" });
+    } finally {
+      setBatchTranslating(false);
+    }
+  };
+
   // --- Handlers for Form Modals ---
 
   // 1. Menu Save
@@ -267,6 +424,7 @@ export default function NavigationClientManager({
       isActive: data.isActive !== false,
       categories: data.categories || [],
       footer: data.footer,
+      translations: data.translations,
     };
 
     await handleSaveMenu(newMenu);
@@ -287,6 +445,7 @@ export default function NavigationClientManager({
       title: catData.title.trim(),
       iconName: catData.iconName || "Sparkles",
       groups: catData.groups || [],
+      translations: catData.translations,
     };
 
     if (categoryModal.mode === "edit" && typeof categoryModal.index === "number") {
@@ -327,6 +486,7 @@ export default function NavigationClientManager({
       href: grpData.href ? grpData.href.trim() : undefined,
       iconName: grpData.iconName,
       items: grpData.items || [],
+      translations: grpData.translations,
     };
 
     if (mode === "edit" && typeof groupIndex === "number") {
@@ -371,6 +531,7 @@ export default function NavigationClientManager({
       href: itemData.href.trim(),
       badge: itemData.badge?.trim() || undefined,
       description: itemData.description?.trim() || undefined,
+      translations: itemData.translations,
     };
 
     if (mode === "edit" && typeof itemIndex === "number") {
@@ -405,23 +566,23 @@ export default function NavigationClientManager({
   return (
     <div className="space-y-6">
       {/* Top Banner Header with Matii Architectural Corner Accents */}
-      <div className="bg-white p-6 border border-zinc-200/80 shadow-sm relative rounded-[4px]">
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -left-[3px]" />
-        <div className="absolute bg-[#292c2e] size-[6px] -bottom-[3px] -right-[3px]" />
+      <div className="bg-white dark:bg-[#16181b] p-6 border border-zinc-200/80 dark:border-white/10 shadow-sm relative rounded-[4px]">
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -left-[3px]" />
+        <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -bottom-[3px] -right-[3px]" />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <div className="p-1.5 bg-[#292c2e] text-[#98ff03] rounded-[4px]">
+              <div className="p-1.5 bg-[#292c2e] dark:bg-[#98ff03] text-[#98ff03] dark:text-black rounded-[4px]">
                 <Menu className="size-4" />
               </div>
-              <h1 className="text-xl font-space font-bold tracking-tight text-[#292c2e]">
+              <h1 className="text-xl font-space font-bold tracking-tight text-[#292c2e] dark:text-zinc-100">
                 Navigation & Mega-Menu Studio
               </h1>
             </div>
-            <p className="font-inter text-xs text-zinc-500 mt-1">
+            <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400 mt-1">
               Visually create, customize, and reorder navigation tabs, labels, categories, and dropdown links without writing JSON.
             </p>
           </div>
@@ -429,9 +590,35 @@ export default function NavigationClientManager({
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               type="button"
+              onClick={handleBatchTranslateCurrentMenu}
+              disabled={batchTranslating || saving || !currentMenu}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-semibold bg-[#98ff03]/15 hover:bg-[#98ff03]/25 text-black dark:text-[#98ff03] border border-[#98ff03]/30 rounded-[4px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50 shadow-2xs"
+              title="AI Auto-Translate this entire active menu (all categories, groups, links & footer) into Oromo, Amharic, German & Polish"
+            >
+              {batchTranslating ? (
+                <Loader2 className="size-3.5 animate-spin text-black dark:text-[#98ff03]" />
+              ) : (
+                <Sparkles className="size-3.5 text-black dark:text-[#98ff03]" />
+              )}
+              <span>{batchTranslating ? "Translating Tree..." : "AI Translate Menu"}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleBatchTranslateAllMenus}
+              disabled={batchTranslating || saving}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[4px] text-zinc-700 dark:text-zinc-200 transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
+              title="AI Auto-Translate all navbar menus at once"
+            >
+              <Sparkles className="size-3.5 text-zinc-500 dark:text-[#98ff03]" />
+              <span>Translate All Menus</span>
+            </button>
+
+            <button
+              type="button"
               onClick={handleResetToDefault}
-              disabled={saving}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 hover:bg-zinc-100 rounded-[4px] text-zinc-700 transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
+              disabled={saving || batchTranslating}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[4px] text-zinc-700 dark:text-zinc-200 transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
               title="Reset all menus to system default presets"
             >
               <RotateCcw className="size-3.5" />
@@ -446,7 +633,7 @@ export default function NavigationClientManager({
                   setEditingConfigJson(JSON.stringify(currentMenu, null, 2));
                 }
               }}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 hover:bg-zinc-100 rounded-[4px] text-zinc-700 transition-all active:scale-[0.96] cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[4px] text-zinc-700 dark:text-zinc-200 transition-all active:scale-[0.96] cursor-pointer"
             >
               <Sliders className="size-3.5" />
               <span>{isJsonMode ? "Visual Form Builder" : "Advanced JSON"}</span>
@@ -468,9 +655,9 @@ export default function NavigationClientManager({
                   },
                 })
               }
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96] cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-all active:scale-[0.96] cursor-pointer"
             >
-              <Plus className="size-3.5 text-[#98ff03]" />
+              <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
               <span>Add New Nav Menu</span>
             </button>
           </div>
@@ -482,21 +669,21 @@ export default function NavigationClientManager({
         <div
           className={`p-3.5 rounded-[4px] flex items-center gap-2.5 text-xs font-inter border transition-all ${
             feedback.type === "success"
-              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-              : "bg-red-50 text-red-800 border-red-200"
+              ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
+              : "bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-300 border-red-200 dark:border-red-800"
           }`}
         >
           {feedback.type === "success" ? (
-            <Check className="size-4 text-emerald-600 shrink-0" />
+            <Check className="size-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
           ) : (
-            <AlertCircle className="size-4 text-red-600 shrink-0" />
+            <AlertCircle className="size-4 text-red-600 dark:text-red-400 shrink-0" />
           )}
           <span>{feedback.message}</span>
         </div>
       )}
 
       {/* Horizontal Navbar Tabs */}
-      <div className="bg-white border border-zinc-200/80 p-2 rounded-[4px] flex items-center gap-1.5 overflow-x-auto shadow-2xs">
+      <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-2 rounded-[4px] flex items-center gap-1.5 overflow-x-auto shadow-2xs">
         {menus.map((menu) => {
           const isSelected = selectedKey === menu.key;
           const hasDropdown = Boolean(menu.categories && menu.categories.length > 0);
@@ -506,14 +693,14 @@ export default function NavigationClientManager({
               onClick={() => handleSelectMenu(menu.key)}
               className={`px-3.5 py-2 text-xs font-space rounded-[3px] transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
                 isSelected
-                  ? "bg-[#292c2e] text-white font-semibold shadow-xs"
-                  : "text-zinc-600 hover:text-black hover:bg-zinc-100"
+                  ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black font-semibold shadow-xs"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10"
               }`}
             >
               <span>{menu.label}</span>
               <span
                 className={`text-[10px] font-mono px-1.5 py-0.2 rounded ${
-                  isSelected ? "bg-[#98ff03] text-black font-bold" : "bg-zinc-100 text-zinc-500"
+                  isSelected ? "bg-[#98ff03] dark:bg-black text-black dark:text-[#98ff03] font-bold" : "bg-zinc-100 dark:bg-white/10 text-zinc-500 dark:text-zinc-400"
                 }`}
               >
                 {hasDropdown ? `${menu.categories.length} Cats` : "Link"}
@@ -528,13 +715,13 @@ export default function NavigationClientManager({
 
       {/* Main Content Area: Visual Form Editor or Advanced JSON */}
       {isJsonMode ? (
-        <div className="bg-white border border-zinc-200/80 rounded-[4px] p-5 space-y-3">
+        <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 rounded-[4px] p-5 space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-space font-bold text-sm text-zinc-900">
+              <h3 className="font-space font-bold text-sm text-zinc-900 dark:text-zinc-100">
                 Raw JSON Editor: {currentMenu?.label}
               </h3>
-              <p className="font-inter text-xs text-zinc-400">
+              <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500">
                 Directly view or modify the complete structured schema for this navigation node.
               </p>
             </div>
@@ -542,9 +729,9 @@ export default function NavigationClientManager({
               type="button"
               onClick={handleSaveJson}
               disabled={saving}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase tracking-wider rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space font-semibold uppercase tracking-wider rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50"
             >
-              <Save className="size-3.5 text-[#98ff03]" />
+              <Save className="size-3.5 text-[#98ff03] dark:text-black" />
               <span>{saving ? "Saving..." : "Save JSON Changes"}</span>
             </button>
           </div>
@@ -552,41 +739,41 @@ export default function NavigationClientManager({
             value={editingConfigJson}
             onChange={(e) => setEditingConfigJson(e.target.value)}
             rows={24}
-            className="w-full font-mono text-xs p-4 rounded-[4px] bg-[#161819] text-zinc-100 border border-zinc-800 focus:outline-none focus:border-[#98ff03] leading-relaxed"
+            className="w-full font-mono text-xs p-4 rounded-[4px] bg-[#161819] dark:bg-[#121417] text-zinc-100 border border-zinc-800 dark:border-white/10 focus:outline-none focus:border-[#98ff03] leading-relaxed"
           />
         </div>
       ) : (
         <div className="space-y-6">
           {/* Selected Menu Meta Summary Card */}
-          <div className="bg-white border border-zinc-200/80 p-5 rounded-[4px] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-5 rounded-[4px] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="font-space font-bold text-base text-[#292c2e]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-space font-bold text-base text-[#292c2e] dark:text-zinc-100">
                   {currentMenu?.label}
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded bg-zinc-100 text-zinc-600 font-mono">
+                <span className="text-xs px-2 py-0.5 rounded bg-zinc-100 dark:bg-white/10 text-zinc-600 dark:text-zinc-300 font-mono">
                   key: {currentMenu?.key}
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded bg-zinc-100 text-zinc-600 font-mono">
+                <span className="text-xs px-2 py-0.5 rounded bg-zinc-100 dark:bg-white/10 text-zinc-600 dark:text-zinc-300 font-mono">
                   order: #{currentMenu?.order}
                 </span>
                 <span
                   className={`text-[10px] font-space uppercase px-2 py-0.5 rounded font-bold ${
                     currentMenu?.isActive
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : "bg-zinc-100 text-zinc-500"
+                      ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                      : "bg-zinc-100 dark:bg-white/10 text-zinc-500 dark:text-zinc-400"
                   }`}
                 >
                   {currentMenu?.isActive ? "Active on Site" : "Hidden / Inactive"}
                 </span>
               </div>
-              <p className="font-inter text-xs text-zinc-500">
-                Primary route: <span className="font-mono text-zinc-700">{currentMenu?.href}</span>
+              <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400">
+                Primary route: <span className="font-mono text-zinc-700 dark:text-zinc-300">{currentMenu?.href}</span>
                 {currentMenu?.footer && (
                   <>
                     {" "}
                     • Footer Banner CTA:{" "}
-                    <span className="font-mono text-zinc-700 font-medium">
+                    <span className="font-mono text-zinc-700 dark:text-zinc-300 font-medium">
                       &ldquo;{currentMenu.footer.ctaLabel}&rdquo;
                     </span>
                   </>
@@ -597,6 +784,21 @@ export default function NavigationClientManager({
             <div className="flex items-center gap-2">
               <button
                 type="button"
+                onClick={handleBatchTranslateCurrentMenu}
+                disabled={batchTranslating || saving}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-semibold bg-[#98ff03]/15 hover:bg-[#98ff03]/25 text-black dark:text-[#98ff03] border border-[#98ff03]/30 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
+                title="AI Auto-Translate this entire menu into Oromo, Amharic, German & Polish"
+              >
+                {batchTranslating ? (
+                  <Loader2 className="size-3 animate-spin text-black dark:text-[#98ff03]" />
+                ) : (
+                  <Sparkles className="size-3 text-black dark:text-[#98ff03]" />
+                )}
+                <span>{batchTranslating ? "Translating..." : "AI Translate Tree"}</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={() =>
                   setMenuModal({
                     isOpen: true,
@@ -604,16 +806,16 @@ export default function NavigationClientManager({
                     data: { ...currentMenu },
                   })
                 }
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-medium border border-zinc-200 hover:bg-zinc-100 rounded-[3px] text-zinc-700 transition-all active:scale-[0.96] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-medium border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px] text-zinc-700 dark:text-zinc-200 transition-all active:scale-[0.96] cursor-pointer"
               >
-                <Edit2 className="size-3 text-zinc-500" />
+                <Edit2 className="size-3 text-zinc-500 dark:text-zinc-400" />
                 <span>Edit Menu Meta</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleDeleteMenu(currentMenu.key)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-medium text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 border border-transparent hover:border-red-200 dark:hover:border-red-800 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer"
               >
                 <Trash2 className="size-3" />
                 <span>Delete Menu</span>
@@ -625,11 +827,11 @@ export default function NavigationClientManager({
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-space font-bold text-sm text-[#292c2e] uppercase tracking-wider flex items-center gap-2">
-                  <Layers className="size-4 text-[#292c2e]" />
+                <h3 className="font-space font-bold text-sm text-[#292c2e] dark:text-zinc-100 uppercase tracking-wider flex items-center gap-2">
+                  <Layers className="size-4 text-[#292c2e] dark:text-[#98ff03]" />
                   <span>Mega-Menu Categories ({currentMenu?.categories?.length || 0})</span>
                 </h3>
-                <p className="font-inter text-xs text-zinc-400 mt-0.5">
+                <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
                   Left-sidebar categories and right-column navigation groups shown in the mega dropdown.
                 </p>
               </div>
@@ -648,24 +850,24 @@ export default function NavigationClientManager({
                     },
                   })
                 }
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space font-semibold uppercase rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer shadow-2xs"
               >
-                <Plus className="size-3.5 text-[#98ff03]" />
+                <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
                 <span>Add Category</span>
               </button>
             </div>
 
             {(!currentMenu?.categories || currentMenu.categories.length === 0) ? (
-              <div className="bg-white border border-dashed border-zinc-300 p-8 rounded-[4px] text-center space-y-3">
-                <div className="size-10 rounded-full bg-zinc-100 flex items-center justify-center mx-auto text-zinc-400">
+              <div className="bg-white dark:bg-[#16181b] border border-dashed border-zinc-300 dark:border-white/15 p-8 rounded-[4px] text-center space-y-3">
+                <div className="size-10 rounded-full bg-zinc-100 dark:bg-white/10 flex items-center justify-center mx-auto text-zinc-400 dark:text-zinc-300">
                   <LinkIcon className="size-5" />
                 </div>
                 <div>
-                  <p className="font-space font-bold text-sm text-zinc-800">
+                  <p className="font-space font-bold text-sm text-zinc-800 dark:text-zinc-100">
                     Direct Navbar Link (No Dropdown)
                   </p>
-                  <p className="font-inter text-xs text-zinc-400 mt-1 max-w-md mx-auto">
-                    This item links directly to <code className="font-mono text-zinc-600 bg-zinc-100 px-1 py-0.5 rounded">{currentMenu?.href}</code>. If you want it to display a 2-column mega menu, click below to add its first category.
+                  <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 mt-1 max-w-md mx-auto">
+                    This item links directly to <code className="font-mono text-zinc-600 dark:text-zinc-300 bg-zinc-100 dark:bg-white/10 px-1 py-0.5 rounded">{currentMenu?.href}</code>. If you want it to display a 2-column mega menu, click below to add its first category.
                   </p>
                 </div>
                 <button
@@ -682,9 +884,9 @@ export default function NavigationClientManager({
                       },
                     })
                   }
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space font-semibold uppercase rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space font-semibold uppercase rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer shadow-2xs"
                 >
-                  <Plus className="size-3.5 text-[#98ff03]" />
+                  <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
                   <span>Convert to Mega-Menu & Add Category</span>
                 </button>
               </div>
@@ -693,25 +895,25 @@ export default function NavigationClientManager({
                 {currentMenu.categories.map((category, catIdx) => (
                   <div
                     key={category.id || catIdx}
-                    className="bg-white border border-zinc-200/90 rounded-[4px] shadow-sm overflow-hidden"
+                    className="bg-white dark:bg-[#16181b] border border-zinc-200/90 dark:border-white/10 rounded-[4px] shadow-sm overflow-hidden"
                   >
                     {/* Category Header */}
-                    <div className="bg-[#f8f9fa] border-b border-zinc-200/80 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="bg-[#f8f9fa] dark:bg-white/[0.02] border-b border-zinc-200/80 dark:border-white/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="size-9 rounded-[4px] bg-white border border-zinc-200 flex items-center justify-center text-[#292c2e] shadow-2xs shrink-0">
-                          <CategoryIconPreview name={category.iconName} className="size-4 text-[#292c2e]" />
+                        <div className="size-9 rounded-[4px] bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-[#292c2e] dark:text-[#98ff03] shadow-2xs shrink-0">
+                          <CategoryIconPreview name={category.iconName} className="size-4 text-[#292c2e] dark:text-[#98ff03]" />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="font-space font-bold text-sm text-[#292c2e]">
+                            <h4 className="font-space font-bold text-sm text-[#292c2e] dark:text-zinc-100">
                               {category.title}
                             </h4>
-                            <span className="font-mono text-[11px] text-zinc-400 bg-white px-1.5 py-0.2 rounded border border-zinc-200">
+                            <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-400 bg-white dark:bg-white/5 px-1.5 py-0.2 rounded border border-zinc-200 dark:border-white/10">
                               id: {category.id}
                             </span>
                           </div>
-                          <p className="font-inter text-xs text-zinc-400">
-                            Icon: <span className="font-mono text-zinc-600">{category.iconName}</span> • {category.groups?.length || 0} sub-groups
+                          <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500">
+                            Icon: <span className="font-mono text-zinc-600 dark:text-zinc-300">{category.iconName}</span> • {category.groups?.length || 0} sub-groups
                           </p>
                         </div>
                       </div>
@@ -727,9 +929,9 @@ export default function NavigationClientManager({
                               data: { title: "", href: "", items: [] },
                             })
                           }
-                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-space font-medium bg-white hover:bg-zinc-50 border border-zinc-200 rounded-[3px] text-zinc-700 active:scale-[0.96] transition-all cursor-pointer shadow-2xs"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-space font-medium bg-white dark:bg-[#1f2224] hover:bg-zinc-50 dark:hover:bg-[#282b2e] border border-zinc-200 dark:border-white/10 rounded-[3px] text-zinc-700 dark:text-zinc-200 active:scale-[0.96] transition-all cursor-pointer shadow-2xs"
                         >
-                          <Plus className="size-3 text-[#292c2e]" />
+                          <Plus className="size-3 text-[#292c2e] dark:text-[#98ff03]" />
                           <span>Add Sub-Group</span>
                         </button>
 
@@ -743,7 +945,7 @@ export default function NavigationClientManager({
                               data: { ...category },
                             })
                           }
-                          className="p-1.5 text-zinc-500 hover:text-black hover:bg-white rounded-[3px] transition-colors border border-transparent hover:border-zinc-200 cursor-pointer"
+                          className="p-1.5 text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white hover:bg-white dark:hover:bg-white/10 rounded-[3px] transition-colors border border-transparent hover:border-zinc-200 dark:hover:border-white/10 cursor-pointer"
                           title="Edit Category Details"
                         >
                           <Edit2 className="size-3.5" />
@@ -752,7 +954,7 @@ export default function NavigationClientManager({
                         <button
                           type="button"
                           onClick={() => handleDeleteCategory(catIdx)}
-                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-[3px] transition-colors cursor-pointer"
+                          className="p-1.5 text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-[3px] transition-colors cursor-pointer"
                           title="Delete Category"
                         >
                           <Trash2 className="size-3.5" />
@@ -763,7 +965,7 @@ export default function NavigationClientManager({
                     {/* Sub-Groups inside Category */}
                     <div className="p-4 space-y-4">
                       {(!category.groups || category.groups.length === 0) ? (
-                        <p className="font-inter text-xs text-zinc-400 italic py-2">
+                        <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 italic py-2">
                           No sub-groups added yet. Click &ldquo;Add Sub-Group&rdquo; to create section headers for links.
                         </p>
                       ) : (
@@ -771,16 +973,16 @@ export default function NavigationClientManager({
                           {category.groups.map((group, grpIdx) => (
                             <div
                               key={grpIdx}
-                              className="border border-zinc-200/80 rounded-[4px] p-3.5 bg-zinc-50/50 space-y-3"
+                              className="border border-zinc-200/80 dark:border-white/10 rounded-[4px] p-3.5 bg-zinc-50/50 dark:bg-white/[0.02] space-y-3"
                             >
                               {/* Group Header */}
-                              <div className="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+                              <div className="flex items-center justify-between pb-2 border-b border-zinc-200/60 dark:border-white/10">
                                 <div className="flex items-center gap-2">
-                                  <FolderTree className="size-3.5 text-zinc-500 shrink-0" />
-                                  <span className="font-space font-bold text-xs text-zinc-800 uppercase tracking-wider">
+                                  <FolderTree className="size-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
+                                  <span className="font-space font-bold text-xs text-zinc-800 dark:text-zinc-100 uppercase tracking-wider">
                                     {group.title}
                                   </span>
-                                  <span className="font-mono text-[10px] text-zinc-400">
+                                  <span className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500">
                                     ({group.items?.length || 0})
                                   </span>
                                 </div>
@@ -797,9 +999,9 @@ export default function NavigationClientManager({
                                         data: { title: "", href: "", badge: "", description: "" },
                                       })
                                     }
-                                    className="px-2 py-0.5 text-[10px] font-space uppercase font-bold bg-[#292c2e] hover:bg-black text-white rounded-[3px] transition-transform active:scale-[0.96] flex items-center gap-1 cursor-pointer"
+                                    className="px-2 py-0.5 text-[10px] font-space uppercase font-bold bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black rounded-[3px] transition-transform active:scale-[0.96] flex items-center gap-1 cursor-pointer"
                                   >
-                                    <Plus className="size-2.5 text-[#98ff03]" />
+                                    <Plus className="size-2.5 text-[#98ff03] dark:text-black" />
                                     <span>Add Link</span>
                                   </button>
 
@@ -814,7 +1016,7 @@ export default function NavigationClientManager({
                                         data: { ...group },
                                       })
                                     }
-                                    className="p-1 text-zinc-400 hover:text-black rounded transition-colors cursor-pointer"
+                                    className="p-1 text-zinc-400 hover:text-black dark:hover:text-white rounded transition-colors cursor-pointer"
                                     title="Edit Sub-Group"
                                   >
                                     <Edit2 className="size-3" />
@@ -823,7 +1025,7 @@ export default function NavigationClientManager({
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteGroup(catIdx, grpIdx)}
-                                    className="p-1 text-zinc-400 hover:text-red-600 rounded transition-colors cursor-pointer"
+                                    className="p-1 text-zinc-400 hover:text-red-600 dark:hover:text-red-400 rounded transition-colors cursor-pointer"
                                     title="Delete Sub-Group"
                                   >
                                     <Trash2 className="size-3" />
@@ -834,30 +1036,30 @@ export default function NavigationClientManager({
                               {/* Items List */}
                               <div className="space-y-1.5">
                                 {(!group.items || group.items.length === 0) ? (
-                                  <p className="font-inter text-[11px] text-zinc-400 italic">
+                                  <p className="font-inter text-[11px] text-zinc-400 dark:text-zinc-500 italic">
                                     No links in this group yet. Click &ldquo;Add Link&rdquo; above.
                                   </p>
                                 ) : (
                                   group.items.map((item, itmIdx) => (
                                     <div
                                       key={itmIdx}
-                                      className="flex items-center justify-between p-2 rounded-[3px] bg-white border border-zinc-200/80 hover:border-zinc-300 transition-colors group"
+                                      className="flex items-center justify-between p-2 rounded-[3px] bg-white dark:bg-[#121417] border border-zinc-200/80 dark:border-white/10 hover:border-zinc-300 dark:hover:border-white/20 transition-colors group"
                                     >
                                       <div className="min-w-0 flex-1 pr-2">
                                         <div className="flex items-center gap-1.5">
-                                          <span className="font-space font-medium text-xs text-[#292c2e] truncate">
+                                          <span className="font-space font-medium text-xs text-[#292c2e] dark:text-zinc-100 truncate">
                                             {item.title}
                                           </span>
                                           {item.badge && (
-                                            <span className="text-[9px] font-space uppercase font-bold px-1.5 py-0.2 bg-[#98ff03]/25 text-black border border-[#98ff03]/40 rounded">
+                                            <span className="text-[9px] font-space uppercase font-bold px-1.5 py-0.2 bg-[#98ff03]/25 text-black dark:text-[#98ff03] border border-[#98ff03]/40 rounded">
                                               {item.badge}
                                             </span>
                                           )}
                                         </div>
-                                        <p className="font-mono text-[10px] text-zinc-400 truncate mt-0.5">
+                                        <p className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
                                           {item.href}
                                           {item.description && (
-                                            <span className="font-inter text-zinc-500 ml-1.5">
+                                            <span className="font-inter text-zinc-500 dark:text-zinc-400 ml-1.5">
                                               • {item.description}
                                             </span>
                                           )}
@@ -877,7 +1079,7 @@ export default function NavigationClientManager({
                                               data: { ...item },
                                             })
                                           }
-                                          className="p-1 text-zinc-400 hover:text-black rounded cursor-pointer"
+                                          className="p-1 text-zinc-400 hover:text-black dark:hover:text-white rounded cursor-pointer"
                                           title="Edit Link"
                                         >
                                           <Edit2 className="size-3" />
@@ -885,7 +1087,7 @@ export default function NavigationClientManager({
                                         <button
                                           type="button"
                                           onClick={() => handleDeleteItem(catIdx, grpIdx, itmIdx)}
-                                          className="p-1 text-zinc-400 hover:text-red-600 rounded cursor-pointer"
+                                          className="p-1 text-zinc-400 hover:text-red-600 dark:hover:text-red-400 rounded cursor-pointer"
                                           title="Delete Link"
                                         >
                                           <Trash2 className="size-3" />
@@ -912,19 +1114,19 @@ export default function NavigationClientManager({
 
       {/* 1. Add / Edit Menu Modal */}
       {menuModal.isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-[4px] border border-zinc-200 max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-[#16181b] rounded-[4px] border border-zinc-200 dark:border-white/10 max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
-              <h3 className="font-space font-bold text-base text-zinc-900">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
+              <h3 className="font-space font-bold text-base text-zinc-900 dark:text-zinc-100">
                 {menuModal.mode === "create" ? "Add New Navbar Item" : "Edit Navbar Item Meta"}
               </h3>
               <button
                 type="button"
                 onClick={() => setMenuModal({ ...menuModal, isOpen: false })}
-                className="text-zinc-400 hover:text-black p-1"
+                className="text-zinc-400 hover:text-black dark:hover:text-white p-1"
               >
                 <X className="size-4" />
               </button>
@@ -932,7 +1134,7 @@ export default function NavigationClientManager({
 
             <form onSubmit={handleMenuModalSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Menu Display Label *
                 </label>
                 <input
@@ -953,13 +1155,13 @@ export default function NavigationClientManager({
                       },
                     }));
                   }}
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                  <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Key Identifier *
                   </label>
                   <input
@@ -974,12 +1176,12 @@ export default function NavigationClientManager({
                         data: { ...prev.data, key: e.target.value },
                       }))
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none disabled:bg-zinc-100"
+                    className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none disabled:bg-zinc-100 dark:disabled:bg-white/5"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                  <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Primary Route / URL *
                   </label>
                   <input
@@ -993,14 +1195,14 @@ export default function NavigationClientManager({
                         data: { ...prev.data, href: e.target.value },
                       }))
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                  <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                     Order Number
                   </label>
                   <input
@@ -1012,7 +1214,7 @@ export default function NavigationClientManager({
                         data: { ...prev.data, order: Number(e.target.value) },
                       }))
                     }
-                    className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                    className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
 
@@ -1027,17 +1229,17 @@ export default function NavigationClientManager({
                         data: { ...prev.data, isActive: e.target.checked },
                       }))
                     }
-                    className="rounded border-zinc-300 text-[#292c2e] focus:ring-[#292c2e]"
+                    className="rounded border-zinc-300 dark:border-zinc-600 text-[#292c2e] focus:ring-[#98ff03] accent-[#98ff03]"
                   />
-                  <label htmlFor="menuIsActive" className="font-space text-xs text-zinc-700 cursor-pointer">
+                  <label htmlFor="menuIsActive" className="font-space text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
                     Active (Show in Header)
                   </label>
                 </div>
               </div>
 
               {/* Footer CTA configuration */}
-              <div className="border-t border-zinc-200/80 pt-3 space-y-2">
-                <span className="font-space text-[11px] uppercase font-bold text-zinc-600 block">
+              <div className="border-t border-zinc-200/80 dark:border-white/10 pt-3 space-y-2">
+                <span className="font-space text-[11px] uppercase font-bold text-zinc-600 dark:text-zinc-400 block">
                   Optional Footer CTA Banner (For Mega Dropdown)
                 </span>
                 <div className="grid grid-cols-2 gap-2">
@@ -1059,7 +1261,7 @@ export default function NavigationClientManager({
                         },
                       }))
                     }
-                    className="border border-zinc-300 px-2.5 py-1.5 rounded-[3px] text-xs font-inter focus:border-[#292c2e] outline-none"
+                    className="border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] text-xs font-inter text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                   <input
                     type="text"
@@ -1079,23 +1281,173 @@ export default function NavigationClientManager({
                         },
                       }))
                     }
-                    className="border border-zinc-300 px-2.5 py-1.5 rounded-[3px] text-xs font-mono focus:border-[#292c2e] outline-none"
+                    className="border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] text-xs font-mono text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100">
+              {/* AI Auto-Translation for Navbar Item / Menu */}
+              <div className="p-3 bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/10 rounded-[4px] space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-white/10 pb-2">
+                  <div>
+                    <h4 className="text-[11px] font-space font-bold text-zinc-800 dark:text-zinc-200">
+                      Multi-Language Translations
+                    </h4>
+                    <p className="text-[9px] text-zinc-500 dark:text-zinc-400 font-inter">
+                      Translate menu label & footer banner into Oromo, Amharic, German, Polish.
+                    </p>
+                  </div>
+                  <AutoTranslateButton
+                    sourceFields={{
+                      label: menuModal.data.label || "",
+                      footerLabel: menuModal.data.footer?.label || "",
+                      footerCtaLabel: menuModal.data.footer?.ctaLabel || "",
+                    }}
+                    onTranslated={(newTranslations) => {
+                      setMenuModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            ...newTranslations,
+                          },
+                        },
+                      }));
+                    }}
+                  />
+                </div>
+
+                {/* Locale Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {[
+                    { code: "om", name: "Afaan Oromoo" },
+                    { code: "am", name: "አማርኛ (Amharic)" },
+                    { code: "de", name: "Deutsch" },
+                    { code: "pl", name: "Polski" },
+                  ].map((loc) => {
+                    const isFilled = Boolean(menuModal.data.translations?.[loc.code]?.label);
+                    return (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setActiveMenuTranslationLocale(loc.code)}
+                        className={`px-2 py-0.5 rounded text-[10px] font-space font-medium transition-colors flex items-center gap-1.5 ${
+                          activeMenuTranslationLocale === loc.code
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black font-semibold"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{loc.name}</span>
+                        {isFilled && (
+                          <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Locale Fields */}
+                <div className="space-y-2 pt-1">
+                  <div>
+                    <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                      Label ({activeMenuTranslationLocale.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={menuModal.data.translations?.[activeMenuTranslationLocale]?.label || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setMenuModal((prev) => ({
+                          ...prev,
+                          data: {
+                            ...prev.data,
+                            translations: {
+                              ...(prev.data.translations || {}),
+                              [activeMenuTranslationLocale]: {
+                                ...(prev.data.translations?.[activeMenuTranslationLocale] || {}),
+                                label: val,
+                              },
+                            },
+                          },
+                        }));
+                      }}
+                      placeholder="Menu label translation..."
+                      className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                        Footer Banner Text ({activeMenuTranslationLocale.toUpperCase()})
+                      </label>
+                      <input
+                        type="text"
+                        value={menuModal.data.translations?.[activeMenuTranslationLocale]?.footerLabel || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMenuModal((prev) => ({
+                            ...prev,
+                            data: {
+                              ...prev.data,
+                              translations: {
+                                ...(prev.data.translations || {}),
+                                [activeMenuTranslationLocale]: {
+                                  ...(prev.data.translations?.[activeMenuTranslationLocale] || {}),
+                                  footerLabel: val,
+                                },
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder="Footer text translation..."
+                        className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                        Footer CTA ({activeMenuTranslationLocale.toUpperCase()})
+                      </label>
+                      <input
+                        type="text"
+                        value={menuModal.data.translations?.[activeMenuTranslationLocale]?.footerCtaLabel || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setMenuModal((prev) => ({
+                            ...prev,
+                            data: {
+                              ...prev.data,
+                              translations: {
+                                ...(prev.data.translations || {}),
+                                [activeMenuTranslationLocale]: {
+                                  ...(prev.data.translations?.[activeMenuTranslationLocale] || {}),
+                                  footerCtaLabel: val,
+                                },
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder="Footer CTA translation..."
+                        className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setMenuModal({ ...menuModal, isOpen: false })}
-                  className="px-3 py-1.5 text-xs font-space text-zinc-600 hover:bg-zinc-100 rounded-[3px]"
+                  className="px-3 py-1.5 text-xs font-space text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
                 >
                   {menuModal.mode === "create" ? "Create Menu Item" : "Save Changes"}
                 </button>
@@ -1107,19 +1459,19 @@ export default function NavigationClientManager({
 
       {/* 2. Add / Edit Category Modal */}
       {categoryModal.isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-[4px] border border-zinc-200 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-[#16181b] rounded-[4px] border border-zinc-200 dark:border-white/10 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
-              <h3 className="font-space font-bold text-base text-zinc-900">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
+              <h3 className="font-space font-bold text-base text-zinc-900 dark:text-zinc-100">
                 {categoryModal.mode === "create" ? "Add Dropdown Category" : "Edit Category"}
               </h3>
               <button
                 type="button"
                 onClick={() => setCategoryModal({ ...categoryModal, isOpen: false })}
-                className="text-zinc-400 hover:text-black p-1"
+                className="text-zinc-400 hover:text-black dark:hover:text-white p-1"
               >
                 <X className="size-4" />
               </button>
@@ -1127,7 +1479,7 @@ export default function NavigationClientManager({
 
             <form onSubmit={handleCategoryModalSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Category Title *
                 </label>
                 <input
@@ -1147,12 +1499,12 @@ export default function NavigationClientManager({
                       },
                     }));
                   }}
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Category ID *
                 </label>
                 <input
@@ -1166,15 +1518,15 @@ export default function NavigationClientManager({
                       data: { ...prev.data, id: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Category Icon
                 </label>
-                <div className="grid grid-cols-6 gap-2 p-2 border border-zinc-200 rounded-[4px] bg-zinc-50 max-h-36 overflow-y-auto">
+                <div className="grid grid-cols-6 gap-2 p-2 border border-zinc-200 dark:border-white/10 rounded-[4px] bg-zinc-50 dark:bg-white/[0.02] max-h-36 overflow-y-auto">
                   {ICON_OPTIONS.map((opt) => {
                     const isSelected = (categoryModal.data.iconName || "Sparkles") === opt.name;
                     const IconComp = opt.icon;
@@ -1190,8 +1542,8 @@ export default function NavigationClientManager({
                         }
                         className={`p-2 rounded-[3px] flex flex-col items-center justify-center gap-1 transition-all cursor-pointer ${
                           isSelected
-                            ? "bg-[#292c2e] text-[#98ff03] ring-1 ring-[#292c2e]"
-                            : "bg-white text-zinc-600 hover:text-black border border-zinc-200"
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-[#98ff03] dark:text-black ring-1 ring-[#292c2e] dark:ring-[#98ff03]"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white border border-zinc-200 dark:border-white/10"
                         }`}
                         title={opt.name}
                       >
@@ -1203,18 +1555,107 @@ export default function NavigationClientManager({
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100">
+              {/* AI Auto-Translation for Category */}
+              <div className="p-3 bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/10 rounded-[4px] space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-white/10 pb-2">
+                  <div>
+                    <h4 className="text-[11px] font-space font-bold text-zinc-800 dark:text-zinc-200">
+                      Multi-Language Translations
+                    </h4>
+                    <p className="text-[9px] text-zinc-500 dark:text-zinc-400 font-inter">
+                      Translate category title into Oromo, Amharic, German, Polish.
+                    </p>
+                  </div>
+                  <AutoTranslateButton
+                    sourceFields={{
+                      title: categoryModal.data.title || "",
+                    }}
+                    onTranslated={(newTranslations) => {
+                      setCategoryModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            ...newTranslations,
+                          },
+                        },
+                      }));
+                    }}
+                  />
+                </div>
+
+                {/* Locale Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {[
+                    { code: "om", name: "Afaan Oromoo" },
+                    { code: "am", name: "አማርኛ (Amharic)" },
+                    { code: "de", name: "Deutsch" },
+                    { code: "pl", name: "Polski" },
+                  ].map((loc) => {
+                    const isFilled = Boolean(categoryModal.data.translations?.[loc.code]?.title);
+                    return (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setActiveCatTranslationLocale(loc.code)}
+                        className={`px-2 py-0.5 rounded text-[10px] font-space font-medium transition-colors flex items-center gap-1.5 ${
+                          activeCatTranslationLocale === loc.code
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black font-semibold"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{loc.name}</span>
+                        {isFilled && (
+                          <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Locale Fields */}
+                <div className="pt-1">
+                  <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                    Title ({activeCatTranslationLocale.toUpperCase()})
+                  </label>
+                  <input
+                    type="text"
+                    value={categoryModal.data.translations?.[activeCatTranslationLocale]?.title || ""}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setCategoryModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            [activeCatTranslationLocale]: {
+                              ...(prev.data.translations?.[activeCatTranslationLocale] || {}),
+                              title: val,
+                            },
+                          },
+                        },
+                      }));
+                    }}
+                    placeholder="Category title translation..."
+                    className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setCategoryModal({ ...categoryModal, isOpen: false })}
-                  className="px-3 py-1.5 text-xs font-space text-zinc-600 hover:bg-zinc-100 rounded-[3px]"
+                  className="px-3 py-1.5 text-xs font-space text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
                 >
                   {categoryModal.mode === "create" ? "Add Category" : "Save Changes"}
                 </button>
@@ -1226,19 +1667,19 @@ export default function NavigationClientManager({
 
       {/* 3. Add / Edit Sub-Group Modal */}
       {groupModal.isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-[4px] border border-zinc-200 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-[#16181b] rounded-[4px] border border-zinc-200 dark:border-white/10 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
-              <h3 className="font-space font-bold text-base text-zinc-900">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
+              <h3 className="font-space font-bold text-base text-zinc-900 dark:text-zinc-100">
                 {groupModal.mode === "create" ? "Add Sub-Group" : "Edit Sub-Group"}
               </h3>
               <button
                 type="button"
                 onClick={() => setGroupModal({ ...groupModal, isOpen: false })}
-                className="text-zinc-400 hover:text-black p-1"
+                className="text-zinc-400 hover:text-black dark:hover:text-white p-1"
               >
                 <X className="size-4" />
               </button>
@@ -1246,7 +1687,7 @@ export default function NavigationClientManager({
 
             <form onSubmit={handleGroupModalSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Sub-Group Title *
                 </label>
                 <input
@@ -1260,12 +1701,12 @@ export default function NavigationClientManager({
                       data: { ...prev.data, title: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Optional Sub-Group Href / Anchor
                 </label>
                 <input
@@ -1278,22 +1719,111 @@ export default function NavigationClientManager({
                       data: { ...prev.data, href: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100">
+              {/* AI Auto-Translation for Sub-Group */}
+              <div className="p-3 bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/10 rounded-[4px] space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-white/10 pb-2">
+                  <div>
+                    <h4 className="text-[11px] font-space font-bold text-zinc-800 dark:text-zinc-200">
+                      Multi-Language Translations
+                    </h4>
+                    <p className="text-[9px] text-zinc-500 dark:text-zinc-400 font-inter">
+                      Translate group title into Oromo, Amharic, German, Polish.
+                    </p>
+                  </div>
+                  <AutoTranslateButton
+                    sourceFields={{
+                      title: groupModal.data.title || "",
+                    }}
+                    onTranslated={(newTranslations) => {
+                      setGroupModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            ...newTranslations,
+                          },
+                        },
+                      }));
+                    }}
+                  />
+                </div>
+
+                {/* Locale Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {[
+                    { code: "om", name: "Afaan Oromoo" },
+                    { code: "am", name: "አማርኛ (Amharic)" },
+                    { code: "de", name: "Deutsch" },
+                    { code: "pl", name: "Polski" },
+                  ].map((loc) => {
+                    const isFilled = Boolean(groupModal.data.translations?.[loc.code]?.title);
+                    return (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setActiveGrpTranslationLocale(loc.code)}
+                        className={`px-2 py-0.5 rounded text-[10px] font-space font-medium transition-colors flex items-center gap-1.5 ${
+                          activeGrpTranslationLocale === loc.code
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black font-semibold"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{loc.name}</span>
+                        {isFilled && (
+                          <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Locale Fields */}
+                <div className="pt-1">
+                  <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                    Title ({activeGrpTranslationLocale.toUpperCase()})
+                  </label>
+                  <input
+                    type="text"
+                    value={groupModal.data.translations?.[activeGrpTranslationLocale]?.title || ""}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setGroupModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            [activeGrpTranslationLocale]: {
+                              ...(prev.data.translations?.[activeGrpTranslationLocale] || {}),
+                              title: val,
+                            },
+                          },
+                        },
+                      }));
+                    }}
+                    placeholder="Group title translation..."
+                    className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setGroupModal({ ...groupModal, isOpen: false })}
-                  className="px-3 py-1.5 text-xs font-space text-zinc-600 hover:bg-zinc-100 rounded-[3px]"
+                  className="px-3 py-1.5 text-xs font-space text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
                 >
                   {groupModal.mode === "create" ? "Add Sub-Group" : "Save Changes"}
                 </button>
@@ -1305,19 +1835,19 @@ export default function NavigationClientManager({
 
       {/* 4. Add / Edit Navigation Link / Item Modal */}
       {itemModal.isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-[4px] border border-zinc-200 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative">
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] size-[6px] -top-[3px] -right-[3px]" />
+        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-[#16181b] rounded-[4px] border border-zinc-200 dark:border-white/10 max-w-md w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-150 relative max-h-[90vh] overflow-y-auto">
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -left-[3px]" />
+            <div className="absolute bg-[#292c2e] dark:bg-[#98ff03] size-[6px] -top-[3px] -right-[3px]" />
 
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
-              <h3 className="font-space font-bold text-base text-zinc-900">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-3">
+              <h3 className="font-space font-bold text-base text-zinc-900 dark:text-zinc-100">
                 {itemModal.mode === "create" ? "Add Link / Item" : "Edit Link"}
               </h3>
               <button
                 type="button"
                 onClick={() => setItemModal({ ...itemModal, isOpen: false })}
-                className="text-zinc-400 hover:text-black p-1"
+                className="text-zinc-400 hover:text-black dark:hover:text-white p-1"
               >
                 <X className="size-4" />
               </button>
@@ -1325,7 +1855,7 @@ export default function NavigationClientManager({
 
             <form onSubmit={handleItemModalSubmit} className="space-y-4">
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Item Label / Title *
                 </label>
                 <input
@@ -1339,12 +1869,12 @@ export default function NavigationClientManager({
                       data: { ...prev.data, title: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Destination URL / Href *
                 </label>
                 <input
@@ -1358,12 +1888,12 @@ export default function NavigationClientManager({
                       data: { ...prev.data, href: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-mono text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Optional Badge / Tag
                 </label>
                 <input
@@ -1376,12 +1906,12 @@ export default function NavigationClientManager({
                       data: { ...prev.data, badge: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-space text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none uppercase"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-space text-xs uppercase font-bold text-zinc-700">
+                <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300">
                   Optional Subtitle / Description
                 </label>
                 <input
@@ -1394,22 +1924,171 @@ export default function NavigationClientManager({
                       data: { ...prev.data, description: e.target.value },
                     }))
                   }
-                  className="w-full border border-zinc-300 px-3 py-2 rounded-[3px] font-inter text-xs text-zinc-800 focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-inter text-xs text-zinc-800 dark:text-zinc-200 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100">
+              {/* AI Auto-Translation for Nav Link */}
+              <div className="p-3 bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/10 rounded-[4px] space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-white/10 pb-2">
+                  <div>
+                    <h4 className="text-[11px] font-space font-bold text-zinc-800 dark:text-zinc-200">
+                      Multi-Language Translations
+                    </h4>
+                    <p className="text-[9px] text-zinc-500 dark:text-zinc-400 font-inter">
+                      Translate item title, badge & description into Oromo, Amharic, German, Polish.
+                    </p>
+                  </div>
+                  <AutoTranslateButton
+                    sourceFields={{
+                      title: itemModal.data.title || "",
+                      badge: itemModal.data.badge || "",
+                      description: itemModal.data.description || "",
+                    }}
+                    onTranslated={(newTranslations) => {
+                      setItemModal((prev) => ({
+                        ...prev,
+                        data: {
+                          ...prev.data,
+                          translations: {
+                            ...(prev.data.translations || {}),
+                            ...newTranslations,
+                          },
+                        },
+                      }));
+                    }}
+                  />
+                </div>
+
+                {/* Locale Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {[
+                    { code: "om", name: "Afaan Oromoo" },
+                    { code: "am", name: "አማርኛ (Amharic)" },
+                    { code: "de", name: "Deutsch" },
+                    { code: "pl", name: "Polski" },
+                  ].map((loc) => {
+                    const isFilled = Boolean(itemModal.data.translations?.[loc.code]?.title);
+                    return (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setActiveNavTranslationLocale(loc.code)}
+                        className={`px-2 py-0.5 rounded text-[10px] font-space font-medium transition-colors flex items-center gap-1.5 ${
+                          activeNavTranslationLocale === loc.code
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{loc.name}</span>
+                        {isFilled && (
+                          <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Locale Fields */}
+                <div className="space-y-2 pt-1">
+                  <div>
+                    <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                      Title ({activeNavTranslationLocale.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={itemModal.data.translations?.[activeNavTranslationLocale]?.title || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setItemModal((prev) => ({
+                          ...prev,
+                          data: {
+                            ...prev.data,
+                            translations: {
+                              ...(prev.data.translations || {}),
+                              [activeNavTranslationLocale]: {
+                                ...(prev.data.translations?.[activeNavTranslationLocale] || {}),
+                                title: val,
+                              },
+                            },
+                          },
+                        }));
+                      }}
+                      placeholder="Title translation..."
+                      className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                        Badge ({activeNavTranslationLocale.toUpperCase()})
+                      </label>
+                      <input
+                        type="text"
+                        value={itemModal.data.translations?.[activeNavTranslationLocale]?.badge || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setItemModal((prev) => ({
+                            ...prev,
+                            data: {
+                              ...prev.data,
+                              translations: {
+                                ...(prev.data.translations || {}),
+                                [activeNavTranslationLocale]: {
+                                  ...(prev.data.translations?.[activeNavTranslationLocale] || {}),
+                                  badge: val,
+                                },
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder="Badge translation..."
+                        className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03] uppercase"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-0.5">
+                        Description ({activeNavTranslationLocale.toUpperCase()})
+                      </label>
+                      <input
+                        type="text"
+                        value={itemModal.data.translations?.[activeNavTranslationLocale]?.description || ""}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setItemModal((prev) => ({
+                            ...prev,
+                            data: {
+                              ...prev.data,
+                              translations: {
+                                ...(prev.data.translations || {}),
+                                [activeNavTranslationLocale]: {
+                                  ...(prev.data.translations?.[activeNavTranslationLocale] || {}),
+                                  description: val,
+                                },
+                              },
+                            },
+                          }));
+                        }}
+                        placeholder="Description translation..."
+                        className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[3px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setItemModal({ ...itemModal, isOpen: false })}
-                  className="px-3 py-1.5 text-xs font-space text-zinc-600 hover:bg-zinc-100 rounded-[3px]"
+                  className="px-3 py-1.5 text-xs font-space text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[3px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-xs font-space uppercase font-bold rounded-[3px] transition-transform active:scale-[0.96] cursor-pointer disabled:opacity-50"
                 >
                   {itemModal.mode === "create" ? "Add Link" : "Save Changes"}
                 </button>

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import svgPaths from "@/lib/svgPaths";
+import { useTranslations } from "next-intl";
 
 const contactFormSchema = z.object({
   name: z
@@ -29,6 +30,7 @@ const contactFormSchema = z.object({
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export function ContactFormWhite() {
+  const t = useTranslations("contactSection");
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,9 +61,7 @@ export function ContactFormWhite() {
   };
 
   const onSubmit = (data: ContactFormValues) => {
-    alert(
-      `Thank you, ${data.name}! Your message has been sent to Matii Digitals.`
-    );
+    alert(t("successMessage"));
     reset();
     setFile(null);
   };
@@ -72,14 +72,14 @@ export function ContactFormWhite() {
       className="w-full h-full bg-white dark:bg-[#161819] border border-[#AEAEAE]/40 dark:border-white/10 p-8 md:p-12 flex flex-col justify-between gap-8 relative"
     >
       <h3 className="font-space font-bold text-xl md:text-2xl text-black dark:text-white uppercase tracking-tight">
-        Send Us A Message
+        {t("sendUsMessage")}
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Field 1: Name */}
         <div className="flex flex-col gap-2">
           <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
-            Full Name *
+            {t("fullName")} *
           </label>
           <div
             className={`border-b pb-2 transition-colors ${errors.name ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
@@ -88,7 +88,7 @@ export function ContactFormWhite() {
             <input
               type="text"
               {...register("name")}
-              placeholder="e.g. John Doe"
+              placeholder={t("fullNamePlaceholder")}
               className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
@@ -102,7 +102,7 @@ export function ContactFormWhite() {
         {/* Field 2: Email */}
         <div className="flex flex-col gap-2">
           <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
-            Email Address *
+            {t("emailAddress")} *
           </label>
           <div
             className={`border-b pb-2 transition-colors ${errors.email ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
@@ -111,7 +111,7 @@ export function ContactFormWhite() {
             <input
               type="email"
               {...register("email")}
-              placeholder="e.g. john@example.com"
+              placeholder={t("emailPlaceholder")}
               className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
@@ -127,7 +127,7 @@ export function ContactFormWhite() {
         {/* Field 3: Phone */}
         <div className="flex flex-col gap-2">
           <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
-            Phone Number
+            {t("phoneNumber")}
           </label>
           <div
             className={`border-b pb-2 transition-colors ${errors.phone ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
@@ -136,7 +136,7 @@ export function ContactFormWhite() {
             <input
               type="tel"
               {...register("phone")}
-              placeholder="e.g. +1 (555) 000-0000"
+              placeholder={t("phoneNumberPlaceholder")}
               className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none"
             />
           </div>
@@ -150,7 +150,7 @@ export function ContactFormWhite() {
         {/* Field 4: Service Interested In */}
         <div className="flex flex-col gap-2">
           <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
-            Interested Service
+            {t("serviceNeeded")}
           </label>
           <div
             className={`border-b pb-2 transition-colors ${errors.service ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
@@ -180,7 +180,7 @@ export function ContactFormWhite() {
       {/* Field 5: Message */}
       <div className="flex flex-col gap-2">
         <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
-          Tell us about your project *
+          {t("projectDescription")} *
         </label>
         <div
           className={`border-b pb-2 transition-colors ${errors.message ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
@@ -189,7 +189,7 @@ export function ContactFormWhite() {
           <textarea
             rows={4}
             {...register("message")}
-            placeholder="Briefly describe your project, goals, or scope..."
+            placeholder={t("projectPlaceholder")}
             className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white placeholder-[#999] dark:placeholder-zinc-500 focus:outline-none resize-none"
           />
         </div>
@@ -223,7 +223,7 @@ export function ContactFormWhite() {
             </svg>
           </div>
           <span className="font-inter font-medium text-sm text-[#292c2e] dark:text-zinc-300">
-            {file ? `Attached: ${file.name}` : "Attach Project Brief / Specs"}
+            {file ? `Attached: ${file.name}` : t("attachFile")}
           </span>
         </button>
 
@@ -232,7 +232,7 @@ export function ContactFormWhite() {
           disabled={isSubmitting}
           className="bg-[#292c2e] hover:bg-[#1a1c1d] dark:bg-[#98ff03] dark:hover:bg-[#86e200] disabled:opacity-50 text-white dark:text-[#161819] font-inter font-medium text-sm md:text-base px-8 py-3.5 rounded-[12px] shadow-md inline-flex items-center justify-center gap-3 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer active:scale-[0.98]"
         >
-          <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+          <span>{isSubmitting ? t("submitting") : t("submitMessage")}</span>
           <div className="bg-[#98ff03] dark:bg-[#161819] p-1.5 rounded-[4px] flex items-center justify-center">
             <svg className="size-4" fill="none" viewBox="0 0 24 24">
               <path

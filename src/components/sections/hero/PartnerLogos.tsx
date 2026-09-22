@@ -130,36 +130,54 @@ function DefaultLogos() {
 function LogoSet({ partners }: { partners?: PartnerItem[] }) {
   if (partners && partners.length > 0) {
     return (
-      <div className="flex shrink-0 items-center gap-10 md:gap-16 pr-10 md:pr-16">
-        {partners.map((partner, idx) => (
-          <div
-            key={`${partner.id}-${idx}`}
-            className="h-8 shrink-0 flex items-center gap-2 px-3 py-1 bg-white/70 dark:bg-[#161819] border border-zinc-200/60 dark:border-white/10 rounded-[4px] hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors"
-            title={partner.name}
-          >
-            {partner.logoUrl ? (
-              <div className="w-6 h-6 relative shrink-0">
-                <Image
-                  src={partner.logoUrl}
-                  alt={partner.name}
-                  fill
-                  unoptimized={true}
-                  sizes="24px"
-                  className="object-contain"
-                />
-              </div>
-            ) : null}
-            <span className="font-space font-medium text-xs md:text-sm text-[#2a2a2b] dark:text-zinc-200 tracking-wider uppercase whitespace-nowrap">
-              {partner.name}
-            </span>
-          </div>
-        ))}
+      <div className="flex shrink-0 items-center gap-12 sm:gap-16 md:gap-20 pr-12 sm:pr-16 md:pr-20">
+        {partners.map((partner, idx) => {
+          if (!partner.logoUrl) return null;
+
+          const logoElement = (
+            <div
+              className="relative h-10 sm:h-12 md:h-14 w-32 sm:w-40 md:w-48 shrink-0 flex items-center justify-center transition-all duration-300 group"
+              style={{ position: "relative" }}
+              title={partner.name}
+            >
+              <Image
+                src={partner.logoUrl}
+                alt={partner.name}
+                fill
+                unoptimized={true}
+                sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
+                className="object-contain filter grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 dark:brightness-150 dark:contrast-125 dark:group-hover:brightness-100 transition-all duration-300"
+              />
+            </div>
+          );
+
+          if (partner.websiteUrl) {
+            return (
+              <a
+                key={`${partner.id}-${idx}`}
+                href={partner.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#98ff03] rounded-md transition-transform hover:scale-105"
+                title={partner.name}
+              >
+                {logoElement}
+              </a>
+            );
+          }
+
+          return (
+            <div key={`${partner.id}-${idx}`} className="shrink-0 transition-transform hover:scale-105">
+              {logoElement}
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   return (
-    <div className="flex shrink-0 items-center gap-10 md:gap-16 pr-10 md:pr-16 dark:brightness-200 dark:contrast-125">
+    <div className="flex shrink-0 items-center gap-12 sm:gap-16 md:gap-20 pr-12 sm:pr-16 md:pr-20 dark:brightness-200 dark:contrast-125">
       <DefaultLogos />
     </div>
   );

@@ -3,8 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import { Compass, Target, CheckCircle2, Award, Users, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function AboutStory() {
+  const t = useTranslations("aboutStory");
+
   return (
     <section className="relative w-full overflow-hidden">
       <div className="max-w-[1380px] mx-auto border border-[#AEAEAE]/40 dark:border-white/10 bg-white dark:bg-[#161819] relative pt-12 md:pt-20 transition-colors duration-200">
@@ -13,14 +16,14 @@ export function AboutStory() {
           <div className="inline-flex gap-2.5 items-center bg-white dark:bg-white/5 border border-transparent dark:border-white/10 px-2.5 py-1 transition-colors">
             <div className="bg-[#98ff03] size-4 shrink-0" />
             <span className="font-space font-normal text-base md:text-lg text-black dark:text-white uppercase tracking-wider whitespace-nowrap">
-              OUR ORIGIN & PURPOSE
+              {t("originTag")}
             </span>
           </div>
         </div>
 
         {/* Main Title */}
         <h2 className="lg:col-span-6 font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-black dark:text-white tracking-tight max-w-4xl mx-auto text-center mb-12 sm:mb-16 transition-colors">
-          Engineering core systems, powering progress.
+          {t("originHeading")}
         </h2>
 
         {/* 2-Column Main Split */}
@@ -39,10 +42,10 @@ export function AboutStory() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                 <span className="text-xs font-space uppercase tracking-wider text-white bg-[#292c2e]/90 px-3 py-1.5 border border-white/10">
-                  Engineering & Design Studio
+                  {t("studioBadge")}
                 </span>
                 <span className="text-xs font-inter font-medium text-[#98ff03]">
-                  Est. 2018
+                  {t("estYear")}
                 </span>
               </div>
             </div>
@@ -50,26 +53,26 @@ export function AboutStory() {
             <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#AEAEAE]/30 dark:border-white/10">
               <div className="flex flex-col">
                 <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
-                  8+
+                  {t("yearsActiveCount")}
                 </span>
                 <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
-                  Years Active
+                  {t("yearsActiveLabel")}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
-                  100%
+                  {t("seniorTeamCount")}
                 </span>
                 <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
-                  Senior Team
+                  {t("seniorTeamLabel")}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="font-space font-bold text-2xl md:text-3xl text-[#292c2e] dark:text-white transition-colors">
-                  50+
+                  {t("productsShippedCount")}
                 </span>
                 <span className="font-inter text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider mt-1">
-                  Products Shipped
+                  {t("productsShippedLabel")}
                 </span>
               </div>
             </div>
@@ -83,26 +86,23 @@ export function AboutStory() {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2">
                 <span className="font-space text-xs uppercase tracking-widest text-[#797f8b] dark:text-zinc-400">
-                  // THE JOURNEY
+                  {t("journeyTag")}
                 </span>
               </div>
 
               <h3 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white leading-snug transition-colors">
-                Why we built Matii Technologies.
+                {t("journeyTitle")}
               </h3>
 
               <div className="space-y-4 font-inter text-sm md:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
                 <p>
-                  Matii Technologies is a technology company engineering enterprise
-                  platforms, fintech infrastructures, BPO solutions, and data
-                  intelligence for organizations that cannot afford to fail.
+                  {t("storyP1")}
                 </p>
                 <p>
-                  Founded in Ethiopia and built to global standards, we deliver secure,
-                  scalable systems for enterprise, government, and financial institutions.
+                  {t("storyP2")}
                 </p>
                 <p>
-                  We don&apos;t just write code—we build the infrastructure that powers progress.
+                  {t("storyP3")}
                 </p>
               </div>
             </div>
@@ -119,29 +119,27 @@ export function AboutStory() {
                   <Compass className="w-6 h-6 text-[#98ff03]" />
                 </div>
                 <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                  01 // PURPOSE
+                  {t("missionTag")}
                 </span>
               </div>
 
               <h4 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white uppercase tracking-tight transition-colors">
-                OUR MISSION
+                {t("missionTitle")}
               </h4>
 
               <p className="font-inter text-sm sm:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
-                To engineer the systems that power enterprise, government, and
-                finance, delivering technology that is reliable, secure, and built
-                to scale.
+                {t("missionDesc")}
               </p>
 
               <div className="pt-4 border-t border-[#AEAEAE]/20 dark:border-white/10 space-y-2">
                 <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We solve complex problems.
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> {t("missionPoint1")}
                 </p>
                 <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We deliver on time.
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> {t("missionPoint2")}
                 </p>
                 <p className="font-inter font-medium text-xs sm:text-sm text-[#292c2e] dark:text-zinc-200 flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> We build infrastructure.
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" /> {t("missionPoint3")}
                 </p>
               </div>
             </div>
@@ -155,18 +153,16 @@ export function AboutStory() {
                   <Target className="w-6 h-6 text-[#98ff03]" />
                 </div>
                 <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                  02 // FUTURE
+                  {t("visionTag")}
                 </span>
               </div>
 
               <h4 className="font-urbanist font-medium text-xl sm:text-2xl text-[#292c2e] dark:text-white uppercase tracking-tight transition-colors">
-                OUR VISION
+                {t("visionTitle")}
               </h4>
 
               <p className="font-inter text-sm sm:text-base text-[#555] dark:text-zinc-300 leading-relaxed transition-colors">
-                Our ambition is to become one of the largest technology companies
-                and the backbone of emerging markets—a company whose platforms run
-                the systems that nations, institutions, and businesses depend on.
+                {t("visionDesc")}
               </p>
             </div>
           </div>
@@ -177,3 +173,4 @@ export function AboutStory() {
 }
 
 export default AboutStory;
+

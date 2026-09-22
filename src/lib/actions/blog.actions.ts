@@ -24,6 +24,7 @@ export async function saveBlogPostAction(data: {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  translations?: Record<string, any>;
   navbarIntegration?: {
     enabled: boolean;
     menuKey: string;
@@ -37,7 +38,7 @@ export async function saveBlogPostAction(data: {
   const isAuth = await isAdminAuthenticated();
   if (!isAuth) throw new Error("Unauthorized");
 
-  const postPayload = {
+  const postPayload: any = {
     slug: data.slug,
     title: data.title,
     category: data.category,
@@ -54,6 +55,7 @@ export async function saveBlogPostAction(data: {
     seoTitle: data.seoTitle || null,
     seoDescription: data.seoDescription || null,
     seoKeywords: data.seoKeywords || null,
+    translations: data.translations ? JSON.stringify(data.translations) : null,
   };
 
   if (data.id) {

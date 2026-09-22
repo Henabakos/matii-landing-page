@@ -1,0 +1,183 @@
+{
+  "common": {
+    "brandName": "Matii Digitals",
+    "startProject": "Projekt starten",
+    "exploreServices": "Dienstleistungen entdecken",
+    "contactUs": "Kontaktieren Sie uns",
+    "talkToEngineer": "Mit einem Ingenieur sprechen",
+    "trustedPartners": "UNSERE VERTRAUENSVOLLEN PARTNER",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "selectLanguage": "Sprache wählen",
+    "all": "Alle",
+    "readMore": "Mehr lesen",
+    "viewProject": "Projekt ansehen",
+    "bookCall": "Gespräch buchen",
+    "exploreAll": "Alle anzeigen"
+  },
+  "nav": {
+    "services": "Dienstleistungen",
+    "projects": "Projekte",
+    "about": "Über uns",
+    "careers": "Karriere",
+    "blog": "Blog",
+    "news": "Neuigkeiten",
+    "contact": "Kontakt",
+    "internships": "Praktika",
+    "talentPool": "Talent-Pool"
+  },
+  "hero": {
+    "badge": "AMBITIONIERTE IDEEN MIT PRÄZISION VORANBRINGEN",
+    "headline": "Kernsysteme entwickeln, Fortschritt vorantreiben.",
+    "subtitle": "Von ehrgeizigen Ideen bis hin zu leistungsstarken digitalen Produkten entwickeln wir Systeme und Technologien, die Unternehmen voranbringen.",
+    "startProject": "Projekt starten",
+    "exploreServices": "Dienstleistungen entdecken"
+  },
+  "officeShowcase": {
+    "badge": "GLOBALER STANDARD",
+    "title": "Software nach globalem Standard entwickelt",
+    "subtitle": "Aus unserem Studio in Addis Abeba verbinden unsere Teams erstklassiges Engineering mit Präzision, um zuverlässige Software bereitzustellen.",
+    "bookCall": "Gespräch buchen",
+    "seeWork": "Unsere Arbeit sehen"
+  },
+  "aboutUs": {
+    "tag": "WER WIR SIND & WAS WIR TUN",
+    "aboutTag": "Über uns",
+    "heading": "Kernsysteme entwickeln, Fortschritt vorantreiben.",
+    "desc": "Matii Technologies ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen und Datenintelligenz für Organisationen entwickelt.",
+    "stat1Value": "50+",
+    "stat1Desc": "Digitale Produkte, entwickelt für verschiedenste Branchen.",
+    "stat2Value": "10+",
+    "stat2Desc": "Branchen transformiert durch durchdachtes Design und Technologie.",
+    "stat3Value": "∞",
+    "stat3Desc": "Grenzenlose Möglichkeiten durch die Verwirklichung ambitionierter Ideen."
+  },
+  "aboutStory": {
+    "originTag": "UNSER URSPRUNG & ZWECK",
+    "originHeading": "Kernsysteme entwickeln, Fortschritt vorantreiben.",
+    "studioBadge": "Engineering & Design Studio",
+    "estYear": "Gegr. 2018",
+    "yearsActiveCount": "8+",
+    "yearsActiveLabel": "Jahre aktiv",
+    "seniorTeamCount": "100%",
+    "seniorTeamLabel": "Senior-Team",
+    "productsShippedCount": "50+",
+    "productsShippedLabel": "Erfolgreiche Produkte",
+    "journeyTag": "// DIE REISE",
+    "journeyTitle": "Warum wir Matii Technologies gegründet haben.",
+    "storyP1": "Matii Technologies ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen, BPO-Lösungen und Datenintelligenz für Organisationen entwickelt, die keine Ausfälle tolerieren können.",
+    "storyP2": "In Äthiopien gegründet und nach globalen Standards aufgebaut, liefern wir sichere, skalierbare Systeme für Unternehmen, Regierungen und Finanzinstitute.",
+    "storyP3": "Wir schreiben nicht nur Code – wir bauen die Infrastruktur, die den Fortschritt antreibt.",
+    "missionTag": "01 // ZWECK",
+    "missionTitle": "UNSERE MISSION",
+    "missionDesc": "Die Systeme zu entwickeln, die Wirtschaft, Staat und Finanzwesen antreiben, mit zuverlässiger, sicherer und skalierbarer Technologie.",
+    "missionPoint1": "Wir lösen komplexe Probleme.",
+    "missionPoint2": "Wir liefern pünktlich.",
+    "missionPoint3": "Wir bauen Infrastruktur.",
+    "visionTag": "02 // ZUKUNFT",
+    "visionTitle": "UNSERE VISION",
+    "visionDesc": "Unsere Ambition ist es, eines der führenden Technologieunternehmen und das Rückgrat aufstrebender Märkte zu werden – ein Unternehmen, auf dessen Systeme Nationen, Institutionen und Unternehmen vertrauen."
+  },
+  "aboutCoreValues": {
+    "tag": "UNSER FUNDAMENT",
+    "heading": "Kernwerte",
+    "value1Title": "Umsetzung vor allem",
+    "value1Desc": "Wir fokussieren uns auf wirkungsvolle Resultate und erstklassige Lieferung.",
+    "value2Title": "Auf Vertrauen gebaut",
+    "value2Desc": "Sicherheit, Zuverlässigkeit und Integrität bilden die Basis jedes Systems.",
+    "value3Title": "Kontinuierliches Lernen",
+    "value3Desc": "Wir passen uns stets an, innovieren und beherrschen neue Technologien.",
+    "value4Title": "In Afrika verwurzelt, weltweit führend",
+    "value4Desc": "Unsere Herkunft ist unsere Stärke; wir bauen lokal mit globalem Exzellenzanspruch."
+  },
+  "solutions": {
+    "tag": "AUSGEWÄHLTE LÖSUNGEN",
+    "heading": "Bedürfnisse verstehen. Fortschritt vorantreiben.",
+    "desc": "Wir verstehen Ihre Prioritäten und Herausforderungen und entwickeln praktische Lösungen, die messbare Ergebnisse liefern."
+  },
+  "services": {
+    "tag": "KERNKOMPETENZEN",
+    "heading": "IDEEN BLEIBEN NICHT STEHEN."
+  },
+  "whyUs": {
+    "tag": "WARUM MATII",
+    "heading": "Gebaut zum Lösen. Entworfen zum Bewegen.",
+    "desc": "Wir kombinieren strategisches Denken, intuitives Design und technische Präzision, um digitale Produkte zu entwickeln, die Unternehmen voranbringen."
+  },
+  "testimonials": {
+    "tag": "KUNDENSTIMMEN",
+    "heading": "WAS UNSERE KUNDEN SAGEN"
+  },
+  "contactSection": {
+    "tag": "KONTAKT",
+    "heading": "LASSEN SIE UNS ÜBER IHRE NÄCHSTE GROSSE IDEE SPRECHEN.",
+    "directEmail": "Direkte E-Mail",
+    "phoneWhatsApp": "Telefon / WhatsApp",
+    "headquarterLocation": "Hauptsitz",
+    "headquarterAddress": "Addis Abeba, Äthiopien",
+    "sendUsMessage": "Senden Sie uns eine Nachricht",
+    "fullName": "Vollständiger Name",
+    "fullNamePlaceholder": "z.B. Max Mustermann",
+    "emailAddress": "E-Mail-Adresse",
+    "emailPlaceholder": "z.B. max@example.com",
+    "phoneNumber": "Telefonnummer (Optional)",
+    "phoneNumberPlaceholder": "z.B. +49 170 1234567",
+    "serviceNeeded": "Benötigte Dienstleistung",
+    "projectDescription": "Projektbeschreibung",
+    "projectPlaceholder": "Erzählen Sie uns von Ihrem Projekt, Zeitplan und Zielen...",
+    "attachFile": "Briefing / Dokument anhängen (Optional)",
+    "submitMessage": "Nachricht senden",
+    "submitting": "Wird gesendet...",
+    "successMessage": "Vielen Dank! Ihre Anfrage wurde an unser Engineering-Team weitergeleitet."
+  },
+  "faq": {
+    "tag": "HÄUFIG GESTELLTE FRAGEN",
+    "heading": "Haben Sie Fragen? Wir haben Antworten."
+  },
+  "pages": {
+    "about": {
+      "tag": "WER WIR SIND & WAS WIR TUN",
+      "title": "Mit Präzision gebaut. Mit Dynamik angetrieben.",
+      "description": "Von unserem Studio in Addis Abeba aus entwickeln wir mit erstklassiger Ingenieurskunst digitale Systeme, auf die sich Unternehmen verlassen."
+    },
+    "projects": {
+      "tag": "UNSERE PROJEKTE",
+      "title": "Lösungen für zukunftsorientierte Teams.",
+      "description": "Entdecken Sie unsere Plattformen, KI-Workflow-Agenten und Hochleistungsanwendungen für Institutionen weltweit."
+    },
+    "services": {
+      "tag": "FÄHIGKEITEN & SYSTEME",
+      "title": "Automatisierung in echtes Wachstum verwandeln.",
+      "description": "Wir helfen Unternehmen, Automatisierung in praktische Systeme umzusetzen, die Abläufe skalieren."
+    },
+    "careers": {
+      "tag": "KARRIERE & OFFENE STELLEN",
+      "title": "Bauen Sie die Zukunft digitaler Produkte & KI.",
+      "description": "Schließen Sie sich unserem Engineering-Team an und lösen Sie anspruchsvolle architektonische Herausforderungen."
+    },
+    "blog": {
+      "tag": "ENGINEERING & DESIGN JOURNAL",
+      "title": "Perspektiven zu Systemen, KI & Architektur.",
+      "description": "Entdecken Sie praktische Leitfäden, Engineering-Benchmarks und Designmethoden unserer Entwickler."
+    },
+    "contact": {
+      "tag": "KONTAKT",
+      "title": "Lassen Sie uns gemeinsam Außergewöhnliches schaffen.",
+      "description": "Sprechen Sie direkt mit unserem leitenden Engineering-Team."
+    }
+  },
+  "ctaBanner": {
+    "titlePrefix": "Möchten Sie mit einem",
+    "titleHighlight": "Matii",
+    "titleSuffix": "Ingenieur sprechen?",
+    "description": "Buchen Sie eine strategische 30-minütige Beratung mit unseren technischen Leitern, um Ihre Architektur oder Anforderungen zu besprechen.",
+    "scheduleMeeting": "30-minütiges Google Meet vereinbaren"
+  },
+  "footer": {
+    "newsletterHeading": "AUF DEM LAUFENDEN BLEIBEN",
+    "newsletterSubtitle": "Engineering-Einblicke und System-Benchmarks direkt in Ihr Postfach geliefert.",
+    "placeholderEmail": "E-Mail-Adresse eingeben...",
+    "subscribe": "Abonnieren",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen"
+  }
+}

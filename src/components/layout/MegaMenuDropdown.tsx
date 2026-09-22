@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 import {
   Brain,
   Code2,
@@ -110,6 +111,7 @@ interface MegaMenuDropdownProps {
 }
 
 export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
+  const locale = useLocale();
   const categories = menu.categories || [];
   const [activeCategoryId, setActiveCategoryId] = useState<string>(
     categories[0]?.id || ""
@@ -126,6 +128,9 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
     categories.find((c) => c.id === activeCategoryId) || categories[0];
 
   if (!activeCategory) return null;
+
+  const footerLabel = menu.translations?.[locale]?.footerLabel || menu.footer?.label;
+  const footerCtaLabel = menu.translations?.[locale]?.footerCtaLabel || menu.footer?.ctaLabel;
 
   return (
     <div
@@ -147,6 +152,7 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
         <div className="w-[280px] shrink-0 border-r border-[rgba(174,174,174,0.2)] dark:border-white/10 p-3.5 flex flex-col gap-1.5 bg-[#f8fafc] dark:bg-[#121415] select-none rounded-l-[4px]">
           {categories.map((category) => {
             const isActive = category.id === activeCategory.id;
+            const categoryTitle = category.translations?.[locale]?.title || category.title;
             return (
               <button
                 key={category.id}
@@ -176,7 +182,7 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
                       : "font-normal"
                       }`}
                   >
-                    {category.title}
+                    {categoryTitle}
                   </span>
                 </div>
 
@@ -195,46 +201,53 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
             key={activeCategory.id}
             className="animate-in fade-in duration-150 space-y-6"
           >
-            {activeCategory.groups.map((group, groupIdx) => (
-              <div key={groupIdx} className="space-y-3">
-                {/* Group Heading with Arrow */}
-                <Link
-                  href={group.href || menu.href}
-                  onClick={onClose}
-                  className="group/hdr inline-flex items-center gap-2 text-zinc-900 dark:text-white hover:text-black dark:hover:text-[#98ff03] transition-colors"
-                >
-                  <div className="size-6 rounded-[4px] bg-[#98ff03]/15 dark:bg-[#98ff03]/20 text-[#161819] dark:text-[#98ff03] flex items-center justify-center shrink-0">
-                    <DynamicIcon name={group.iconName} className="size-3.5" />
-                  </div>
-                  <h4 className="font-space font-semibold text-[13.5px] uppercase tracking-wide group-hover/hdr:translate-x-0.5 transition-transform">
-                    {group.title}
-                  </h4>
-                  <ArrowRight className="size-3.5 text-zinc-400 group-hover/hdr:text-black dark:group-hover/hdr:text-[#98ff03] group-hover/hdr:translate-x-1 transition-all" />
-                </Link>
+            {activeCategory.groups.map((group, groupIdx) => {
+              const groupTitle = group.translations?.[locale]?.title || group.title;
+              return (
+                <div key={groupIdx} className="space-y-3">
+                  {/* Group Heading with Arrow */}
+                  <Link
+                    href={group.href || menu.href}
+                    onClick={onClose}
+                    className="group/hdr inline-flex items-center gap-2 text-zinc-900 dark:text-white hover:text-black dark:hover:text-[#98ff03] transition-colors"
+                  >
+                    <div className="size-6 rounded-[4px] bg-[#98ff03]/15 dark:bg-[#98ff03]/20 text-[#161819] dark:text-[#98ff03] flex items-center justify-center shrink-0">
+                      <DynamicIcon name={group.iconName} className="size-3.5" />
+                    </div>
+                    <h4 className="font-space font-semibold text-[13.5px] uppercase tracking-wide group-hover/hdr:translate-x-0.5 transition-transform">
+                      {groupTitle}
+                    </h4>
+                    <ArrowRight className="size-3.5 text-zinc-400 group-hover/hdr:text-black dark:group-hover/hdr:text-[#98ff03] group-hover/hdr:translate-x-1 transition-all" />
+                  </Link>
 
-                {/* 2-Column Grid of Links */}
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 pl-8">
-                  {group.items.map((item, itemIdx) => (
-                    <Link
-                      key={itemIdx}
-                      href={item.href}
-                      onClick={onClose}
-                      className="group/item flex items-center justify-between text-[13px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors py-1 relative"
-                    >
-                      <span className="truncate flex items-center gap-2 group-hover/item:translate-x-1 group-hover/item:text-black dark:group-hover/item:text-[#98ff03] transition-all">
-                        <span className="size-1 rounded-full bg-zinc-300 dark:bg-zinc-600 group-hover/item:bg-[#98ff03] shrink-0 transition-colors" />
-                        <span className="truncate">{item.title}</span>
-                      </span>
-                      {item.badge && (
-                        <span className="text-[10px] uppercase font-space font-semibold px-1.5 py-0.5 rounded bg-[#98ff03]/20 text-[#161819] dark:text-[#98ff03] shrink-0 ml-2">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
+                  {/* 2-Column Grid of Links */}
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-2 pl-8">
+                    {group.items.map((item, itemIdx) => {
+                      const itemTitle = item.translations?.[locale]?.title || item.title;
+                      const itemBadge = item.translations?.[locale]?.badge || item.badge;
+                      return (
+                        <Link
+                          key={itemIdx}
+                          href={item.href}
+                          onClick={onClose}
+                          className="group/item flex items-center justify-between text-[13px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors py-1 relative"
+                        >
+                          <span className="truncate flex items-center gap-2 group-hover/item:translate-x-1 group-hover/item:text-black dark:group-hover/item:text-[#98ff03] transition-all">
+                            <span className="size-1 rounded-full bg-zinc-300 dark:bg-zinc-600 group-hover/item:bg-[#98ff03] shrink-0 transition-colors" />
+                            <span className="truncate">{itemTitle}</span>
+                          </span>
+                          {itemBadge && (
+                            <span className="text-[10px] uppercase font-space font-semibold px-1.5 py-0.5 rounded bg-[#98ff03]/20 text-[#161819] dark:text-[#98ff03] shrink-0 ml-2">
+                              {itemBadge}
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -247,7 +260,7 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
             onClick={onClose}
             className="group inline-flex items-center gap-2 font-space text-[12px] font-medium uppercase tracking-[0.08em] text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-[#98ff03] transition-colors"
           >
-            <span>{menu.footer.label}</span>
+            <span>{footerLabel}</span>
           </Link>
 
           <Link
@@ -255,7 +268,7 @@ export function MegaMenuDropdown({ menu, onClose }: MegaMenuDropdownProps) {
             onClick={onClose}
             className="font-space text-[12px] font-semibold uppercase tracking-[0.08em] text-[#161819] dark:text-[#98ff03] hover:underline flex items-center gap-1.5 transition-colors"
           >
-            <span>{menu.footer.ctaLabel}</span>
+            <span>{footerCtaLabel}</span>
           </Link>
         </div>
       )}

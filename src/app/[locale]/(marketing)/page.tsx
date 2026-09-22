@@ -56,9 +56,9 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={orgSchema} />
-      <main className="w-full px-4 md:px-8">
+      <main className="w-full px-4 md:px-8 space-y-16">
+        <Hero partners={partners} />
         <div className="max-w-345 mx-auto space-y-16">
-          <Hero partners={partners} />
           <OfficeShowcase />
           <AboutUs kpis={kpis} />
           <SolutionsWeBuilt projects={solutionsProjects} />

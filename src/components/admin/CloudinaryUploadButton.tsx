@@ -134,8 +134,8 @@ export function CloudinaryUploadButton({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="font-space text-[11px] uppercase font-bold text-zinc-700 tracking-wider flex items-center gap-1.5">
-          <ImageIcon className="size-3.5 text-[#292c2e]" />
+        <label className="font-space text-[11px] uppercase font-bold text-zinc-700 dark:text-zinc-300 tracking-wider flex items-center gap-1.5">
+          <ImageIcon className="size-3.5 text-[#292c2e] dark:text-[#98ff03]" />
           <span>{label}</span>
         </label>
         <div className="flex items-center gap-2">
@@ -143,7 +143,7 @@ export function CloudinaryUploadButton({
             <button
               type="button"
               onClick={() => setShowUrlInput(!showUrlInput)}
-              className="text-[10px] font-space uppercase text-zinc-500 hover:text-black flex items-center gap-1 transition-colors cursor-pointer"
+              className="text-[10px] font-space uppercase text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-[#98ff03] flex items-center gap-1 transition-colors cursor-pointer"
             >
               <LinkIcon className="size-3" />
               <span>{showUrlInput ? "Hide URL Editor" : "Edit URL"}</span>
@@ -152,7 +152,7 @@ export function CloudinaryUploadButton({
         </div>
       </div>
 
-      {hint && <p className="font-inter text-[11px] text-zinc-400">{hint}</p>}
+      {hint && <p className="font-inter text-[11px] text-zinc-400 dark:text-zinc-500">{hint}</p>}
 
       {/* Manual URL editor drawer (when value is present) */}
       {showUrlInput && value && (
@@ -169,13 +169,13 @@ export function CloudinaryUploadButton({
                 handleManualUrlSubmit();
               }
             }}
-            className="flex-1 border border-zinc-300 px-3 py-1.5 rounded-[3px] text-xs font-mono text-zinc-800 focus:border-[#292c2e] outline-none bg-white disabled:opacity-50"
+            className="flex-1 border border-zinc-300 dark:border-white/10 px-3 py-1.5 rounded-[3px] text-xs font-mono text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none bg-white dark:bg-[#121417] disabled:opacity-50"
           />
           <button
             type="button"
             disabled={isUploading}
             onClick={() => handleManualUrlSubmit()}
-            className="px-3 py-1.5 bg-[#292c2e] hover:bg-black text-white text-[11px] font-space uppercase font-semibold rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50 flex items-center gap-1"
+            className="px-3 py-1.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-[11px] font-space uppercase font-semibold rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50 flex items-center gap-1"
           >
             {isUploading ? (
               <Loader2 className="size-3 animate-spin" />
@@ -198,7 +198,7 @@ export function CloudinaryUploadButton({
       {/* Main Upload / Preview Area */}
       {value ? (
         layout === "vertical" ? (
-          <div className="relative group border border-zinc-200/90 rounded-[4px] p-2.5 bg-zinc-50/50 space-y-2.5">
+          <div className="relative group border border-zinc-200/90 dark:border-white/10 rounded-[4px] p-2.5 bg-zinc-50/50 dark:bg-white/[0.02] space-y-2.5">
             {/* Full-width responsive image preview */}
             <div
               className={`relative w-full ${
@@ -207,12 +207,12 @@ export function CloudinaryUploadButton({
                   : aspectRatio === "wide"
                   ? "aspect-[21/9]"
                   : "aspect-video"
-              } overflow-hidden rounded-[3px] bg-zinc-900 outline outline-1 outline-[oklch(0_0_0_/_0.1)]`}
+              } overflow-hidden rounded-[3px] bg-zinc-900 outline outline-1 outline-[oklch(0_0_0_/_0.1)] dark:outline-white/10`}
             >
               {hasImgError ? (
                 <div className="size-full flex flex-col items-center justify-center p-3 text-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 space-y-1">
-                  <ImageIcon className="size-6 text-zinc-300" />
-                  <span className="text-[10px] font-space uppercase font-bold text-zinc-600">Asset Linked</span>
+                  <ImageIcon className="size-6 text-zinc-300 dark:text-zinc-600" />
+                  <span className="text-[10px] font-space uppercase font-bold text-zinc-600 dark:text-zinc-300">Asset Linked</span>
                   <span className="text-[9px] font-mono text-zinc-400 truncate max-w-[120px]">{value}</span>
                 </div>
               ) : (
@@ -229,15 +229,15 @@ export function CloudinaryUploadButton({
             </div>
 
             {/* Bottom metadata and action bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-zinc-200/70">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-zinc-200/70 dark:border-white/10">
               <div className="min-w-0 flex-1 space-y-0.5">
-                <div className="flex items-center gap-1.5 text-emerald-600 font-space text-[10px] font-bold uppercase tracking-wider">
+                <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-space text-[10px] font-bold uppercase tracking-wider">
                   <CheckCircle2 className="size-3 shrink-0" />
                   <span className="truncate">
                     {value.startsWith("http") ? "Asset Ready & Synced" : "Local Asset Linked"}
                   </span>
                 </div>
-                <p className="font-mono text-[10px] text-zinc-400 truncate max-w-[200px]" title={value}>
+                <p className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500 truncate max-w-[200px]" title={value}>
                   {value}
                 </p>
               </div>
@@ -247,7 +247,7 @@ export function CloudinaryUploadButton({
                   type="button"
                   disabled={isUploading}
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50 whitespace-nowrap shadow-2xs"
+                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 dark:bg-[#1f2224] dark:hover:bg-[#282b2e] text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-white/10 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50 whitespace-nowrap shadow-2xs"
                 >
                   Replace File
                 </button>
@@ -258,14 +258,14 @@ export function CloudinaryUploadButton({
                     setManualUrl(value);
                     setShowUrlInput(true);
                   }}
-                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer whitespace-nowrap shadow-2xs disabled:opacity-50"
+                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 dark:bg-[#1f2224] dark:hover:bg-[#282b2e] text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-white/10 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer whitespace-nowrap shadow-2xs disabled:opacity-50"
                 >
                   Edit URL
                 </button>
                 <button
                   type="button"
                   onClick={handleRemove}
-                  className="px-2 py-1 text-[10px] font-space uppercase font-bold text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-[3px] transition-colors cursor-pointer whitespace-nowrap"
+                  className="px-2 py-1 text-[10px] font-space uppercase font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 border border-transparent hover:border-red-200 dark:hover:border-red-800 rounded-[3px] transition-colors cursor-pointer whitespace-nowrap"
                 >
                   Remove
                 </button>
@@ -274,7 +274,7 @@ export function CloudinaryUploadButton({
           </div>
         ) : (
           /* Horizontal / Auto layout with defensive wrapping and min-widths */
-          <div className="relative group border border-zinc-200/90 rounded-[4px] p-2.5 bg-zinc-50/50 flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
+          <div className="relative group border border-zinc-200/90 dark:border-white/10 rounded-[4px] p-2.5 bg-zinc-50/50 dark:bg-white/[0.02] flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
             <div
               className={`relative w-full ${
                 aspectRatio === "square"
@@ -282,12 +282,12 @@ export function CloudinaryUploadButton({
                   : aspectRatio === "wide"
                   ? "aspect-[21/9] sm:w-56"
                   : "aspect-video sm:w-48"
-              } overflow-hidden rounded-[3px] bg-zinc-900 outline outline-1 outline-[oklch(0_0_0_/_0.1)] shrink-0`}
+              } overflow-hidden rounded-[3px] bg-zinc-900 outline outline-1 outline-[oklch(0_0_0_/_0.1)] dark:outline-white/10 shrink-0`}
             >
               {hasImgError ? (
                 <div className="size-full flex flex-col items-center justify-center p-3 text-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 space-y-1">
-                  <ImageIcon className="size-6 text-zinc-300" />
-                  <span className="text-[10px] font-space uppercase font-bold text-zinc-600">Asset Linked</span>
+                  <ImageIcon className="size-6 text-zinc-300 dark:text-zinc-600" />
+                  <span className="text-[10px] font-space uppercase font-bold text-zinc-600 dark:text-zinc-300">Asset Linked</span>
                   <span className="text-[9px] font-mono text-zinc-400 truncate max-w-[120px]">{value}</span>
                 </div>
               ) : (
@@ -304,13 +304,13 @@ export function CloudinaryUploadButton({
             </div>
 
             <div className="flex-1 min-w-0 w-full space-y-1.5">
-              <div className="flex items-center gap-1.5 text-emerald-600 font-space text-[10px] font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-space text-[10px] font-bold uppercase tracking-wider">
                 <CheckCircle2 className="size-3 shrink-0" />
                 <span className="whitespace-nowrap">
                   {value.startsWith("http") ? "Asset Ready & Synced" : "Local Asset Linked"}
                 </span>
               </div>
-              <p className="font-mono text-[11px] text-zinc-500 truncate" title={value}>
+              <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400 truncate" title={value}>
                 {value}
               </p>
               <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -318,7 +318,7 @@ export function CloudinaryUploadButton({
                   type="button"
                   disabled={isUploading}
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50 whitespace-nowrap shadow-2xs"
+                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 dark:bg-[#1f2224] dark:hover:bg-[#282b2e] text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-white/10 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50 whitespace-nowrap shadow-2xs"
                 >
                   Replace File
                 </button>
@@ -329,14 +329,14 @@ export function CloudinaryUploadButton({
                     setManualUrl(value);
                     setShowUrlInput(true);
                   }}
-                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 text-zinc-700 border border-zinc-200 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer whitespace-nowrap shadow-2xs disabled:opacity-50"
+                  className="px-2.5 py-1 text-[10px] font-space uppercase font-bold bg-white hover:bg-zinc-100 dark:bg-[#1f2224] dark:hover:bg-[#282b2e] text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-white/10 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer whitespace-nowrap shadow-2xs disabled:opacity-50"
                 >
                   Edit URL
                 </button>
                 <button
                   type="button"
                   onClick={handleRemove}
-                  className="px-2 py-1 text-[10px] font-space uppercase font-bold text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-[3px] transition-colors cursor-pointer whitespace-nowrap"
+                  className="px-2 py-1 text-[10px] font-space uppercase font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 border border-transparent hover:border-red-200 dark:hover:border-red-800 rounded-[3px] transition-colors cursor-pointer whitespace-nowrap"
                 >
                   Remove
                 </button>
@@ -347,7 +347,7 @@ export function CloudinaryUploadButton({
       ) : (
         /* Empty State: Tabs between Upload File and Enter URL */
         <div className="space-y-2">
-          <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-[4px] border border-zinc-200/80 w-fit">
+          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-white/5 p-1 rounded-[4px] border border-zinc-200/80 dark:border-white/10 w-fit">
             <button
               type="button"
               onClick={() => {
@@ -356,8 +356,8 @@ export function CloudinaryUploadButton({
               }}
               className={`px-3 py-1 text-[10px] font-space uppercase font-bold rounded-[3px] transition-all flex items-center gap-1.5 cursor-pointer ${
                 entryMode === "upload"
-                  ? "bg-white text-[#292c2e] shadow-2xs"
-                  : "text-zinc-500 hover:text-black"
+                  ? "bg-white dark:bg-[#1f2224] text-[#292c2e] dark:text-[#98ff03] shadow-2xs"
+                  : "text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white"
               }`}
             >
               <UploadCloud className="size-3" />
@@ -371,8 +371,8 @@ export function CloudinaryUploadButton({
               }}
               className={`px-3 py-1 text-[10px] font-space uppercase font-bold rounded-[3px] transition-all flex items-center gap-1.5 cursor-pointer ${
                 entryMode === "url"
-                  ? "bg-white text-[#292c2e] shadow-2xs"
-                  : "text-zinc-500 hover:text-black"
+                  ? "bg-white dark:bg-[#1f2224] text-[#292c2e] dark:text-[#98ff03] shadow-2xs"
+                  : "text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white"
               }`}
             >
               <LinkIcon className="size-3" />
@@ -383,31 +383,31 @@ export function CloudinaryUploadButton({
           {entryMode === "upload" ? (
             <div
               onClick={() => !isUploading && fileInputRef.current?.click()}
-              className={`border-2 border-dashed border-zinc-300 hover:border-[#292c2e] bg-white hover:bg-zinc-50/70 p-6 rounded-[4px] text-center cursor-pointer transition-all active:scale-[0.99] group ${
+              className={`border-2 border-dashed border-zinc-300 dark:border-white/15 hover:border-[#292c2e] dark:hover:border-[#98ff03] bg-white dark:bg-[#121417] hover:bg-zinc-50/70 dark:hover:bg-white/[0.03] p-6 rounded-[4px] text-center cursor-pointer transition-all active:scale-[0.99] group ${
                 isUploading ? "opacity-60 pointer-events-none" : ""
               }`}
             >
               <div className="flex flex-col items-center justify-center space-y-2">
-                <div className="size-10 rounded-full bg-zinc-100 group-hover:bg-[#98ff03]/20 flex items-center justify-center text-zinc-600 group-hover:text-black transition-colors">
+                <div className="size-10 rounded-full bg-zinc-100 dark:bg-white/10 group-hover:bg-[#98ff03]/20 flex items-center justify-center text-zinc-600 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-[#98ff03] transition-colors">
                   {isUploading ? (
-                    <Loader2 className="size-5 animate-spin text-[#292c2e]" />
+                    <Loader2 className="size-5 animate-spin text-[#292c2e] dark:text-[#98ff03]" />
                   ) : (
                     <UploadCloud className="size-5" />
                   )}
                 </div>
                 <div>
-                  <p className="font-space font-bold text-xs text-[#292c2e]">
+                  <p className="font-space font-bold text-xs text-[#292c2e] dark:text-zinc-200">
                     {isUploading ? "Uploading to Cloudinary..." : "Click to select or drop image"}
                   </p>
-                  <p className="font-inter text-[10px] text-zinc-400 mt-0.5">
+                  <p className="font-inter text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">
                     Supports SVG, PNG, JPG, WebP with CDN delivery
                   </p>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="border border-zinc-200 bg-white p-4 rounded-[4px] space-y-2.5">
-              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 block">
+            <div className="border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#121417] p-4 rounded-[4px] space-y-2.5">
+              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400 block">
                 Enter Web URL or SVG Code
               </label>
               <div className="flex gap-2">
@@ -426,13 +426,13 @@ export function CloudinaryUploadButton({
                       handleManualUrlSubmit();
                     }
                   }}
-                  className="flex-1 border border-zinc-300 px-3 py-2 rounded-[3px] text-xs font-mono text-zinc-800 focus:border-[#292c2e] outline-none disabled:opacity-50"
+                  className="flex-1 border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs font-mono text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none disabled:opacity-50"
                 />
                 <button
                   type="button"
                   disabled={isUploading || !manualUrl.trim()}
                   onClick={() => handleManualUrlSubmit()}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-black text-white text-[11px] font-space uppercase font-bold rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-[11px] font-space uppercase font-bold rounded-[3px] active:scale-[0.96] transition-transform cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
                 >
                   {isUploading ? (
                     <>
@@ -444,7 +444,7 @@ export function CloudinaryUploadButton({
                   )}
                 </button>
               </div>
-              <p className="font-inter text-[10px] text-zinc-400">
+              <p className="font-inter text-[10px] text-zinc-400 dark:text-zinc-500">
                 Supports direct image URLs (PNG, SVG, JPG), Logoipsum artwork pages, or raw SVG code.
               </p>
             </div>
@@ -453,7 +453,7 @@ export function CloudinaryUploadButton({
       )}
 
       {uploadError && (
-        <p className="font-inter text-[11px] text-red-600 flex items-center gap-1">
+        <p className="font-inter text-[11px] text-red-600 dark:text-red-400 flex items-center gap-1">
           <X className="size-3 shrink-0" />
           <span>{uploadError}</span>
         </p>

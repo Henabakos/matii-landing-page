@@ -66,6 +66,8 @@ export function RichTextEditor({
         heading: {
           levels: [1, 2, 3, 4, 5, 6],
         },
+        link: false,
+        underline: false,
       }),
       Underline,
       Table.configure({
@@ -195,7 +197,7 @@ export function RichTextEditor({
   const stats = getWordAndCharStats(editor.getHTML());
 
   return (
-    <div className="border border-zinc-300 rounded-[4px] overflow-hidden bg-white focus-within:border-[#292c2e] focus-within:ring-1 focus-within:ring-[#292c2e]/20 transition-all shadow-xs">
+    <div className="border border-zinc-300 dark:border-white/10 rounded-[4px] overflow-hidden bg-white dark:bg-[#121417] focus-within:border-[#292c2e] dark:focus-within:border-[#98ff03] focus-within:ring-1 focus-within:ring-[#292c2e]/20 dark:focus-within:ring-[#98ff03]/20 transition-all shadow-xs">
       {/* Hidden file input for Cloudinary image upload */}
       <input
         ref={fileInputRef}
@@ -579,13 +581,13 @@ export function RichTextEditor({
       )}
 
       {/* Editor Content Area */}
-      <div className="min-h-[320px] bg-white cursor-text" onClick={() => editor.commands.focus()}>
+      <div className="min-h-[320px] bg-white dark:bg-[#121417] cursor-text text-zinc-800 dark:text-zinc-100" onClick={() => editor.commands.focus()}>
         <EditorContent editor={editor} />
       </div>
 
       {/* Stats Bar */}
-      <div className="px-4 py-2 bg-zinc-50 border-t border-zinc-200 flex items-center justify-between text-[11px] font-space text-zinc-400">
-        <span className="flex items-center gap-1.5 text-[#292c2e]/70 font-medium">
+      <div className="px-4 py-2 bg-zinc-50 dark:bg-[#16181b] border-t border-zinc-200 dark:border-white/10 flex items-center justify-between text-[11px] font-space text-zinc-500 dark:text-zinc-400">
+        <span className="flex items-center gap-1.5 text-[#292c2e]/70 dark:text-zinc-300 font-medium">
           <span className="size-2 rounded-full bg-[#98ff03] inline-block shadow-xs" />
           Semantic HTML Engine active
         </span>
@@ -594,7 +596,7 @@ export function RichTextEditor({
           <span>•</span>
           <span>{stats.charCount} characters</span>
           <span>•</span>
-          <span className="text-zinc-600">{stats.readTime}</span>
+          <span className="text-zinc-600 dark:text-zinc-400">{stats.readTime}</span>
         </div>
       </div>
     </div>

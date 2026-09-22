@@ -3,14 +3,15 @@ import { notFound } from "next/navigation";
 import ProjectDetailPage from "@/components/pages/ProjectDetailPage";
 import { getProjectBySlug } from "@/lib/services/project.service";
 import { JsonLd, generateProjectSchema, generateBreadcrumbSchema } from "@/components/common/JsonLd";
+import { getLocalizedField } from "@/lib/i18n-helpers";
 import type { Metadata } from "next";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = await getProjectBySlug(slug);
 
   if (!project) {
@@ -20,10 +21,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = project.seoTitle || `${project.title} | Matii Digitals`;
-  const description = project.seoDescription || project.subtitle;
+  const localizedTitle = getLocalizedField(project, "title", locale);
+  const localizedSubtitle = getLocalizedField(project, "subtitle", locale);
+
+  const title = project.seoTitle || `${localizedTitle} | Matii Digitals`;
+  const description = project.seoDescription || localizedSubtitle;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const url = `${siteUrl}/projects/${project.slug}`;
+  const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}projects/${project.slug}`;
 
   return {
     title,
@@ -42,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           url: project.coverImage,
           width: 1200,
           height: 630,
-          alt: project.title,
+          alt: localizedTitle,
         },
       ],
     },
@@ -56,19 +60,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProjectSlugPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
+  const localizedTitle = getLocalizedField(project, "title", locale);
+  const localizedSubtitle = getLocalizedField(project, "subtitle", locale);
+  const localizedChallenge = getLocalizedField(project, "challengeParagraphs", locale) || project.challengeParagraphs;
+  const localizedSolution = getLocalizedField(project, "solutionParagraphs", locale) || project.solutionParagraphs;
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const projectUrl = `${siteUrl}/projects/${project.slug}`;
+  const projectUrl = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}projects/${project.slug}`;
 
   const projectSchema = generateProjectSchema({
-    title: project.title,
-    description: project.subtitle,
+    title: localizedTitle,
+    description: localizedSubtitle,
     url: projectUrl,
     image: project.coverImage,
     clientName: project.clientName,
@@ -78,7 +87,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: siteUrl },
     { name: "Projects", url: `${siteUrl}/projects` },
-    { name: project.title, url: projectUrl },
+    { name: localizedTitle, url: projectUrl },
   ]);
 
   const resultsProps = {
@@ -94,16 +103,16 @@ export default async function ProjectSlugPage({ params }: PageProps) {
       <JsonLd data={breadcrumbSchema} />
       <ProjectDetailPage
         slug={project.slug}
-        title={project.title}
-        subtitle={project.subtitle}
+        title={localizedTitle}
+        subtitle={localizedSubtitle}
         coverImage={project.coverImage}
         clientName={project.clientName || undefined}
         clientLogoText={project.clientLogoText || undefined}
         liveUrl={project.liveUrl || undefined}
         timeline={project.timeline || undefined}
         services={project.services || undefined}
-        challengeParagraphs={project.challengeParagraphs}
-        solutionParagraphs={project.solutionParagraphs}
+        challengeParagraphs={Array.isArray(localizedChallenge) ? localizedChallenge : [localizedChallenge]}
+        solutionParagraphs={Array.isArray(localizedSolution) ? localizedSolution : [localizedSolution]}
         galleryItems={project.galleryItems}
         resultsProps={resultsProps}
       />

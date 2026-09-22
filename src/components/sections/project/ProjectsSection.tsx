@@ -82,7 +82,11 @@ const fallbackProjects: ProjectCardProps[] = [
   },
 ];
 
+import { useTranslations } from "next-intl";
+
 function ProjectsContent({ initialProjects, initialCategories }: ProjectsSectionProps) {
+  const tPages = useTranslations("pages.projects");
+  const tCommon = useTranslations("common");
   const searchParams = useSearchParams();
   const router = useRouter();
   const paramCategory = searchParams.get("category");
@@ -178,32 +182,26 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
     <section className="relative w-full pt-8 md:pt-12 px-4 md:px-8 overflow-hidden">
       <div className="max-w-345 mx-auto relative space-y-12">
         <PageHeader
-          tag="OUR WORK & PROJECTS"
-          title={
-            <>
-              Solutions Built For
-              <br />
-              Forward-Thinking Teams.
-            </>
-          }
-          description="Explore our enterprise platforms, AI workflow agents, and high-performance applications engineered for institutions worldwide."
+          tag={tPages("tag")}
+          title={tPages("title")}
+          description={tPages("description")}
         />
 
-        {/* Dynamic Pill Category Filter with Live Counts & URL Sync */}
+        {/* Dynamic Category Filter Tabs with Live Counts & URL Sync */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-12">
-          {/* ALL Pill */}
+          {/* ALL Tab */}
           <button
             type="button"
             onClick={() => handleSelectCategory("All")}
-            className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+            className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-none transition-all duration-300 cursor-pointer flex items-center gap-2 ${
               selectedCategory === "All"
                 ? "bg-[#292c2e] text-white shadow-md border border-[#292c2e] dark:bg-[#98ff03] dark:text-[#161819] dark:border-[#98ff03]"
-                : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-transparent dark:border-white/10"
+                : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10"
             }`}
           >
-            <span>All</span>
+            <span>{tCommon("all")}</span>
             <span
-              className={`text-[11px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+              className={`text-[11px] px-1.5 py-0.5 rounded-none font-mono font-bold ${
                 selectedCategory === "All"
                   ? "bg-white/20 dark:bg-black/20 text-white dark:text-[#161819]"
                   : "bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400"
@@ -213,7 +211,7 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
             </span>
           </button>
 
-          {/* Dynamic Category Pills */}
+          {/* Dynamic Category Tabs */}
           {categoriesList.map((cat) => {
             const isActive = selectedCategory.toLowerCase() === cat.name.toLowerCase();
             return (
@@ -221,15 +219,15 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
                 key={cat.id}
                 type="button"
                 onClick={() => handleSelectCategory(cat.name, cat.slug)}
-                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                className={`font-space text-xs md:text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-none transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   isActive
                     ? "bg-[#292c2e] text-white shadow-md border border-[#292c2e] dark:bg-[#98ff03] dark:text-[#161819] dark:border-[#98ff03]"
-                    : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-transparent dark:border-white/10"
+                    : "bg-[#f3f4f6] dark:bg-[#161819] text-[#292c2e] dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-white/10 border border-zinc-200/80 dark:border-white/10"
                 }`}
               >
                 <span>{cat.name}</span>
                 <span
-                  className={`text-[11px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                  className={`text-[11px] px-1.5 py-0.5 rounded-none font-mono font-bold ${
                     isActive
                       ? "bg-white/20 dark:bg-black/20 text-white dark:text-[#161819]"
                       : "bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400"

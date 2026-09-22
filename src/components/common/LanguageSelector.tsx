@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useTransition } from "react";
 import { TbChevronDown, TbCheck } from "react-icons/tb";
 import { CountryFlag } from "@/components/common/CountryFlags";
+import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/routing";
 
 export interface LanguageItem {
   code: string;
@@ -12,7 +14,7 @@ export interface LanguageItem {
 
 export const LANGUAGES: LanguageItem[] = [
   { code: "en", name: "English", nativeName: "English" },
-  { code: "om", name: "Afaan Oromoo", nativeName: "Oromoo" },
+  { code: "om", name: "Afaan Oromoo", nativeName: "Afaan Oromoo" },
   { code: "am", name: "Amharic", nativeName: "አማርኛ" },
   { code: "de", name: "German", nativeName: "Deutsch" },
   { code: "pl", name: "Polish", nativeName: "Polski" },
@@ -20,25 +22,11 @@ export const LANGUAGES: LanguageItem[] = [
 
 export function LanguageSelector({ className = "" }: { className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<string>("en");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Read initial language from cookie on mount
-  useEffect(() => {
-    const getCookie = (name: string) => {
-      const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-      return match ? decodeURIComponent(match[2]) : null;
-    };
-
-    const cookieVal = getCookie("googtrans");
-    if (cookieVal) {
-      const parts = cookieVal.split("/");
-      const targetCode = parts[parts.length - 1]?.toLowerCase();
-      if (targetCode && LANGUAGES.some((l) => l.code === targetCode)) {
-        setCurrentLang(targetCode);
-      }
-    }
-  }, []);
 
   // Handle outside click & escape key
   useEffect(() => {
@@ -62,35 +50,15 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
     };
   }, []);
 
-  const handleLanguageChange = (langCode: string) => {
-    setCurrentLang(langCode);
+  const handleLanguageChange = (nextLocale: string) => {
     setIsOpen(false);
-
-    const hostname = window.location.hostname;
-    const cookieVal = `/en/${langCode}`;
-
-    // Set cookie across root and host
-    document.cookie = `googtrans=${cookieVal}; path=/;`;
-    if (hostname && !hostname.includes("localhost") && !hostname.includes("127.0.0.1")) {
-      document.cookie = `googtrans=${cookieVal}; domain=${hostname}; path=/;`;
-      const domainParts = hostname.split(".");
-      if (domainParts.length > 2) {
-        document.cookie = `googtrans=${cookieVal}; domain=.${domainParts.slice(-2).join(".")}; path=/;`;
-      }
-    }
-
-    // Trigger Google Translate select element if available
-    const combo = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-    if (combo) {
-      combo.value = langCode;
-      combo.dispatchEvent(new Event("change"));
-    } else {
-      // Fallback reload so Google Translate script picks up cookie on next frame
-      window.location.reload();
-    }
+    startTransition(() => {
+      router.replace(pathname, { locale: nextLocale });
+    });
   };
 
-  const activeLanguage = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
+  const activeLanguage =
+    LANGUAGES.find((l) => l.code === locale) || LANGUAGES[0];
 
   return (
     <div ref={dropdownRef} className={`relative inline-block ${className}`}>
@@ -108,9 +76,8 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
           {activeLanguage.nativeName}
         </span>
         <TbChevronDown
-          className={`size-3 text-zinc-400 transition-transform duration-200 shrink-0 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`size-3 text-zinc-400 transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""
+            }`}
           strokeWidth={2}
         />
       </button>
@@ -136,7 +103,7 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
 
           <div className="space-y-0.5">
             {LANGUAGES.map((lang) => {
-              const isSelected = currentLang === lang.code;
+              const isSelected = locale === lang.code;
 
               return (
                 <button
@@ -144,11 +111,10 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
                   type="button"
                   role="menuitem"
                   onClick={() => handleLanguageChange(lang.code)}
-                  className={`w-full px-2.5 py-2 text-left rounded-[2px] flex items-center justify-between transition-colors cursor-pointer active:scale-[0.98] ${
-                    isSelected
+                  className={`w-full px-2.5 py-2 text-left rounded-[2px] flex items-center justify-between transition-colors cursor-pointer active:scale-[0.98] ${isSelected
                       ? "bg-[#292c2e] text-white dark:bg-[#98ff03] dark:text-[#161819]"
                       : "hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-800 dark:text-zinc-200"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <CountryFlag code={lang.code} className="w-[22px] h-[15px]" />
@@ -157,11 +123,10 @@ export function LanguageSelector({ className = "" }: { className?: string }) {
                         {lang.nativeName}
                       </span>
                       <span
-                        className={`text-[10px] font-inter truncate ${
-                          isSelected
+                        className={`text-[10px] font-inter truncate ${isSelected
                             ? "text-zinc-300 dark:text-zinc-800 font-medium"
                             : "text-zinc-400 dark:text-zinc-500"
-                        }`}
+                          }`}
                       >
                         {lang.name}
                       </span>

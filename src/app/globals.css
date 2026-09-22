@@ -617,3 +617,251 @@ font.goog-text-highlight {
   height: 0px !important;
   width: 0px !important;
 }
+
+/* ==========================================================================
+   Tech Path Background Animations
+   ========================================================================== */
+@keyframes techPathPulse1 {
+  0% {
+    stroke-dashoffset: 1400;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -400;
+    opacity: 0;
+  }
+}
+
+@keyframes techPathPulse2 {
+  0% {
+    stroke-dashoffset: 1600;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -500;
+    opacity: 0;
+  }
+}
+
+@keyframes techPathPulse3 {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    stroke-dashoffset: -300;
+    opacity: 0;
+  }
+}
+
+@keyframes nodeGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+@keyframes nodeGlowSubtle {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.tech-pulse-line-1 {
+  stroke-dasharray: 90 800;
+  animation: techPathPulse1 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.tech-pulse-line-2 {
+  stroke-dasharray: 120 950;
+  animation: techPathPulse2 15s cubic-bezier(0.4, 0, 0.2, 1) 4s infinite;
+}
+
+.tech-pulse-line-3 {
+  stroke-dasharray: 70 650;
+  animation: techPathPulse3 10s cubic-bezier(0.4, 0, 0.2, 1) 7s infinite;
+}
+
+.tech-node-pulsing {
+  transform-origin: center;
+  animation: nodeGlow 5s ease-in-out infinite;
+}
+
+.tech-node-subtle-pulse {
+  animation: nodeGlowSubtle 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-pulse-line-1,
+  .tech-pulse-line-2,
+  .tech-pulse-line-3,
+  .tech-node-pulsing,
+  .tech-node-subtle-pulse {
+    animation: none !important;
+    stroke-dasharray: none !important;
+  }
+}
+
+/* ==========================================================================
+   Custom Scrollbar System: Hide Horizontal Everywhere & Thin Dark Gray Vertical
+   ========================================================================== */
+
+/* 1. Page-Level Strict No-Horizontal-Scroll */
+html,
+body,
+#__next {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  position: relative;
+}
+
+/* 2. Suppress Horizontal Scrollbars across ALL browsers & elements */
+*,
+*::before,
+*::after {
+  scrollbar-width: thin;
+}
+
+/* Remove all horizontal scrollbars completely in WebKit / Blink / Chromium */
+::-webkit-scrollbar:horizontal,
+*::-webkit-scrollbar:horizontal,
+html::-webkit-scrollbar:horizontal,
+body::-webkit-scrollbar:horizontal,
+div::-webkit-scrollbar:horizontal,
+section::-webkit-scrollbar:horizontal,
+main::-webkit-scrollbar:horizontal {
+  display: none !important;
+  height: 0px !important;
+  width: 0px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  -webkit-appearance: none !important;
+}
+
+::-webkit-scrollbar-thumb:horizontal,
+*::-webkit-scrollbar-thumb:horizontal {
+  display: none !important;
+  height: 0px !important;
+  width: 0px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+::-webkit-scrollbar-track:horizontal,
+*::-webkit-scrollbar-track:horizontal {
+  display: none !important;
+  height: 0px !important;
+  width: 0px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Also hide horizontal scrollbars for containers with horizontal scroll */
+.overflow-x-auto,
+.overflow-x-scroll,
+[class*="overflow-x-auto"],
+[class*="overflow-x-scroll"] {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE / Edge */
+}
+
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-x-scroll::-webkit-scrollbar,
+[class*="overflow-x-auto"]::-webkit-scrollbar,
+[class*="overflow-x-scroll"]::-webkit-scrollbar {
+  display: none !important;
+  height: 0px !important;
+  width: 0px !important;
+  background: transparent !important;
+}
+
+/* 3. Custom Thin & Short Vertical Scrollbar Only */
+::-webkit-scrollbar:vertical,
+*::-webkit-scrollbar:vertical {
+  width: 6px !important;
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-track:vertical,
+*::-webkit-scrollbar-track:vertical {
+  background: transparent !important;
+  border-radius: 9999px !important;
+}
+
+/* Scrollbar Thumb: Dark Gray Thin & Short Pill */
+::-webkit-scrollbar-thumb:vertical,
+*::-webkit-scrollbar-thumb:vertical {
+  background-color: #71717a !important;
+  border-radius: 9999px !important;
+  min-height: 28px !important;
+  transition: background-color 0.2s ease;
+}
+
+.dark ::-webkit-scrollbar-thumb:vertical,
+.dark *::-webkit-scrollbar-thumb:vertical {
+  background-color: #52525b !important;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover,
+*::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: #3f3f46 !important;
+}
+
+.dark ::-webkit-scrollbar-thumb:vertical:hover,
+.dark *::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: #71717a !important;
+}
+
+::-webkit-scrollbar-thumb:vertical:active,
+*::-webkit-scrollbar-thumb:vertical:active {
+  background-color: #27272a !important;
+}
+
+.dark ::-webkit-scrollbar-thumb:vertical:active,
+.dark *::-webkit-scrollbar-thumb:vertical:active {
+  background-color: #a1a1aa !important;
+}
+
+/* Firefox standard scrollbar properties */
+* {
+  scrollbar-color: #71717a transparent;
+}
+
+.dark * {
+  scrollbar-color: #52525b transparent;
+}
+
+/* Scrollbar Corner */
+::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+

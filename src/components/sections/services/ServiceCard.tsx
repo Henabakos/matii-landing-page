@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import svgPaths from "@/lib/svgPaths";
 
 export interface ServiceCardProps {

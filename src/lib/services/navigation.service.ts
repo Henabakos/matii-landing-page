@@ -14,6 +14,7 @@ interface RawNavMenu {
   footerCtaLabel: string | null;
   footerCtaHref: string | null;
   categories: string;
+  translations?: string | null;
   createdAt?: string | Date;
   updatedAt?: string | Date;
 }
@@ -24,6 +25,15 @@ function parseNavMenu(raw: RawNavMenu): MegaMenuConfig {
     categories = JSON.parse(raw.categories);
   } catch {
     categories = [];
+  }
+
+  let translations: Record<string, { label?: string; footerLabel?: string; footerCtaLabel?: string }> | undefined;
+  if (raw.translations) {
+    try {
+      translations = typeof raw.translations === "string" ? JSON.parse(raw.translations) : raw.translations;
+    } catch {
+      translations = undefined;
+    }
   }
 
   return {
@@ -43,6 +53,7 @@ function parseNavMenu(raw: RawNavMenu): MegaMenuConfig {
           }
         : undefined,
     categories,
+    translations,
   };
 }
 
@@ -63,8 +74,8 @@ async function seedDefaultNavMenusIfEmpty(): Promise<MegaMenuConfig[]> {
       const id = `nav_${menu.key}_${Date.now()}`;
       await db.$queryRawUnsafe(
         `INSERT OR REPLACE INTO NavMenu (
-          id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, createdAt, updatedAt
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, translations, createdAt, updatedAt
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         id,
         menu.key,
         menu.label,
@@ -75,7 +86,8 @@ async function seedDefaultNavMenusIfEmpty(): Promise<MegaMenuConfig[]> {
         menu.footer?.href || null,
         menu.footer?.ctaLabel || null,
         menu.footer?.ctaHref || null,
-        JSON.stringify(menu.categories),
+        JSON.stringify(menu.categories || []),
+        menu.translations ? JSON.stringify(menu.translations) : null,
         now,
         now
       );
@@ -128,8 +140,8 @@ export async function upsertNavMenu(
 
   await db.$queryRawUnsafe(
     `INSERT INTO NavMenu (
-      id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, createdAt, updatedAt
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, translations, createdAt, updatedAt
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(\`key\`) DO UPDATE SET
       label = excluded.label,
       href = excluded.href,
@@ -140,6 +152,7 @@ export async function upsertNavMenu(
       footerCtaLabel = excluded.footerCtaLabel,
       footerCtaHref = excluded.footerCtaHref,
       categories = excluded.categories,
+      translations = excluded.translations,
       updatedAt = excluded.updatedAt
     `,
     id,
@@ -152,7 +165,8 @@ export async function upsertNavMenu(
     menu.footer?.href || null,
     menu.footer?.ctaLabel || null,
     menu.footer?.ctaHref || null,
-    JSON.stringify(menu.categories),
+    JSON.stringify(menu.categories || []),
+    menu.translations ? JSON.stringify(menu.translations) : null,
     now,
     now
   );

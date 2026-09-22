@@ -32,6 +32,7 @@ export interface SaveJobPositionInput {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  translations?: Record<string, any>;
 }
 
 export async function saveJobPositionAction(data: SaveJobPositionInput) {
@@ -47,46 +48,33 @@ export async function saveJobPositionAction(data: SaveJobPositionInput) {
     throw new Error("Title, slug, and content are required.");
   }
 
+  const payload: any = {
+    slug: normalizedSlug,
+    title: data.title,
+    department: data.department || "Engineering",
+    location: data.location || "Addis Ababa, Ethiopia / Remote",
+    type: data.type || "Full-Time",
+    experience: data.experience || "3+ Years",
+    salary: data.salary || "Competitive",
+    shortDescription: data.shortDescription || "",
+    content: data.content,
+    order: Number(data.order || 0),
+    isActive: Boolean(data.isActive ?? true),
+    isFeatured: Boolean(data.isFeatured ?? false),
+    seoTitle: data.seoTitle || null,
+    seoDescription: data.seoDescription || null,
+    seoKeywords: data.seoKeywords || null,
+    translations: data.translations ? JSON.stringify(data.translations) : null,
+  };
+
   if (data.id) {
     await db.jobPosition.update({
       where: { id: data.id },
-      data: {
-        slug: normalizedSlug,
-        title: data.title,
-        department: data.department || "Engineering",
-        location: data.location || "Addis Ababa, Ethiopia / Remote",
-        type: data.type || "Full-Time",
-        experience: data.experience || "3+ Years",
-        salary: data.salary || "Competitive",
-        shortDescription: data.shortDescription || "",
-        content: data.content,
-        order: Number(data.order || 0),
-        isActive: Boolean(data.isActive ?? true),
-        isFeatured: Boolean(data.isFeatured ?? false),
-        seoTitle: data.seoTitle || null,
-        seoDescription: data.seoDescription || null,
-        seoKeywords: data.seoKeywords || null,
-      },
+      data: payload,
     });
   } else {
     await db.jobPosition.create({
-      data: {
-        slug: normalizedSlug,
-        title: data.title,
-        department: data.department || "Engineering",
-        location: data.location || "Addis Ababa, Ethiopia / Remote",
-        type: data.type || "Full-Time",
-        experience: data.experience || "3+ Years",
-        salary: data.salary || "Competitive",
-        shortDescription: data.shortDescription || "",
-        content: data.content,
-        order: Number(data.order || 0),
-        isActive: Boolean(data.isActive ?? true),
-        isFeatured: Boolean(data.isFeatured ?? false),
-        seoTitle: data.seoTitle || null,
-        seoDescription: data.seoDescription || null,
-        seoKeywords: data.seoKeywords || null,
-      },
+      data: payload,
     });
   }
 

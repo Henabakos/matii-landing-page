@@ -24,6 +24,13 @@ export interface ParsedProject {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  translations?: Record<string, {
+    title?: string;
+    subtitle?: string;
+    category?: string;
+    challengeParagraphs?: string[];
+    solutionParagraphs?: string[];
+  }>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,6 +40,7 @@ function parseProjectFields(project: any): ParsedProject {
   let solutionParagraphs: string[] = [];
   let galleryItems: { id: string; title: string; imageUrl: string }[] = [];
   let metrics: Record<string, string> = {};
+  let translations: Record<string, any> = {};
 
   try {
     challengeParagraphs = JSON.parse(project.challenge || "[]");
@@ -58,12 +66,19 @@ function parseProjectFields(project: any): ParsedProject {
     metrics = {};
   }
 
+  try {
+    translations = project.translations ? (typeof project.translations === "string" ? JSON.parse(project.translations) : project.translations) : {};
+  } catch {
+    translations = {};
+  }
+
   return {
     ...project,
     challengeParagraphs,
     solutionParagraphs,
     galleryItems,
     metrics,
+    translations,
   };
 }
 
@@ -151,4 +166,3 @@ export async function getAdminAllProjectCategories(): Promise<FormattedProjectCa
 
   return counts;
 }
-

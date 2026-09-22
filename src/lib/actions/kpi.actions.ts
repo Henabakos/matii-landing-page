@@ -14,12 +14,19 @@ export async function saveKpiAction(data: {
   category: string;
   order: number;
   isActive: boolean;
+  translations?: Record<string, any> | string;
 }) {
   const isAuth = await isAdminAuthenticated();
   if (!isAuth) throw new Error("Unauthorized");
 
+  const translationsString = data.translations
+    ? typeof data.translations === "string"
+      ? data.translations
+      : JSON.stringify(data.translations)
+    : undefined;
+
   if (data.id) {
-    await db.kpi.update({
+    await (db.kpi as any).update({
       where: { id: data.id },
       data: {
         key: data.key,
@@ -30,10 +37,11 @@ export async function saveKpiAction(data: {
         category: data.category,
         order: Number(data.order),
         isActive: data.isActive,
+        ...(translationsString !== undefined ? { translations: translationsString } : {}),
       },
     });
   } else {
-    await db.kpi.create({
+    await (db.kpi as any).create({
       data: {
         key: data.key,
         label: data.label,
@@ -43,6 +51,7 @@ export async function saveKpiAction(data: {
         category: data.category,
         order: Number(data.order),
         isActive: data.isActive,
+        translations: translationsString || null,
       },
     });
   }

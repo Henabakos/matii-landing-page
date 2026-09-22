@@ -9,12 +9,15 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { faqItems } from "@/data/faq-data";
+import { useTranslations } from "next-intl";
 
 export function Faq() {
+  const t = useTranslations("faq");
+
   return (
     <section className="relative w-full overflow-hidden">
       <div className="relative max-w-[1380px] mx-auto pt-10 md:pt-20 bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.4)] dark:border-white/10 transition-colors duration-200">
-        <div className="hidden md:block absolute -top-1 left-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
+        <div className="hidden md:block absolute -top-1 left-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
           <Image
             src="/shapes/faq-shape.svg"
             alt="faq-shape"
@@ -29,7 +32,7 @@ export function Faq() {
 
         {/* Headline - Subheadline: Urbanist Medium */}
         <h2 className="font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] dark:text-white text-center lowercase tracking-tight mb-12 md:mb-16 transition-colors">
-          Questions? We Have Answers.
+          {t("heading")}
         </h2>
 
         {/* 2-Column Grid */}

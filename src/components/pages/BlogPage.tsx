@@ -11,11 +11,14 @@ import PageHeader from "@/components/common/PageHeader";
 import Image from "next/image";
 import type { FormattedBlogPost } from "@/lib/services/blog.service";
 
+import { useTranslations } from "next-intl";
+
 interface BlogPageProps {
   initialPosts?: FormattedBlogPost[];
 }
 
 export default function BlogPage({ initialPosts }: BlogPageProps) {
+  const t = useTranslations("pages.blog");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
 
@@ -95,15 +98,9 @@ export default function BlogPage({ initialPosts }: BlogPageProps) {
     <main className="w-full min-h-screen text-[#292c2e] dark:text-[#ededed] px-4 sm:px-6 lg:px-12 py-8 md:py-12 transition-colors">
       <div className="max-w-[1380px] mx-auto space-y-10">
         <PageHeader
-          tag="ENGINEERING & DESIGN JOURNAL"
-          title={
-            <>
-              Perspectives On Systems,
-              <br />
-              AI & Architecture.
-            </>
-          }
-          description="Explore actionable playbooks, engineering benchmarks, and product design methodologies from our core builders."
+          tag={t("tag")}
+          title={t("title")}
+          description={t("description")}
         />
 
         <div className="relative bg-white dark:bg-[#161819] border border-zinc-200/80 dark:border-white/10 transition-colors">

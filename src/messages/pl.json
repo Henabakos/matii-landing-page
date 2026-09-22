@@ -1,0 +1,183 @@
+{
+  "common": {
+    "brandName": "Matii Digitals",
+    "startProject": "Rozpocznij projekt",
+    "exploreServices": "Odkryj usługi",
+    "contactUs": "Skontaktuj się z nami",
+    "talkToEngineer": "Porozmawiaj z inżynierem",
+    "trustedPartners": "NASI ZAUFANI PARTNERZY",
+    "allRightsReserved": "Wszelkie prawa zastrzeżone.",
+    "selectLanguage": "Wybierz język",
+    "all": "Wszystkie",
+    "readMore": "Czytaj więcej",
+    "viewProject": "Zobacz projekt",
+    "bookCall": "Zarezerwuj rozmowę",
+    "exploreAll": "Zobacz wszystko"
+  },
+  "nav": {
+    "services": "Usługi",
+    "projects": "Projekty",
+    "about": "O nas",
+    "careers": "Kariera",
+    "blog": "Blog",
+    "news": "Aktualności",
+    "contact": "Kontakt",
+    "internships": "Praktyki",
+    "talentPool": "Baza talentów"
+  },
+  "hero": {
+    "badge": "REALIZACJA AMBITNYCH IDEI Z PRECYZJĄ",
+    "headline": "Projektowanie systemów, napędzanie postępu.",
+    "subtitle": "Od ambitnych pomysłów po zaawansowane produkty cyfrowe – projektujemy i budujemy technologie rozwijające biznes.",
+    "startProject": "Rozpocznij projekt",
+    "exploreServices": "Odkryj usługi"
+  },
+  "officeShowcase": {
+    "badge": "GLOBALNY STANDARD",
+    "title": "Oprogramowanie tworzone według globalnych standardów",
+    "subtitle": "Z naszego studia w Addis Abebie zespoły inżynierów dostarczają niezawodne, skalowalne oprogramowanie, na którym polegają firmy na całym świecie.",
+    "bookCall": "Zarezerwuj rozmowę",
+    "seeWork": "Zobacz nasze realizacje"
+  },
+  "aboutUs": {
+    "tag": "KIM JESTEŚMY I CO ROBIMY",
+    "aboutTag": "O nas",
+    "heading": "Projektowanie systemów, napędzanie postępu.",
+    "desc": "Matii Technologies to firma technologiczna budująca platformy korporacyjne, infrastrukturę fintech i analizę danych dla wymagających organizacji.",
+    "stat1Value": "50+",
+    "stat1Desc": "Produkty cyfrowe zaprojektowane i wdrożone w wielu branżach.",
+    "stat2Value": "10+",
+    "stat2Desc": "Branże przekształcone dzięki przemyślanemu designowi i technologii.",
+    "stat3Value": "∞",
+    "stat3Desc": "Nieograniczone możliwości dzięki zamianie śmiałych idei w cyfrową rzeczywistość."
+  },
+  "aboutStory": {
+    "originTag": "NASZE POCHODZENIE I CEL",
+    "originHeading": "Projektowanie systemów, napędzanie postępu.",
+    "studioBadge": "Studio Inżynierii i Designu",
+    "estYear": "Zał. 2018",
+    "yearsActiveCount": "8+",
+    "yearsActiveLabel": "Lat na rynku",
+    "seniorTeamCount": "100%",
+    "seniorTeamLabel": "Zespół Seniorów",
+    "productsShippedCount": "50+",
+    "productsShippedLabel": "Wdrożonych produktów",
+    "journeyTag": "// NASZA DROGA",
+    "journeyTitle": "Dlaczego stworzyliśmy Matii Technologies.",
+    "storyP1": "Matii Technologies to firma technologiczna inżynierii platform korporacyjnych, infrastruktury fintech, rozwiązań BPO i analityki danych dla organizacji o najwyższych wymaganiach.",
+    "storyP2": "Założona w Etiopii i budowana według światowych standardów, dostarcza bezpieczne i skalowalne systemy dla przedsiębiorstw, instytucji rządowych i sektora finansowego.",
+    "storyP3": "Nie tylko piszemy kod — budujemy infrastrukturę napędzającą postęp.",
+    "missionTag": "01 // CEL",
+    "missionTitle": "NASZA MISJA",
+    "missionDesc": "Tworzenie systemów zasilających przedsiębiorstwa, administrację publiczną i finanse, dostarczając niezawodną, bezpieczną i skalowalną technologię.",
+    "missionPoint1": "Rozwiązujemy złożone problemy.",
+    "missionPoint2": "Dostarczamy na czas.",
+    "missionPoint3": "Budujemy solidną infrastrukturę.",
+    "visionTag": "02 // PRZYSZŁOŚĆ",
+    "visionTitle": "NASZA WIZJA",
+    "visionDesc": "Naszą ambicją jest stanie się jedną z wiodących firm technologicznych i filarem rynków wschodzących — firmą, na której platformach polegają państwa, instytucje i biznes."
+  },
+  "aboutCoreValues": {
+    "tag": "NASZ FUNDAMENT",
+    "heading": "Wartości Główne",
+    "value1Title": "Egzekucja ponad wszystko",
+    "value1Desc": "Skupiamy się na dostarczaniu rozwiązań o wysokiej wartości i realnych wynikach.",
+    "value2Title": "Zbudowane na zaufaniu",
+    "value2Desc": "Bezpieczeństwo, niezawodność i uczciwość to fundament wszystkiego, co tworzymy.",
+    "value3Title": "Nieustanny rozwój",
+    "value3Desc": "Stale adaptujemy, wprowadzamy innowacje i opanowujemy nowe technologie.",
+    "value4Title": "Zakorzenieni w Afryce, klasa światowa",
+    "value4Desc": "Nasza lokalizacja to nasza przewaga; budujemy lokalnie według światowych standardów."
+  },
+  "solutions": {
+    "tag": "WYBRANE ROZWIĄZANIA",
+    "heading": "Zrozumienie potrzeb. Napędzanie postępu.",
+    "desc": "Rozumiemy Twoje priorytety i wyzwania, tworząc praktyczne rozwiązania przynoszące wymierne efekty."
+  },
+  "services": {
+    "tag": "KLUCZOWE KOMPETENCJE",
+    "heading": "POMYSŁY NIE STOJĄ W MIEJSCU."
+  },
+  "whyUs": {
+    "tag": "DLACZEGO MATII",
+    "heading": "Stworzone do rozwiązywania. Zaprojektowane do rozwoju.",
+    "desc": "Łączymy myślenie strategiczne, intuicyjny design i precyzję inżynieryjną, tworząc produkty cyfrowe przyspieszające wzrost biznesu."
+  },
+  "testimonials": {
+    "tag": "OPINIE KLIENTÓW",
+    "heading": "CO MÓWIĄ NASI KLIENCI"
+  },
+  "contactSection": {
+    "tag": "KONTAKT",
+    "heading": "POROZMAWIAJMY O TWOIM KOLEJNYM WIELKIM PROJEKCIE.",
+    "directEmail": "Bezpośredni e-mail",
+    "phoneWhatsApp": "Telefon / WhatsApp",
+    "headquarterLocation": "Siedziba główna",
+    "headquarterAddress": "Addis Abeba, Etiopia",
+    "sendUsMessage": "Wyślij nam wiadomość",
+    "fullName": "Imię i nazwisko",
+    "fullNamePlaceholder": "np. Jan Kowalski",
+    "emailAddress": "Adres e-mail",
+    "emailPlaceholder": "np. jan@example.com",
+    "phoneNumber": "Numer telefonu (Opcjonalnie)",
+    "phoneNumberPlaceholder": "np. +48 123 456 789",
+    "serviceNeeded": "Wymagana usługa",
+    "projectDescription": "Opis projektu",
+    "projectPlaceholder": "Opowiedz nam o swoim projekcie, harmonogramie i celach...",
+    "attachFile": "Załącz brief / dokument (Opcjonalnie)",
+    "submitMessage": "Wyślij wiadomość",
+    "submitting": "Wysyłanie...",
+    "successMessage": "Dziękujemy! Twoje zapytanie zostało przekazane do naszego zespołu inżynierów."
+  },
+  "faq": {
+    "tag": "NAJCZĘŚCIEJ ZADAWANE PYTANIA",
+    "heading": "Masz pytania? Mamy odpowiedzi."
+  },
+  "pages": {
+    "about": {
+      "tag": "KIM JESTEŚMY I CO ROBIMY",
+      "title": "Zbudowane z precyzją. Napędzane dynamiką.",
+      "description": "Z naszego studia w Addis Abebie tworzymy z najwyższą dbałością systemy cyfrowe, na których polegają organizacje."
+    },
+    "projects": {
+      "tag": "NASZE PROJEKTY",
+      "title": "Rozwiązania dla nowoczesnych zespołów.",
+      "description": "Poznaj nasze platformy korporacyjne, agentów AI i aplikacje o wysokiej wydajności tworzone dla klientów na całym świecie."
+    },
+    "services": {
+      "tag": "KOMPETENCJE I SYSTEMY",
+      "title": "Przekształcanie automatyzacji w realny wzrost.",
+      "description": "Pomagamy firmom wdrażać automatyzację w praktyczne systemy skalujące operacje i przynoszące zyski."
+    },
+    "careers": {
+      "tag": "KARIERA I OFERTY PRACY",
+      "title": "Buduj przyszłość produktów cyfrowych i AI.",
+      "description": "Dołącz do naszego zespołu inżynierów i rozwiązuj złożone wyzwania architektoniczne według globalnych standardów."
+    },
+    "blog": {
+      "tag": "DZIENNIK INŻYNIERII I DESIGNU",
+      "title": "Perspektywy na systemy, AI i architekturę.",
+      "description": "Odkryj praktyczne poradniki, testy inżynieryjne i metodyki projektowania od naszych twórców."
+    },
+    "contact": {
+      "tag": "KONTAKT",
+      "title": "Stwórzmy razem coś wyjątkowego.",
+      "description": "Porozmawiaj bezpośrednio z naszym głównym zespołem inżynierów."
+    }
+  },
+  "ctaBanner": {
+    "titlePrefix": "Chcesz porozmawiać z inżynierem",
+    "titleHighlight": "Matii",
+    "titleSuffix": "?",
+    "description": "Zarezerwuj 30-minutową konsultację z naszymi liderami technicznymi, aby omówić architekturę lub wymagania.",
+    "scheduleMeeting": "Umów 30-minutowe spotkanie Google Meet"
+  },
+  "footer": {
+    "newsletterHeading": "BĄDŹ NA BIEŻĄCO",
+    "newsletterSubtitle": "Wnioski inżynieryjne i analizy architektoniczne dostarczane prosto do Twojej skrzynki.",
+    "placeholderEmail": "Wpisz swój adres e-mail...",
+    "subscribe": "Subskrybuj",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfService": "Regulamin świadczenia usług"
+  }
+}

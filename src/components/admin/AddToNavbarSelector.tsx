@@ -239,8 +239,8 @@ export function AddToNavbarSelector({
     <div
       className={`rounded-[4px] border p-4 space-y-3 transition-colors ${
         isExisting
-          ? "bg-[#98ff03]/5 border-[#98ff03]/40"
-          : "bg-zinc-50/70 border-zinc-200/90"
+          ? "bg-[#98ff03]/5 dark:bg-[#98ff03]/10 border-[#98ff03]/40 dark:border-[#98ff03]/30"
+          : "bg-zinc-50/70 dark:bg-white/[0.02] border-zinc-200/90 dark:border-white/10"
       }`}
     >
       {/* Header & Status Bar */}
@@ -258,15 +258,15 @@ export function AddToNavbarSelector({
                 removeIfExists: !checked && isExisting,
               });
             }}
-            className="mt-0.5 rounded border-zinc-300 text-[#292c2e] focus:ring-[#292c2e] size-4 cursor-pointer accent-[#292c2e]"
+            className="mt-0.5 rounded border-zinc-300 dark:border-zinc-600 text-[#292c2e] focus:ring-[#98ff03] size-4 cursor-pointer accent-[#98ff03]"
           />
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <label
                 htmlFor={`addToNavbarToggle-${contentType}`}
-                className="font-space text-xs font-bold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
+                className="font-space text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-1.5 cursor-pointer"
               >
-                <Menu className="size-3.5 text-[#292c2e]" />
+                <Menu className="size-3.5 text-[#292c2e] dark:text-[#98ff03]" />
                 <span>
                   {isExisting ? "Navbar Integration Active" : `Add this ${contentType} to Site Navbar`}
                 </span>
@@ -282,18 +282,18 @@ export function AddToNavbarSelector({
 
               {/* Status Pill: EDITED */}
               {hasModifications && value.enabled && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[3px] bg-sky-100 text-sky-800 border border-sky-300 font-space font-semibold text-[10px] uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[3px] bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-300 dark:border-sky-700 font-space font-semibold text-[10px] uppercase tracking-wider">
                   <Edit3 className="size-3" />
                   Edited (Updates on Save)
                 </span>
               )}
             </div>
 
-            <p className="font-inter text-[11px] text-zinc-500 mt-0.5">
+            <p className="font-inter text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
               {isExisting ? (
                 <span>
                   Currently in{" "}
-                  <strong className="text-zinc-800 font-space">
+                  <strong className="text-zinc-800 dark:text-zinc-200 font-space">
                     {existingMatch?.menuLabel} &gt; {existingMatch?.categoryTitle} &gt;{" "}
                     {existingMatch?.groupTitle}
                   </strong>
@@ -313,7 +313,7 @@ export function AddToNavbarSelector({
               type="button"
               onClick={handleRemoveImmediately}
               disabled={isRemoving}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-space font-semibold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-[3px] transition-all cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-space font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-[3px] transition-all cursor-pointer disabled:opacity-50"
               title="Remove this link from the navbar immediately"
             >
               <Trash2 className="size-3" />
@@ -325,23 +325,23 @@ export function AddToNavbarSelector({
 
       {/* Immediate removal feedback */}
       {removalSuccess && (
-        <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-[3px] text-xs font-space text-emerald-800 flex items-center gap-1.5 animate-in fade-in duration-150">
-          <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0" />
+        <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-[3px] text-xs font-space text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5 animate-in fade-in duration-150">
+          <CheckCircle2 className="size-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span>Successfully removed link from the site navigation.</span>
         </div>
       )}
 
       {/* Pending Uncheck Warning */}
       {isExisting && !value.enabled && (
-        <div className="p-2.5 bg-amber-50 border border-amber-200 rounded-[3px] text-xs font-space text-amber-800 flex items-center justify-between gap-2">
+        <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-[3px] text-xs font-space text-amber-800 dark:text-amber-300 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
-            <AlertTriangle className="size-3.5 text-amber-600 shrink-0" />
+            <AlertTriangle className="size-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
             <span>Link is unchecked: It will be removed from the navbar when you save.</span>
           </div>
           <button
             type="button"
             onClick={() => onChange({ ...value, enabled: true, removeIfExists: false })}
-            className="text-[10px] font-bold underline hover:text-amber-950 uppercase"
+            className="text-[10px] font-bold underline hover:text-amber-950 dark:hover:text-amber-200 uppercase"
           >
             Keep in Navbar
           </button>
@@ -350,20 +350,20 @@ export function AddToNavbarSelector({
 
       {/* Expanded Configuration & Editing Section */}
       {value.enabled && (
-        <div className="pt-3 border-t border-zinc-200/70 space-y-3 animate-in fade-in-50 duration-150">
+        <div className="pt-3 border-t border-zinc-200/70 dark:border-white/10 space-y-3 animate-in fade-in-50 duration-150">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* 1. Target Nav Menu */}
             <div className="space-y-1">
-              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 flex items-center justify-between">
+              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400 flex items-center justify-between">
                 <span>Target Navigation Menu</span>
                 {isExisting && value.menuKey !== existingMatch?.menuKey && (
-                  <span className="text-[9px] text-sky-600 font-mono">Moving Menu</span>
+                  <span className="text-[9px] text-sky-600 dark:text-sky-400 font-mono">Moving Menu</span>
                 )}
               </label>
               <select
                 value={value.menuKey || defaultMenuKey}
                 onChange={(e) => handleMenuChange(e.target.value)}
-                className="w-full border border-zinc-300 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 bg-white focus:border-[#292c2e] outline-none"
+                className="w-full border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
               >
                 {menus.length > 0 ? (
                   menus.map((menu) => (
@@ -381,10 +381,10 @@ export function AddToNavbarSelector({
 
             {/* 2. Target Category */}
             <div className="space-y-1">
-              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 flex items-center justify-between">
+              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400 flex items-center justify-between">
                 <span>Category in Mega-Menu</span>
                 {isExisting && value.categoryId !== existingMatch?.categoryId && (
-                  <span className="text-[9px] text-sky-600 font-mono">Moving Category</span>
+                  <span className="text-[9px] text-sky-600 dark:text-sky-400 font-mono">Moving Category</span>
                 )}
               </label>
               {isCustomCategory ? (
@@ -397,12 +397,12 @@ export function AddToNavbarSelector({
                       setCustomCategoryTitle(e.target.value);
                       onChange({ ...value, categoryId: e.target.value });
                     }}
-                    className="flex-1 border border-zinc-300 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 bg-white focus:border-[#292c2e] outline-none"
+                    className="flex-1 border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                   <button
                     type="button"
                     onClick={() => setIsCustomCategory(false)}
-                    className="px-2 py-1 text-[10px] font-space uppercase font-bold bg-zinc-200 hover:bg-zinc-300 rounded-[3px]"
+                    className="px-2 py-1 text-[10px] font-space uppercase font-bold bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 text-zinc-800 dark:text-zinc-200 rounded-[3px]"
                   >
                     List
                   </button>
@@ -411,7 +411,7 @@ export function AddToNavbarSelector({
                 <select
                   value={value.categoryId}
                   onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="w-full border border-zinc-300 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 bg-white focus:border-[#292c2e] outline-none"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                 >
                   {availableCategories.length > 0 ? (
                     availableCategories.map((cat) => (
@@ -431,10 +431,10 @@ export function AddToNavbarSelector({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* 3. Sub-Group Title */}
             <div className="space-y-1">
-              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 flex items-center justify-between">
+              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400 flex items-center justify-between">
                 <span>Sub-Group Header</span>
                 {isExisting && value.groupTitle !== existingMatch?.groupTitle && (
-                  <span className="text-[9px] text-sky-600 font-mono">Moving Group</span>
+                  <span className="text-[9px] text-sky-600 dark:text-sky-400 font-mono">Moving Group</span>
                 )}
               </label>
               <input
@@ -443,7 +443,7 @@ export function AddToNavbarSelector({
                 placeholder="e.g. Featured, Case Studies, Recent"
                 value={value.groupTitle || ""}
                 onChange={(e) => onChange({ ...value, groupTitle: e.target.value })}
-                className="w-full border border-zinc-300 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 bg-white focus:border-[#292c2e] outline-none"
+                className="w-full border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
               />
               <datalist id={`groups-list-${contentType}`}>
                 {availableGroups.map((g, idx) => (
@@ -454,7 +454,7 @@ export function AddToNavbarSelector({
 
             {/* 4. Optional Badge */}
             <div className="space-y-1">
-              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 block">
+              <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400 block">
                 Link Badge / Tag (Optional)
               </label>
               <input
@@ -462,32 +462,32 @@ export function AddToNavbarSelector({
                 placeholder="e.g. NEW, HOT, 2026"
                 value={value.badge || ""}
                 onChange={(e) => onChange({ ...value, badge: e.target.value })}
-                className="w-full border border-zinc-300 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 bg-white focus:border-[#292c2e] outline-none uppercase"
+                className="w-full border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] font-space text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none uppercase"
               />
             </div>
           </div>
 
           {/* Live Slug & Link Preview */}
-          <div className="p-2.5 bg-white border border-zinc-200 rounded-[3px] flex items-center justify-between gap-2 shadow-2xs">
+          <div className="p-2.5 bg-white dark:bg-[#16181b] border border-zinc-200 dark:border-white/10 rounded-[3px] flex items-center justify-between gap-2 shadow-2xs">
             <div className="min-w-0 flex items-center gap-2">
               <span className="size-1.5 rounded-full bg-[#98ff03] shrink-0" />
               <div className="truncate">
-                <span className="font-space font-semibold text-xs text-zinc-900 mr-2">
+                <span className="font-space font-semibold text-xs text-zinc-900 dark:text-zinc-100 mr-2">
                   {title || "Link Title"}
                 </span>
-                <span className="font-mono text-[11px] text-zinc-400">
+                <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
                   {targetHref}
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {value.badge && (
-                <span className="text-[9px] font-space uppercase font-bold px-1.5 py-0.2 bg-[#98ff03]/25 text-black border border-[#98ff03]/40 rounded">
+                <span className="text-[9px] font-space uppercase font-bold px-1.5 py-0.2 bg-[#98ff03]/25 text-black dark:text-[#98ff03] border border-[#98ff03]/40 rounded">
                   {value.badge}
                 </span>
               )}
               {isExisting && (
-                <span className="text-[9px] font-mono text-zinc-400">
+                <span className="text-[9px] font-mono text-zinc-400 dark:text-zinc-500">
                   (In Navbar)
                 </span>
               )}

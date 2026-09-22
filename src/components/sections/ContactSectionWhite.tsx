@@ -1,9 +1,12 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import ContactFormWhite from "./contact/ContactFormWhite";
 
 export function ContactSectionWhite() {
+  const t = useTranslations("contactSection");
+
   return (
     <section className="relative w-full py-12 md:py-20 overflow-hidden">
       <div className="max-w-345 mx-auto flex flex-col gap-12">
@@ -15,14 +18,14 @@ export function ContactSectionWhite() {
                 <div className="inline-flex gap-2.5 items-center bg-white dark:bg-[#161819] px-2.5 py-1 border border-[#AEAEAE]/20 dark:border-white/10">
                   <div className="bg-[#98ff03] size-4 shrink-0" />
                   <span className="font-space font-normal text-base md:text-lg text-black dark:text-white uppercase tracking-wider whitespace-nowrap">
-                    Contact
+                    {t("tag")}
                   </span>
                 </div>
               </div>
 
               <div className="flex flex-col gap-4">
                 <h2 className="font-inter font-bold text-3xl sm:text-4xl text-black dark:text-white uppercase tracking-tight">
-                  LET&apos;S TALK ABOUT YOUR NEXT BIG IDEA.
+                  {t("heading")}
                 </h2>
               </div>
             </div>
@@ -36,7 +39,7 @@ export function ContactSectionWhite() {
               >
                 <div className="flex flex-col gap-1">
                   <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                    // Direct Email
+                    // {t("directEmail")}
                   </span>
                   <span className="font-inter font-semibold text-lg text-black dark:text-white">
                     contact@Matiidigitals.com
@@ -54,7 +57,7 @@ export function ContactSectionWhite() {
               >
                 <div className="flex flex-col gap-1">
                   <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                    // Phone / WhatsApp
+                    // {t("phoneWhatsApp")}
                   </span>
                   <span className="font-inter font-semibold text-lg text-black dark:text-white">
                     +(251)-945-014-531
@@ -68,10 +71,10 @@ export function ContactSectionWhite() {
               {/* Office Location */}
               <div className="border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex flex-col gap-1 relative">
                 <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                  // Headquarter Location
+                  // {t("headquarterLocation")}
                 </span>
                 <span className="font-inter font-semibold text-base text-black dark:text-white">
-                  Addis Ababa, Ethiopia
+                  {t("headquarterAddress")}
                 </span>
               </div>
             </div>

@@ -1,0 +1,183 @@
+{
+  "common": {
+    "brandName": "Matii Digitals",
+    "startProject": "Pirojektii Jalqabi",
+    "exploreServices": "Tajaajiloota Daawwadhu",
+    "contactUs": "Nu Qunnamaa",
+    "talkToEngineer": "Injinera Waliin Dubbadhu",
+    "trustedPartners": "WALTII-DHUFEENYA AMANAMOO KEENYA",
+    "allRightsReserved": "Mirgi hunduu eegamaadha.",
+    "selectLanguage": "Afaan Filadhaa",
+    "all": "Hundaa",
+    "readMore": "Dabalata Dubbisaa",
+    "viewProject": "Pirojektii Ilaali",
+    "bookCall": "Walgahii Qabadhaa",
+    "exploreAll": "Hundaa Daawwadhu"
+  },
+  "nav": {
+    "services": "Tajaajiloota",
+    "projects": "Pirojektoota",
+    "about": "Waa'ee Keenya",
+    "careers": "Carraa Hojii",
+    "blog": "Mata-dureewwan",
+    "news": "Oduu",
+    "contact": "Qunnamtii",
+    "internships": "Shaakala Hojii",
+    "talentPool": "Kuusaa Dandeettii"
+  },
+  "hero": {
+    "badge": "YAADA BAL'AA HUMNA GUUTUUDHAAN DUUBATTI GUURUU",
+    "headline": "Sirnoota Bu'uuraa Ijaaruu, Guddina Saffisiisuu.",
+    "subtitle": "Yaada guddaa irraa kaasee hanga oomishaalee dijitaalaa ciccimoo ijaaruutti, muuxannoo fi teeknoolojii daldala fuulduratti tarkaanfachiisan ni uumna.",
+    "startProject": "Pirojektii Jalqabi",
+    "exploreServices": "Tajaajiloota Daawwadhu"
+  },
+  "officeShowcase": {
+    "badge": "SADARKAA ADDUNYAA",
+    "title": "Sooftiweerii sadarkaa addunyaatiin ijaarame",
+    "subtitle": "Istuudiyoo keenya Finfinnee jiru irraa kaasee, gareewwan keenya ogummaa injineriingii sadarkaa olaanaa fi qulqullina guddaadhaan sooftiweerii amansiisaa fi saffisaa addunyaan itti fayyadamu dhiyeessu.",
+    "bookCall": "Walgahii Qabadhaa",
+    "seeWork": "Hojii Keenya Ilaalaa"
+  },
+  "aboutUs": {
+    "tag": "NU EENYU & MAAL HOJJENNA",
+    "aboutTag": "Waa'ee Keenya",
+    "heading": "Sirnoota bu'uuraa ijaaruu, guddina saffisiisuu.",
+    "desc": "Matii Tekinolojiis dhaabbata teeknooloojii sirnoota daldalaa gurguddoo, bu'uuraalee faayinaansii (fintech), fi sirnoota odeeffannoo qorannoo dhaabbilee gufuu malee socho'aniif ijaarudha.",
+    "stat1Value": "50+",
+    "stat1Desc": "Oomishaalee dijitaalaa dameewwan garaa garaa keessatti saxaxamanii fi ijaaraman.",
+    "stat2Value": "10+",
+    "stat2Desc": "Dameewwan daldalaa saxaxaa fi teeknooloojiin jijjiiraman.",
+    "stat3Value": "∞",
+    "stat3Desc": "Yaada guddaa gara qabatamaatti jijjiiruun carraawwan daangaa hin qabne uumamaniiru."
+  },
+  "aboutStory": {
+    "originTag": "KA'UMSA & KAAYYOO KEENYA",
+    "originHeading": "Sirnoota bu'uuraa ijaaruu, guddina saffisiisuu.",
+    "studioBadge": "Istuudiyoo Injineriingii & Saxaxaa",
+    "estYear": "Hundeeffame 2018",
+    "yearsActiveCount": "8+",
+    "yearsActiveLabel": "Waggoota Hojii",
+    "seniorTeamCount": "100%",
+    "seniorTeamLabel": "Garee Ogeeyyii Olaanoo",
+    "productsShippedCount": "50+",
+    "productsShippedLabel": "Oomishaalee Xumuraman",
+    "journeyTag": "// ADEEMSA KEENYA",
+    "journeyTitle": "Maaliif Matii Tekinolojiis hundeessine.",
+    "storyP1": "Matii Tekinolojiis dhaabbata teeknooloojii pilaatfoormiiwwan daldalaa, bu'uuraalee faayinaansii, furmaataawwan BPO, fi sirnoota daataa qorannoo dhaabbilee dogoggora hin fudhanneef ijaarudha.",
+    "storyP2": "Itoophiyaa keessatti hundeeffamee sadarkaa addunyaatiin ijaarame, sirnoota amansiisoo fi saffisoo daldalaaf, mootummaa fi dhaabbilee faayinaansiif dhiyeessina.",
+    "storyP3": "Nuti koodii qofa hin barreessinu—bu'uuraalee guddina saffisiisan ijaarra.",
+    "missionTag": "01 // KAAYYOO",
+    "missionTitle": "ERGAMA KEENYA",
+    "missionDesc": "Sirnoota daldala, mootummaa fi faayinaansii sochoosan ijaaruu, teeknooloojii amansiisaa, nageenya qabuu fi guddinaaf mijaawaa ta'e dhiyeessuu.",
+    "missionPoint1": "Rakkoolee walxaxoo ni furra.",
+    "missionPoint2": "Yeroon dhiyeessina.",
+    "missionPoint3": "Bu'uuraalee jajjaboo ni ijaarra.",
+    "visionTag": "02 // MUL'ATA",
+    "visionTitle": "MUL'ATA KEENYA",
+    "visionDesc": "Dhaabbata teeknooloojii gurguddoo fi utubaa gabaa guddataa jiru ta'uu—dhaabbata pilaatfoormiin isaa sirnoota biyyoonni, dhaabbileenii fi daldalli itti fayyadaman sochoosudha."
+  },
+  "aboutCoreValues": {
+    "tag": "BU'UURA KEENYA",
+    "heading": "Dudhaalee Bu'uuraa",
+    "value1Title": "Hojii Qabatamaa Dursuu",
+    "value1Desc": "Bu'aa qabatamaa fi dhiyeessii dhiibbaa guddaa qabu irratti xiyyeeffanna.",
+    "value2Title": "Amanamummaa Irratti Ijaarame",
+    "value2Desc": "Nageenyi, amansiisummaan fi qajeelummaan bu'uura waan nuti ijaarru hundaati.",
+    "value3Title": "Barachuu Walirraa Hin Cinne",
+    "value3Desc": "Yeroo hunda fuldura ta'uuf teeknooloojiiwwan haaraa ni baratna, ni kalaqna, ni to'anna.",
+    "value4Title": "Hundeen Afrikaa, Sadarkaan Addunyaa",
+    "value4Desc": "Naannoon keenya carraa keenyadha; sadarkaa qulqullina addunyaatiin biyya keessatti ijaarra."
+  },
+  "solutions": {
+    "tag": "FURMAATAWLAN FILATAMOO",
+    "heading": "Fedhii Hubachuu. Tarkaanfii Fiduu.",
+    "desc": "Dursa barbaachisummaa fi rakkoolee keessan hubanna, achiis furmaata qabatamaa guddina fiduu danda'u ni ijaarra."
+  },
+  "services": {
+    "tag": "DANDEETTIIWWAN BU'UURAA",
+    "heading": "YAADNI HIN DHAABATU."
+  },
+  "whyUs": {
+    "tag": "MAALIYF MATII",
+    "heading": "Furmaataaf Ijaarame. Socho'uuf Saxaxame.",
+    "desc": "Yaada tarsiimoo, saxaxa saffisaa fi injineriingii qulqullina qabu walitti fiduun oomishaalee dijitaalaa daldala keessan fuulduratti deemsisan ijaarra."
+  },
+  "testimonials": {
+    "tag": "DHUGAA BA'UMSA",
+    "heading": "MAAMILTOONNI KEENYA MAAL JEDHU"
+  },
+  "contactSection": {
+    "tag": "NUGUULAA",
+    "heading": "WAA'EE YAADA KEESSAN ISA GUDDAA HA DUDDUBANNU.",
+    "directEmail": "Imeelii Kallattii",
+    "phoneWhatsApp": "Bilbila / WhatsApp",
+    "headquarterLocation": "Teessoo Waajjira Muummee",
+    "headquarterAddress": "Finfinnee, Itoophiyaa",
+    "sendUsMessage": "Ergaa Nuuf Ergaa",
+    "fullName": "Maqaa Guutuu",
+    "fullNamePlaceholder": "fkn. Caalaa Mokonnin",
+    "emailAddress": "Teessoo Imeelii",
+    "emailPlaceholder": "fkn. cala@example.com",
+    "phoneNumber": "Lakkoofsa Bilbilaa (Filannoo)",
+    "phoneNumberPlaceholder": "fkn. +251 911 234 567",
+    "serviceNeeded": "Tajaajila Barbaadan",
+    "projectDescription": "Ibsa Pirojektii",
+    "projectPlaceholder": "Waa'ee pirojektii keessanii, yeroo fi galma keessan nuuf ibsaa...",
+    "attachFile": "Sanada / Qajeelfama Maxxansaa (Filannoo)",
+    "submitMessage": "Ergaa Ergaa",
+    "submitting": "Ergamaa jira...",
+    "successMessage": "Galatoomaa! Gaaffiin keessan garee injinaroota keenyaaf dhiyaateera."
+  },
+  "faq": {
+    "tag": "GAAFFIIWWAN YEROO HUNDAA GAAFATAMAN",
+    "heading": "Gaaffii Qabduu? Deebii Qabna."
+  },
+  "pages": {
+    "about": {
+      "tag": "NU EENYU & MAAL HOJJENNA",
+      "title": "Qulqullinaan Ijaarame. Humnaan Socho'a.",
+      "description": "Istuudiyoo keenya Finfinnee irraa kaasee, sirnoota dijitaalaa dhaabbileen itti fayyadaman qulqullina sadarkaa olaanaadhaan ijaarra."
+    },
+    "projects": {
+      "tag": "HOJIIWWAN & PIROJEKTOOTA KEENYA",
+      "title": "Furmaata Dhaabbilee Fuulduratti Tarkaanfataniif Ijaarame.",
+      "description": "Pilaatfoormiiwwan daldalaa, sirnoota AI, fi aplikeeshinoota sadarkaa addunyaatiin ijaaraman daawwadhaa."
+    },
+    "services": {
+      "tag": "DANDEETTIIWWAN & SIRNOOTA",
+      "title": "Otomeeshinii gara Guddina Qabatamaatti Jijjiiruu.",
+      "description": "Dhaabbileen otomeeshinii fayyadamuun hojii isaanii akka saffisiisanii fi guddina fidan gargaarra."
+    },
+    "careers": {
+      "tag": "CARRAA HOJII & BANAAN",
+      "title": "Boruu Oomishaalee Dijitaalaa & AI Ijaaraa.",
+      "description": "Garee injineriingii keenyatti makamuun rakkoolee teeknoolojii ciccimoo sadarkaa addunyaatiin furaa."
+    },
+    "blog": {
+      "tag": "KITAABA INJINERINGII & SAXAXAA",
+      "title": "Ilaalcha Sirnootaa, AI fi Ijaarsa Teeknoolojii.",
+      "description": "Qajeelfamoota, madaalliiwwan injineriingii fi tooftaalee saxaxa oomishaa dubbisaa."
+    },
+    "contact": {
+      "tag": "NUGUULAA",
+      "title": "Waliin Hojii Addaa Ha Ijaarru.",
+      "description": "Garee injinariingii keenya waliin kallattiin mari'adhaa."
+    }
+  },
+  "ctaBanner": {
+    "titlePrefix": "Injinera",
+    "titleHighlight": "Matii",
+    "titleSuffix": "waliin dubbachuu barbaadduu?",
+    "description": "Tarsiimoo, ijaarsa sirnaa fi barbaachisummaa teeknoolojii keessanii daqiiqaa 30 keessatti injinaroota keenya waliin mari'adhaa.",
+    "scheduleMeeting": "Walgahii Google Meet Daqiiqaa 30 Qabadhaa"
+  },
+  "footer": {
+    "newsletterHeading": "ODELEFFANNOO HAARAA ARGAADHAA",
+    "newsletterSubtitle": "Odeeffannoo injineriingii fi yaada teeknoolojii kallattiin imeelii keessaniin argadhaa.",
+    "placeholderEmail": "Teessoo imeelii keessanii galchaa...",
+    "subscribe": "Galmaa'aa",
+    "privacyPolicy": "Imaammata Mateenyaa",
+    "termsOfService": "Waliigaltee Tajaajilaa"
+  }
+}

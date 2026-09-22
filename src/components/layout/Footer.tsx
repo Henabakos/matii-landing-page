@@ -2,10 +2,14 @@
 
 import svgPaths from "@/lib/svgPaths";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import ContactForm from "../sections/contact/ContactForm";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -20,73 +24,67 @@ export function Footer() {
         <div className="border-b border-[rgba(174,174,174,0.3)] dark:border-white/10">
           <nav className="flex flex-wrap justify-between items-center w-full gap-6 md:gap-8 p-8 md:p-14">
             <Link
-              href="/about"
+              href="/services"
               className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>About us</span>
+              <span>{tNav("services")}</span>
             </Link>
             <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
             <Link
               href="/projects"
               className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>Projects</span>
+              <span>{tNav("projects")}</span>
             </Link>
             <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
             <Link
-              href="/services"
+              href="/about"
               className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>Services</span>
-            </Link>
-            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
-            <Link
-              href="/blog"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>Blog</span>
+              <span>{tNav("about")}</span>
             </Link>
             <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
             <Link
               href="/news"
               className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>News</span>
+              <span>{tNav("news")}</span>
             </Link>
             <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
             <Link
               href="/careers"
               className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
             >
-              <span>Careers</span>
+              <span>{tNav("careers")}</span>
             </Link>
           </nav>
         </div>
 
-        <div className="w-full relative h-[460px]">
+        <div className="w-full relative h-[460px]" style={{ position: "relative" }}>
           <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0  z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0  z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0  z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0 z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0 z-10" />
+          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0 z-10" />
 
-          <div className="hidden md:block absolute top-0 left-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
+          <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
             <Image
               src="/shapes/footer-shape.svg"
-              alt="hero-shape"
+              alt="footer-shape"
               className="object-contain"
               fill
             />
           </div>
 
-          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
+          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
             <Image
               src="/shapes/footer-shape.svg"
-              alt="hero-shape"
+              alt="footer-shape"
               className="rotate-180 object-contain"
               fill
             />
           </div>
         </div>
+
         {/* Bottom Bar (Socials, Copyright, Back to Top) */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 p-8 border-t border-[rgba(174,174,174,0.3)] dark:border-white/10">
           {/* Social Channels & Copyright */}
@@ -143,7 +141,7 @@ export function Footer() {
                   />
                 </svg>
               </div>
-              <span>2026 Matiis. All Rights Reserved</span>
+              <span>2026 Matii Digitals. {tCommon("allRightsReserved")}</span>
             </div>
           </div>
 

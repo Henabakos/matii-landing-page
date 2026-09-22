@@ -17,6 +17,7 @@ import {
   User,
 } from "lucide-react";
 import { CloudinaryUploadButton } from "@/components/admin/CloudinaryUploadButton";
+import { AutoTranslateButton } from "@/components/admin/AutoTranslateButton";
 import {
   saveTestimonialAction,
   deleteTestimonialAction,
@@ -39,6 +40,8 @@ export function TestimonialClientManager({
 }: TestimonialClientManagerProps) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
   const [editingTestimonial, setEditingTestimonial] = useState<Partial<Testimonial> | null>(null);
+  const [translations, setTranslations] = useState<Record<string, Record<string, string>>>({});
+  const [activeTranslationLocale, setActiveTranslationLocale] = useState<string>("om");
   const [isNew, setIsNew] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -47,6 +50,19 @@ export function TestimonialClientManager({
 
   const handleOpenEdit = (testimonial: Testimonial) => {
     setEditingTestimonial(testimonial);
+    if ((testimonial as any).translations) {
+      try {
+        setTranslations(
+          typeof (testimonial as any).translations === "string"
+            ? JSON.parse((testimonial as any).translations)
+            : (testimonial as any).translations
+        );
+      } catch {
+        setTranslations({});
+      }
+    } else {
+      setTranslations({});
+    }
     setIsNew(false);
     setFeedback(null);
     setImportError(null);
@@ -62,6 +78,7 @@ export function TestimonialClientManager({
       order: testimonials.length + 1,
       isActive: true,
     });
+    setTranslations({});
     setIsNew(true);
     setFeedback(null);
     setImportError(null);
@@ -69,6 +86,7 @@ export function TestimonialClientManager({
 
   const handleClose = () => {
     setEditingTestimonial(null);
+    setTranslations({});
     setIsNew(false);
     setImportError(null);
   };
@@ -114,6 +132,7 @@ export function TestimonialClientManager({
           rating: Number(editingTestimonial.rating || 5),
           order: Number(editingTestimonial.order || 0),
           isActive: Boolean(editingTestimonial.isActive),
+          translations,
         });
 
         if (res?.testimonial) {
@@ -171,34 +190,34 @@ export function TestimonialClientManager({
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 pb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-white/10 pb-6">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
-            <div className="p-1.5 bg-[#292c2e] text-[#98ff03] rounded-[4px]">
+            <div className="p-1.5 bg-[#292c2e] dark:bg-[#98ff03] text-[#98ff03] dark:text-black rounded-[4px]">
               <MessageSquareQuote className="size-4" />
             </div>
-            <h1 className="text-2xl font-space font-bold text-zinc-900 tracking-tight">
+            <h1 className="text-2xl font-space font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
               Client Testimonials
             </h1>
           </div>
-          <p className="text-xs font-inter text-zinc-500">
+          <p className="text-xs font-inter text-zinc-500 dark:text-zinc-400">
             Manage the social proof and client endorsements displayed on the homepage.
           </p>
         </div>
 
         <button
           onClick={handleOpenNew}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-zinc-800 text-white rounded-[8px] font-space text-xs font-medium transition-all shadow-sm active:scale-[0.98]"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#292c2e] hover:bg-zinc-800 dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black rounded-[8px] font-space text-xs font-medium transition-all shadow-sm active:scale-[0.98]"
         >
-          <Plus className="size-4 text-[#98ff03]" />
+          <Plus className="size-4 text-[#98ff03] dark:text-black" />
           <span>New Testimonial</span>
         </button>
       </div>
 
       {/* Feedback Alert */}
       {feedback && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-[8px] text-xs font-inter flex items-center gap-2 shadow-sm animate-in fade-in duration-200">
-          <Check className="size-4 text-emerald-600" />
+        <div className="p-4 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 rounded-[8px] text-xs font-inter flex items-center gap-2 shadow-sm animate-in fade-in duration-200">
+          <Check className="size-4 text-emerald-600 dark:text-emerald-400" />
           <span>{feedback}</span>
         </div>
       )}
@@ -208,10 +227,10 @@ export function TestimonialClientManager({
         {testimonials.map((item) => (
           <div
             key={item.id}
-            className={`border rounded-[12px] p-6 flex flex-col justify-between transition-all bg-white ${
+            className={`border rounded-[12px] p-6 flex flex-col justify-between transition-all bg-white dark:bg-[#16181b] ${
               item.isActive
-                ? "border-zinc-200 hover:border-zinc-300 shadow-sm"
-                : "border-zinc-200/60 opacity-60 bg-zinc-50"
+                ? "border-zinc-200 dark:border-white/10 hover:border-zinc-300 dark:hover:border-white/20 shadow-sm"
+                : "border-zinc-200/60 dark:border-white/5 opacity-60 bg-zinc-50 dark:bg-white/[0.01]"
             }`}
           >
             {/* Top Bar: Stars, Order Badge, & Actions */}
@@ -224,11 +243,11 @@ export function TestimonialClientManager({
                       className={`size-4 ${
                         i < item.rating
                           ? "text-[#80d800] fill-[#80d800]"
-                          : "text-zinc-200 fill-zinc-200"
+                          : "text-zinc-200 dark:text-zinc-700 fill-zinc-200 dark:fill-zinc-700"
                       }`}
                     />
                   ))}
-                  <span className="ml-1.5 text-[11px] font-space text-zinc-400">
+                  <span className="ml-1.5 text-[11px] font-space text-zinc-400 dark:text-zinc-500">
                     ({item.rating}/5)
                   </span>
                 </div>
@@ -239,29 +258,29 @@ export function TestimonialClientManager({
                     disabled={isPending}
                     className={`px-2 py-0.5 rounded-[4px] text-[10px] font-space font-semibold uppercase tracking-wider transition-colors ${
                       item.isActive
-                        ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
-                        : "bg-zinc-200 text-zinc-600 hover:bg-zinc-300"
+                        ? "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-900/60"
+                        : "bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-white/20"
                     }`}
                   >
                     {item.isActive ? "Active" : "Inactive"}
                   </button>
 
-                  <span className="text-[11px] font-space text-zinc-400 bg-zinc-100 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-space text-zinc-400 dark:text-zinc-400 bg-zinc-100 dark:bg-white/5 px-2 py-0.5 rounded">
                     #{item.order}
                   </span>
                 </div>
               </div>
 
               {/* Quote */}
-              <p className="font-inter text-sm text-zinc-700 leading-relaxed italic mb-6">
+              <p className="font-inter text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed italic mb-6">
                 &ldquo;{item.quote}&rdquo;
               </p>
             </div>
 
             {/* Bottom Footer: Author Details & Edit Buttons */}
-            <div className="flex items-center justify-between pt-4 border-t border-zinc-100 mt-auto">
+            <div className="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-white/10 mt-auto">
               <div className="flex items-center gap-3">
-                <div className="relative size-10 rounded-full overflow-hidden border border-zinc-200 shrink-0 bg-zinc-100">
+                <div className="relative size-10 rounded-full overflow-hidden border border-zinc-200 dark:border-white/10 shrink-0 bg-zinc-100 dark:bg-zinc-800">
                   <Image
                     src={item.avatarUrl || "/avatars/avatar-1.png"}
                     alt={item.authorName}
@@ -272,10 +291,10 @@ export function TestimonialClientManager({
                   />
                 </div>
                 <div>
-                  <h4 className="font-urbanist font-semibold text-sm text-zinc-900">
+                  <h4 className="font-urbanist font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                     {item.authorName}
                   </h4>
-                  <p className="font-inter text-xs text-zinc-500">
+                  <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400">
                     {item.authorRole}
                   </p>
                 </div>
@@ -284,14 +303,14 @@ export function TestimonialClientManager({
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => handleOpenEdit(item)}
-                  className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-[6px] transition-colors"
+                  className="p-1.5 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[6px] transition-colors"
                   title="Edit testimonial"
                 >
                   <Edit2 className="size-3.5" />
                 </button>
                 <button
                   onClick={() => handleDelete(item.id)}
-                  className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-[6px] transition-colors"
+                  className="p-1.5 text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-[6px] transition-colors"
                   title="Delete testimonial"
                 >
                   <Trash2 className="size-3.5" />
@@ -303,19 +322,19 @@ export function TestimonialClientManager({
       </div>
 
       {testimonials.length === 0 && (
-        <div className="text-center py-16 bg-zinc-50 border border-dashed border-zinc-300 rounded-[12px]">
-          <MessageSquareQuote className="size-8 text-zinc-400 mx-auto mb-3" />
-          <h3 className="font-space font-medium text-sm text-zinc-700 mb-1">
+        <div className="text-center py-16 bg-zinc-50 dark:bg-white/[0.02] border border-dashed border-zinc-300 dark:border-white/10 rounded-[12px]">
+          <MessageSquareQuote className="size-8 text-zinc-400 dark:text-zinc-600 mx-auto mb-3" />
+          <h3 className="font-space font-medium text-sm text-zinc-700 dark:text-zinc-300 mb-1">
             No Testimonials Found
           </h3>
-          <p className="font-inter text-xs text-zinc-500 mb-4">
+          <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400 mb-4">
             Add testimonials to feature client endorsements on the homepage.
           </p>
           <button
             onClick={handleOpenNew}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#292c2e] text-white rounded-[6px] text-xs font-space font-medium hover:bg-zinc-800"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#292c2e] hover:bg-zinc-800 dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black rounded-[6px] text-xs font-space font-medium"
           >
-            <Plus className="size-3.5 text-[#98ff03]" />
+            <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
             Add First Testimonial
           </button>
         </div>
@@ -323,15 +342,15 @@ export function TestimonialClientManager({
 
       {/* Edit / New Modal */}
       {editingTestimonial && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-[12px] border border-zinc-200 max-w-lg w-full p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between border-b border-zinc-100 pb-4">
-              <h3 className="font-space font-bold text-base text-zinc-900">
+        <div className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-[#16181b] rounded-[12px] border border-zinc-200 dark:border-white/10 max-w-lg w-full p-6 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-zinc-100 dark:border-white/10 pb-4">
+              <h3 className="font-space font-bold text-base text-zinc-900 dark:text-zinc-100">
                 {isNew ? "Add New Testimonial" : "Edit Testimonial"}
               </h3>
               <button
                 onClick={handleClose}
-                className="text-zinc-400 hover:text-zinc-700 p-1"
+                className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 p-1"
               >
                 <X className="size-4" />
               </button>
@@ -339,7 +358,7 @@ export function TestimonialClientManager({
 
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="block text-xs font-space font-medium text-zinc-700 mb-1.5">
+                <label className="block text-xs font-space font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                   Author Name *
                 </label>
                 <input
@@ -353,12 +372,12 @@ export function TestimonialClientManager({
                     }))
                   }
                   placeholder="e.g. Sara Haile"
-                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 rounded-[6px] focus:outline-none focus:border-[#292c2e] focus:ring-1 focus:ring-[#292c2e]"
+                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[6px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03] focus:ring-1 focus:ring-[#292c2e] dark:focus:ring-[#98ff03]/20"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-space font-medium text-zinc-700 mb-1.5">
+                <label className="block text-xs font-space font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                   Author Role & Company *
                 </label>
                 <input
@@ -372,12 +391,12 @@ export function TestimonialClientManager({
                     }))
                   }
                   placeholder="e.g. Founder at Nexis AI Solutions"
-                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 rounded-[6px] focus:outline-none focus:border-[#292c2e] focus:ring-1 focus:ring-[#292c2e]"
+                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[6px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03] focus:ring-1 focus:ring-[#292c2e] dark:focus:ring-[#98ff03]/20"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-space font-medium text-zinc-700 mb-1.5">
+                <label className="block text-xs font-space font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                   Quote / Review Content *
                 </label>
                 <textarea
@@ -391,12 +410,111 @@ export function TestimonialClientManager({
                     }))
                   }
                   placeholder="Share the client's endorsement or project review..."
-                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 rounded-[6px] focus:outline-none focus:border-[#292c2e] focus:ring-1 focus:ring-[#292c2e]"
+                  className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[6px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03] focus:ring-1 focus:ring-[#292c2e] dark:focus:ring-[#98ff03]/20"
                 />
               </div>
 
+              {/* AI Auto-Translation Panel */}
+              <div className="p-4 bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/10 rounded-[8px] space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-white/10 pb-2.5">
+                  <div>
+                    <h4 className="text-xs font-space font-bold text-zinc-800 dark:text-zinc-200">
+                      Multi-Language Translations
+                    </h4>
+                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-inter">
+                      Translate quote & author role into Afaan Oromoo, Amharic, German, and Polish.
+                    </p>
+                  </div>
+                  <AutoTranslateButton
+                    sourceFields={{
+                      quote: editingTestimonial.quote || "",
+                      authorRole: editingTestimonial.authorRole || "",
+                    }}
+                    onTranslated={(newTranslations) => {
+                      setTranslations((prev) => ({
+                        ...prev,
+                        ...newTranslations,
+                      }));
+                    }}
+                  />
+                </div>
+
+                {/* Locale Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                  {[
+                    { code: "om", name: "Afaan Oromoo" },
+                    { code: "am", name: "አማርኛ (Amharic)" },
+                    { code: "de", name: "Deutsch" },
+                    { code: "pl", name: "Polski" },
+                  ].map((loc) => {
+                    const isFilled = Boolean(translations[loc.code]?.quote);
+                    return (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setActiveTranslationLocale(loc.code)}
+                        className={`px-2.5 py-1 rounded text-[11px] font-space font-medium transition-colors flex items-center gap-1.5 ${
+                          activeTranslationLocale === loc.code
+                            ? "bg-[#292c2e] dark:bg-[#98ff03] text-white dark:text-black"
+                            : "bg-white dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10"
+                        }`}
+                      >
+                        <span>{loc.name}</span>
+                        {isFilled && (
+                          <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Locale Fields */}
+                <div className="space-y-2.5 pt-1">
+                  <div>
+                    <label className="block text-[11px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-1">
+                      Author Role ({activeTranslationLocale.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={translations[activeTranslationLocale]?.authorRole || ""}
+                      onChange={(e) =>
+                        setTranslations((prev) => ({
+                          ...prev,
+                          [activeTranslationLocale]: {
+                            ...prev[activeTranslationLocale],
+                            authorRole: e.target.value,
+                          },
+                        }))
+                      }
+                      placeholder="Role translation..."
+                      className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[4px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-space font-medium text-zinc-600 dark:text-zinc-400 mb-1">
+                      Quote ({activeTranslationLocale.toUpperCase()})
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={translations[activeTranslationLocale]?.quote || ""}
+                      onChange={(e) =>
+                        setTranslations((prev) => ({
+                          ...prev,
+                          [activeTranslationLocale]: {
+                            ...prev[activeTranslationLocale],
+                            quote: e.target.value,
+                          },
+                        }))
+                      }
+                      placeholder="Quote translation..."
+                      className="w-full px-2.5 py-1.5 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[4px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Author Avatar Management: Upload, Web URL, Preset, or Local Path */}
-              <div className="bg-zinc-50/70 p-4 border border-zinc-200/90 rounded-[8px] space-y-3.5">
+              <div className="bg-zinc-50/70 dark:bg-white/[0.02] p-4 border border-zinc-200/90 dark:border-white/10 rounded-[8px] space-y-3.5">
                 <CloudinaryUploadButton
                   label="Author Avatar Image"
                   hint="Upload an avatar image (PNG, JPG, WebP), or add by URL from web"
@@ -413,13 +531,13 @@ export function TestimonialClientManager({
                 />
 
                 {/* Direct Asset Path or Web URL Input */}
-                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70">
+                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70 dark:border-white/10">
                   <div className="flex items-center justify-between">
-                    <label className="font-space text-[10px] uppercase font-bold text-zinc-600">
+                    <label className="font-space text-[10px] uppercase font-bold text-zinc-600 dark:text-zinc-400">
                       Direct Asset Path or Web URL
                     </label>
                     {editingTestimonial.avatarUrl && (
-                      <span className="font-mono text-[9px] text-zinc-400 bg-white px-1.5 py-0.2 rounded border border-zinc-200">
+                      <span className="font-mono text-[9px] text-zinc-400 dark:text-zinc-400 bg-white dark:bg-white/5 px-1.5 py-0.2 rounded border border-zinc-200 dark:border-white/10">
                         {editingTestimonial.avatarUrl.startsWith("http")
                           ? "Remote URL"
                           : "Local /avatars/ Path"}
@@ -437,7 +555,7 @@ export function TestimonialClientManager({
                         );
                         if (importError) setImportError(null);
                       }}
-                      className="flex-1 border border-zinc-300 px-3 py-1.5 rounded-[4px] font-mono text-xs text-zinc-800 focus:border-[#292c2e] outline-none bg-white"
+                      className="flex-1 border border-zinc-300 dark:border-white/10 px-3 py-1.5 rounded-[4px] font-mono text-xs text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#121417] focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                     />
                     {editingTestimonial.avatarUrl &&
                       editingTestimonial.avatarUrl.startsWith("http") &&
@@ -446,7 +564,7 @@ export function TestimonialClientManager({
                           type="button"
                           disabled={isImportingUrl}
                           onClick={handleImportFromUrl}
-                          className="px-2.5 py-1.5 bg-[#292c2e] hover:bg-black text-white text-[10px] font-space uppercase font-bold rounded-[4px] shrink-0 active:scale-[0.96] transition-all flex items-center gap-1 cursor-pointer disabled:opacity-50 shadow-2xs"
+                          className="px-2.5 py-1.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-[10px] font-space uppercase font-bold rounded-[4px] shrink-0 active:scale-[0.96] transition-all flex items-center gap-1 cursor-pointer disabled:opacity-50 shadow-2xs"
                           title="Import and optimize avatar from this URL"
                         >
                           {isImportingUrl ? (
@@ -456,7 +574,7 @@ export function TestimonialClientManager({
                             </>
                           ) : (
                             <>
-                              <UploadCloud className="size-3 text-[#98ff03]" />
+                              <UploadCloud className="size-3 text-[#98ff03] dark:text-black" />
                               <span>Import</span>
                             </>
                           )}
@@ -464,7 +582,7 @@ export function TestimonialClientManager({
                       )}
                   </div>
                   {importError && (
-                    <p className="text-[10px] text-red-600 font-inter flex items-center gap-1">
+                    <p className="text-[10px] text-red-600 dark:text-red-400 font-inter flex items-center gap-1">
                       <X className="size-3 shrink-0" />
                       <span>{importError}</span>
                     </p>
@@ -472,8 +590,8 @@ export function TestimonialClientManager({
                 </div>
 
                 {/* Preset Avatars Quick Select */}
-                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70">
-                  <span className="font-space text-[10px] uppercase font-bold text-zinc-500 tracking-wider block">
+                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70 dark:border-white/10">
+                  <span className="font-space text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-wider block">
                     Or Pick a Default Preset Avatar
                   </span>
                   <div className="flex items-center gap-3">
@@ -488,8 +606,8 @@ export function TestimonialClientManager({
                         }
                         className={`relative size-10 rounded-full overflow-hidden border-2 transition-all cursor-pointer ${
                           editingTestimonial.avatarUrl === preset.url
-                            ? "border-[#292c2e] ring-2 ring-[#98ff03] scale-105"
-                            : "border-zinc-200 opacity-60 hover:opacity-100 hover:scale-105"
+                            ? "border-[#292c2e] dark:border-[#98ff03] ring-2 ring-[#98ff03] scale-105"
+                            : "border-zinc-200 dark:border-white/10 opacity-60 hover:opacity-100 hover:scale-105"
                         }`}
                         title={preset.label}
                       >
@@ -507,21 +625,21 @@ export function TestimonialClientManager({
                 </div>
 
                 {/* Live Testimonial Preview */}
-                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70">
-                  <span className="font-space text-[10px] uppercase font-bold text-zinc-500 tracking-wider block">
+                <div className="space-y-1.5 pt-1 border-t border-zinc-200/70 dark:border-white/10">
+                  <span className="font-space text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-wider block">
                     Live Testimonial Card Preview
                   </span>
-                  <div className="p-3 bg-white rounded-[6px] border border-zinc-200 shadow-2xs space-y-2">
+                  <div className="p-3 bg-white dark:bg-[#121417] rounded-[6px] border border-zinc-200 dark:border-white/10 shadow-2xs space-y-2">
                     <div className="flex items-center gap-1 text-[#80d800]">
                       {Array.from({ length: editingTestimonial.rating || 5 }).map((_, i) => (
                         <Star key={i} className="size-3.5 fill-[#80d800]" />
                       ))}
                     </div>
-                    <p className="font-inter text-xs text-zinc-600 italic line-clamp-2">
+                    <p className="font-inter text-xs text-zinc-600 dark:text-zinc-300 italic line-clamp-2">
                       &ldquo;{editingTestimonial.quote || "Client testimonial quote will appear here..."}&rdquo;
                     </p>
                     <div className="flex items-center gap-2.5 pt-1">
-                      <div className="relative size-8 rounded-full overflow-hidden border border-zinc-200 bg-zinc-100 shrink-0">
+                      <div className="relative size-8 rounded-full overflow-hidden border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-zinc-800 shrink-0">
                         {editingTestimonial.avatarUrl ? (
                           <Image
                             src={editingTestimonial.avatarUrl}
@@ -532,16 +650,16 @@ export function TestimonialClientManager({
                             className="object-cover"
                           />
                         ) : (
-                          <div className="size-full flex items-center justify-center bg-zinc-200 text-zinc-400">
+                          <div className="size-full flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 text-zinc-400">
                             <User className="size-4" />
                           </div>
                         )}
                       </div>
                       <div className="min-w-0">
-                        <p className="font-urbanist font-bold text-xs text-zinc-900 truncate">
+                        <p className="font-urbanist font-bold text-xs text-zinc-900 dark:text-zinc-100 truncate">
                           {editingTestimonial.authorName || "Author Name"}
                         </p>
-                        <p className="font-inter text-[10px] text-zinc-400 truncate">
+                        <p className="font-inter text-[10px] text-zinc-400 dark:text-zinc-500 truncate">
                           {editingTestimonial.authorRole || "Role & Company"}
                         </p>
                       </div>
@@ -553,7 +671,7 @@ export function TestimonialClientManager({
               {/* Star Rating & Order */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-space font-medium text-zinc-700 mb-1.5">
+                  <label className="block text-xs font-space font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                     Rating (1 to 5 Stars)
                   </label>
                   <div className="flex items-center gap-1.5 py-1">
@@ -573,7 +691,7 @@ export function TestimonialClientManager({
                           className={`size-5 ${
                             star <= (editingTestimonial.rating || 5)
                               ? "text-[#80d800] fill-[#80d800]"
-                              : "text-zinc-200 fill-zinc-200"
+                              : "text-zinc-200 dark:text-zinc-700 fill-zinc-200 dark:fill-zinc-700"
                           }`}
                         />
                       </button>
@@ -582,7 +700,7 @@ export function TestimonialClientManager({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-space font-medium text-zinc-700 mb-1.5">
+                  <label className="block text-xs font-space font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                     Display Order
                   </label>
                   <input
@@ -595,7 +713,7 @@ export function TestimonialClientManager({
                         order: parseInt(e.target.value) || 1,
                       }))
                     }
-                    className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 rounded-[6px] focus:outline-none focus:border-[#292c2e]"
+                    className="w-full px-3 py-2 text-xs font-inter border border-zinc-300 dark:border-white/10 rounded-[6px] bg-white dark:bg-[#121417] text-zinc-800 dark:text-zinc-100 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
                   />
                 </div>
               </div>
@@ -612,29 +730,29 @@ export function TestimonialClientManager({
                       isActive: e.target.checked,
                     }))
                   }
-                  className="rounded border-zinc-300 text-[#292c2e] focus:ring-[#292c2e]"
+                  className="rounded border-zinc-300 dark:border-zinc-600 text-[#292c2e] focus:ring-[#98ff03] accent-[#98ff03]"
                 />
                 <label
                   htmlFor="isActiveToggle"
-                  className="text-xs font-space text-zinc-700 cursor-pointer"
+                  className="text-xs font-space text-zinc-700 dark:text-zinc-300 cursor-pointer"
                 >
                   Publish on Public Homepage (Active)
                 </label>
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-100">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-4 py-2 text-xs font-space text-zinc-600 hover:bg-zinc-100 rounded-[6px] transition-colors"
+                  className="px-4 py-2 text-xs font-space text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[6px] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="px-4 py-2 bg-[#292c2e] hover:bg-zinc-800 text-white rounded-[6px] font-space text-xs font-medium transition-all disabled:opacity-50 inline-flex items-center gap-2"
+                  className="px-4 py-2 bg-[#292c2e] hover:bg-zinc-800 dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black rounded-[6px] font-space text-xs font-medium transition-all disabled:opacity-50 inline-flex items-center gap-2"
                 >
                   {isPending ? "Saving..." : isNew ? "Create" : "Save Changes"}
                 </button>

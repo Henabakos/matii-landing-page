@@ -12,21 +12,19 @@ import AboutUs from "../common/AboutUs";
 import Testimonials from "../sections/Testimonials";
 import PageHeader from "../common/PageHeader";
 
+import { useTranslations } from "next-intl";
+
 export function AboutPage() {
+  const t = useTranslations("pages.about");
+
   return (
     <div className="w-full px-4 md:px-8 py-8 md:py-12">
       <div className="max-w-[1380px] mx-auto space-y-16">
         {/* Page Header */}
         <PageHeader
-          tag="WHO WE ARE & WHAT WE DO"
-          title={
-            <>
-              Built With Precision.
-              <br />
-              Powered By Momentum.
-            </>
-          }
-          description="From our studio in Addis Ababa, we pair world-class software engineering with deliberate care and craft to build digital systems organizations rely on."
+          tag={t("tag")}
+          title={t("title")}
+          description={t("description")}
         />
 
         {/* Hero Section & Stats */}

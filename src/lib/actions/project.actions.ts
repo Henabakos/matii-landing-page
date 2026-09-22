@@ -28,6 +28,7 @@ export async function saveProjectAction(data: {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  translations?: Record<string, any>;
   navbarIntegration?: {
     enabled: boolean;
     menuKey: string;
@@ -62,6 +63,7 @@ export async function saveProjectAction(data: {
     order: Number(data.order || 0),
     seoTitle: data.seoTitle || null,
     seoDescription: data.seoDescription || null,
+    translations: data.translations ? JSON.stringify(data.translations) : null,
   };
 
   if (data.seoKeywords && data.seoKeywords.trim()) {

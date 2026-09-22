@@ -18,6 +18,7 @@ model Kpi {
   category    String   @default("HERO_ABOUT") // HERO_ABOUT, SOLUTIONS_CAROUSEL, GENERAL
   order       Int      @default(0)
   isActive    Boolean  @default(true)
+  translations String? // JSON map of { [locale]: { label, description } }
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -59,6 +60,7 @@ model Project {
   seoTitle            String?
   seoDescription      String?
   seoKeywords         String?
+  translations        String?  // JSON map of { [locale]: { title, subtitle, challenge, solution } }
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }
@@ -83,6 +85,7 @@ model BlogPost {
   seoTitle        String?
   seoDescription  String?
   seoKeywords     String?
+  translations    String?  // JSON map of { [locale]: { title, excerpt, content } }
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -105,6 +108,7 @@ model NewsArticle {
   seoTitle        String?
   seoDescription  String?
   seoKeywords     String?
+  translations    String?  // JSON map of { [locale]: { title, excerpt, content } }
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -133,6 +137,7 @@ model Testimonial {
   rating      Int      @default(5)
   order       Int      @default(0)
   isActive    Boolean  @default(true)
+  translations String? // JSON map of { [locale]: { quote, authorRole } }
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -150,6 +155,7 @@ model NavMenu {
   footerCtaLabel String?
   footerCtaHref  String?
   categories     String   // JSON string array of MegaMenuCategory objects
+  translations   String?  // JSON map of { [locale]: { label, footerLabel, footerCtaLabel } }
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -172,6 +178,7 @@ model JobPosition {
   seoTitle         String?
   seoDescription   String?
   seoKeywords      String?
+  translations     String?          // JSON map of { [locale]: { title, shortDescription, content, ... } }
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
   applications     JobApplication[]
@@ -206,4 +213,3 @@ model ProjectCategory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-

@@ -83,20 +83,20 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
   };
 
   return (
-    <div className="bg-zinc-50 border border-zinc-200/90 rounded-[4px] p-5 space-y-4">
+    <div className="bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/90 dark:border-white/10 rounded-[4px] p-5 space-y-4">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 dark:border-white/10 pb-3">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
-            <Layers className="size-4 text-[#292c2e]" />
-            <h4 className="font-space text-xs font-bold uppercase tracking-wider text-[#292c2e]">
+            <Layers className="size-4 text-[#292c2e] dark:text-[#98ff03]" />
+            <h4 className="font-space text-xs font-bold uppercase tracking-wider text-[#292c2e] dark:text-zinc-100">
               Case Study Gallery Images
             </h4>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/80 text-zinc-700 font-semibold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/80 dark:bg-white/10 text-zinc-700 dark:text-zinc-300 font-semibold">
               {items.length} {items.length === 1 ? "image" : "images"}
             </span>
           </div>
-          <p className="text-[11px] font-inter text-zinc-500">
+          <p className="text-[11px] font-inter text-zinc-500 dark:text-zinc-400">
             Showcase screenshots, dashboard views, mobile UI, and visual deliverables on the project details page.
           </p>
         </div>
@@ -106,10 +106,10 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
             <button
               type="button"
               onClick={handleLoadDefaults}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-zinc-100 border border-zinc-300 text-zinc-700 text-[11px] font-space font-medium rounded-[3px] transition-all cursor-pointer"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-zinc-100 dark:bg-[#16181b] dark:hover:bg-white/10 border border-zinc-300 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-[11px] font-space font-medium rounded-[3px] transition-all cursor-pointer"
               title="Preload standard template items"
             >
-              <Sparkles className="size-3 text-[#292c2e]" />
+              <Sparkles className="size-3 text-[#292c2e] dark:text-[#98ff03]" />
               <span>Load Template</span>
             </button>
           )}
@@ -117,9 +117,9 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
           <button
             type="button"
             onClick={handleAddItem}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black text-white text-[11px] font-space font-bold uppercase tracking-wider rounded-[3px] transition-all active:scale-[0.96] cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#292c2e] hover:bg-black dark:bg-[#98ff03] dark:hover:bg-[#8ae600] text-white dark:text-black text-[11px] font-space font-bold uppercase tracking-wider rounded-[3px] transition-all active:scale-[0.96] cursor-pointer shadow-xs"
           >
-            <Plus className="size-3.5 text-[#98ff03]" />
+            <Plus className="size-3.5 text-[#98ff03] dark:text-black" />
             <span>Add Gallery Image</span>
           </button>
         </div>
@@ -127,12 +127,12 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
 
       {/* Empty State */}
       {items.length === 0 ? (
-        <div className="text-center py-8 border-2 border-dashed border-zinc-200 rounded-[4px] bg-white space-y-2">
-          <ImageIcon className="size-8 text-zinc-300 mx-auto" />
-          <p className="font-space text-xs font-semibold text-zinc-600">
+        <div className="text-center py-8 border-2 border-dashed border-zinc-200 dark:border-white/10 rounded-[4px] bg-white dark:bg-[#121417] space-y-2">
+          <ImageIcon className="size-8 text-zinc-300 dark:text-zinc-600 mx-auto" />
+          <p className="font-space text-xs font-semibold text-zinc-600 dark:text-zinc-300">
             No Case Study Images Configured
           </p>
-          <p className="font-inter text-[11px] text-zinc-400 max-w-sm mx-auto">
+          <p className="font-inter text-[11px] text-zinc-400 dark:text-zinc-500 max-w-sm mx-auto">
             Click &quot;Add Gallery Image&quot; above to upload screenshots or high-res deliverables via Cloudinary.
           </p>
         </div>
@@ -142,11 +142,11 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
           {items.map((item, index) => (
             <div
               key={item.id || index}
-              className="bg-white border border-zinc-200/90 rounded-[4px] p-3.5 space-y-3 shadow-xs relative group overflow-hidden"
+              className="bg-white dark:bg-[#121417] border border-zinc-200/90 dark:border-white/10 rounded-[4px] p-3.5 space-y-3 shadow-xs relative group overflow-hidden"
             >
               {/* Card top toolbar */}
-              <div className="flex items-center justify-between pb-2 border-b border-zinc-100">
-                <span className="font-space text-[10px] font-bold uppercase tracking-wider text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-[2px]">
+              <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-white/10">
+                <span className="font-space text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-white/5 px-2 py-0.5 rounded-[2px]">
                   Visual #{index + 1}
                 </span>
 
@@ -156,7 +156,7 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
                     disabled={index === 0}
                     onClick={() => handleMoveUp(index)}
                     title="Move image up"
-                    className="p-1 text-zinc-400 hover:text-black disabled:opacity-25 transition-colors cursor-pointer"
+                    className="p-1 text-zinc-400 hover:text-black dark:hover:text-white disabled:opacity-25 transition-colors cursor-pointer"
                   >
                     <ArrowUp className="size-3.5" />
                   </button>
@@ -166,18 +166,18 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
                     disabled={index === items.length - 1}
                     onClick={() => handleMoveDown(index)}
                     title="Move image down"
-                    className="p-1 text-zinc-400 hover:text-black disabled:opacity-25 transition-colors cursor-pointer"
+                    className="p-1 text-zinc-400 hover:text-black dark:hover:text-white disabled:opacity-25 transition-colors cursor-pointer"
                   >
                     <ArrowDown className="size-3.5" />
                   </button>
 
-                  <div className="w-[1px] h-3 bg-zinc-200 mx-0.5" />
+                  <div className="w-[1px] h-3 bg-zinc-200 dark:bg-white/10 mx-0.5" />
 
                   <button
                     type="button"
                     onClick={() => handleRemoveItem(index)}
                     title="Remove image from gallery"
-                    className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-[2px] transition-colors cursor-pointer"
+                    className="p-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-[2px] transition-colors cursor-pointer"
                   >
                     <Trash2 className="size-3.5" />
                   </button>
@@ -186,7 +186,7 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
 
               {/* Title / Caption input */}
               <div className="space-y-1">
-                <label className="text-[10px] font-space uppercase font-bold text-zinc-600 block">
+                <label className="text-[10px] font-space uppercase font-bold text-zinc-600 dark:text-zinc-400 block">
                   Image Title / Caption
                 </label>
                 <input
@@ -194,7 +194,7 @@ export function CaseStudyGalleryManager({ items = [], onChange }: CaseStudyGalle
                   placeholder="e.g. Interactive Dashboard UI, Node Architecture"
                   value={item.title || ""}
                   onChange={(e) => handleUpdateItem(index, { title: e.target.value })}
-                  className="w-full border border-zinc-300 px-2.5 py-1.5 rounded-[3px] text-xs font-inter text-zinc-800 focus:outline-none focus:border-[#292c2e]"
+                  className="w-full border border-zinc-300 dark:border-white/10 px-2.5 py-1.5 rounded-[3px] text-xs font-inter text-zinc-800 dark:text-zinc-100 bg-white dark:bg-[#16181b] focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"
                 />
               </div>
 

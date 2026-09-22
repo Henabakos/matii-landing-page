@@ -5,15 +5,18 @@ import WhyUsTag from "./why-choose-us/WhyUsTag";
 import WhyUsCard from "./why-choose-us/WhyUsCard";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function WhyChooseUs() {
+  const t = useTranslations("whyUs");
+
   return (
     <section className="relative w-full overflow-hidden">
       <div className="max-w-345 mx-auto border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white dark:bg-[#161819] relative py-16 transition-colors duration-200">
-        <div className="hidden md:block absolute top-0 right-0 w-32 h-26 lg:w-56 lg:h-48 dark:opacity-80">
+        <div className="hidden md:block absolute top-0 right-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
           <Image
             src="/shapes/white-shape.svg"
-            alt="hero-shape"
+            alt="why-us-shape"
             className="object-contain"
             fill
           />
@@ -31,12 +34,11 @@ export function WhyChooseUs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-12 lg:mb-16 p-6 md:p-12">
           <div className="flex flex-col mb-8s">
             <h2 className="font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] dark:text-white tracking-tight lowercase transition-colors">
-              Built to Solve. Designed to Move.
+              {t("heading")}
             </h2>
           </div>
           <p className="font-urbanist font-normal text-base md:text-[18px] leading-[1.4] text-[#444445] dark:text-zinc-300 lg:pt-2 transition-colors">
-            We combine strategic thinking, intuitive design, and engineering
-            precision to build digital products that move businesses forward.
+            {t("desc")}
           </p>
         </div>
 

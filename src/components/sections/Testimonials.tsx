@@ -12,6 +12,7 @@ import {
   CarouselNext,
   CarouselDots,
 } from "@/components/ui/carousel";
+import { useTranslations } from "next-intl";
 import {
   TestimonialItem,
   DEFAULT_TESTIMONIALS,
@@ -22,6 +23,7 @@ interface TestimonialsProps {
 }
 
 export function Testimonials({ testimonials }: TestimonialsProps) {
+  const t = useTranslations("testimonials");
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true }),
   );
@@ -41,7 +43,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
 
         {/* Headline - Subheadline: Urbanist Medium */}
         <h2 className="font-urbanist font-medium text-3xl sm:text-4xl md:text-[48px] leading-[1.2] text-[#292c2e] dark:text-white text-center lowercase tracking-tight mb-12 md:mb-16 transition-colors">
-          WHAT OUR CLIENTS SAY
+          {t("heading")}
         </h2>
 
         {/* Shadcn Carousel Integration */}
