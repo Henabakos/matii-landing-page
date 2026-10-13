@@ -1,0 +1,109 @@
+.page a:focus-visible,
+.page summary:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 5px;
+}
+
+.hero {
+  background-image: radial-gradient(
+    ellipse at 90% 0%,
+    rgba(152, 255, 3, 0.08),
+    transparent 60%
+  );
+}
+
+.diagram {
+  isolation: isolate;
+}
+
+.hero a:focus-visible {
+  outline-color: #98ff03;
+}
+
+.sectionTitle {
+  font-family: var(--font-urbanist), sans-serif;
+  font-size: clamp(1.875rem, 3.2vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+  text-wrap: balance;
+}
+
+.reveal {
+  animation: reveal 650ms ease-out both;
+}
+
+.primaryAction,
+.secondaryAction,
+.capability,
+.related {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.primaryAction:hover {
+  background-color: #86e200;
+}
+
+.secondaryAction:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.capability:hover,
+.related:hover {
+  border-color: #65a30d;
+}
+
+.textLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.sectionNav a:hover {
+  background-color: var(--card);
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq[open] summary svg {
+  transform: rotate(45deg);
+}
+
+.faq summary svg {
+  transition: transform 180ms ease;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .related:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
