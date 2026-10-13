@@ -127,7 +127,19 @@
     "attachFile": "Attach Brief / Document (Optional)",
     "submitMessage": "Send Message",
     "submitting": "Sending...",
-    "successMessage": "Thank you! Your project inquiry has been logged with our engineering team."
+    "successMessage": "Thank you for reaching out. Your project inquiry has been received, and a member of our engineering team will be in touch shortly.",
+    "locationsTitle": "Our Global Presence",
+    "locationsSubtitle": "ENGINEERING HUBS & CLIENT PARTNERSHIPS",
+    "locationUsa": "United States",
+    "locationUsaCity": "New York · Americas Hub",
+    "locationUk": "United Kingdom",
+    "locationUkCity": "London · EMEA Hub",
+    "locationPoland": "Poland",
+    "locationPolandCity": "Warsaw · European Engineering Studio",
+    "locationEthiopia": "Ethiopia",
+    "locationEthiopiaCity": "Addis Ababa · Global Headquarters",
+    "hqBadge": "HEADQUARTERS",
+    "activeStatus": "Operational"
   },
   "faq": {
     "tag": "FREQUENTLY ASKED QUESTIONS",

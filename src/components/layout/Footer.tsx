@@ -6,6 +6,8 @@ import { Link } from "@/i18n/routing";
 import ContactForm from "../sections/contact/ContactForm";
 import { useTranslations } from "next-intl";
 
+import FooterLogo from "./FooterLogo";
+
 export function Footer() {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
@@ -60,13 +62,14 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="w-full relative h-[460px]" style={{ position: "relative" }}>
+        {/* Middle Brand Showcase - Full Width Logo Fading Out to Bottom */}
+        <div className="w-full relative h-[280px] sm:h-[360px] md:h-[460px] flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-12 select-none">
           <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 right-0 z-10" />
           <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0 z-10" />
           <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0 z-10" />
           <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0 z-10" />
 
-          <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
+          {/* <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80 z-10 pointer-events-none">
             <Image
               src="/shapes/footer-shape.svg"
               alt="footer-shape"
@@ -75,12 +78,30 @@ export function Footer() {
             />
           </div>
 
-          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80" style={{ position: "absolute" }}>
+          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80 z-10 pointer-events-none">
             <Image
               src="/shapes/footer-shape.svg"
               alt="footer-shape"
               className="rotate-180 object-contain"
               fill
+            />
+          </div> */}
+
+          <div
+            className="w-full max-w-[1100px] flex items-center justify-center pointer-events-none transition-opacity duration-300"
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%)",
+            }}
+          >
+            <Image
+              src="/images/matii-footer-logo.svg"
+              alt="footer-logo"
+              width={1300}
+              height={425}
+              className="object-contain"
             />
           </div>
         </div>
@@ -141,7 +162,7 @@ export function Footer() {
                   />
                 </svg>
               </div>
-              <span>2026 Matii Digitals. {tCommon("allRightsReserved")}</span>
+              <span>2026 Matii Technologies. {tCommon("allRightsReserved")}</span>
             </div>
           </div>
 

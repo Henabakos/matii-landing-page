@@ -127,7 +127,19 @@
     "attachFile": "Sanada / Qajeelfama Maxxansaa (Filannoo)",
     "submitMessage": "Ergaa Ergaa",
     "submitting": "Ergamaa jira...",
-    "successMessage": "Galatoomaa! Gaaffiin keessan garee injinaroota keenyaaf dhiyaateera."
+    "successMessage": "Galatoomaa! Gaaffiin keessan garee injinaroota keenyaaf dhiyaateera.",
+    "locationsTitle": "Wiirtuuwwan Addunyaa fi Iddoowwan",
+    "locationsSubtitle": "WIIRTUUWWAN INJINARINGII FI HIRMAANNAA",
+    "locationUsa": "Yuunaayitid Isteetis",
+    "locationUsaCity": "Niwu Yoorki · Wiirtuu Ameerikaa",
+    "locationUk": "Yuunaayitid Kingidam",
+    "locationUkCity": "Landan · Wiirtuu EMEA",
+    "locationPoland": "Poolaandi",
+    "locationPolandCity": "Waarsoo · Isteediyoo Awurooppaa",
+    "locationEthiopia": "Itoophiyaa",
+    "locationEthiopiaCity": "Finfinnee · Waajjira Ol'aanaa",
+    "hqBadge": "WAAJJIRA OL'AANAA",
+    "activeStatus": "Wiirtuu Socho'aa"
   },
   "faq": {
     "tag": "GAAFFIIWWAN YEROO HUNDAA GAAFATAMAN",

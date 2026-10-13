@@ -127,7 +127,19 @@
     "attachFile": "ሰነድ / ማብራሪያ ያያይዙ (አማራጭ)",
     "submitMessage": "መልዕክት ይላኩ",
     "submitting": "በመላክ ላይ...",
-    "successMessage": "እናመሰግናለን! ጥያቄዎ ለኢንጅነሪንግ ቡድናችን ደርሷል።"
+    "successMessage": "ለቀረበው ጥያቄዎ እናመሰግናለን። የፕሮጀክት ጥያቄዎ ተቀብለናል፣ እና የኢንጂነሪንግ ቡድናችን አባል በቅርቡ ያነጋግርዎታል።",
+    "locationsTitle": "የእኛ ዓለም አቀፍ ስርጭት",
+    "locationsSubtitle": "የኢንጂነሪንግ ማዕከላት እና የደንበኛ አጋርነቶች",
+    "locationUsa": "ዩናይትድ ስቴትስ",
+    "locationUsaCity": "ኒው ዮርክ · የአሜሪካ ማዕከል",
+    "locationUk": "ዩናይትድ ኪንግደም",
+    "locationUkCity": "ለንደን · የ EMEA ማዕከል",
+    "locationPoland": "ፖላንድ",
+    "locationPolandCity": "ዋርሶ · የአውሮፓ ኢንጂነሪንግ ስቱዲዮ",
+    "locationEthiopia": "ኢትዮጵያ",
+    "locationEthiopiaCity": "አዲስ አበባ · ዓለም አቀፍ ዋና መሥሪያ ቤት",
+    "hqBadge": "ዋና መሥሪያ ቤት",
+    "activeStatus": "በሥራ ላይ"
   },
   "faq": {
     "tag": "ተደጋግመው የሚጠየቁ ጥያቄዎች",

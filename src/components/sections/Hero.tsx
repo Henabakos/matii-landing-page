@@ -24,14 +24,14 @@ export function Hero({ partners }: HeroProps) {
       <TechPathBackground variant="brand" intensity="subtle" animated={true} />
       <div className="relative max-w-345 mx-auto pt-10 md:pt-16 pb-16 md:pb-24">
 
-        <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48" style={{ position: "absolute" }}>
+        {/* <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48" style={{ position: "absolute" }}>
           <Image
             src="/shapes/hero-shape.svg"
             alt="hero-shape"
             className="object-contain"
             fill
           />
-        </div>
+        </div> */}
 
         <div className="hidden md:block absolute -bottom-10 lg:-bottom-14 right-0 w-28 h-24 lg:w-44 lg:h-36 pointer-events-none z-0 opacity-75" style={{ position: "absolute" }}>
           <Image

@@ -127,7 +127,19 @@
     "attachFile": "Briefing / Dokument anhängen (Optional)",
     "submitMessage": "Nachricht senden",
     "submitting": "Wird gesendet...",
-    "successMessage": "Vielen Dank! Ihre Anfrage wurde an unser Engineering-Team weitergeleitet."
+    "successMessage": "Vielen Dank für Ihre Nachricht. Ihre Projektanfrage ist bei uns eingegangen, und ein Mitglied unseres Engineering-Teams wird sich in Kürze bei Ihnen melden.",
+    "locationsTitle": "Unsere globale Präsenz",
+    "locationsSubtitle": "ENGINEERING-STANDORTE & KUNDENPARTNERSCHAFTEN",
+    "locationUsa": "Vereinigte Staaten",
+    "locationUsaCity": "New York · Hub Amerika",
+    "locationUk": "Vereinigtes Königreich",
+    "locationUkCity": "London · Hub EMEA",
+    "locationPoland": "Polen",
+    "locationPolandCity": "Warschau · Europäisches Engineering-Studio",
+    "locationEthiopia": "Äthiopien",
+    "locationEthiopiaCity": "Addis Abeba · Globaler Hauptsitz",
+    "hqBadge": "HAUPTSITZ",
+    "activeStatus": "Operativ"
   },
   "faq": {
     "tag": "HÄUFIG GESTELLTE FRAGEN",

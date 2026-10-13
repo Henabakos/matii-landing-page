@@ -1,7 +1,11 @@
-"use client";
-
 import ServicesTag from "./services/ServicesTag";
 import ServiceCard from "./services/ServiceCard";
+import {
+  EnterpriseSoftwareFigure,
+  BpoSolutionsFigure,
+  AiDataPlatformFigure,
+  ManagedCloudFigure,
+} from "../figures/pillar-figures";
 
 export function Services() {
   return (
@@ -31,6 +35,7 @@ export function Services() {
             <ServiceCard
               index="01"
               title="ENTERPRISE SOFTWARE"
+              href="/services/enterprise"
               description="Mission-critical platforms, core banking systems, and robust ERP architectures built for scale, resilience, and institutional compliance."
               items={[
                 "Core Banking & Fintech",
@@ -39,12 +44,14 @@ export function Services() {
                 "Secure API & Integrations",
               ]}
               bgImage="/images/enterprise-software.jpg"
+              animationComponent={<EnterpriseSoftwareFigure />}
             />
 
             {/* Card 02 - BPO */}
             <ServiceCard
               index="02"
               title="BPO SOLUTIONS"
+              href="/services/bpo"
               description="High-efficiency business process outsourcing, dedicated tech-enabled back-office operations, and 24/7 multilingual customer support."
               items={[
                 "Customer Experience & CX",
@@ -53,12 +60,14 @@ export function Services() {
                 "Dedicated Talent Teams",
               ]}
               bgImage="/images/bpo-solutions.jpg"
+              animationComponent={<BpoSolutionsFigure />}
             />
 
             {/* Card 03 - AI & Data Platform */}
             <ServiceCard
               index="03"
               title="AI & DATA PLATFORM"
+              href="/services/ai"
               description="Enterprise AI pipelines, automated intelligent agents, and centralized data architectures transforming telemetry into decisive action."
               items={[
                 "Data Warehousing & ETL",
@@ -67,12 +76,14 @@ export function Services() {
                 "Intelligent Automation",
               ]}
               bgImage="/images/ai-data-platform.jpg"
+              animationComponent={<AiDataPlatformFigure />}
             />
 
             {/* Card 04 - Managed Cloud Services */}
             <ServiceCard
               index="04"
               title="MANAGED CLOUD SERVICES"
+              href="/services/cloud"
               description="End-to-end cloud infrastructure management, 24/7 SRE monitoring, automated CI/CD pipelines, and high-availability disaster recovery."
               items={[
                 "Cloud Migration & Architecture",
@@ -81,6 +92,7 @@ export function Services() {
                 "Security & Compliance Audits",
               ]}
               bgImage="/images/ai-automation.png"
+              animationComponent={<ManagedCloudFigure />}
             />
           </div>
         </div>

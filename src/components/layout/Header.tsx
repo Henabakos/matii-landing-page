@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { LanguageSelector } from "@/components/common/LanguageSelector";
 import { MegaMenuDropdown } from "@/components/layout/MegaMenuDropdown";
 import { defaultNavMenus, MegaMenuConfig } from "@/data/navigation-data";
+import Image from "next/image";
 
 function LineiconsGoogleMeet({ className }: { className?: string } = {}) {
   return (
@@ -145,15 +146,22 @@ export function Header({ initialMenus }: HeaderProps = {}) {
               href="/"
               className="flex items-center gap-2.5 xl:gap-3 font-space text-lg md:text-xl font-medium tracking-tight text-[#292c2e] dark:text-white"
             >
-              <div className="w-7 h-7 md:w-8 md:h-8 bg-[#292c2e] dark:bg-[#222527] dark:border dark:border-white/10 rounded-[4px] flex items-center justify-center text-[#98ff03] font-bold text-sm md:text-base shadow-sm shrink-0">
-                M
-              </div>
-              <span
-                translate="no"
-                className="notranslate font-space uppercase tracking-[0.1em] text-sm md:text-base font-semibold text-[#292c2e] dark:text-white"
-              >
-                Matii
-              </span>
+              <Image
+                src="/header-logo-light.svg"
+                alt="Matii Technologies"
+                width={130}
+                height={30}
+                className="h-7 md:h-[30px] w-auto flex-shrink-0 dark:hidden"
+                priority
+              />
+              <Image
+                src="/icon-logo.svg"
+                alt="Matii Technologies"
+                width={130}
+                height={30}
+                className="h-7 md:h-[30px] w-auto flex-shrink-0 hidden dark:block"
+                priority
+              />
             </Link>
             <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px] transition-colors duration-200" />
             <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px] transition-colors duration-200" />

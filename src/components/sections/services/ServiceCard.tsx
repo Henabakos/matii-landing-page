@@ -12,6 +12,7 @@ export interface ServiceCardProps {
   items: string[];
   bgImage?: string;
   href?: string;
+  animationComponent?: React.ReactNode;
 }
 
 export function ServiceCard({
@@ -21,10 +22,11 @@ export function ServiceCard({
   items,
   bgImage = "/images/ai-automation.png",
   href = "/contact",
+  animationComponent,
 }: ServiceCardProps) {
   return (
     <Link href={href} className="block h-full">
-      <div className="relative bg-white dark:bg-[#161819] border border-[#AEAEAE]/40 dark:border-white/10 p-6 md:p-8 flex flex-col justify-between h-full min-h-120 lg:min-h-140 overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out hover:bg-[#292c2e] dark:hover:bg-[#222527]">
+      <div className="relative bg-white dark:bg-[#161819] border border-[#AEAEAE]/40 dark:border-white/10 p-6 md:p-8 flex flex-col justify-between h-full min-h-[520px] lg:min-h-[580px] overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out hover:bg-[#292c2e] dark:hover:bg-[#222527]">
         {/* Optional Background Image on Hover */}
         {bgImage && (
           <Image
@@ -32,7 +34,7 @@ export function ServiceCard({
             alt={title}
             fill
             sizes="(max-width: 1200px) 100vw, 400px"
-            className="object-cover size-full opacity-0 group-hover:opacity-50 transition-opacity duration-500 ease-in-out pointer-events-none"
+            className="object-cover size-full opacity-0 group-hover:opacity-30 transition-opacity duration-500 ease-in-out pointer-events-none"
           />
         )}
 
@@ -41,7 +43,7 @@ export function ServiceCard({
 
         {/* Top Tag Badge */}
         <div className="self-start bg-[#292c2e] dark:bg-white/10 group-hover:bg-[#f3f4f6] px-3 py-1.5 rounded-xs flex items-center gap-2.5 z-10 transition-colors duration-500 ease-in-out">
-          <div className="bg-[#98ff03] size-3.5 shrink-0" />
+          <div className="bg-[#A2FF00] size-3.5 shrink-0" />
           <span className="font-urbanist font-medium text-xs md:text-sm text-white group-hover:text-[#292c2e] uppercase tracking-wider whitespace-nowrap transition-colors duration-500 ease-in-out">
             {title}
           </span>
@@ -49,16 +51,24 @@ export function ServiceCard({
 
         {/* Optional Description Text (Shown on Hover or if available) */}
         {description && (
-          <p className="font-inter font-normal text-xs md:text-[13px] text-white/90 leading-relaxed z-10 max-w-70 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+          <p className="font-inter font-normal text-xs md:text-[13px] text-white/90 leading-relaxed z-10 max-w-70 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
             {description}
           </p>
         )}
 
-        {/* Center Big Number */}
-        <div className="relative my-auto flex items-center justify-center pointer-events-none select-none z-10">
-          <span className="font-urbanist font-medium text-[140px] sm:text-[170px] lg:text-[200px] leading-none text-[#f3f4f6] dark:text-white/5 group-hover:text-white/70 uppercase tracking-tighter transition-colors duration-500 ease-in-out">
-            {index}
-          </span>
+        {/* Technical 3D Isometric Illustration Area (Occupies ~70-80% of middle area) */}
+        <div className="relative my-auto py-2 w-full z-10 flex items-center justify-center">
+          {animationComponent ? (
+            <div className="w-full max-w-[320px] transition-transform duration-300 group-hover:scale-[1.02]">
+              {animationComponent}
+            </div>
+          ) : (
+            <div className="relative flex items-center justify-center pointer-events-none select-none">
+              <span className="font-urbanist font-medium text-[140px] sm:text-[170px] lg:text-[200px] leading-none text-[#f3f4f6] dark:text-white/5 group-hover:text-white/70 uppercase tracking-tighter transition-colors duration-500 ease-in-out">
+                {index}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Bottom Action & Items Container */}

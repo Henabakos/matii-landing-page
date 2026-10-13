@@ -126,8 +126,19 @@
     "projectPlaceholder": "Opowiedz nam o swoim projekcie, harmonogramie i celach...",
     "attachFile": "Załącz brief / dokument (Opcjonalnie)",
     "submitMessage": "Wyślij wiadomość",
-    "submitting": "Wysyłanie...",
-    "successMessage": "Dziękujemy! Twoje zapytanie zostało przekazane do naszego zespołu inżynierów."
+    "successMessage": "Dziękujemy za kontakt. Państwa zapytanie projektowe zostało przyjęte, a przedstawiciel naszego zespołu inżynierów skontaktuje się z Państwem w najbliższym czasie.",
+    "locationsTitle": "Nasza globalna obecność",
+    "locationsSubtitle": "CENTRA INŻYNIERYJNE I PARTNERSTWA Z KLIENTAMI",
+    "locationUsa": "Stany Zjednoczone",
+    "locationUsaCity": "Nowy Jork · Centrum Ameryk",
+    "locationUk": "Wielka Brytania",
+    "locationUkCity": "Londyn · Centrum EMEA",
+    "locationPoland": "Polska",
+    "locationPolandCity": "Warszawa · Europejskie Studio Inżynieryjne",
+    "locationEthiopia": "Etiopia",
+    "locationEthiopiaCity": "Addis Abeba · Siedziba Główna",
+    "hqBadge": "SIEDZIBA GŁÓWNA",
+    "activeStatus": "Działające"
   },
   "faq": {
     "tag": "NAJCZĘŚCIEJ ZADAWANE PYTANIA",

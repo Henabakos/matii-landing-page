@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import ContactFormWhite from "./contact/ContactFormWhite";
+import ContactLocations from "./contact/ContactLocations";
 
 export function ContactSectionWhite() {
   const t = useTranslations("contactSection");
@@ -32,51 +33,8 @@ export function ContactSectionWhite() {
 
             {/* Info Cards */}
             <div className="flex flex-col gap-4">
-              {/* Email Card */}
-              <a
-                href="mailto:contact@Matiidigitals.com"
-                className="group border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex items-center justify-between relative hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors"
-              >
-                <div className="flex flex-col gap-1">
-                  <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                    // {t("directEmail")}
-                  </span>
-                  <span className="font-inter font-semibold text-lg text-black dark:text-white">
-                    contact@Matiidigitals.com
-                  </span>
-                </div>
-                <div className="size-8 bg-[#f3f4f6] dark:bg-white/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
-                  <span className="text-[#292c2e] dark:text-[#98ff03] font-bold">→</span>
-                </div>
-              </a>
-
-              {/* Phone Card */}
-              <a
-                href="tel:+251945014531"
-                className="group border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex items-center justify-between relative hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-colors"
-              >
-                <div className="flex flex-col gap-1">
-                  <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                    // {t("phoneWhatsApp")}
-                  </span>
-                  <span className="font-inter font-semibold text-lg text-black dark:text-white">
-                    +(251)-945-014-531
-                  </span>
-                </div>
-                <div className="size-8 bg-[#f3f4f6] dark:bg-white/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:-rotate-45">
-                  <span className="text-[#292c2e] dark:text-[#98ff03] font-bold">→</span>
-                </div>
-              </a>
-
-              {/* Office Location */}
-              <div className="border border-[#AEAEAE]/40 dark:border-white/10 p-6 bg-white dark:bg-[#161819] flex flex-col gap-1 relative">
-                <span className="font-space text-xs text-[#797F8B] dark:text-zinc-400 uppercase tracking-wider">
-                  // {t("headquarterLocation")}
-                </span>
-                <span className="font-inter font-semibold text-base text-black dark:text-white">
-                  {t("headquarterAddress")}
-                </span>
-              </div>
+              {/* Global Office Locations */}
+              <ContactLocations variant="light" className="mt-2" />
             </div>
           </div>
 

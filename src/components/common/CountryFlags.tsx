@@ -125,8 +125,54 @@ export function FlagPoland({ className = "" }: FlagProps) {
   );
 }
 
+/**
+ * United States Flag (Stars and Stripes)
+ */
+export function FlagUSA({ className = "" }: FlagProps) {
+  return (
+    <svg
+      viewBox="0 0 60 36"
+      className={`${DEFAULT_FLAG_STYLE} ${className}`}
+      aria-label="United States Flag"
+    >
+      <rect width="60" height="36" fill="#B22234" />
+      <path
+        d="M0,2.77 h60 M0,8.31 h60 M0,13.85 h60 M0,19.38 h60 M0,24.92 h60 M0,30.46 h60"
+        stroke="#FFFFFF"
+        strokeWidth="2.77"
+      />
+      <rect width="26" height="19.4" fill="#3C3B6E" />
+      <g fill="#FFFFFF" opacity="0.95">
+        <circle cx="4.5" cy="3.5" r="0.9" />
+        <circle cx="9.5" cy="3.5" r="0.9" />
+        <circle cx="14.5" cy="3.5" r="0.9" />
+        <circle cx="19.5" cy="3.5" r="0.9" />
+        <circle cx="7" cy="7" r="0.9" />
+        <circle cx="12" cy="7" r="0.9" />
+        <circle cx="17" cy="7" r="0.9" />
+        <circle cx="22" cy="7" r="0.9" />
+        <circle cx="4.5" cy="10.5" r="0.9" />
+        <circle cx="9.5" cy="10.5" r="0.9" />
+        <circle cx="14.5" cy="10.5" r="0.9" />
+        <circle cx="19.5" cy="10.5" r="0.9" />
+        <circle cx="7" cy="14" r="0.9" />
+        <circle cx="12" cy="14" r="0.9" />
+        <circle cx="17" cy="14" r="0.9" />
+        <circle cx="22" cy="14" r="0.9" />
+        <circle cx="4.5" cy="17" r="0.8" />
+        <circle cx="9.5" cy="17" r="0.8" />
+        <circle cx="14.5" cy="17" r="0.8" />
+        <circle cx="19.5" cy="17" r="0.8" />
+      </g>
+    </svg>
+  );
+}
+
 export function CountryFlag({ code, className = "" }: { code: string; className?: string }) {
   switch (code.toLowerCase()) {
+    case "us":
+    case "usa":
+      return <FlagUSA className={className} />;
     case "om":
       return <FlagOromo className={className} />;
     case "am":
@@ -140,3 +186,4 @@ export function CountryFlag({ code, className = "" }: { code: string; className?
       return <FlagUK className={className} />;
   }
 }
+
