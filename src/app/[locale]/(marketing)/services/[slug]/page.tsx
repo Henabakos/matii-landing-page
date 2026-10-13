@@ -1,8 +1,8 @@
-import React from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import PillarDetailPage from "@/components/pages/PillarDetailPage";
-import { getPillarBySlug, getAllPillarSlugs, PILLARS_LIST } from "@/data/pillars-data";
+import { getPillarBySlug, PILLARS_LIST } from "@/data/pillars-data";
+import { SERVICE_DETAIL_CONTENT } from "@/data/service-detail-content";
 
 interface ServiceDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -23,18 +23,20 @@ export async function generateMetadata({
 
   if (!pillar) {
     return {
-      title: "Service Pillar Not Found | Matii Technologies",
-      description: "The requested engineering pillar could not be found.",
+      title: "Service Not Found",
+      description: "The requested service could not be found.",
     };
   }
 
-  const title = `${pillar.title} | Matii Technologies`;
-  const description = pillar.subtitle;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
+  const content = SERVICE_DETAIL_CONTENT[pillar.id];
+  const title = `${content.name} | Matii Digitals`;
+  const description = content.intro;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
   const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}services/${pillar.slug}`;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     keywords: [
       pillar.shortTitle,

@@ -1,587 +1,453 @@
-"use client";
-
-import React, { useState } from "react";
-import Image from "next/image";
-import { Link } from "@/i18n/routing";
 import {
-  ArrowLeft,
+  ArrowDown,
   ArrowRight,
-  CheckCircle2,
-  ChevronDown,
-  Layers,
-  Cpu,
-  Server,
-  Zap,
-  ShieldCheck,
-  Activity,
-  Calendar,
-  ExternalLink,
-  Code2,
-  Users2,
+  Check,
+  ChevronRight,
   Cloud,
-  Brain,
+  Code2,
+  Database,
+  Headphones,
+  Layers3,
+  Plus,
+  ShieldCheck,
+  Workflow,
 } from "lucide-react";
+import { Link } from "@/i18n/routing";
 import {
   EnterpriseSoftwareFigure,
   BpoSolutionsFigure,
   AiDataPlatformFigure,
   ManagedCloudFigure,
 } from "@/components/figures/pillar-figures";
-import type { PillarData } from "@/data/pillars-data";
-import { PILLARS_LIST } from "@/data/pillars-data";
+import { PILLARS_LIST, type PillarData } from "@/data/pillars-data";
+import { SERVICE_DETAIL_CONTENT } from "@/data/service-detail-content";
+import styles from "./ServiceDetail.module.css";
 
-interface PillarDetailPageProps {
-  pillar: PillarData;
+const FIGURES = {
+  EnterpriseSoftwareFigure,
+  BpoSolutionsFigure,
+  AiDataPlatformFigure,
+  ManagedCloudFigure,
+};
+const ICONS = {
+  enterprise: Code2,
+  bpo: Headphones,
+  cloud: Cloud,
+  ai: Database,
+};
+const CAPABILITY_ICONS = [
+  Layers3,
+  Workflow,
+  Database,
+  ShieldCheck,
+  Code2,
+  Headphones,
+];
+const PHASES = ["Understand", "Design", "Deliver", "Improve"];
+const SECTIONS = ["Overview", "Capabilities", "Approach", "FAQs"];
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-4 flex items-center gap-2.5 font-inter text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+      <span aria-hidden="true" className="size-2 shrink-0 bg-[#98ff03]" />
+      {children}
+    </p>
+  );
 }
 
-const FIGURE_COMPONENTS = {
-  EnterpriseSoftwareFigure: <EnterpriseSoftwareFigure />,
-  BpoSolutionsFigure: <BpoSolutionsFigure />,
-  AiDataPlatformFigure: <AiDataPlatformFigure />,
-  ManagedCloudFigure: <ManagedCloudFigure />,
-};
-
-const PILLAR_ICONS = {
-  enterprise: <Code2 className="size-4 text-[#98ff03]" />,
-  bpo: <Users2 className="size-4 text-[#98ff03]" />,
-  cloud: <Cloud className="size-4 text-[#98ff03]" />,
-  ai: <Brain className="size-4 text-[#98ff03]" />,
-};
-
-export default function PillarDetailPage({ pillar }: PillarDetailPageProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  const otherPillars = PILLARS_LIST.filter((p) => p.id !== pillar.id);
+export default function PillarDetailPage({ pillar }: { pillar: PillarData }) {
+  const content = SERVICE_DETAIL_CONTENT[pillar.id];
+  const Figure = FIGURES[pillar.figureName];
+  const Icon = ICONS[pillar.id];
 
   return (
-    <div className="w-full px-4 md:px-8 py-8 md:py-14 overflow-hidden">
-      <div className="max-w-[1380px] mx-auto space-y-16 md:space-y-24">
-        {/* =================================================================== */}
-        {/* 1. TOP BREADCRUMB & BACK ACTION */}
-        {/* =================================================================== */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[rgba(174,174,174,0.25)] dark:border-white/10">
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 font-space text-xs sm:text-sm uppercase tracking-wider text-[#292c2e] dark:text-zinc-300 hover:text-black dark:hover:text-[#98ff03] transition-colors group"
-          >
-            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
-            <span>Back to All Services</span>
+    <div className={`${styles.page} px-4 pb-12 pt-6 md:px-8 md:pb-20 md:pt-8`}>
+      <div className="mx-auto max-w-[1380px]">
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-6 flex flex-wrap items-center gap-2 font-inter text-xs text-muted-foreground"
+        >
+          <Link href="/" className={styles.textLink}>
+            Home
           </Link>
+          <ChevronRight aria-hidden="true" className="size-3" />
+          <Link href="/services" className={styles.textLink}>
+            Services
+          </Link>
+          <ChevronRight aria-hidden="true" className="size-3" />
+          <span aria-current="page" className="font-medium text-foreground">
+            {content.name}
+          </span>
+        </nav>
 
-          <div className="flex items-center gap-2 text-xs font-space uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-            <span>Services</span>
-            <span>/</span>
-            <span className="text-[#292c2e] dark:text-[#98ff03] font-medium">
-              {pillar.shortTitle}
-            </span>
-          </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 2. HERO SECTION — ARCHITECTURAL FRAMED HEADER */}
-        {/* =================================================================== */}
-        <div className="relative bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.35)] dark:border-white/10 p-6 sm:p-10 md:p-14 transition-colors duration-200">
-          {/* Architectural Corner Accents */}
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px]" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
-            <div className="lg:col-span-8 space-y-6">
-              {/* Pillar Tag */}
-              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 bg-[#292c2e] dark:bg-white/10 rounded-[2px] border border-zinc-700/40 dark:border-white/10">
-                <div className="size-2 rounded-full bg-[#98ff03] animate-pulse" />
-                <span className="font-space font-medium text-xs sm:text-[13px] uppercase tracking-wider text-white">
-                  {pillar.tag}
+        <section
+          aria-labelledby="service-title"
+          className={`${styles.hero} relative overflow-hidden rounded-[4px] border border-white/10 bg-[#161819] text-white`}
+        >
+          <div className="grid items-center gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:px-14 lg:py-16">
+            <div className={`${styles.reveal} relative z-10`}>
+              <p className="mb-6 flex items-center gap-3 font-inter text-xs font-medium tracking-wide text-[#98ff03]">
+                <Icon aria-hidden="true" className="size-4" />
+                {content.name}
+                <span className="ml-auto hidden font-mono text-[10px] text-zinc-500 sm:block">
+                  SERVICE / {pillar.index}
                 </span>
-              </div>
-
-              {/* Headline */}
-              <h1 className="font-space font-medium text-3xl sm:text-5xl md:text-[56px] lg:text-[62px] leading-[1.08] text-[#292c2e] dark:text-white tracking-tight">
-                {pillar.title}
-              </h1>
-
-              {/* Subtitle */}
-              <p className="font-inter text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-3xl">
-                {pillar.subtitle}
               </p>
-
-              {/* Hero Action CTA Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-4">
+              <h1
+                id="service-title"
+                className="whitespace-pre-line text-balance font-urbanist text-[clamp(2.5rem,4.7vw,4.75rem)] font-semibold leading-[1.06] tracking-[-0.04em]"
+              >
+                {content.headline}
+              </h1>
+              <p className="mt-6 max-w-xl font-inter text-base leading-[1.8] text-zinc-300 sm:text-lg">
+                {content.intro}
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
-                  target="_blank"
-                  href="https://calendly.com/Matiidigitals/30min"
-                  className="font-inter text-sm md:text-[15px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-[#98ff03] dark:text-[#161819] dark:hover:bg-[#86e200] px-6 py-3 rounded-[4px] inline-flex items-center gap-2.5 shadow-sm transition-all group"
+                  href="/contact"
+                  className={`${styles.primaryAction} inline-flex min-h-12 items-center justify-between gap-6 rounded-lg bg-[#98ff03] px-5 py-3.5 font-inter text-sm font-semibold text-[#161819]`}
                 >
-                  <span>Book Architecture Review</span>
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  <span>Let’s talk about your project</span>
+                  <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
                 </Link>
-
                 <a
-                  href="#specifications"
-                  className="font-inter text-sm md:text-[15px] font-medium text-[#292c2e] dark:text-zinc-300 hover:text-black dark:hover:text-white px-5 py-3 rounded-[4px] border border-zinc-300 dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 transition-all inline-flex items-center gap-2"
+                  href="#capabilities"
+                  className={`${styles.secondaryAction} inline-flex min-h-12 items-center justify-center gap-3 rounded-lg border border-white/20 px-5 py-3.5 font-inter text-sm text-white`}
                 >
-                  <span>Explore Technical Specs</span>
-                  <ChevronDown className="size-4" />
+                  Explore the service
+                  <ArrowDown aria-hidden="true" className="size-4" />
                 </a>
               </div>
+              <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-5 font-inter text-xs text-zinc-400">
+                <span className="flex items-center gap-2">
+                  <Check
+                    aria-hidden="true"
+                    className="size-3.5 text-[#98ff03]"
+                  />
+                  Built around your needs
+                </span>
+                <span className="flex items-center gap-2">
+                  <Check
+                    aria-hidden="true"
+                    className="size-3.5 text-[#98ff03]"
+                  />
+                  Clear delivery and ownership
+                </span>
+              </div>
             </div>
-
-            {/* Quick Metadata Card */}
-            <div className="lg:col-span-4 bg-zinc-50 dark:bg-[#0f1113] border border-zinc-200 dark:border-white/10 p-6 rounded-[4px] space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-white/10">
-                <span className="font-space text-xs uppercase tracking-wider text-zinc-500">
-                  System Identifier
-                </span>
-                <span className="font-space text-xs font-semibold text-[#292c2e] dark:text-[#98ff03]">
-                  {pillar.systemCode}
-                </span>
-              </div>
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-white/10">
-                <span className="font-space text-xs uppercase tracking-wider text-zinc-500">
-                  Engagement Model
-                </span>
-                <span className="font-inter text-xs font-medium text-zinc-800 dark:text-zinc-200">
-                  Dedicated Pod / Turnkey SLA
+            <div
+              className={`${styles.diagram} relative min-w-0 rounded-xl border border-white/10 bg-[#0d0f10] p-4 sm:p-6`}
+            >
+              <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4 font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+                <span>Connected by design</span>
+                <span className="flex items-center gap-2 text-[#98ff03]">
+                  <span className="size-1.5 rounded-full bg-[#98ff03]" />
+                  {pillar.shortTitle}
                 </span>
               </div>
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-white/10">
-                <span className="font-space text-xs uppercase tracking-wider text-zinc-500">
-                  Audit Readiness
-                </span>
-                <span className="font-inter text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                  <CheckCircle2 className="size-3.5" />
-                  SOC2 · ISO 27001
-                </span>
+              <div className="mx-auto w-full max-w-[460px] py-6">
+                <Figure />
               </div>
-              <div className="flex items-center justify-between">
-                <span className="font-space text-xs uppercase tracking-wider text-zinc-500">
-                  Deployment Speed
-                </span>
-                <span className="font-inter text-xs font-medium text-zinc-800 dark:text-zinc-200">
-                  2 – 4 Weeks to Staging
-                </span>
-              </div>
+              <ol
+                aria-label="Service workflow"
+                className="grid grid-cols-3 gap-2 border-t border-white/10 pt-4"
+              >
+                {content.workflow.map((step, index) => (
+                  <li key={step} className="min-w-0">
+                    <span className="mb-2 block font-mono text-[10px] text-[#98ff03]">
+                      0{index + 1}
+                    </span>
+                    <span className="font-inter text-[11px] leading-relaxed text-zinc-300 sm:text-xs">
+                      {step}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 font-inter text-[10px] text-zinc-500">
+                Illustrative service architecture
+              </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* =================================================================== */}
-        {/* 3. INTERACTIVE 3D SCHEMATIC / FIGURE STAGE */}
-        {/* =================================================================== */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="inline-flex items-center gap-2">
-              <div className="size-2 bg-[#98ff03]" />
-              <span className="font-space text-xs md:text-sm font-semibold uppercase tracking-wider text-[#292c2e] dark:text-white">
-                Live Architecture Stage · Interactive Telemetry
+        <nav
+          aria-label="On this page"
+          className={`${styles.sectionNav} my-6 flex items-center gap-1 overflow-x-auto border-b border-border pb-3 sm:my-8 sm:gap-3`}
+        >
+          {SECTIONS.map((section, index) => (
+            <a
+              key={section}
+              href={`#${section.toLowerCase()}`}
+              className="inline-flex shrink-0 items-center gap-2 rounded-md px-3 py-3 font-inter text-xs font-medium text-foreground sm:px-4 sm:text-sm"
+            >
+              <span className="font-mono text-[10px] text-muted-foreground">
+                0{index + 1}
               </span>
-            </div>
-            <span className="hidden sm:inline font-space text-xs text-zinc-500 uppercase tracking-wider">
-              Move cursor over schematic to inspect node telemetry
-            </span>
-          </div>
+              {section}
+            </a>
+          ))}
+          <span className="ml-auto hidden pr-2 font-inter text-xs text-muted-foreground lg:block">
+            From possibility to a practical plan.
+          </span>
+        </nav>
 
-          <div className="relative border border-[rgba(174,174,174,0.35)] dark:border-white/10 bg-white dark:bg-[#0c0d0f] rounded-[4px] p-4 sm:p-8 md:p-12 overflow-hidden shadow-sm">
-            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px]" />
-            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px]" />
-            <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px]" />
-
-            <div className="max-w-[840px] mx-auto flex items-center justify-center">
-              {FIGURE_COMPONENTS[pillar.figureName]}
-            </div>
-          </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 4. KEY TECHNICAL SPECIFICATIONS & BENCHMARKS (4 CARDS) */}
-        {/* =================================================================== */}
-        <div id="specifications" className="space-y-6 scroll-mt-24">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <section
+          id="overview"
+          aria-labelledby="overview-title"
+          className="scroll-mt-8 py-10 sm:py-14 lg:py-16"
+        >
+          <div className="grid gap-7 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
             <div>
-              <div className="inline-flex items-center gap-2 mb-2">
-                <div className="size-2 bg-[#98ff03]" />
-                <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                  BENCHMARK PROTOCOLS
+              <SectionLabel>The opportunity</SectionLabel>
+              <h2 id="overview-title" className={styles.sectionTitle}>
+                Built for your business.
+                <br />
+                <span className="text-muted-foreground">
+                  Designed to move it forward.
                 </span>
-              </div>
-              <h2 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl text-[#292c2e] dark:text-white tracking-tight">
-                Engineering Specifications & SLA Thresholds
               </h2>
             </div>
-            <span className="font-inter text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
-              Audited in production environments
-            </span>
+            <p className="max-w-2xl font-inter text-base leading-[1.9] text-muted-foreground sm:text-lg">
+              {content.overview}
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {pillar.specs.map((spec, idx) => (
-              <div
-                key={idx}
-                className="relative bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.3)] dark:border-white/10 p-6 rounded-[4px] hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-all group"
-              >
-                <div className="font-space text-xs uppercase tracking-wider text-zinc-500 mb-2 flex items-center justify-between">
-                  <span>{spec.label}</span>
-                  <span className="size-1.5 rounded-full bg-[#98ff03] opacity-60 group-hover:opacity-100" />
-                </div>
-                <div className="font-space font-bold text-2xl sm:text-3xl text-[#292c2e] dark:text-white tracking-tight mb-2 group-hover:text-black dark:group-hover:text-[#98ff03] transition-colors">
-                  {spec.value}
-                </div>
-                {spec.description && (
-                  <p className="font-inter text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                    {spec.description}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 5. CORE CAPABILITIES MATRIX (6 CARDS) */}
-        {/* =================================================================== */}
-        <div className="space-y-6">
-          <div>
-            <div className="inline-flex items-center gap-2 mb-2">
-              <div className="size-2 bg-[#98ff03]" />
-              <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                CORE CAPABILITIES
-              </span>
-            </div>
-            <h2 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl text-[#292c2e] dark:text-white tracking-tight">
-              What We Engineer & Deliver
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pillar.capabilities.map((cap, idx) => (
-              <div
-                key={idx}
-                className="relative bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.3)] dark:border-white/10 p-6 md:p-7 rounded-[4px] flex flex-col justify-between hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-all group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-space text-xs font-semibold text-zinc-400 dark:text-zinc-500">
-                      {(idx + 1).toString().padStart(2, "0")}
-                    </span>
-                    {cap.metrics && (
-                      <span className="font-space text-[11px] font-semibold uppercase px-2 py-0.5 rounded-[2px] bg-zinc-100 dark:bg-white/10 text-[#292c2e] dark:text-[#98ff03]">
-                        {cap.metrics}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="font-space font-semibold text-lg md:text-xl text-[#292c2e] dark:text-white mb-3 group-hover:text-black dark:group-hover:text-[#98ff03] transition-colors">
-                    {cap.title}
-                  </h3>
-                  <p className="font-inter text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
-                    {cap.description}
-                  </p>
-                </div>
-
-                {cap.tags && cap.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-zinc-100 dark:border-white/5">
-                    {cap.tags.map((t, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="text-[11px] font-inter px-2 py-0.5 bg-zinc-50 dark:bg-white/5 text-zinc-600 dark:text-zinc-400 rounded-[2px]"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 6. ARCHITECTURAL BLUEPRINT & PROCESSING FLOW (3 PIPELINE STEPS) */}
-        {/* =================================================================== */}
-        <div className="space-y-6">
-          <div>
-            <div className="inline-flex items-center gap-2 mb-2">
-              <div className="size-2 bg-[#98ff03]" />
-              <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                SYSTEM BLUEPRINT
-              </span>
-            </div>
-            <h2 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl text-[#292c2e] dark:text-white tracking-tight">
-              Production Execution Pipeline
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            {pillar.architectureSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className="relative bg-zinc-50/70 dark:bg-[#121416] border border-zinc-200 dark:border-white/10 p-6 md:p-8 rounded-[4px] space-y-4"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-space font-bold text-2xl md:text-3xl text-zinc-300 dark:text-zinc-700">
-                    {step.step}
-                  </span>
-                  <span className="text-[11px] font-space uppercase tracking-wider px-2 py-1 bg-zinc-200/60 dark:bg-white/10 text-zinc-800 dark:text-zinc-200 rounded-[2px]">
-                    {step.techBadge}
-                  </span>
-                </div>
-                <h3 className="font-space font-semibold text-lg text-[#292c2e] dark:text-white">
-                  {step.title}
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+            {content.outcomes.map((outcome, index) => (
+              <div key={outcome.title} className="border-t border-border pt-5">
+                <span className="font-mono text-xs text-muted-foreground">
+                  0{index + 1} /
+                </span>
+                <h3 className="mb-2 mt-4 font-urbanist text-xl font-semibold tracking-tight text-foreground">
+                  {outcome.title}
                 </h3>
-                <p className="font-inter text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {step.description}
+                <p className="max-w-xs font-inter text-sm leading-relaxed text-muted-foreground">
+                  {outcome.description}
                 </p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* =================================================================== */}
-        {/* 7. REAL-WORLD CASE STUDY IMPACT TEASER */}
-        {/* =================================================================== */}
-        <div className="relative bg-gradient-to-br from-zinc-900 to-[#161819] text-white p-8 sm:p-12 md:p-16 rounded-[4px] border border-zinc-800 overflow-hidden">
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#98ff03] text-black text-xs font-space uppercase font-bold tracking-wider rounded-[2px]">
-                Proven Client Impact
-              </div>
-              <h3 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl leading-tight text-white">
-                {pillar.caseStudy.headline}
-              </h3>
-              {pillar.caseStudy.quote && (
-                <p className="font-inter italic text-zinc-300 text-sm sm:text-base border-l-2 border-[#98ff03] pl-4 py-1">
-                  &ldquo;{pillar.caseStudy.quote}&rdquo;
-                </p>
-              )}
-              <div className="text-xs font-space text-zinc-400">
-                Client: {pillar.caseStudy.client} · {pillar.caseStudy.industry}
+        <section
+          id="capabilities"
+          aria-labelledby="capabilities-title"
+          className="scroll-mt-8 py-10 sm:py-14 lg:py-16"
+        >
+          <div className="mb-8 flex flex-col justify-between gap-4 sm:mb-10 lg:flex-row lg:items-end">
+            <div>
+              <SectionLabel>What we can help you build</SectionLabel>
+              <h2 id="capabilities-title" className={styles.sectionTitle}>
+                The right expertise.
+                <br />
+                Where you need it.
+              </h2>
+            </div>
+            <p className="max-w-sm font-inter text-sm leading-relaxed text-muted-foreground">
+              A focused engagement or a connected solution. We shape the scope
+              around your priorities.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {content.capabilities.map((capability, index) => {
+              const CapabilityIcon = CAPABILITY_ICONS[index];
+              return (
+                <article
+                  key={capability.title}
+                  className={`${styles.capability} rounded-lg border border-border bg-card p-6 sm:p-8`}
+                >
+                  <div className="mb-7 flex items-center justify-between">
+                    <span className="inline-flex size-11 items-center justify-center rounded-lg bg-background text-foreground">
+                      <CapabilityIcon aria-hidden="true" className="size-5" />
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="mb-3 font-urbanist text-xl font-semibold leading-tight tracking-tight text-card-foreground">
+                    {capability.title}
+                  </h3>
+                  <p className="font-inter text-sm leading-[1.8] text-muted-foreground">
+                    {capability.description}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section
+          id="approach"
+          aria-labelledby="approach-title"
+          className="scroll-mt-8 py-10 sm:py-14 lg:py-16"
+        >
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+            <div>
+              <SectionLabel>How we work</SectionLabel>
+              <h2 id="approach-title" className={styles.sectionTitle}>
+                A clear process.
+                <br />A shared direction.
+              </h2>
+              <p className="mt-5 max-w-md font-inter text-sm leading-[1.8] text-muted-foreground">
+                We make room for the right questions, involve your team at each
+                stage, and keep the next step clear.
+              </p>
+              <div className="mt-8 rounded-lg border border-border bg-card p-6 sm:p-7">
+                <h3 className="mb-5 font-urbanist text-lg font-semibold text-foreground">
+                  What you take forward
+                </h3>
+                <ul className="space-y-4">
+                  {content.deliverables.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 font-inter text-sm leading-relaxed text-muted-foreground"
+                    >
+                      <Check
+                        aria-hidden="true"
+                        className="mt-0.5 size-4 shrink-0 text-foreground"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
+            <ol className="divide-y divide-border border-y border-border">
+              {content.phases.map((phase, index) => (
+                <li
+                  key={PHASES[index]}
+                  className="flex gap-5 py-7 sm:gap-7 sm:py-8"
+                >
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-card font-mono text-sm text-foreground">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <h3 className="mb-2 font-urbanist text-2xl font-semibold tracking-tight text-foreground">
+                      {PHASES[index]}
+                    </h3>
+                    <p className="max-w-xl font-inter text-sm leading-[1.8] text-muted-foreground">
+                      {phase}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-            <div className="lg:col-span-5 space-y-3 bg-white/5 border border-white/10 p-6 rounded-[4px]">
-              <div className="font-space text-xs font-semibold uppercase tracking-wider text-[#98ff03] mb-2">
-                Audited Results
-              </div>
-              {pillar.caseStudy.impactMetrics.map((m, mIdx) => (
-                <div key={mIdx} className="flex items-start gap-3">
-                  <CheckCircle2 className="size-4 text-[#98ff03] shrink-0 mt-0.5" />
-                  <span className="font-inter text-sm text-zinc-200">{m}</span>
-                </div>
+        <section
+          aria-labelledby="toolchain-title"
+          className="my-8 rounded-lg border border-border bg-card px-6 py-8 sm:px-8"
+        >
+          <div className="grid gap-6 lg:grid-cols-[0.65fr_1.35fr] lg:items-center">
+            <div>
+              <SectionLabel>Tools that fit the task</SectionLabel>
+              <h2
+                id="toolchain-title"
+                className="font-urbanist text-2xl font-semibold tracking-tight text-foreground"
+              >
+                Your needs lead.
+                <br />
+                The technology follows.
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {pillar.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-md border border-border bg-background px-3 py-2 font-inter text-xs text-foreground"
+                >
+                  {tech}
+                </span>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* =================================================================== */}
-        {/* 8. PRODUCTION TECH STACK */}
-        {/* =================================================================== */}
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2">
-            <div className="size-2 bg-[#98ff03]" />
-            <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-              ENGINEERING TOOLCHAIN
-            </span>
-          </div>
-          <h2 className="font-space font-medium text-2xl sm:text-3xl text-[#292c2e] dark:text-white tracking-tight">
-            Production Technologies & Frameworks
-          </h2>
-
-          <div className="flex flex-wrap gap-2.5 pt-2">
-            {pillar.techStack.map((tech, idx) => (
-              <span
-                key={idx}
-                className="font-space text-xs sm:text-sm font-medium px-3.5 py-1.5 rounded-[3px] bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.35)] dark:border-white/10 text-[#292c2e] dark:text-zinc-200 hover:border-[#98ff03] transition-colors"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 9. DELIVERY LIFECYCLE (4 PHASES) */}
-        {/* =================================================================== */}
-        <div className="space-y-6">
+        <section
+          id="faqs"
+          aria-labelledby="faq-title"
+          className="grid scroll-mt-8 gap-8 py-10 sm:py-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:py-16"
+        >
           <div>
-            <div className="inline-flex items-center gap-2 mb-2">
-              <div className="size-2 bg-[#98ff03]" />
-              <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                HOW WE DELIVER
-              </span>
-            </div>
-            <h2 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl text-[#292c2e] dark:text-white tracking-tight">
-              4-Stage Enterprise Delivery Protocol
+            <SectionLabel>A few things you might ask</SectionLabel>
+            <h2 id="faq-title" className={styles.sectionTitle}>
+              Before we begin.
             </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {pillar.lifecycle.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.3)] dark:border-white/10 p-6 rounded-[4px] relative"
+            <p className="mt-5 max-w-sm font-inter text-sm leading-relaxed text-muted-foreground">
+              Have a more specific question?
+              <br />
+              <Link
+                href="/contact"
+                className={`${styles.textLink} mt-3 inline-flex items-center gap-2 font-medium text-foreground`}
               >
-                <div className="font-space font-bold text-2xl text-[#98ff03] mb-2">
-                  {item.step}
-                </div>
-                <h3 className="font-space font-semibold text-base text-[#292c2e] dark:text-white mb-2">
-                  {item.title}
-                </h3>
-                <p className="font-inter text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                  {item.desc}
+                Talk to our team
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            </p>
+          </div>
+          <div className="divide-y divide-border border-y border-border">
+            {content.faqs.map((faq) => (
+              <details key={faq.question} className={styles.faq}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-6 font-urbanist text-lg font-semibold leading-relaxed text-foreground">
+                  <span>{faq.question}</span>
+                  <Plus aria-hidden="true" className="size-5 shrink-0" />
+                </summary>
+                <p className="pb-6 pr-5 font-inter text-sm leading-[1.8] text-muted-foreground">
+                  {faq.answer}
                 </p>
-              </div>
+              </details>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* =================================================================== */}
-        {/* 10. TECHNICAL FAQ ACCORDION */}
-        {/* =================================================================== */}
-        {pillar.faqs && pillar.faqs.length > 0 && (
-          <div className="space-y-6">
+        <section
+          aria-labelledby="related-title"
+          className="border-t border-border py-10 sm:py-14"
+        >
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 mb-2">
-                <div className="size-2 bg-[#98ff03]" />
-                <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                  FREQUENTLY ASKED QUESTIONS
-                </span>
-              </div>
-              <h2 className="font-space font-medium text-2xl sm:text-3xl md:text-4xl text-[#292c2e] dark:text-white tracking-tight">
-                Technical & Engagement Questions
-              </h2>
-            </div>
-
-            <div className="space-y-3">
-              {pillar.faqs.map((faq, idx) => {
-                const isOpen = openFaq === idx;
-                return (
-                  <div
-                    key={idx}
-                    className="border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#161819] rounded-[4px] overflow-hidden transition-colors"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFaq(isOpen ? null : idx)}
-                      className="w-full text-left p-5 md:p-6 flex items-center justify-between gap-4 font-space font-medium text-base sm:text-lg text-[#292c2e] dark:text-white cursor-pointer"
-                    >
-                      <span>{faq.question}</span>
-                      <ChevronDown
-                        className={`size-5 text-[#98ff03] transition-transform duration-200 shrink-0 ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <div className="px-5 pb-6 md:px-6 font-inter text-sm md:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-white/5 pt-4">
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* =================================================================== */}
-        {/* 11. CROSS-PILLAR NAVIGATION ("EXPLORE OTHER PILLARS") */}
-        {/* =================================================================== */}
-        <div className="space-y-6 pt-6 border-t border-[rgba(174,174,174,0.3)] dark:border-white/10">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="inline-flex items-center gap-2 mb-1">
-                <div className="size-2 bg-[#98ff03]" />
-                <span className="font-space text-xs uppercase tracking-widest text-[#292c2e] dark:text-[#98ff03] font-semibold">
-                  DISCOVER MORE PILLARS
-                </span>
-              </div>
-              <h2 className="font-space font-medium text-2xl sm:text-3xl text-[#292c2e] dark:text-white tracking-tight">
-                Explore The Complete Matii Platform
+              <SectionLabel>Better together</SectionLabel>
+              <h2
+                id="related-title"
+                className="font-urbanist text-3xl font-semibold tracking-tight text-foreground"
+              >
+                Explore our other services.
               </h2>
             </div>
             <Link
               href="/services"
-              className="hidden sm:inline-flex items-center gap-1.5 font-space text-xs uppercase tracking-wider text-[#292c2e] dark:text-white hover:text-[#98ff03] dark:hover:text-[#98ff03] transition-colors"
+              className={`${styles.textLink} inline-flex items-center gap-2 font-inter text-sm text-foreground`}
             >
-              <span>View Overview</span>
-              <ArrowRight className="size-3.5" />
+              All services
+              <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {otherPillars.map((other) => (
-              <Link
-                key={other.id}
-                href={`/services/${other.slug}`}
-                className="group relative bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.3)] dark:border-white/10 p-6 rounded-[4px] hover:border-[#98ff03] dark:hover:border-[#98ff03] transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-space text-xs font-semibold text-zinc-400">
-                      PILLAR {other.index}
+          <div className="grid gap-4 md:grid-cols-3">
+            {PILLARS_LIST.filter((other) => other.id !== pillar.id).map(
+              (other) => {
+                const OtherIcon = ICONS[other.id];
+                return (
+                  <Link
+                    key={other.id}
+                    href={`/services/${other.slug}`}
+                    className={`${styles.related} group flex items-center gap-4 rounded-lg border border-border bg-card p-5 sm:p-6`}
+                  >
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-background text-foreground">
+                      <OtherIcon aria-hidden="true" className="size-5" />
                     </span>
-                    <div className="p-1.5 rounded-[2px] bg-zinc-100 dark:bg-white/10">
-                      {PILLAR_ICONS[other.id]}
-                    </div>
-                  </div>
-                  <h3 className="font-space font-semibold text-lg text-[#292c2e] dark:text-white group-hover:text-[#98ff03] transition-colors mb-2">
-                    {other.title}
-                  </h3>
-                  <p className="font-inter text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-                    {other.subtitle}
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between font-space text-xs uppercase font-semibold text-[#292c2e] dark:text-zinc-300 group-hover:text-black dark:group-hover:text-[#98ff03]">
-                  <span>Explore Pillar →</span>
-                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
+                    <span className="font-urbanist text-lg font-semibold text-foreground">
+                      {SERVICE_DETAIL_CONTENT[other.id].name}
+                    </span>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="ml-auto size-4 shrink-0 text-foreground"
+                    />
+                  </Link>
+                );
+              },
+            )}
           </div>
-        </div>
-
-        {/* =================================================================== */}
-        {/* 12. BOTTOM FRAMED CTA BANNER */}
-        {/* =================================================================== */}
-        <div className="relative bg-white dark:bg-[#161819] border border-[rgba(174,174,174,0.35)] dark:border-white/10 p-8 sm:p-12 md:p-16 text-center space-y-6">
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -left-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -top-[3px] -right-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -left-[3px]" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-[6px] -bottom-[3px] -right-[3px]" />
-
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#292c2e] dark:bg-white/10 rounded-[2px] text-white text-xs font-space uppercase">
-            <span className="size-2 rounded-full bg-[#98ff03]" />
-            Enterprise Engagement Ready
-          </div>
-
-          <h2 className="font-space font-medium text-3xl sm:text-4xl md:text-5xl text-[#292c2e] dark:text-white max-w-2xl mx-auto leading-tight">
-            Ready to Deploy {pillar.shortTitle} for Your Organization?
-          </h2>
-
-          <p className="font-inter text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
-            Connect directly with our principal architects. We review your requirements, benchmark performance targets, and provide a comprehensive architecture blueprint.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              target="_blank"
-              href="https://calendly.com/Matiidigitals/30min"
-              className="font-inter text-sm md:text-base font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-[#98ff03] dark:text-[#161819] dark:hover:bg-[#86e200] px-7 py-3.5 rounded-[4px] inline-flex items-center gap-2.5 shadow-sm transition-all group"
-            >
-              <span>Schedule Architecture Call</span>
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/contact"
-              className="font-inter text-sm md:text-base font-medium text-[#292c2e] dark:text-zinc-200 hover:text-black dark:hover:text-white px-7 py-3.5 rounded-[4px] border border-zinc-300 dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/20 transition-all inline-flex items-center gap-2"
-            >
-              <span>Send Inquiries</span>
-            </Link>
-          </div>
-        </div>
+        </section>
       </div>
     </div>
   );
