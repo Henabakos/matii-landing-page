@@ -1,0 +1,29 @@
+.viewport:hover .track,
+.viewport:focus-within .track {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none !important;
+    width: 100% !important;
+    will-change: auto;
+  }
+
+  .duplicate,
+  .mask {
+    display: none;
+  }
+
+  .logoSet {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-right: 0;
+  }
+
+  .track > div {
+    width: 100%;
+  }
+}

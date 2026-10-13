@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import svgPaths from "@/lib/svgPaths";
 import type { PartnerItem } from "@/lib/services/partner.service";
+import styles from "./PartnerLogos.module.css";
 
 interface PartnerLogosProps {
   partners?: PartnerItem[];
@@ -130,7 +131,7 @@ function DefaultLogos() {
 function LogoSet({ partners }: { partners?: PartnerItem[] }) {
   if (partners && partners.length > 0) {
     return (
-      <div className="flex shrink-0 items-center gap-12 sm:gap-16 md:gap-20 pr-12 sm:pr-16 md:pr-20">
+      <div className={`${styles.logoSet} flex shrink-0 items-center gap-8 sm:gap-12 md:gap-16 pr-8 sm:pr-12 md:pr-16`}>
         {partners.map((partner, idx) => {
           if (!partner.logoUrl) return null;
 
@@ -177,7 +178,7 @@ function LogoSet({ partners }: { partners?: PartnerItem[] }) {
   }
 
   return (
-    <div className="flex shrink-0 items-center gap-12 sm:gap-16 md:gap-20 pr-12 sm:pr-16 md:pr-20 dark:brightness-200 dark:contrast-125">
+    <div className={`${styles.logoSet} flex shrink-0 items-center gap-8 sm:gap-12 md:gap-16 pr-8 sm:pr-12 md:pr-16 dark:brightness-200 dark:contrast-125`}>
       <DefaultLogos />
     </div>
   );
@@ -185,24 +186,25 @@ function LogoSet({ partners }: { partners?: PartnerItem[] }) {
 
 export function PartnerLogos({ partners }: PartnerLogosProps) {
   return (
-    <div className="relative w-full overflow-hidden py-4">
+    <div className={`${styles.viewport} relative w-full overflow-hidden py-4`}>
       {/* Edge gradient masks for smooth fade on margins */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-36 md:w-48 bg-gradient-to-r from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#0d0f10] dark:via-[#0d0f10]/95 dark:to-transparent z-20 transition-colors" />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-36 md:w-48 bg-gradient-to-l from-[#f3f4f6] via-[#f3f4f6]/95 to-transparent dark:from-[#0d0f10] dark:via-[#0d0f10]/95 dark:to-transparent z-20 transition-colors" />
+      <div aria-hidden="true" className={`${styles.mask} pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-12 md:w-20 bg-gradient-to-r from-background to-transparent z-20`} />
+      <div aria-hidden="true" className={`${styles.mask} pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-12 md:w-20 bg-gradient-to-l from-background to-transparent z-20`} />
 
       {/* Infinite scrolling track */}
       <div
-        className="animate-marquee flex w-max cursor-grab active:cursor-grabbing"
-        style={{ animation: "marqueeScroll 25s linear infinite" }}
+        className={`${styles.track} animate-marquee flex w-max`}
       >
         {/* First Half (Track A) */}
         <div className="flex shrink-0 items-center">
           <LogoSet partners={partners} />
-          <LogoSet partners={partners} />
+          <div className={styles.duplicate} aria-hidden="true" inert>
+            <LogoSet partners={partners} />
+          </div>
         </div>
 
         {/* Second Half (Track B: exact clone for infinite 0% to -50% loop) */}
-        <div className="flex shrink-0 items-center" aria-hidden="true">
+        <div className={`${styles.duplicate} flex shrink-0 items-center`} aria-hidden="true" inert>
           <LogoSet partners={partners} />
           <LogoSet partners={partners} />
         </div>

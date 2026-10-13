@@ -4,7 +4,6 @@ import AboutUs from "@/components/common/AboutUs";
 import SolutionsWeBuilt from "@/components/sections/SolutionsWeBuilt";
 import Services from "@/components/sections/Services";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import ToolsWeUse from "@/components/sections/ToolsWeUse";
 import Faq from "@/components/sections/Faq";
 import Testimonials from "@/components/sections/Testimonials";
 import { getActivePartners } from "@/lib/services/partner.service";
@@ -56,9 +55,9 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={orgSchema} />
-      <main className="w-full px-4 md:px-8 space-y-16">
+      <div className="w-full px-4 md:px-8 space-y-12 sm:space-y-16 lg:space-y-20">
         <Hero partners={partners} />
-        <div className="max-w-345 mx-auto space-y-16">
+        <div className="max-w-345 mx-auto space-y-12 sm:space-y-16 lg:space-y-20">
           <OfficeShowcase />
           <AboutUs kpis={kpis} />
           <SolutionsWeBuilt projects={solutionsProjects} />
@@ -68,7 +67,7 @@ export default async function HomePage() {
           <Faq />
           <Testimonials testimonials={testimonials} />
         </div>
-      </main>
+      </div>
     </>
   );
 }
