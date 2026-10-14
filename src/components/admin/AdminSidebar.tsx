@@ -51,6 +51,11 @@ const navItems = [
     group: "CONTENT STUDIO",
     items: [
       {
+        name: "Service Pillars",
+        href: "/admin/pillars",
+        icon: Layers,
+      },
+      {
         name: "Projects & Case Studies",
         href: "/admin/projects",
         icon: Briefcase,

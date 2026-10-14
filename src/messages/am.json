@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "Matii Digitals",
+    "brandName": "MATII TECHNOLOGIES",
     "startProject": "ፕሮጀክት ጀምር",
     "exploreServices": "አገልግሎቶችን ይመልከቱ",
     "contactUs": "ያግኙን",
@@ -128,6 +128,11 @@
     "submitMessage": "መልዕክት ይላኩ",
     "submitting": "በመላክ ላይ...",
     "successMessage": "ለቀረበው ጥያቄዎ እናመሰግናለን። የፕሮጀክት ጥያቄዎ ተቀብለናል፣ እና የኢንጂነሪንግ ቡድናችን አባል በቅርቡ ያነጋግርዎታል።",
+    "mapChooseCity": "ከተማ ይምረጡ",
+    "mapTitle": "የ{city} ካርታ",
+    "mapCityOnly": "የከተማ እይታ፦ {city}። ትክክለኛው የቢሮ አድራሻ ገና አልተዘረዘረም።",
+    "mapDirections": "አቅጣጫ ያግኙ",
+    "mapOpen": "ትልቅ ካርታ ይክፈቱ",
     "locationsTitle": "የእኛ ዓለም አቀፍ ስርጭት",
     "locationsSubtitle": "የኢንጂነሪንግ ማዕከላት እና የደንበኛ አጋርነቶች",
     "locationUsa": "ዩናይትድ ስቴትስ",
@@ -191,5 +196,47 @@
     "subscribe": "ይመዝገቡ",
     "privacyPolicy": "የግላዊነት ፖሊሲ",
     "termsOfService": "የአገልግሎት ውሎች"
+  },
+  "emptyContent": {
+    "contact": "ያግኙን",
+    "projects": {
+      "title": "እስካሁን የታተሙ ፕሮጀክቶች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "testimonials": {
+      "title": "እስካሁን የታተሙ የደንበኞች አስተያየቶች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "partners": {
+      "title": "እስካሁን የተዘረዘሩ አጋሮች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "metrics": {
+      "title": "እስካሁን የታተሙ ውጤቶች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "services": {
+      "title": "እስካሁን የታተሙ አገልግሎቶች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "blog": {
+      "title": "እስካሁን የታተሙ ጽሑፎች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "careers": {
+      "title": "በዚህ ዝርዝር ውስጥ ክፍት የሥራ ቦታዎች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "gallery": {
+      "title": "እስካሁን የታተሙ ምስሎች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "news": {
+      "title": "እስካሁን የታተሙ ዜናዎች የሉም",
+      "description": "የታተሙ ይዘቶች ሲገኙ እዚህ ይታያሉ። ጥያቄ ካለዎት ያግኙን።"
+    },
+    "errorTitle": "ይዘቱን መጫን አልተቻለም",
+    "errorDescription": "ይዘቱ ለጊዜው አይገኝም። እባክዎ እንደገና ይሞክሩ።",
+    "retry": "እንደገና ሞክር"
   }
 }

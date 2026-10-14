@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-import { unstable_cache } from "next/cache";
+import { cachedCmsRead } from "./cms-fallback";
+import { fallbackRows } from "./cms-fallback-content";
 
 export interface FormattedNewsArticle {
   id: string;
@@ -14,6 +15,7 @@ export interface FormattedNewsArticle {
   readTime: string;
   date: string;
   publishedAt: Date;
+  updatedAt?: Date;
   isFeatured: boolean;
   isPublished: boolean;
   seoTitle: string | null;
@@ -48,7 +50,7 @@ function formatNews(item: any): FormattedNewsArticle {
   };
 }
 
-export const getAllNewsArticles = unstable_cache(
+export const getAllNewsArticles = cachedCmsRead(
   async (): Promise<FormattedNewsArticle[]> => {
     const raw = await db.newsArticle.findMany({
       where: { isPublished: true },
@@ -57,7 +59,8 @@ export const getAllNewsArticles = unstable_cache(
     return raw.map(formatNews);
   },
   ["news-all"],
-  { tags: ["news"], revalidate: 3600 }
+  { tags: ["news"], revalidate: 3600 },
+  () => fallbackRows("NewsArticle").sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime()).map(formatNews)
 );
 
 export async function getAdminAllNewsArticles(): Promise<FormattedNewsArticle[]> {
@@ -67,7 +70,7 @@ export async function getAdminAllNewsArticles(): Promise<FormattedNewsArticle[]>
   return raw.map(formatNews);
 }
 
-export const getFeaturedNews = unstable_cache(
+export const getFeaturedNews = cachedCmsRead(
   async (): Promise<FormattedNewsArticle | null> => {
     const raw = await db.newsArticle.findFirst({
       where: { isFeatured: true, isPublished: true },
@@ -83,10 +86,11 @@ export const getFeaturedNews = unstable_cache(
     return formatNews(raw);
   },
   ["news-featured"],
-  { tags: ["news"], revalidate: 3600 }
+  { tags: ["news"], revalidate: 3600 },
+  () => { const rows = fallbackRows("NewsArticle").sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime()); const row = rows.find(row => row.isFeatured) ?? rows[0]; return row ? formatNews(row) : null; }
 );
 
-export const getNewsArticleBySlug = unstable_cache(
+export const getNewsArticleBySlug = cachedCmsRead(
   async (slug: string): Promise<FormattedNewsArticle | null> => {
     const raw = await db.newsArticle.findUnique({
       where: { slug },
@@ -95,5 +99,6 @@ export const getNewsArticleBySlug = unstable_cache(
     return formatNews(raw);
   },
   ["news-by-slug"],
-  { tags: ["news"], revalidate: 3600 }
+  { tags: ["news"], revalidate: 3600 },
+  (slug) => { const row = fallbackRows("NewsArticle").find(row => row.slug === slug); return row ? formatNews(row) : null; }
 );

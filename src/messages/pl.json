@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "Matii Digitals",
+    "brandName": "MATII TECHNOLOGIES",
     "startProject": "Rozpocznij projekt",
     "exploreServices": "Odkryj usługi",
     "contactUs": "Skontaktuj się z nami",
@@ -43,7 +43,7 @@
     "tag": "KIM JESTEŚMY I CO ROBIMY",
     "aboutTag": "O nas",
     "heading": "Projektowanie systemów, napędzanie postępu.",
-    "desc": "Matii Technologies to firma technologiczna budująca platformy korporacyjne, infrastrukturę fintech i analizę danych dla wymagających organizacji.",
+    "desc": "MATII TECHNOLOGIES to firma technologiczna budująca platformy korporacyjne, infrastrukturę fintech i analizę danych dla wymagających organizacji.",
     "stat1Value": "50+",
     "stat1Desc": "Produkty cyfrowe zaprojektowane i wdrożone w wielu branżach.",
     "stat2Value": "10+",
@@ -63,8 +63,8 @@
     "productsShippedCount": "50+",
     "productsShippedLabel": "Wdrożonych produktów",
     "journeyTag": "// NASZA DROGA",
-    "journeyTitle": "Dlaczego stworzyliśmy Matii Technologies.",
-    "storyP1": "Matii Technologies to firma technologiczna inżynierii platform korporacyjnych, infrastruktury fintech, rozwiązań BPO i analityki danych dla organizacji o najwyższych wymaganiach.",
+    "journeyTitle": "Dlaczego stworzyliśmy MATII TECHNOLOGIES.",
+    "storyP1": "MATII TECHNOLOGIES to firma technologiczna inżynierii platform korporacyjnych, infrastruktury fintech, rozwiązań BPO i analityki danych dla organizacji o najwyższych wymaganiach.",
     "storyP2": "Założona w Etiopii i budowana według światowych standardów, dostarcza bezpieczne i skalowalne systemy dla przedsiębiorstw, instytucji rządowych i sektora finansowego.",
     "storyP3": "Nie tylko piszemy kod — budujemy infrastrukturę napędzającą postęp.",
     "missionTag": "01 // CEL",
@@ -127,6 +127,11 @@
     "attachFile": "Załącz brief / dokument (Opcjonalnie)",
     "submitMessage": "Wyślij wiadomość",
     "successMessage": "Dziękujemy za kontakt. Państwa zapytanie projektowe zostało przyjęte, a przedstawiciel naszego zespołu inżynierów skontaktuje się z Państwem w najbliższym czasie.",
+    "mapChooseCity": "Wybierz miasto",
+    "mapTitle": "Mapa: {city}",
+    "mapCityOnly": "Widok miasta: {city}. Dokładny adres biura nie został jeszcze podany.",
+    "mapDirections": "Wyznacz trasę",
+    "mapOpen": "Otwórz większą mapę",
     "locationsTitle": "Nasza globalna obecność",
     "locationsSubtitle": "CENTRA INŻYNIERYJNE I PARTNERSTWA Z KLIENTAMI",
     "locationUsa": "Stany Zjednoczone",
@@ -190,5 +195,47 @@
     "subscribe": "Subskrybuj",
     "privacyPolicy": "Polityka prywatności",
     "termsOfService": "Regulamin świadczenia usług"
+  },
+  "emptyContent": {
+    "contact": "Skontaktuj się z nami",
+    "projects": {
+      "title": "Nie opublikowano jeszcze projektów",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "testimonials": {
+      "title": "Nie opublikowano jeszcze opinii",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "partners": {
+      "title": "Nie dodano jeszcze partnerów",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "metrics": {
+      "title": "Nie opublikowano jeszcze wyników",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "services": {
+      "title": "Nie opublikowano jeszcze usług",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "blog": {
+      "title": "Nie opublikowano jeszcze artykułów",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "careers": {
+      "title": "Brak otwartych stanowisk w tym widoku",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "gallery": {
+      "title": "Nie opublikowano jeszcze zdjęć",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "news": {
+      "title": "Nie opublikowano jeszcze aktualności",
+      "description": "Opublikowane treści pojawią się tutaj, gdy będą dostępne. Jeśli masz pytania, skontaktuj się z nami."
+    },
+    "errorTitle": "Nie można wczytać treści",
+    "errorDescription": "Treści są chwilowo niedostępne. Spróbuj ponownie.",
+    "retry": "Spróbuj ponownie"
   }
 }

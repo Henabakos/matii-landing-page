@@ -35,9 +35,8 @@ export function OfficeShowcase({
           <div className="absolute inset-0 z-0">
             <Image
               src="/images/office.jpg"
-              alt="Matii Technologies studio in Addis Ababa"
+              alt="MATII TECHNOLOGIES studio in Addis Ababa"
               fill
-              priority
               sizes="(max-width: 1380px) 100vw, 1380px"
               className="object-cover object-center scale-[1.01] transition-transform duration-700 ease-out hover:scale-105"
             />

@@ -1,10 +1,12 @@
+import PageStructuredData from "@/components/common/PageStructuredData";
+import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
 import AboutPage from "@/components/pages/AboutPage";
 
-export const metadata = {
-  title: "About Us | Matii Digitals",
-  description: "Senior engineering and design studio building scalable software, AI solutions, and digital products for modern startups and enterprises.",
-};
 
-export default function Page() {
-  return <AboutPage />;
+export default async function Page({ params }: LocalePageProps) {
+  return <><PageStructuredData path="/about" locale={(await params).locale} /><AboutPage /></>;
+}
+
+export function generateMetadata(props: LocalePageProps) {
+  return staticPageMetadata("/about", props);
 }

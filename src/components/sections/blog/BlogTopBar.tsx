@@ -1,4 +1,4 @@
-import { Search, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 type BlogTopBarProps = {
   searchQuery: string
@@ -11,12 +11,13 @@ export function BlogTopBar({
   onSearchChange,
   onClearSearch,
 }: BlogTopBarProps) {
+  const t = useTranslations("nav");
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6">
       <div>
-        <h1 className="font-space font-bold text-2xl sm:text-3xl text-zinc-950 dark:text-white tracking-tight mt-0.5 transition-colors">
-          Blogs
-        </h1>
+        <h2 className="font-space font-bold text-2xl sm:text-3xl text-zinc-950 dark:text-white tracking-tight mt-0.5 transition-colors">
+          {t("blog")}
+        </h2>
       </div>
 
       {/* <div className="relative w-full sm:w-[340px]">

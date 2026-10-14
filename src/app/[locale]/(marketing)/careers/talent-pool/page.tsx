@@ -1,23 +1,18 @@
+import PageStructuredData from "@/components/common/PageStructuredData";
+import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
 import React from "react";
 import TalentPoolView from "@/components/sections/careers/TalentPoolView";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Priority Global Talent Pool | Matii Digitals",
-  description:
-    "Join our curated engineering and design network to receive first-look access to upcoming senior technical roles, high-impact contract pods, and advisory opportunities.",
-  openGraph: {
-    title: "Join The Global Talent Pool | Matii Digitals",
-    description:
-      "Skip the automated ATS queue. Connect directly with hiring partners for full-time, fractional, and advisory digital initiatives.",
-    type: "website",
-  },
-};
 
-export default function TalentPoolPage() {
-  return (
-    <main className="w-full">
+export default async function TalentPoolPage({ params }: LocalePageProps) {
+  return (<>
+    <PageStructuredData path="/careers/talent-pool" locale={(await params).locale} />
+    <div className="w-full">
       <TalentPoolView />
-    </main>
-  );
+    </div>
+  </>);
+}
+
+export function generateMetadata(props: LocalePageProps) {
+  return staticPageMetadata("/careers/talent-pool", props);
 }

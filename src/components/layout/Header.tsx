@@ -8,7 +8,7 @@ import svgPaths from "@/lib/svgPaths";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { LanguageSelector } from "@/components/common/LanguageSelector";
 import { MegaMenuDropdown } from "@/components/layout/MegaMenuDropdown";
-import { defaultNavMenus, MegaMenuConfig } from "@/data/navigation-data";
+import type { MegaMenuConfig } from "@/data/navigation-data";
 import Image from "next/image";
 
 function LineiconsGoogleMeet({ className }: { className?: string } = {}) {
@@ -50,7 +50,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
   const tCommon = useTranslations("common");
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState<MegaMenuConfig[]>(
-    initialMenus && initialMenus.length > 0 ? initialMenus : defaultNavMenus
+    initialMenus ?? []
   );
   const [activeMenuKey, setActiveMenuKey] = useState<string | null>(null);
   const [mobileExpandedSection, setMobileExpandedSection] = useState<string | null>(null);
@@ -63,7 +63,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
     fetch("/api/navigation")
       .then((res) => res.json())
       .then((res) => {
-        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        if (res.success && Array.isArray(res.data)) {
           setMenus(res.data);
         }
       })
@@ -148,7 +148,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
             >
               <Image
                 src="/header-logo-light.svg"
-                alt="Matii Technologies"
+                alt="MATII TECHNOLOGIES"
                 width={130}
                 height={30}
                 className="h-7 md:h-[30px] w-auto flex-shrink-0 dark:hidden"
@@ -156,7 +156,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
               />
               <Image
                 src="/icon-logo.svg"
-                alt="Matii Technologies"
+                alt="MATII TECHNOLOGIES"
                 width={130}
                 height={30}
                 className="h-7 md:h-[30px] w-auto flex-shrink-0 hidden dark:block"

@@ -130,7 +130,7 @@ export default async function AdminDashboardPage() {
               </span>
             </div>
             <h2 className="font-space font-medium text-2xl sm:text-3xl text-[#292c2e] dark:text-white tracking-tight">
-              Matii Digital Studio CMS
+              MATII TECHNOLOGIES Studio CMS
             </h2>
             <p className="font-inter text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1">
               Live content updates instantly purge Next.js cached tags and update

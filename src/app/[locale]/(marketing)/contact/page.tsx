@@ -1,21 +1,23 @@
+import PageStructuredData from "@/components/common/PageStructuredData";
+import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
 import React from "react";
 import ContactSectionWhite from "@/components/sections/ContactSectionWhite";
 import Faq from "@/components/sections/Faq";
 
-export const metadata = {
-  title: "Contact Us | Matii Digitals",
-  description:
-    "Get in touch with Matii Digitals. Let's discuss your next digital product, software engineering, or AI automation project.",
-};
 
-export default function ContactPage() {
-  return (
-    <main className="w-full min-h-screen">
+export default async function ContactPage({ params }: LocalePageProps) {
+  return (<>
+    <PageStructuredData path="/contact" locale={(await params).locale} />
+    <div className="w-full min-h-screen">
       {/* White Theme Contact Section */}
       <ContactSectionWhite />
 
       {/* FAQs Section */}
       <Faq />
-    </main>
-  );
+    </div>
+  </>);
+}
+
+export function generateMetadata(props: LocalePageProps) {
+  return staticPageMetadata("/contact", props);
 }

@@ -1,3 +1,6 @@
+import { cmsMetadata } from "@/lib/seo-cms";
+import { missingMetadata, localizedUrl, publishedLocales } from "@/lib/seo";
+import { siteConfig } from "@/lib/site-config";
 import React from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
@@ -16,51 +19,8 @@ type NewsDetailPageProps = {
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
   const { locale, slug } = await params;
   const news = await getNewsArticleBySlug(slug);
-
-  if (!news) {
-    return {
-      title: "Dispatch Not Found | Matii Digitals",
-      description: "The requested news dispatch could not be found.",
-    };
-  }
-
-  const localizedTitle = getLocalizedField(news, "title", locale);
-  const localizedExcerpt = getLocalizedField(news, "excerpt", locale);
-
-  const title = news.seoTitle || `${localizedTitle} | Matii Newsroom`;
-  const description = news.seoDescription || localizedExcerpt;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}news/${news.slug}`;
-
-  return {
-    title,
-    description,
-    keywords: news.seoKeywords ? news.seoKeywords.split(",").map((k) => k.trim()) : undefined,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title,
-      description,
-      url,
-      type: "article",
-      publishedTime: new Date(news.publishedAt).toISOString(),
-      images: [
-        {
-          url: news.coverImage,
-          width: 1200,
-          height: 630,
-          alt: localizedTitle,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [news.coverImage],
-    },
-  };
+  if (!news) return missingMetadata();
+  return cmsMetadata(news, "news", "excerpt", locale, ["title", "excerpt", "content"]);
 }
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
@@ -76,8 +36,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const localizedContent = getLocalizedField(news, "content", locale);
   const localizedCategory = getLocalizedField(news, "category", locale);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const newsUrl = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}news/${news.slug}`;
+  const siteUrl = siteConfig.url;
+  const newsUrl = localizedUrl(`/news/${news.slug}`, publishedLocales(news.translations, ["title", "excerpt", "content"]).includes(locale as "en") ? locale : "en");
 
   const newsSchema = generateNewsSchema({
     title: localizedTitle,
@@ -89,8 +49,8 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: siteUrl },
-    { name: "Newsroom", url: `${siteUrl}/news` },
+    { name: "Home", url: localizedUrl("/", locale) },
+    { name: "Newsroom", url: localizedUrl("/news", locale) },
     { name: localizedTitle, url: newsUrl },
   ]);
 

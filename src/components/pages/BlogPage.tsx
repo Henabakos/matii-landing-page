@@ -1,7 +1,8 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import { useMemo, useState } from "react";
-import { BLOG_POSTS, BlogPost } from "@/data/blogPosts";
 import { BlogCategoryFilters } from "@/components/sections/blog/BlogCategoryFilters";
 import { BlogEmptyState } from "@/components/sections/blog/BlogEmptyState";
 import { BlogGridSection } from "@/components/sections/blog/BlogGridSection";
@@ -32,12 +33,12 @@ export default function BlogPage({ initialPosts }: BlogPageProps) {
         excerpt: p.excerpt,
         date: p.date,
         readTime: p.readTime,
-        image: p.coverImage || "/images/about-illustration.png",
+        image: p.coverImage,
         isMainHero: p.isMainHero,
         isSideFeatured: p.isSideFeatured,
       }));
     }
-    return BLOG_POSTS;
+    return [];
   }, [initialPosts]);
 
   const categories = useMemo(() => {
@@ -78,7 +79,7 @@ export default function BlogPage({ initialPosts }: BlogPageProps) {
     }
 
     const heroIds = new Set([
-      mainHeroPost.id,
+      mainHeroPost?.id,
       ...sideFeaturedPosts.map((post) => post.id),
     ]);
 
@@ -92,10 +93,12 @@ export default function BlogPage({ initialPosts }: BlogPageProps) {
     sideFeaturedPosts,
   ]);
 
+  if (!posts.length) return <div className="mx-auto max-w-345 px-4 py-12 md:px-8"><PageHeader tag={t("tag")} title={t("title")} description={t("description")} /><ContentEmptyState kind="blog" /></div>;
+
   const isFiltering = Boolean(searchQuery) || selectedCategory !== "ALL";
 
   return (
-    <main className="w-full min-h-screen text-[#292c2e] dark:text-[#ededed] px-4 sm:px-6 lg:px-12 py-8 md:py-12 transition-colors">
+    <div className="w-full min-h-screen text-[#292c2e] dark:text-[#ededed] px-4 sm:px-6 lg:px-12 py-8 md:py-12 transition-colors">
       <div className="max-w-[1380px] mx-auto space-y-10">
         <PageHeader
           tag={t("tag")}
@@ -157,6 +160,6 @@ export default function BlogPage({ initialPosts }: BlogPageProps) {
           <BlogGridSection posts={lowerGridPosts} isFiltered={isFiltering} />
         ) : null}
       </div>
-    </main>
+    </div>
   );
 }

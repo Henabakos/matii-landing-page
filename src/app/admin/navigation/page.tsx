@@ -1,5 +1,5 @@
 import React from "react";
-import { getAllNavMenus } from "@/lib/services/navigation.service";
+import { getAdminNavMenus } from "@/lib/services/navigation.service";
 import NavigationClientManager from "./NavigationClientManager";
 
 export const metadata = {
@@ -7,6 +7,6 @@ export const metadata = {
 };
 
 export default async function AdminNavigationPage() {
-  const menus = await getAllNavMenus();
+  const menus = await getAdminNavMenus();
   return <NavigationClientManager initialMenus={menus} />;
 }

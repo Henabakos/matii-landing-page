@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "Matii Digitals",
+    "brandName": "MATII TECHNOLOGIES",
     "startProject": "Start Project",
     "exploreServices": "Explore Services",
     "contactUs": "Contact Us",
@@ -43,7 +43,7 @@
     "tag": "WHO WE ARE & WHAT WE DO",
     "aboutTag": "About Us",
     "heading": "Engineering core systems, powering progress.",
-    "desc": "Matii Technologies is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
+    "desc": "MATII TECHNOLOGIES is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
     "stat1Value": "50+",
     "stat1Desc": "Digital products designed and built across diverse industries.",
     "stat2Value": "10+",
@@ -63,8 +63,8 @@
     "productsShippedCount": "50+",
     "productsShippedLabel": "Products Shipped",
     "journeyTag": "// THE JOURNEY",
-    "journeyTitle": "Why we built Matii Technologies.",
-    "storyP1": "Matii Technologies is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
+    "journeyTitle": "Why we built MATII TECHNOLOGIES.",
+    "storyP1": "MATII TECHNOLOGIES is a technology company engineering enterprise platforms, fintech infrastructures, BPO solutions, and data intelligence for organizations that cannot afford to fail.",
     "storyP2": "Founded in Ethiopia and built to global standards, we deliver secure, scalable systems for enterprise, government, and financial institutions.",
     "storyP3": "We don't just write code—we build the infrastructure that powers progress.",
     "missionTag": "01 // PURPOSE",
@@ -128,6 +128,11 @@
     "submitMessage": "Send Message",
     "submitting": "Sending...",
     "successMessage": "Thank you for reaching out. Your project inquiry has been received, and a member of our engineering team will be in touch shortly.",
+    "mapChooseCity": "Choose a city",
+    "mapTitle": "Map of {city}",
+    "mapCityOnly": "City overview: {city}. An exact office address is not listed yet.",
+    "mapDirections": "Get directions",
+    "mapOpen": "Open larger map",
     "locationsTitle": "Our Global Presence",
     "locationsSubtitle": "ENGINEERING HUBS & CLIENT PARTNERSHIPS",
     "locationUsa": "United States",
@@ -191,5 +196,47 @@
     "subscribe": "Subscribe",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
+  },
+  "emptyContent": {
+    "contact": "Contact us",
+    "projects": {
+      "title": "No projects published yet",
+      "description": "There are no case studies to explore here yet. Contact us to discuss your project."
+    },
+    "testimonials": {
+      "title": "No testimonials published yet",
+      "description": "Client feedback will appear here once it is published."
+    },
+    "partners": {
+      "title": "No partners listed yet",
+      "description": "Partner information has not been published yet."
+    },
+    "metrics": {
+      "title": "No results published yet",
+      "description": "Published figures will appear here when they are available."
+    },
+    "services": {
+      "title": "No services published yet",
+      "description": "Service details are not available yet. Contact us to discuss what you need."
+    },
+    "blog": {
+      "title": "No articles published yet",
+      "description": "Published articles will appear here. Check back for updates."
+    },
+    "careers": {
+      "title": "No open roles here right now",
+      "description": "There are no published roles matching this view. Contact us about future opportunities."
+    },
+    "gallery": {
+      "title": "No images published yet",
+      "description": "Project images will appear here when they are added."
+    },
+    "news": {
+      "title": "No news published yet",
+      "description": "Company announcements will appear here once they are published."
+    },
+    "errorTitle": "Unable to load content",
+    "errorDescription": "Content is temporarily unavailable. Please try again.",
+    "retry": "Try again"
   }
 }

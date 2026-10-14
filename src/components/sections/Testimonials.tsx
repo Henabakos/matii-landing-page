@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import TestimonialTag from "./testimonials/TestimonialTag";
@@ -13,10 +15,7 @@ import {
   CarouselDots,
 } from "@/components/ui/carousel";
 import { useTranslations } from "next-intl";
-import {
-  TestimonialItem,
-  DEFAULT_TESTIMONIALS,
-} from "@/lib/services/testimonial.service";
+import type { TestimonialItem } from "@/lib/services/testimonial.service";
 
 interface TestimonialsProps {
   testimonials?: TestimonialItem[];
@@ -28,10 +27,8 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
     Autoplay({ delay: 5000, stopOnInteraction: true }),
   );
 
-  const displayTestimonials =
-    testimonials && testimonials.length > 0
-      ? testimonials
-      : DEFAULT_TESTIMONIALS;
+  const displayTestimonials = testimonials ?? [];
+  if (!displayTestimonials.length) return <ContentEmptyState kind="testimonials" />;
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -65,8 +62,8 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                   quote={item.quote}
                   authorName={item.authorName}
                   authorRole={item.authorRole}
-                  avatarUrl={item.avatarUrl || "/avatars/avatar-1.png"}
-                  rating={item.rating ?? 5}
+                  avatarUrl={item.avatarUrl}
+                  rating={item.rating}
                 />
               </CarouselItem>
             ))}

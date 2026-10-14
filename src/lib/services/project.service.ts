@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-import { unstable_cache } from "next/cache";
+import { cachedCmsRead } from "./cms-fallback";
+import { fallbackRows } from "./cms-fallback-content";
 
 export interface ParsedProject {
   id: string;
@@ -82,7 +83,7 @@ function parseProjectFields(project: any): ParsedProject {
   };
 }
 
-export const getAllProjects = unstable_cache(
+export const getAllProjects = cachedCmsRead(
   async (): Promise<ParsedProject[]> => {
     const raw = await db.project.findMany({
       orderBy: { order: "asc" },
@@ -90,10 +91,16 @@ export const getAllProjects = unstable_cache(
     return raw.map(parseProjectFields);
   },
   ["projects-all"],
-  { tags: ["projects"], revalidate: 3600 }
+  { tags: ["projects"], revalidate: 3600 },
+  () => fallbackRows("Project").sort((a, b) => a.order - b.order).map(parseProjectFields)
 );
 
-export const getSolutionsBuiltProjects = unstable_cache(
+export async function getAdminAllProjects(): Promise<ParsedProject[]> {
+  const raw = await db.project.findMany({ orderBy: { order: "asc" } });
+  return raw.map(parseProjectFields);
+}
+
+export const getSolutionsBuiltProjects = cachedCmsRead(
   async (): Promise<ParsedProject[]> => {
     const raw = await db.project.findMany({
       where: { isSolutionsBuilt: true },
@@ -102,10 +109,11 @@ export const getSolutionsBuiltProjects = unstable_cache(
     return raw.map(parseProjectFields);
   },
   ["projects-solutions-built"],
-  { tags: ["projects"], revalidate: 3600 }
+  { tags: ["projects"], revalidate: 3600 },
+  () => fallbackRows("Project").filter(row => row.isSolutionsBuilt).sort((a, b) => a.order - b.order).map(parseProjectFields)
 );
 
-export const getProjectBySlug = unstable_cache(
+export const getProjectBySlug = cachedCmsRead(
   async (slug: string): Promise<ParsedProject | null> => {
     const raw = await db.project.findUnique({
       where: { slug },
@@ -114,7 +122,8 @@ export const getProjectBySlug = unstable_cache(
     return parseProjectFields(raw);
   },
   ["project-by-slug"],
-  { tags: ["projects"], revalidate: 3600 }
+  { tags: ["projects"], revalidate: 3600 },
+  (slug) => { const row = fallbackRows("Project").find(row => row.slug === slug); return row ? parseProjectFields(row) : null; }
 );
 
 export interface FormattedProjectCategory {
@@ -127,7 +136,7 @@ export interface FormattedProjectCategory {
   projectCount?: number;
 }
 
-export const getAllProjectCategories = unstable_cache(
+export const getAllProjectCategories = cachedCmsRead(
   async (): Promise<FormattedProjectCategory[]> => {
     const categories = await db.projectCategory.findMany({
       where: { isActive: true },
@@ -147,7 +156,8 @@ export const getAllProjectCategories = unstable_cache(
     return counts;
   },
   ["project-categories-all"],
-  { tags: ["project-categories"], revalidate: 3600 }
+  { tags: ["project-categories"], revalidate: 3600 },
+  () => fallbackRows("ProjectCategory").sort((a, b) => a.order - b.order).map(row => ({ ...row, projectCount: fallbackRows("Project").filter(project => project.category === row.name).length }))
 );
 
 export async function getAdminAllProjectCategories(): Promise<FormattedProjectCategory[]> {

@@ -1,35 +1,27 @@
+import PageStructuredData from "@/components/common/PageStructuredData";
+import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
+import ContentEmptyState from "@/components/common/ContentEmptyState";
 import React from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { ArrowUpRight, Calendar, Clock, ExternalLink } from "lucide-react";
 import { getAllNewsArticles, getFeaturedNews } from "@/lib/services/news.service";
 import PageHeader from "@/components/common/PageHeader";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Newsroom & Press Releases | Matii Digitals",
-  description:
-    "Latest announcements, product releases, company milestones, and engineering insights from Matii Digitals.",
-  openGraph: {
-    title: "Newsroom & Press Releases | Matii Digitals",
-    description:
-      "Latest announcements, product releases, company milestones, and engineering insights from Matii Digitals.",
-    images: ["/images/solutions-1.png"],
-  },
-};
 
-export default async function NewsPage() {
+export default async function NewsPage({ params }: LocalePageProps) {
   const [allNews, featured] = await Promise.all([
-    getAllNewsArticles().catch(() => []),
-    getFeaturedNews().catch(() => null),
+    getAllNewsArticles(),
+    getFeaturedNews(),
   ]);
 
   const nonFeaturedNews = featured
     ? allNews.filter((n) => n.id !== featured.id)
     : allNews;
 
-  return (
-    <main className="w-full min-h-screen text-zinc-900 dark:text-zinc-100 px-4 sm:px-6 lg:px-12 py-8 md:py-12">
+  return (<>
+    <PageStructuredData path="/news" locale={(await params).locale} />
+    <div className="w-full min-h-screen text-zinc-900 dark:text-zinc-100 px-4 sm:px-6 lg:px-12 py-8 md:py-12">
       <div className="max-w-[1380px] mx-auto space-y-12">
         <PageHeader
           tag="PRESS & DISPATCHES"
@@ -42,6 +34,8 @@ export default async function NewsPage() {
           }
           description="Read official press releases, product studio launches, and industry benchmarks published by the Matii team."
         />
+
+        {!allNews.length && <ContentEmptyState kind="news" />}
 
         {/* Featured Top News Hero */}
         {featured ? (
@@ -149,6 +143,10 @@ export default async function NewsPage() {
           </div>
         </div>
       </div>
-    </main>
-  );
+    </div>
+  </>);
+}
+
+export function generateMetadata(props: LocalePageProps) {
+  return staticPageMetadata("/news", props);
 }

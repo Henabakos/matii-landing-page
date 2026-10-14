@@ -22,22 +22,24 @@ export interface ProjectDetailPageProps {
   solutionParagraphs?: string[];
   galleryItems?: GalleryItem[];
   resultsProps?: ProjectResultsProps;
+  relatedProjects?: import("@/components/sections/project/ProjectCard").ProjectCardProps[];
 }
 
 export function ProjectDetailPage({
   slug,
-  title = "AI Agent Website Built for Automation Startups",
-  subtitle = "AI-driven automation systems improved engagement and conversion clarity for a SaaS company, reducing friction.",
-  coverImage = "/images/ai-automation.png",
-  clientName = "Ragnarok AI",
-  clientLogoText = "R",
-  liveUrl = "https://calendly.com/Matiidigitals/30min",
-  timeline = "3 Months",
-  services = "NLP Solutions • AI Automation • AI Integration",
+  title = "",
+  subtitle,
+  coverImage,
+  clientName,
+  clientLogoText,
+  liveUrl,
+  timeline,
+  services,
   challengeParagraphs,
   solutionParagraphs,
   galleryItems,
   resultsProps,
+  relatedProjects,
 }: ProjectDetailPageProps) {
   const formattedSlugTag = slug
     ? `PROJECT // ${slug.replace(/-/g, " ").toUpperCase()}`
@@ -80,7 +82,7 @@ export function ProjectDetailPage({
               sizes="(max-width: 1024px) 128px, 224px"
             />
           </div>
-          <Image
+          {coverImage && <Image
             src={coverImage}
             alt={title}
             fill
@@ -89,7 +91,7 @@ export function ProjectDetailPage({
             sizes="100vw"
             className="object-cover object-center"
             referrerPolicy="no-referrer"
-          />
+          />}
         </div>
 
         {/* METADATA BAR */}
@@ -114,7 +116,7 @@ export function ProjectDetailPage({
         <ProjectResults {...resultsProps} />
 
         {/* 5. EXPLORE MORE WORK SECTION */}
-        <ProjectExploreMore />
+        <ProjectExploreMore projects={relatedProjects} />
       </div>
     </div>
   );

@@ -88,7 +88,7 @@ export default function NavigationClientManager({
   initialMenus,
 }: NavigationClientManagerProps) {
   const [menus, setMenus] = useState<MegaMenuConfig[]>(
-    initialMenus.length > 0 ? initialMenus : defaultNavMenus
+    initialMenus
   );
   const [selectedKey, setSelectedKey] = useState<string>(menus[0]?.key || "services");
   const [isJsonMode, setIsJsonMode] = useState<boolean>(false);
@@ -606,7 +606,7 @@ export default function NavigationClientManager({
             <button
               type="button"
               onClick={handleBatchTranslateAllMenus}
-              disabled={batchTranslating || saving}
+              disabled={!currentMenu || batchTranslating || saving}
               className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-space font-medium border border-zinc-200 dark:border-white/10 hover:bg-zinc-100 dark:hover:bg-white/10 rounded-[4px] text-zinc-700 dark:text-zinc-200 transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
               title="AI Auto-Translate all navbar menus at once"
             >
@@ -744,6 +744,7 @@ export default function NavigationClientManager({
         </div>
       ) : (
         <div className="space-y-6">
+          {!currentMenu && <div className="border border-dashed border-zinc-300 p-8 text-center dark:border-white/15"><h2 className="text-xl font-medium">No navigation menus yet</h2><p className="mt-2 text-sm text-zinc-500">Create a menu to add navigation links to the site.</p></div>}
           {/* Selected Menu Meta Summary Card */}
           <div className="bg-white dark:bg-[#16181b] border border-zinc-200/80 dark:border-white/10 p-5 rounded-[4px] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
@@ -785,7 +786,7 @@ export default function NavigationClientManager({
               <button
                 type="button"
                 onClick={handleBatchTranslateCurrentMenu}
-                disabled={batchTranslating || saving}
+                disabled={!currentMenu || batchTranslating || saving}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-semibold bg-[#98ff03]/15 hover:bg-[#98ff03]/25 text-black dark:text-[#98ff03] border border-[#98ff03]/30 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer disabled:opacity-50"
                 title="AI Auto-Translate this entire menu into Oromo, Amharic, German & Polish"
               >
@@ -814,7 +815,7 @@ export default function NavigationClientManager({
 
               <button
                 type="button"
-                onClick={() => handleDeleteMenu(currentMenu.key)}
+                onClick={() => currentMenu && handleDeleteMenu(currentMenu.key)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-space font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 border border-transparent hover:border-red-200 dark:hover:border-red-800 rounded-[3px] transition-all active:scale-[0.96] cursor-pointer"
               >
                 <Trash2 className="size-3" />

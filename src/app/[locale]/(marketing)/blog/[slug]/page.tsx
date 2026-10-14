@@ -1,3 +1,6 @@
+import { cmsMetadata } from "@/lib/seo-cms";
+import { missingMetadata, localizedUrl, publishedLocales } from "@/lib/seo";
+import { siteConfig } from "@/lib/site-config";
 import React from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
@@ -16,52 +19,8 @@ type BlogDetailPageProps = {
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
   const { locale, slug } = await params;
   const post = await getBlogPostBySlug(slug);
-
-  if (!post) {
-    return {
-      title: "Article Not Found | Matii Digitals",
-      description: "The requested blog article could not be found.",
-    };
-  }
-
-  const localizedTitle = getLocalizedField(post, "title", locale);
-  const localizedExcerpt = getLocalizedField(post, "excerpt", locale);
-
-  const title = post.seoTitle || `${localizedTitle} | Matii Digitals Blog`;
-  const description = post.seoDescription || localizedExcerpt;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const url = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}blog/${post.slug}`;
-
-  return {
-    title,
-    description,
-    keywords: post.seoKeywords ? post.seoKeywords.split(",").map((k) => k.trim()) : undefined,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      title,
-      description,
-      url,
-      type: "article",
-      publishedTime: new Date(post.publishedAt).toISOString(),
-      authors: [post.authorName],
-      images: [
-        {
-          url: post.coverImage,
-          width: 1200,
-          height: 630,
-          alt: localizedTitle,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [post.coverImage],
-    },
-  };
+  if (!post) return missingMetadata();
+  return cmsMetadata(post, "blog", "excerpt", locale, ["title", "excerpt", "content"]);
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
@@ -77,9 +36,9 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const localizedContent = getLocalizedField(post, "content", locale);
   const localizedCategory = getLocalizedField(post, "category", locale);
 
-  const relatedPosts = await getRelatedBlogPosts(post.category, post.slug).catch(() => []);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-  const articleUrl = `${siteUrl}/${locale !== "en" ? `${locale}/` : ""}blog/${post.slug}`;
+  const relatedPosts = await getRelatedBlogPosts(post.category, post.slug);
+  const siteUrl = siteConfig.url;
+  const articleUrl = localizedUrl(`/blog/${post.slug}`, publishedLocales(post.translations, ["title", "excerpt", "content"]).includes(locale as "en") ? locale : "en");
 
   const articleSchema = generateArticleSchema({
     title: localizedTitle,
@@ -92,8 +51,8 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: siteUrl },
-    { name: "Blog", url: `${siteUrl}/blog` },
+    { name: "Home", url: localizedUrl("/", locale) },
+    { name: "Blog", url: localizedUrl("/blog", locale) },
     { name: localizedTitle, url: articleUrl },
   ]);
 

@@ -1,31 +1,35 @@
 import React from "react";
+import { siteConfig } from "@/lib/site-config";
+import { absoluteImage } from "@/lib/seo";
+import type { PillarContent } from "@/lib/pillars/schema";
 
 interface JsonLdProps {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   );
+}
+
+export function serializeJsonLd(data: Record<string, unknown>) {
+  return JSON.stringify(data).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
 }
 
 export function generateOrganizationSchema(siteUrl: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Matii Digitals",
+    "@id": `${siteUrl}/#organization`,
+    name: siteConfig.name,
     url: siteUrl,
-    logo: `${siteUrl}/images/about-illustration.png`,
-    sameAs: [
-      "https://instagram.com",
-      "https://t.me",
-      "https://tiktok.com",
-      "https://youtube.com",
-    ],
+    logo: `${siteUrl}${siteConfig.logo}`,
+    description: siteConfig.description,
+    ...(siteConfig.socialProfiles.length ? { sameAs: siteConfig.socialProfiles } : {}),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Support",
@@ -56,7 +60,7 @@ export function generateArticleSchema({
     "@type": "Article",
     headline: title,
     description: description,
-    image: image.startsWith("http") ? image : `${siteUrl}${image}`,
+    image: absoluteImage(image),
     datePublished: datePublished,
     author: {
       "@type": "Person",
@@ -64,10 +68,10 @@ export function generateArticleSchema({
     },
     publisher: {
       "@type": "Organization",
-      name: "Matii Digitals",
+      name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${siteUrl}/images/about-illustration.png`,
+        url: `${siteUrl}${siteConfig.logo}`,
       },
     },
     mainEntityOfPage: {
@@ -97,14 +101,14 @@ export function generateNewsSchema({
     "@type": "NewsArticle",
     headline: title,
     description: description,
-    image: image.startsWith("http") ? image : `${siteUrl}${image}`,
+    image: absoluteImage(image),
     datePublished: datePublished,
     publisher: {
       "@type": "Organization",
-      name: "Matii Digitals",
+      name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${siteUrl}/images/about-illustration.png`,
+        url: `${siteUrl}${siteConfig.logo}`,
       },
     },
     mainEntityOfPage: {
@@ -119,7 +123,6 @@ export function generateProjectSchema({
   description,
   url,
   image,
-  clientName,
   siteUrl,
 }: {
   title: string;
@@ -135,13 +138,14 @@ export function generateProjectSchema({
     name: title,
     headline: title,
     description: description,
-    image: image.startsWith("http") ? image : `${siteUrl}${image}`,
+    image: absoluteImage(image),
     url: url,
     creator: {
       "@type": "Organization",
-      name: "Matii Digitals",
+      "@id": `${siteUrl}/#organization`,
+      name: siteConfig.name,
     },
-    ...(clientName ? { sponsor: { "@type": "Organization", name: clientName } } : {}),
+
   };
 }
 
@@ -158,4 +162,18 @@ export function generateBreadcrumbSchema(
       item: item.url,
     })),
   };
+}
+
+export function generateServiceSchema(content: PillarContent, url: string, locale: string) {
+  return {
+    "@context": "https://schema.org", "@type": "Service", "@id": `${url}#service`,
+    name: content.name, description: content.description, url,
+    provider: { "@id": `${siteConfig.url}/#organization` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url, inLanguage: locale },
+  };
+}
+export function generateWebsiteSchema() {
+  return { "@context": "https://schema.org", "@type": "WebSite", "@id": `${siteConfig.url}/#website`,
+    url: `${siteConfig.url}/`, name: siteConfig.name, alternateName: siteConfig.shortName,
+    publisher: { "@id": `${siteConfig.url}/#organization` } };
 }

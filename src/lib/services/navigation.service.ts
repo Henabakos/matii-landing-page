@@ -1,25 +1,11 @@
 import { db } from "@/lib/db";
+import type { NavMenu } from "@prisma/client";
 import { unstable_cache, revalidateTag } from "next/cache";
-import { defaultNavMenus, MegaMenuConfig, MegaMenuCategory, MegaMenuItem } from "@/data/navigation-data";
+import type { MegaMenuConfig, MegaMenuCategory, MegaMenuItem } from "@/data/navigation-data";
+import { withCmsFallback } from "./cms-fallback";
+import { fallbackRows } from "./cms-fallback-content";
 
-interface RawNavMenu {
-  id: string;
-  key: string;
-  label: string;
-  href: string;
-  order: number;
-  isActive: boolean | number;
-  footerLabel: string | null;
-  footerHref: string | null;
-  footerCtaLabel: string | null;
-  footerCtaHref: string | null;
-  categories: string;
-  translations?: string | null;
-  createdAt?: string | Date;
-  updatedAt?: string | Date;
-}
-
-function parseNavMenu(raw: RawNavMenu): MegaMenuConfig {
+function parseNavMenu(raw: NavMenu): MegaMenuConfig {
   let categories: MegaMenuCategory[] = [];
   try {
     categories = JSON.parse(raw.categories);
@@ -57,69 +43,35 @@ function parseNavMenu(raw: RawNavMenu): MegaMenuConfig {
   };
 }
 
-// Auto-seed default menus into DB if table is empty
-async function seedDefaultNavMenusIfEmpty(): Promise<MegaMenuConfig[]> {
-  try {
-    const existing = await db.$queryRawUnsafe<RawNavMenu[]>(
-      "SELECT * FROM NavMenu WHERE isActive = 1 ORDER BY `order` ASC"
-    );
-
-    if (existing && existing.length > 0) {
-      return existing.map(parseNavMenu);
-    }
-
-    // Seed defaults
-    const now = new Date().toISOString();
-    for (const menu of defaultNavMenus) {
-      const id = `nav_${menu.key}_${Date.now()}`;
-      await db.$queryRawUnsafe(
-        `INSERT OR REPLACE INTO NavMenu (
-          id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, translations, createdAt, updatedAt
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        id,
-        menu.key,
-        menu.label,
-        menu.href,
-        menu.order,
-        menu.isActive ? 1 : 0,
-        menu.footer?.label || null,
-        menu.footer?.href || null,
-        menu.footer?.ctaLabel || null,
-        menu.footer?.ctaHref || null,
-        JSON.stringify(menu.categories || []),
-        menu.translations ? JSON.stringify(menu.translations) : null,
-        now,
-        now
-      );
-    }
-
-    return defaultNavMenus;
-  } catch (error) {
-    console.error("Error checking/seeding NavMenu in database:", error);
-    return defaultNavMenus;
-  }
+function navMenuData(menu: Omit<MegaMenuConfig, "id">) {
+  return {
+    key: menu.key,
+    label: menu.label,
+    href: menu.href,
+    order: menu.order,
+    isActive: menu.isActive,
+    footerLabel: menu.footer?.label || null,
+    footerHref: menu.footer?.href || null,
+    footerCtaLabel: menu.footer?.ctaLabel || null,
+    footerCtaHref: menu.footer?.ctaHref || null,
+    categories: JSON.stringify(menu.categories || []),
+    translations: menu.translations ? JSON.stringify(menu.translations) : null,
+  };
 }
 
 export async function fetchNavMenusFromDb(): Promise<MegaMenuConfig[]> {
-  try {
-    const rows = await db.$queryRawUnsafe<RawNavMenu[]>(
-      "SELECT * FROM NavMenu WHERE isActive = 1 ORDER BY `order` ASC"
-    );
+  const rows = await db.navMenu.findMany({ where: { isActive: true }, orderBy: { order: "asc" } });
+  return rows.map(parseNavMenu);
+}
 
-    if (!rows || rows.length === 0) {
-      return await seedDefaultNavMenusIfEmpty();
-    }
-
-    return rows.map(parseNavMenu);
-  } catch (error) {
-    console.warn("Fallback to defaultNavMenus due to DB error:", error);
-    return defaultNavMenus;
-  }
+export async function getAdminNavMenus(): Promise<MegaMenuConfig[]> {
+  const rows = await db.navMenu.findMany({ orderBy: { order: "asc" } });
+  return rows.map(parseNavMenu);
 }
 
 const getCachedNavMenus = unstable_cache(
   fetchNavMenusFromDb,
-  ["nav-menus-active"],
+  ["nav-menus-active-db-only"],
   { tags: ["navigation"], revalidate: 60 }
 );
 
@@ -127,65 +79,35 @@ export async function getAllNavMenus(): Promise<MegaMenuConfig[]> {
   try {
     return await getCachedNavMenus();
   } catch {
-    // If running outside of Next request context (e.g. scripts or test suites)
-    return await fetchNavMenusFromDb();
+    // Also supports scripts outside Next's cache context; admin reads stay strict.
+    return withCmsFallback(fetchNavMenusFromDb,
+      () => fallbackRows("NavMenu").sort((a, b) => a.order - b.order).map(parseNavMenu),
+      "navigation");
   }
 }
 
 export async function upsertNavMenu(
   menu: Omit<MegaMenuConfig, "id"> & { id?: string }
 ): Promise<MegaMenuConfig> {
-  const id = menu.id || `nav_${menu.key}_${Date.now()}`;
-  const now = new Date().toISOString();
-
-  await db.$queryRawUnsafe(
-    `INSERT INTO NavMenu (
-      id, \`key\`, label, href, \`order\`, isActive, footerLabel, footerHref, footerCtaLabel, footerCtaHref, categories, translations, createdAt, updatedAt
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ON CONFLICT(\`key\`) DO UPDATE SET
-      label = excluded.label,
-      href = excluded.href,
-      \`order\` = excluded.\`order\`,
-      isActive = excluded.isActive,
-      footerLabel = excluded.footerLabel,
-      footerHref = excluded.footerHref,
-      footerCtaLabel = excluded.footerCtaLabel,
-      footerCtaHref = excluded.footerCtaHref,
-      categories = excluded.categories,
-      translations = excluded.translations,
-      updatedAt = excluded.updatedAt
-    `,
-    id,
-    menu.key,
-    menu.label,
-    menu.href,
-    menu.order,
-    menu.isActive ? 1 : 0,
-    menu.footer?.label || null,
-    menu.footer?.href || null,
-    menu.footer?.ctaLabel || null,
-    menu.footer?.ctaHref || null,
-    JSON.stringify(menu.categories || []),
-    menu.translations ? JSON.stringify(menu.translations) : null,
-    now,
-    now
-  );
+  const data = navMenuData(menu);
+  const saved = await db.navMenu.upsert({
+    where: { key: menu.key },
+    create: { ...data, ...(menu.id ? { id: menu.id } : {}) },
+    update: data,
+  });
 
   try {
-    (revalidateTag as any)("navigation");
+    revalidateTag("navigation", { expire: 0 });
   } catch {}
 
-  return {
-    ...menu,
-    id,
-  };
+  return parseNavMenu(saved);
 }
 
 export async function deleteNavMenu(key: string): Promise<boolean> {
   try {
-    await db.$queryRawUnsafe("DELETE FROM NavMenu WHERE `key` = ?", key);
+    await db.navMenu.deleteMany({ where: { key } });
     try {
-      (revalidateTag as any)("navigation");
+      revalidateTag("navigation", { expire: 0 });
     } catch {}
     return true;
   } catch (error) {
@@ -271,7 +193,7 @@ export async function removeLinkFromNavbar(
     }
 
     try {
-      (revalidateTag as any)("navigation");
+      revalidateTag("navigation", { expire: 0 });
     } catch {}
 
     return { success: true, totalRemoved };
@@ -311,19 +233,14 @@ export async function addLinkToNavbar({
     let targetMenu = menus.find((m) => m.key === menuKey);
 
     if (!targetMenu) {
-      const def = defaultNavMenus.find((m) => m.key === menuKey);
-      if (def) {
-        targetMenu = def;
-      } else {
-        targetMenu = {
-          key: menuKey,
-          label: menuKey.charAt(0).toUpperCase() + menuKey.slice(1),
-          href: `/${menuKey}`,
-          order: menus.length + 1,
-          isActive: true,
-          categories: [],
-        };
-      }
+      targetMenu = {
+        key: menuKey,
+        label: menuKey.charAt(0).toUpperCase() + menuKey.slice(1),
+        href: `/${menuKey}`,
+        order: menus.length + 1,
+        isActive: true,
+        categories: [],
+      };
     }
 
     const categories = [...(targetMenu.categories || [])];

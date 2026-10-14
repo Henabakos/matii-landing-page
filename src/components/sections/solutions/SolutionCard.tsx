@@ -47,13 +47,19 @@ export function SolutionCard({
     setIsHovered(false);
   };
 
+  const publishedMetrics = [
+    { value: metrics.stat1Value, label: metrics.stat1Label },
+    { value: metrics.stat2Value, label: metrics.stat2Label },
+    { value: metrics.stat3Value, label: metrics.stat3Label },
+  ].filter(metric => metric.value && metric.label);
+
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[480px] sm:h-[540px] md:h-[584px] overflow-hidden rounded-[4px] group cursor-pointer"
+      className="relative w-full h-[480px] sm:h-[540px] md:h-[584px] overflow-hidden rounded-[4px] bg-[#292c2e] group cursor-pointer"
     >
       {/* Whole Card Click Target Link */}
       <a
@@ -65,7 +71,7 @@ export function SolutionCard({
       />
 
       {/* Project Unique Background Image */}
-      <Image
+      {bgImage && <Image
         src={bgImage}
         alt={title}
         fill
@@ -73,7 +79,7 @@ export function SolutionCard({
         loading="eager"
         sizes="(max-width: 1380px) 100vw, 1380px"
         className="object-cover size-full group-hover:scale-105 transition-transform duration-700 pointer-events-none"
-      />
+      />}
 
       {/* Smooth Magnetic Cursor-Following "View Project" Button */}
       <div
@@ -125,41 +131,12 @@ export function SolutionCard({
           {description}
         </p>
 
-        {/* Divider Line */}
-        <div className="w-full border-t border-white/20 mb-4" />
-
-        {/* Metrics Row */}
-        <div className="grid grid-cols-3 gap-4 items-center">
-          {/* Stat 1 */}
-          <div className="flex flex-col">
-            <span className="font-space font-medium text-xl sm:text-3xl text-white leading-tight">
-              {metrics.stat1Value}
-            </span>
-            <span className="font-inter font-normal text-[10px] sm:text-xs text-white/60 lowercase">
-              {metrics.stat1Label}
-            </span>
-          </div>
-
-          {/* Stat 2 */}
-          <div className="flex flex-col border-l border-white/20 pl-4">
-            <span className="font-space font-medium text-xl sm:text-3xl text-white leading-tight">
-              {metrics.stat2Value}
-            </span>
-            <span className="font-inter font-normal text-[10px] sm:text-xs text-white/60 lowercase">
-              {metrics.stat2Label}
-            </span>
-          </div>
-
-          {/* Stat 3 */}
-          <div className="flex flex-col border-l border-white/20 pl-4">
-            <span className="font-space font-medium text-xl sm:text-3xl text-white leading-tight">
-              {metrics.stat3Value}
-            </span>
-            <span className="font-inter font-normal text-[10px] sm:text-xs text-white/60 lowercase">
-              {metrics.stat3Label}
-            </span>
-          </div>
-        </div>
+        {publishedMetrics.length > 0 && <div className="mt-4 flex flex-wrap gap-6 border-t border-white/20 pt-4">
+          {publishedMetrics.map(metric => <div key={metric.label} className="flex flex-col">
+            <span className="font-space text-xl font-medium text-white sm:text-3xl">{metric.value}</span>
+            <span className="text-xs text-white/70">{metric.label}</span>
+          </div>)}
+        </div>}
       </div>
     </div>
   );

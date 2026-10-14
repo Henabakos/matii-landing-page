@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import React, { useState } from "react";
 import { Link } from "@/i18n/routing";
 import PageHeader from "@/components/common/PageHeader";
@@ -16,7 +18,7 @@ import {
   TbRadar,
   TbArrowUpRight,
 } from "react-icons/tb";
-import { jobPositions } from "@/data/careers-data";
+
 import type { FormattedJobPosition } from "@/lib/services/career.service";
 
 import { useTranslations } from "next-intl";
@@ -29,7 +31,7 @@ export function CareersSection({ initialJobs }: CareersSectionProps) {
   const t = useTranslations("pages.careers");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
-  const displayJobs = initialJobs && initialJobs.length > 0 ? initialJobs : jobPositions;
+  const displayJobs = initialJobs ?? [];
 
   // Dynamically extract unique departments from active jobs
   const departments = [
@@ -113,6 +115,10 @@ export function CareersSection({ initialJobs }: CareersSectionProps) {
 
         {/* Job Listings Grid */}
         <div className="space-y-4">
+          {!filteredJobs.length && <>
+            <ContentEmptyState kind="careers" />
+            {selectedDepartment !== "All" && <button type="button" onClick={() => setSelectedDepartment("All")} className="min-h-11 border border-zinc-200 px-5 py-3 text-sm dark:border-white/15">Show all roles</button>}
+          </>}
           {filteredJobs.map((job) => (
             <Link
               key={job.id}

@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import Image from "next/image";
 import svgPaths from "@/lib/svgPaths";
 import AboutTag from "../sections/about-us/AboutTag";
@@ -49,23 +51,7 @@ export function AboutUs({ kpis }: AboutUsProps) {
                 />
               ))
             ) : (
-              <>
-                <MetricCard
-                  iconPath={svgPaths.p35638972}
-                  number={t("stat1Value")}
-                  description={t("stat1Desc")}
-                />
-                <MetricCard
-                  iconPath={svgPaths.p28ab6b00}
-                  number={t("stat2Value")}
-                  description={t("stat2Desc")}
-                />
-                <MetricCard
-                  iconPath={svgPaths.p9d06a00}
-                  number={t("stat3Value")}
-                  description={t("stat3Desc")}
-                />
-              </>
+              <ContentEmptyState kind="metrics" compact />
             )}
           </div>
 

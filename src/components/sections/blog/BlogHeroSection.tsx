@@ -17,14 +17,14 @@ export function BlogHeroSection({
       <div className="lg:col-span-7 flex flex-col justify-between group">
         <Link href={`/blog/${mainHeroPost.slug}`} className="block space-y-5">
           <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 dark:bg-white/5 border border-zinc-200/80 dark:border-white/10 shadow-md transition-colors group-hover:border-[#98ff03]">
-            <Image
+            {mainHeroPost.image && <Image
               src={mainHeroPost.image}
               alt={mainHeroPost.title}
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
               priority
               className="object-cover object-center"
-            />
+            />}
           </div>
 
           <div className="space-y-2">
@@ -50,13 +50,13 @@ export function BlogHeroSection({
             className="group flex gap-4 sm:gap-5 items-start p-3 sm:p-4 border border-transparent hover:border-[#98ff03] transition-colors"
           >
             <div className="relative w-28 sm:w-36 md:w-40 aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-white/5 shrink-0 border border-zinc-200/80 dark:border-white/10 transition-colors group-hover:border-[#98ff03]">
-              <Image
+              {post.image && <Image
                 src={post.image}
                 alt={post.title}
                 fill
                 sizes="200px"
                 className="object-cover object-center"
-              />
+              />}
             </div>
 
             <div className="flex flex-col justify-center space-y-1.5 flex-1 min-w-0">

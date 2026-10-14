@@ -1,18 +1,21 @@
+import PageStructuredData from "@/components/common/PageStructuredData";
+import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
 import React from "react";
 import CareersSection from "@/components/sections/careers/CareersSection";
 import { getAllJobPositions } from "@/lib/services/career.service";
 
-export const metadata = {
-  title: "Careers & Open Positions | Matii Digitals",
-  description: "Join our world-class engineering, AI, and design studio solving high-impact architectural challenges.",
-};
 
-export default async function CareersPage() {
+export default async function CareersPage({ params }: LocalePageProps) {
   const jobs = await getAllJobPositions();
 
-  return (
-    <main className="w-full">
+  return (<>
+    <PageStructuredData path="/careers" locale={(await params).locale} />
+    <div className="w-full">
       <CareersSection initialJobs={jobs} />
-    </main>
-  );
+    </div>
+  </>);
+}
+
+export function generateMetadata(props: LocalePageProps) {
+  return staticPageMetadata("/careers", props);
 }

@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "Matii Digitals",
+    "brandName": "MATII TECHNOLOGIES",
     "startProject": "Projekt starten",
     "exploreServices": "Dienstleistungen entdecken",
     "contactUs": "Kontaktieren Sie uns",
@@ -43,7 +43,7 @@
     "tag": "WER WIR SIND & WAS WIR TUN",
     "aboutTag": "Über uns",
     "heading": "Kernsysteme entwickeln, Fortschritt vorantreiben.",
-    "desc": "Matii Technologies ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen und Datenintelligenz für Organisationen entwickelt.",
+    "desc": "MATII TECHNOLOGIES ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen und Datenintelligenz für Organisationen entwickelt.",
     "stat1Value": "50+",
     "stat1Desc": "Digitale Produkte, entwickelt für verschiedenste Branchen.",
     "stat2Value": "10+",
@@ -63,8 +63,8 @@
     "productsShippedCount": "50+",
     "productsShippedLabel": "Erfolgreiche Produkte",
     "journeyTag": "// DIE REISE",
-    "journeyTitle": "Warum wir Matii Technologies gegründet haben.",
-    "storyP1": "Matii Technologies ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen, BPO-Lösungen und Datenintelligenz für Organisationen entwickelt, die keine Ausfälle tolerieren können.",
+    "journeyTitle": "Warum wir MATII TECHNOLOGIES gegründet haben.",
+    "storyP1": "MATII TECHNOLOGIES ist ein Technologieunternehmen, das Unternehmensplattformen, Fintech-Infrastrukturen, BPO-Lösungen und Datenintelligenz für Organisationen entwickelt, die keine Ausfälle tolerieren können.",
     "storyP2": "In Äthiopien gegründet und nach globalen Standards aufgebaut, liefern wir sichere, skalierbare Systeme für Unternehmen, Regierungen und Finanzinstitute.",
     "storyP3": "Wir schreiben nicht nur Code – wir bauen die Infrastruktur, die den Fortschritt antreibt.",
     "missionTag": "01 // ZWECK",
@@ -128,6 +128,11 @@
     "submitMessage": "Nachricht senden",
     "submitting": "Wird gesendet...",
     "successMessage": "Vielen Dank für Ihre Nachricht. Ihre Projektanfrage ist bei uns eingegangen, und ein Mitglied unseres Engineering-Teams wird sich in Kürze bei Ihnen melden.",
+    "mapChooseCity": "Stadt auswählen",
+    "mapTitle": "Karte von {city}",
+    "mapCityOnly": "Stadtübersicht: {city}. Eine genaue Büroadresse ist noch nicht angegeben.",
+    "mapDirections": "Route planen",
+    "mapOpen": "Größere Karte öffnen",
     "locationsTitle": "Unsere globale Präsenz",
     "locationsSubtitle": "ENGINEERING-STANDORTE & KUNDENPARTNERSCHAFTEN",
     "locationUsa": "Vereinigte Staaten",
@@ -191,5 +196,47 @@
     "subscribe": "Abonnieren",
     "privacyPolicy": "Datenschutzrichtlinie",
     "termsOfService": "Nutzungsbedingungen"
+  },
+  "emptyContent": {
+    "contact": "Kontakt aufnehmen",
+    "projects": {
+      "title": "Noch keine Projekte veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "testimonials": {
+      "title": "Noch keine Kundenstimmen veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "partners": {
+      "title": "Noch keine Partner eingetragen",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "metrics": {
+      "title": "Noch keine Ergebnisse veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "services": {
+      "title": "Noch keine Leistungen veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "blog": {
+      "title": "Noch keine Artikel veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "careers": {
+      "title": "Derzeit keine offenen Stellen in dieser Ansicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "gallery": {
+      "title": "Noch keine Bilder veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "news": {
+      "title": "Noch keine Neuigkeiten veröffentlicht",
+      "description": "Veröffentlichte Inhalte erscheinen hier, sobald sie verfügbar sind. Bei Fragen nehmen Sie Kontakt mit uns auf."
+    },
+    "errorTitle": "Inhalte können nicht geladen werden",
+    "errorDescription": "Die Inhalte sind vorübergehend nicht verfügbar. Bitte versuchen Sie es erneut.",
+    "retry": "Erneut versuchen"
   }
 }

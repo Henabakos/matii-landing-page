@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import ProjectCard, {
@@ -12,75 +14,6 @@ interface ProjectsSectionProps {
   initialProjects?: ParsedProject[];
   initialCategories?: FormattedProjectCategory[];
 }
-
-const fallbackProjects: ProjectCardProps[] = [
-  {
-    id: "1",
-    category: "AI Automation",
-    year: "2025",
-    title: "Ragnarok AI Agent Platform",
-    description:
-      "AI-driven automation system improving engagement and conversion clarity for SaaS startups.",
-    statLabel: "Demo Clicks: +13.2x",
-    slug: "ragnarok-ai",
-    imageUrl: "/images/ai-automation.png",
-  },
-  {
-    id: "2",
-    category: "Healthcare SaaS",
-    year: "2025",
-    title: "Liyana Care Patient Portal",
-    description:
-      "Thoughtful clinical portal designed to eliminate patient communication bottlenecks efficiently.",
-    statLabel: "User Retention: 98.4%",
-    slug: "liyana-care",
-    imageUrl: "/images/solutions-1.png",
-  },
-  {
-    id: "3",
-    category: "Cloud Operations",
-    year: "2025",
-    title: "Nexis SaaS Enterprise Platform",
-    description:
-      "Automated cloud workspace streamlining operations across 10+ global enterprise locations.",
-    statLabel: "Operation Speed: +60%",
-    slug: "nexis-saas-platform",
-    imageUrl: "/images/faq-illustration.png",
-  },
-  {
-    id: "4",
-    category: "Fintech & Mobile",
-    year: "2025",
-    title: "Apex Mobile Asset Wallet",
-    description:
-      "High-performance mobile banking and asset wallet built for instant digital transactions.",
-    statLabel: "Downloads: 100k+",
-    slug: "apex-mobile-app",
-    imageUrl: "/images/about-illustration.png",
-  },
-  {
-    id: "5",
-    category: "Fintech & Mobile",
-    year: "2024",
-    title: "Digital Asset & Exchange Web App",
-    description:
-      "Responsive financial trading interface designed for clarity, security, and high performance.",
-    statLabel: "Conversion Lift: +65%",
-    slug: "digital-wallet",
-    imageUrl: "/images/ai-automation.png",
-  },
-  {
-    id: "6",
-    category: "AI Automation",
-    year: "2024",
-    title: "Smart Workflow Orchestration",
-    description:
-      "Custom AI workflow agents automating complex enterprise data pipelines seamlessly.",
-    statLabel: "Time Saved: 45%",
-    slug: "workflow-orchestration",
-    imageUrl: "/images/solutions-1.png",
-  },
-];
 
 import { useTranslations } from "next-intl";
 
@@ -96,7 +29,7 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
   const projectCards: ProjectCardProps[] = useMemo(() => {
     if (initialProjects && initialProjects.length > 0) {
       return initialProjects.map((p) => {
-        let statLabel = "Featured Solution";
+        let statLabel = "";
         if (p.metrics.stat1Value && p.metrics.stat1Label) {
           statLabel = `${p.metrics.stat1Label}: ${p.metrics.stat1Value}`;
         } else if (p.metrics.demoClickGrowth) {
@@ -111,11 +44,11 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
           description: p.subtitle,
           statLabel,
           slug: p.slug,
-          imageUrl: p.coverImage || "/images/ai-automation.png",
+          imageUrl: p.coverImage,
         };
       });
     }
-    return fallbackProjects;
+    return [];
   }, [initialProjects]);
 
   // Dynamically compute categories with accurate counts
@@ -177,6 +110,8 @@ function ProjectsContent({ initialProjects, initialCategories }: ProjectsSection
       : projectCards.filter(
           (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
         );
+
+  if (!projectCards.length) return <div className="mx-auto max-w-345 px-4 py-12 md:px-8"><ContentEmptyState kind="projects" /></div>;
 
   return (
     <section className="relative w-full pt-8 md:pt-12 px-4 md:px-8 overflow-hidden">

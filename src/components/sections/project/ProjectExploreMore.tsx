@@ -5,32 +5,8 @@ import { Link } from "@/i18n/routing";
 import { ArrowUpRight } from "lucide-react";
 import ProjectCard, { ProjectCardProps } from "./ProjectCard";
 
-const defaultRelatedProjects: ProjectCardProps[] = [
-  {
-    id: "1",
-    category: "Fintech",
-    year: "2025",
-    title: "Digital Wallet & Finance Website",
-    description:
-      "Next-gen mobile banking and web app platform crafted for lightning-fast digital asset transactions.",
-    statLabel: "Conversion Lift: +65%",
-    slug: "digital-wallet",
-    imageUrl: "/images/ai-automation.png",
-  },
-  {
-    id: "2",
-    category: "Healthcare SaaS",
-    year: "2025",
-    title: "Liyana Care Patient Portal",
-    description:
-      "Thoughtful digital clinical portal designed to solve patient communication bottlenecks efficiently.",
-    statLabel: "User Retention: 98.4%",
-    slug: "liyana-care",
-    imageUrl: "/images/solutions-1.png",
-  },
-];
-
-export function ProjectExploreMore() {
+export function ProjectExploreMore({ projects = [] }: { projects?: ProjectCardProps[] }) {
+  if (!projects.length) return null;
   return (
     <div className="pt-14 pb-6">
       {/* Section Header */}
@@ -58,7 +34,7 @@ export function ProjectExploreMore() {
 
       {/* Project Cards Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-        {defaultRelatedProjects.map((project) => (
+        {projects.map((project) => (
           <ProjectCard key={project.slug} {...project} />
         ))}
       </div>

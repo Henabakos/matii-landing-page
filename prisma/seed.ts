@@ -177,9 +177,9 @@ async function main() {
       isFeatured: true,
       isSolutionsBuilt: true,
       order: 1,
-      seoTitle: "Ragnarok AI Agent Platform | Matii Digitals Case Study",
+      seoTitle: "Ragnarok AI Agent Platform | MATII TECHNOLOGIES Case Study",
       seoDescription:
-        "How Matii Digitals engineered an AI-driven automation platform yielding +13.2x demo clicks and 42% higher engagement.",
+        "How MATII TECHNOLOGIES engineered an AI-driven automation platform yielding +13.2x demo clicks and 42% higher engagement.",
     },
     {
       slug: "liyana-care",
@@ -363,7 +363,7 @@ async function main() {
       order: 4,
       seoTitle: "Apex Mobile Asset Wallet | Fintech Engineering Case Study",
       seoDescription:
-        "Over 100k downloads and 99.9% uptime: Apex Mobile Asset Wallet designed and deployed by Matii Digitals.",
+        "Over 100k downloads and 99.9% uptime: Apex Mobile Asset Wallet designed and deployed by MATII TECHNOLOGIES.",
     },
     {
       slug: "digital-wallet",
@@ -678,7 +678,7 @@ By declaring schemas that validate both client input and database outputs, you e
       category: "Product Update",
       excerpt:
         "Announcing our dedicated enterprise engineering practice specializing in autonomous agent workflows and mission-critical multi-model integrations.",
-      content: `**SAN FRANCISCO & LONDON** — Matii Digitals today announced the public launch of its Autonomous AI Agent Product Studio, expanding its engineering capabilities to help mid-market and enterprise SaaS organizations integrate production-ready AI agents into their core workflows.
+      content: `**SAN FRANCISCO & LONDON** — MATII TECHNOLOGIES today announced the public launch of its Autonomous AI Agent Product Studio, expanding its engineering capabilities to help mid-market and enterprise SaaS organizations integrate production-ready AI agents into their core workflows.
 
 The new practice integrates deeply with existing infrastructure, delivering self-healing data pipelines, automated document understanding, and real-time conversational agents backed by rigorous evaluation benchmarks.
 
@@ -701,7 +701,7 @@ Early studio client partners have already reported up to 45% reduction in manual
       category: "Milestone",
       excerpt:
         "Twelve venture-backed startups engineered in collaboration with Matii successfully closed Series A and growth financings this quarter.",
-      content: `**NEW YORK** — Matii Digitals celebrated a major milestone today as portfolio startup partners reached an aggregate of over $45 million in institutional capital raised in the third quarter alone.
+      content: `**NEW YORK** — MATII TECHNOLOGIES celebrated a major milestone today as portfolio startup partners reached an aggregate of over $45 million in institutional capital raised in the third quarter alone.
 
 From healthcare software like Liyana Care to cloud infrastructure systems like Nexis SaaS, Matii’s engineering and product design squads have partnered closely with visionary founders from inception through high-scale adoption.
 
@@ -714,7 +714,7 @@ From healthcare software like Liyana Care to cloud infrastructure systems like N
       isPublished: true,
       seoTitle: "Matii Partner Companies Secure $45M in Growth Capital | Milestone",
       seoDescription:
-        "Startups built in partnership with Matii Digitals close $45M+ in combined growth rounds.",
+        "Startups built in partnership with MATII TECHNOLOGIES close $45M+ in combined growth rounds.",
     },
     {
       slug: "scalable-cloud-cost-reduction-architecture-guide",
@@ -746,7 +746,7 @@ The complete whitepaper is available to technical leaders and enterprise teams s
       category: "Press Release",
       excerpt:
         "Matii received premier honors for bridging Swiss architectural design standards with high-performance web systems.",
-      content: `**LONDON** — The International Digital Craft Jury has honored Matii Digitals with top recognition in the 2026 Web Engineering & Visual Excellence category.
+      content: `**LONDON** — The International Digital Craft Jury has honored MATII TECHNOLOGIES with top recognition in the 2026 Web Engineering & Visual Excellence category.
 
 The jury commended Matii's distinctive design identity—characterized by crisp geometric typography, subtle architectural corner accents, and lightning-fast page transitions—as a benchmark for modern digital agencies.
 
@@ -759,7 +759,7 @@ The jury commended Matii's distinctive design identity—characterized by crisp 
       isPublished: true,
       seoTitle: "Matii Honored for Design & Engineering Excellence | Awards",
       seoDescription:
-        "Matii Digitals receives international recognition for digital product design and software engineering.",
+        "MATII TECHNOLOGIES receives international recognition for digital product design and software engineering.",
     },
   ];
 

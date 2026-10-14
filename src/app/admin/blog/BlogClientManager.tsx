@@ -324,7 +324,7 @@ export function BlogClientManager({ initialPosts }: BlogClientManagerProps) {
                   {isNew ? "Write New Blog Article" : `Edit Article: ${editingPost.title}`}
                 </h3>
                 <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
-                  Publish to the official Matii Digitals engineering &amp; design blog.
+                  Publish to the official MATII TECHNOLOGIES engineering &amp; design blog.
                 </p>
               </div>
               <button

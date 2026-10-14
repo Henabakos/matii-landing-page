@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import SolutionsTag from "./solutions/SolutionsTag";
@@ -16,54 +18,6 @@ import SolutionCard, { SolutionCardProps } from "./solutions/SolutionCard";
 import Image from "next/image";
 import type { ParsedProject } from "@/lib/services/project.service";
 
-const defaultProjects: SolutionCardProps[] = [
-  {
-    title: "Liyana Care",
-    description:
-      "Before we build, we listen. We understand the problem, uncover what matters, and create thoughtful digital solutions designed to solve.",
-    bgImage: "/images/ai-automation.png",
-    projectUrl: "/projects/liyana-care",
-    metrics: {
-      stat1Value: "40%",
-      stat1Label: "fast completion",
-      stat2Value: "25%",
-      stat2Label: "user engagement",
-      stat3Value: "4.8",
-      stat3Label: "star rating",
-    },
-  },
-  {
-    title: "Nexis SaaS Platform",
-    description:
-      "Engineered an automated cloud workspace that streamlined internal operations and enhanced team collaboration across 10+ global locations.",
-    bgImage: "/images/ai-automation.png",
-    projectUrl: "/projects/nexis-saas-platform",
-    metrics: {
-      stat1Value: "60%",
-      stat1Label: "speed increase",
-      stat2Value: "3.5x",
-      stat2Label: "scale capacity",
-      stat3Value: "4.9",
-      stat3Label: "star rating",
-    },
-  },
-  {
-    title: "Apex Mobile App",
-    description:
-      "Designed and deployed a modern mobile experience providing real-time analytics, secure transactions, and seamless user journeys.",
-    bgImage: "/images/ai-automation.png",
-    projectUrl: "/projects/apex-mobile-app",
-    metrics: {
-      stat1Value: "100k+",
-      stat1Label: "downloads",
-      stat2Value: "99.9%",
-      stat2Label: "uptime",
-      stat3Value: "5.0",
-      stat3Label: "star rating",
-    },
-  },
-];
-
 interface SolutionsWeBuiltProps {
   projects?: ParsedProject[];
 }
@@ -76,29 +30,19 @@ export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
     Autoplay({ delay: 6000, stopOnInteraction: true }),
   );
 
-  const displayProjects: SolutionCardProps[] =
-    projects && projects.length > 0
-      ? projects.map((p) => ({
-        title: p.title,
-        description: p.subtitle,
-        bgImage: p.coverImage || "/images/ai-automation.png",
-        projectUrl: `/projects/${p.slug}`,
-        metrics: {
-          stat1Value:
-            p.metrics.stat1Value ||
-            (p.metrics.demoClickGrowth ? `+${p.metrics.demoClickGrowth}x` : "40%"),
-          stat1Label: p.metrics.stat1Label || "growth",
-          stat2Value:
-            p.metrics.stat2Value ||
-            (p.metrics.higherEngagement ? `${p.metrics.higherEngagement}%` : "98%"),
-          stat2Label: p.metrics.stat2Label || "retention",
-          stat3Value:
-            p.metrics.stat3Value ||
-            (p.metrics.qualifiedLeads ? `${p.metrics.qualifiedLeads}%` : "4.9"),
-          stat3Label: p.metrics.stat3Label || "satisfaction",
-        },
-      }))
-      : defaultProjects;
+  const displayProjects: SolutionCardProps[] = (projects ?? []).map((p) => ({
+    title: p.title, description: p.subtitle, bgImage: p.coverImage,
+    projectUrl: `/projects/${p.slug}`,
+    metrics: {
+      stat1Value: p.metrics.stat1Value || (p.metrics.demoClickGrowth ? `${p.metrics.demoClickGrowth}x` : ""),
+      stat1Label: p.metrics.stat1Label || (p.metrics.demoClickGrowth ? "demo click growth" : ""),
+      stat2Value: p.metrics.stat2Value || (p.metrics.higherEngagement ? `${p.metrics.higherEngagement}%` : ""),
+      stat2Label: p.metrics.stat2Label || (p.metrics.higherEngagement ? "higher engagement" : ""),
+      stat3Value: p.metrics.stat3Value || (p.metrics.qualifiedLeads ? `${p.metrics.qualifiedLeads}%` : ""),
+      stat3Label: p.metrics.stat3Label || (p.metrics.qualifiedLeads ? "qualified leads" : ""),
+    },
+  }));
+  if (!displayProjects.length) return <ContentEmptyState kind="projects" />;
 
   return (
     <section className="relative w-full overflow-hidden">

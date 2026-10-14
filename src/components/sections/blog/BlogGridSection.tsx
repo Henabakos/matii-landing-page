@@ -27,13 +27,13 @@ export function BlogGridSection({ posts, isFiltered }: BlogGridSectionProps) {
           >
             <div className="space-y-4">
               <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-100 dark:bg-white/5 border border-zinc-100 dark:border-white/10 transition-colors group-hover:border-[#98ff03]">
-                <Image
+                {post.image && <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-center"
-                />
+                />}
               </div>
 
               <div className="space-y-2">

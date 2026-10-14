@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-import { unstable_cache } from "next/cache";
+import { cachedCmsRead } from "./cms-fallback";
+import { fallbackRows } from "./cms-fallback-content";
 
 export interface FormattedBlogPost {
   id: string;
@@ -15,6 +16,7 @@ export interface FormattedBlogPost {
   readTime: string;
   date: string;
   publishedAt: Date;
+  updatedAt?: Date;
   isMainHero: boolean;
   isSideFeatured: boolean;
   isPublished: boolean;
@@ -50,7 +52,7 @@ function formatBlogPost(post: any): FormattedBlogPost {
   };
 }
 
-export const getAllBlogPosts = unstable_cache(
+export const getAllBlogPosts = cachedCmsRead(
   async (): Promise<FormattedBlogPost[]> => {
     const raw = await db.blogPost.findMany({
       where: { isPublished: true },
@@ -59,7 +61,8 @@ export const getAllBlogPosts = unstable_cache(
     return raw.map(formatBlogPost);
   },
   ["blogs-all"],
-  { tags: ["blogs"], revalidate: 3600 }
+  { tags: ["blogs"], revalidate: 3600 },
+  () => fallbackRows("BlogPost").sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime()).map(formatBlogPost)
 );
 
 export async function getAdminAllBlogPosts(): Promise<FormattedBlogPost[]> {
@@ -69,7 +72,7 @@ export async function getAdminAllBlogPosts(): Promise<FormattedBlogPost[]> {
   return raw.map(formatBlogPost);
 }
 
-export const getBlogPostBySlug = unstable_cache(
+export const getBlogPostBySlug = cachedCmsRead(
   async (slug: string): Promise<FormattedBlogPost | null> => {
     const raw = await db.blogPost.findUnique({
       where: { slug },
@@ -78,10 +81,11 @@ export const getBlogPostBySlug = unstable_cache(
     return formatBlogPost(raw);
   },
   ["blog-by-slug"],
-  { tags: ["blogs"], revalidate: 3600 }
+  { tags: ["blogs"], revalidate: 3600 },
+  (slug) => { const row = fallbackRows("BlogPost").find(row => row.slug === slug); return row ? formatBlogPost(row) : null; }
 );
 
-export const getRelatedBlogPosts = unstable_cache(
+export const getRelatedBlogPosts = cachedCmsRead(
   async (category: string, currentSlug: string): Promise<FormattedBlogPost[]> => {
     const raw = await db.blogPost.findMany({
       where: {
@@ -95,5 +99,6 @@ export const getRelatedBlogPosts = unstable_cache(
     return raw.map(formatBlogPost);
   },
   ["blogs-related"],
-  { tags: ["blogs"], revalidate: 3600 }
+  { tags: ["blogs"], revalidate: 3600 },
+  (category, currentSlug) => fallbackRows("BlogPost").filter(row => row.category === category && row.slug !== currentSlug).sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime()).slice(0, 3).map(formatBlogPost)
 );

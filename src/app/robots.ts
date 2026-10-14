@@ -1,16 +1,10 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { siteConfig, isProductionIndexable } from "@/lib/site-config";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-
+  if (!isProductionIndexable()) return { rules: { userAgent: "*", disallow: "/" } };
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/admin/"],
-      },
-    ],
-    sitemap: `${siteUrl}/sitemap.xml`,
+    rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] },
+    sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }

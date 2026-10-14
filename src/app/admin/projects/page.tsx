@@ -1,5 +1,5 @@
 import React from "react";
-import { getAllProjects, getAdminAllProjectCategories } from "@/lib/services/project.service";
+import { getAdminAllProjects, getAdminAllProjectCategories } from "@/lib/services/project.service";
 import ProjectClientManager from "./ProjectClientManager";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function AdminProjectsPage() {
   const [projects, categories] = await Promise.all([
-    getAllProjects(),
+    getAdminAllProjects(),
     getAdminAllProjectCategories(),
   ]);
 

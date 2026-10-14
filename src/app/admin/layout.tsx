@@ -3,6 +3,8 @@ import { isAdminAuthenticated } from "@/lib/auth";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 
+export const metadata = { robots: { index: false, follow: false, noarchive: true } };
+
 export default async function AdminLayout({
   children,
 }: {

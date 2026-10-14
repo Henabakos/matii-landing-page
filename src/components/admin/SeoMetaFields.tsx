@@ -1,5 +1,7 @@
 "use client";
 
+import { siteConfig } from "@/lib/site-config";
+import { brandedTitle } from "@/lib/seo";
 import React, { useState } from "react";
 import Image from "next/image";
 import {
@@ -45,13 +47,13 @@ export function SeoMetaFields({
   const [googleDevice, setGoogleDevice] = useState<"desktop" | "mobile">("desktop");
   const [newKeywordInput, setNewKeywordInput] = useState("");
 
-  const effectiveTitle = seoTitle.trim() || defaultTitle || "Untitled Document";
+  const effectiveTitle = brandedTitle(seoTitle.trim() || defaultTitle || "Untitled Document");
   const effectiveDescription =
     seoDescription.trim() ||
     defaultDescription ||
     "Add a compelling meta description to maximize click-through rate from search engines.";
 
-  const siteUrl = "https://Matiidigitals.com";
+  const siteUrl = siteConfig.url;
   const fullUrl = `${siteUrl}/${sectionPath}/${slug || "preview-slug"}`;
 
   // Keyword array parsing
@@ -104,22 +106,22 @@ export function SeoMetaFields({
               Search Engine Optimization (SEO) & Social Cards
             </h3>
             <p className="font-inter text-[11px] text-zinc-500 dark:text-zinc-400">
-              Fine-tune Google search rankings, snippet previews, and social share cards.
+              Preview titles, descriptions, and social cards. Search engines may rewrite snippets.
             </p>
           </div>
         </div>
 
         {/* Quick Health Pill */}
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-zinc-100 dark:bg-white/10 rounded-[3px] text-[10px] font-space uppercase font-bold text-zinc-700 dark:text-zinc-300">
-          {isTitleIdeal && isDescIdeal && keywordsList.length > 0 ? (
+          {isTitleIdeal && isDescIdeal ? (
             <>
               <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
-              <span>SEO Score: Optimal</span>
+              <span>Snippet length: Good</span>
             </>
           ) : (
             <>
               <AlertTriangle className="size-3 text-amber-500 dark:text-amber-400" />
-              <span>SEO Score: Needs Polish</span>
+              <span>Review snippet length</span>
             </>
           )}
         </div>
@@ -218,7 +220,7 @@ export function SeoMetaFields({
               />
             </div>
             <p className="font-inter text-[10px] text-zinc-400 dark:text-zinc-500">
-              Target search terms injected into meta keywords & JSON-LD schema (e.g. Next.js, AI Automation, Case Study).
+              Editorial planning terms only. Google does not use the meta keywords tag for ranking.
             </p>
           </div>
         </div>
@@ -292,7 +294,7 @@ export function SeoMetaFields({
                 </div>
                 <div className="leading-tight overflow-hidden">
                   <div className="text-[12px] text-[#202124] dark:text-zinc-200 font-normal truncate">
-                    Matii Digitals
+                    MATII TECHNOLOGIES
                   </div>
                   <div className="text-[11px] text-[#4d5156] dark:text-zinc-400 font-mono truncate">
                     {fullUrl}
@@ -333,7 +335,7 @@ export function SeoMetaFields({
               )}
               <div className="p-3 bg-zinc-50 dark:bg-white/5 border-t border-zinc-100 dark:border-white/10 space-y-1">
                 <p className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 tracking-wider">
-                  Matiidigitals.com
+                  {new URL(siteConfig.url).hostname}
                 </p>
                 <h4 className="font-space font-bold text-xs text-[#292c2e] dark:text-white line-clamp-1 leading-snug">
                   {effectiveTitle}

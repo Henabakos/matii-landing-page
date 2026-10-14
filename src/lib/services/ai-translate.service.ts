@@ -16,6 +16,7 @@ export interface BatchTranslationInput {
   fields: Record<string, string>;
   targetLocale: string;
   sourceLocale?: string;
+  strict?: boolean;
 }
 
 const LANGUAGE_NAMES: Record<string, string> = {
@@ -33,6 +34,7 @@ export async function translateFields({
   fields,
   targetLocale,
   sourceLocale = "en",
+  strict = false,
 }: BatchTranslationInput): Promise<Record<string, string>> {
   if (targetLocale === sourceLocale || Object.keys(fields).length === 0) {
     return fields;
@@ -56,7 +58,7 @@ export async function translateFields({
       "gemini-pro",
     ];
 
-    const prompt = `You are a professional technical translator for a high-end software engineering studio (Matii Digitals).
+    const prompt = `You are a professional technical translator for a high-end software engineering studio (MATII TECHNOLOGIES).
 Translate all string values in the following JSON into ${targetLangName}.
 Keep all JSON keys identical. Preserve any HTML tags or code blocks unmodified.
 Return ONLY valid JSON matching the input schema.
@@ -71,6 +73,7 @@ ${JSON.stringify(fields, null, 2)}`;
           `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${geminiKey}`,
           {
             method: "POST",
+            signal: AbortSignal.timeout(30_000),
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
@@ -111,6 +114,7 @@ ${JSON.stringify(fields, null, 2)}`;
       console.log(`[Translate API] 🌐 Translating via OpenAI (gpt-4o-mini) for ${targetLangName}...`);
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
+        signal: AbortSignal.timeout(30_000),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${openAiKey}`,
@@ -121,7 +125,7 @@ ${JSON.stringify(fields, null, 2)}`;
           messages: [
             {
               role: "system",
-              content: `You are a professional technical translator for Matii Digitals. Translate all field values in the provided JSON into ${targetLangName}. Keep the JSON keys identical. Preserve HTML formatting tags. Return ONLY the valid JSON object.`,
+              content: `You are a professional technical translator for MATII TECHNOLOGIES. Translate all field values in the provided JSON into ${targetLangName}. Keep the JSON keys identical. Preserve HTML formatting tags. Return ONLY the valid JSON object.`,
             },
             {
               role: "user",
@@ -135,6 +139,7 @@ ${JSON.stringify(fields, null, 2)}`;
       if (!response.ok) {
         const errText = await response.text();
         console.error(`[Translate API] OpenAI API error (${response.status}):`, errText);
+        if (strict) throw new Error("The translation provider could not complete the request. Check its API key and quota, then try again.");
         return fields;
       }
 
@@ -147,10 +152,12 @@ ${JSON.stringify(fields, null, 2)}`;
       }
     } catch (error: any) {
       console.error(`[Translate API] OpenAI translation failed for ${targetLangName}:`, error.message);
+      if (strict) throw new Error("Translation failed. Check the translation provider's API key and quota, then try again.");
       return fields;
     }
   }
 
+  if (strict) throw new Error("Translation is unavailable. Configure a working GEMINI_API_KEY or OPENAI_API_KEY on the server and try again.");
   // 3. Fallback when no API key is provided
   console.warn(
     `[Translate API] ⚠️ No API key found in .env. To enable real translations, add GEMINI_API_KEY (Free at aistudio.google.com) or OPENAI_API_KEY to your .env file.`

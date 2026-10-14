@@ -22,7 +22,7 @@ export function ProjectCard({
   description,
   statLabel,
   slug,
-  imageUrl = "/images/ai-automation.png",
+  imageUrl,
 }: ProjectCardProps) {
   return (
     <Link

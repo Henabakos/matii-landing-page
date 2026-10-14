@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-import { unstable_cache } from "next/cache";
+import { cachedCmsRead } from "./cms-fallback";
+import { fallbackRows } from "./cms-fallback-content";
 
 export interface FormattedJobPosition {
   id: string;
@@ -78,7 +79,7 @@ function parseJobPosition(job: any): FormattedJobPosition {
   };
 }
 
-export const getAllJobPositions = unstable_cache(
+export const getAllJobPositions = cachedCmsRead(
   async (): Promise<FormattedJobPosition[]> => {
     const raw = await db.jobPosition.findMany({
       where: { isActive: true },
@@ -87,10 +88,11 @@ export const getAllJobPositions = unstable_cache(
     return raw.map(parseJobPosition);
   },
   ["careers-all"],
-  { tags: ["careers"], revalidate: 3600 }
+  { tags: ["careers"], revalidate: 3600 },
+  () => fallbackRows("JobPosition").sort((a, b) => a.order - b.order || b.createdAt.getTime() - a.createdAt.getTime()).map(parseJobPosition)
 );
 
-export const getJobPositionBySlug = unstable_cache(
+export const getJobPositionBySlug = cachedCmsRead(
   async (slug: string): Promise<FormattedJobPosition | null> => {
     const raw = await db.jobPosition.findUnique({
       where: { slug },
@@ -99,7 +101,8 @@ export const getJobPositionBySlug = unstable_cache(
     return parseJobPosition(raw);
   },
   ["career-by-slug"],
-  { tags: ["career-by-slug"], revalidate: 3600 }
+  { tags: ["career-by-slug"], revalidate: 3600 },
+  (slug) => { const row = fallbackRows("JobPosition").find(row => row.slug === slug); return row ? parseJobPosition(row) : null; }
 );
 
 export async function getAdminAllJobPositions(): Promise<FormattedJobPosition[]> {

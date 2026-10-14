@@ -1,6 +1,6 @@
 {
   "common": {
-    "brandName": "Matii Digitals",
+    "brandName": "MATII TECHNOLOGIES",
     "startProject": "Pirojektii Jalqabi",
     "exploreServices": "Tajaajiloota Daawwadhu",
     "contactUs": "Nu Qunnamaa",
@@ -128,6 +128,11 @@
     "submitMessage": "Ergaa Ergaa",
     "submitting": "Ergamaa jira...",
     "successMessage": "Galatoomaa! Gaaffiin keessan garee injinaroota keenyaaf dhiyaateera.",
+    "mapChooseCity": "Magaalaa filadhu",
+    "mapTitle": "Kaartaa {city}",
+    "mapCityOnly": "Ilaalcha magaalaa: {city}. Teessoon waajjiraa sirrii taʼe ammallee hin galmoofne.",
+    "mapDirections": "Kallattii argadhu",
+    "mapOpen": "Kaartaa guddaa bani",
     "locationsTitle": "Wiirtuuwwan Addunyaa fi Iddoowwan",
     "locationsSubtitle": "WIIRTUUWWAN INJINARINGII FI HIRMAANNAA",
     "locationUsa": "Yuunaayitid Isteetis",
@@ -191,5 +196,47 @@
     "subscribe": "Galmaa'aa",
     "privacyPolicy": "Imaammata Mateenyaa",
     "termsOfService": "Waliigaltee Tajaajilaa"
+  },
+  "emptyContent": {
+    "contact": "Nu qunnamaa",
+    "projects": {
+      "title": "Pirojektiin hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "testimonials": {
+      "title": "Yaadni maamiltootaa hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "partners": {
+      "title": "Michoonni hin galmoofne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "metrics": {
+      "title": "Buʼaan hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "services": {
+      "title": "Tajaajilli hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "blog": {
+      "title": "Barreeffamni hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "careers": {
+      "title": "Yeroo ammaa hojii banaa as hin jiru",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "gallery": {
+      "title": "Suuraan hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "news": {
+      "title": "Oduun hin maxxanfamne",
+      "description": "Qabiyyeen maxxanfame yeroo argamu asitti mulʼata. Gaaffii yoo qabaattan nu qunnamaa."
+    },
+    "errorTitle": "Qabiyyee feʼuun hin dandaʼamne",
+    "errorDescription": "Qabiyyeen yeroo ammaa hin argamu. Irra deebiʼii yaali.",
+    "retry": "Irra deebiʼii yaali"
   }
 }

@@ -1,105 +1,27 @@
-"use client";
-
-import React from "react";
-import Image from "next/image";
+﻿import { ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import svgPaths from "@/lib/svgPaths";
 
 export interface ServiceCardProps {
   index: string;
   title: string;
   description?: string;
   items: string[];
-  bgImage?: string;
   href?: string;
-  animationComponent?: React.ReactNode;
 }
 
-export function ServiceCard({
-  index,
-  title,
-  description,
-  items,
-  bgImage = "/images/ai-automation.png",
-  href = "/contact",
-  animationComponent,
-}: ServiceCardProps) {
+export default function ServiceCard({ index, title, description, items, href = "/contact" }: ServiceCardProps) {
   return (
-    <Link href={href} className="block h-full">
-      <div className="relative bg-white dark:bg-[#161819] border border-[#AEAEAE]/40 dark:border-white/10 p-6 md:p-8 flex flex-col justify-between h-full min-h-[520px] lg:min-h-[580px] overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out hover:bg-[#292c2e] dark:hover:bg-[#222527]">
-        {/* Optional Background Image on Hover */}
-        {bgImage && (
-          <Image
-            src={bgImage}
-            alt={title}
-            fill
-            sizes="(max-width: 1200px) 100vw, 400px"
-            className="object-cover size-full opacity-0 group-hover:opacity-30 transition-opacity duration-500 ease-in-out pointer-events-none"
-          />
-        )}
-
-        {/* Dark Overlay on Hover */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out pointer-events-none" />
-
-        {/* Top Tag Badge */}
-        <div className="self-start bg-[#292c2e] dark:bg-white/10 group-hover:bg-[#f3f4f6] px-3 py-1.5 rounded-xs flex items-center gap-2.5 z-10 transition-colors duration-500 ease-in-out">
-          <div className="bg-[#A2FF00] size-3.5 shrink-0" />
-          <span className="font-urbanist font-medium text-xs md:text-sm text-white group-hover:text-[#292c2e] uppercase tracking-wider whitespace-nowrap transition-colors duration-500 ease-in-out">
-            {title}
-          </span>
-        </div>
-
-        {/* Optional Description Text (Shown on Hover or if available) */}
-        {description && (
-          <p className="font-inter font-normal text-xs md:text-[13px] text-white/90 leading-relaxed z-10 max-w-70 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-            {description}
-          </p>
-        )}
-
-        {/* Technical 3D Isometric Illustration Area (Occupies ~70-80% of middle area) */}
-        <div className="relative my-auto py-2 w-full z-10 flex items-center justify-center">
-          {animationComponent ? (
-            <div className="w-full max-w-[320px] transition-transform duration-300 group-hover:scale-[1.02]">
-              {animationComponent}
-            </div>
-          ) : (
-            <div className="relative flex items-center justify-center pointer-events-none select-none">
-              <span className="font-urbanist font-medium text-[140px] sm:text-[170px] lg:text-[200px] leading-none text-[#f3f4f6] dark:text-white/5 group-hover:text-white/70 uppercase tracking-tighter transition-colors duration-500 ease-in-out">
-                {index}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Bottom Action & Items Container */}
-        <div className="flex items-end justify-between z-10 mt-auto w-full">
-          {/* Items List with Vertical Lime Line */}
-          <div className="flex items-center gap-3.5">
-            <div className="w-[2px] h-[68px] bg-[#98ff03] shrink-0" />
-            <ul className="font-inter font-normal text-xs md:text-[14px] text-black dark:text-zinc-200 group-hover:text-white leading-relaxed capitalize transition-colors duration-500 ease-in-out">
-              {items.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Arrow Action Badge (Reveals on Hover) */}
-          <div className="bg-white p-2.5 rounded-[8px] shadow-md flex items-center justify-center shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out transform translate-y-3 group-hover:translate-y-0 hover:bg-[#f3f4f6]">
-            <div className="size-5 md:size-6 relative">
-              <svg className="block size-full" fill="none" viewBox="0 0 24 24">
-                <path
-                  clipRule="evenodd"
-                  d={svgPaths.p127c5100}
-                  fill="#292C2E"
-                  fillRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+    <Link href={href} className="group flex h-full flex-col border border-border bg-card p-6 transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground sm:p-8">
+      <div className="mb-8 flex items-center justify-between">
+        <span className="font-inter text-xs tabular-nums tracking-widest text-zinc-600 dark:text-zinc-400">{index}</span>
+        <ArrowUpRight aria-hidden="true" strokeWidth={1.5} className="size-5 text-foreground" />
       </div>
+      <h3 className="max-w-64 sm:min-h-[2.3em] text-balance font-urbanist text-2xl font-semibold leading-[1.15] tracking-tight xl:text-3xl">{title}</h3>
+      {description && <p className="mb-7 mt-4 max-w-md text-pretty font-inter text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">{description}</p>}
+      <ul className="mt-auto space-y-2 border-s-2 border-primary ps-4 font-inter text-sm leading-relaxed">
+        {items.map(item => <li key={item}>{item}</li>)}
+      </ul>
+      <span className="mt-8 border-t border-border pt-5 font-inter text-sm font-medium underline-offset-4 group-hover:underline">Explore service<span className="sr-only">: {title}</span></span>
     </Link>
   );
 }
-
-export default ServiceCard;

@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   }
 
   // 2. Ignore API routes and public static files
-  if (pathname.startsWith("/api")) {
+  if (pathname.startsWith("/api") || pathname === "/social-image") {
     return NextResponse.next();
   }
 

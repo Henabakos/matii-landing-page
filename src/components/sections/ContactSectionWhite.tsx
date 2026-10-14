@@ -25,9 +25,9 @@ export function ContactSectionWhite() {
               </div>
 
               <div className="flex flex-col gap-4">
-                <h2 className="font-inter font-bold text-3xl sm:text-4xl text-black dark:text-white uppercase tracking-tight">
+                <h1 className="font-inter font-bold text-3xl sm:text-4xl text-black dark:text-white uppercase tracking-tight">
                   {t("heading")}
-                </h2>
+                </h1>
               </div>
             </div>
 

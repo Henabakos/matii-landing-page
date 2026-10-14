@@ -694,7 +694,7 @@ export default function CareerClientManager({
                         )}
 
                         <a
-                          href={`mailto:${app.email}?subject=Application for ${encodeURIComponent(app.jobTitle)} at Matii Digitals`}
+                          href={`mailto:${app.email}?subject=Application for ${encodeURIComponent(app.jobTitle)} at MATII TECHNOLOGIES`}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#161819] hover:bg-zinc-100 dark:hover:bg-white/5 text-zinc-700 dark:text-zinc-300 text-xs font-space rounded-[3px] transition-colors ml-auto"
                         >
                           <Mail className="size-3.5" />
@@ -973,7 +973,7 @@ export default function CareerClientManager({
                   setSeoDescription={(val) => setEditingJob((prev) => (prev ? { ...prev, seoDescription: val } : null))}
                   seoKeywords={editingJob.seoKeywords || ""}
                   setSeoKeywords={(val) => setEditingJob((prev) => (prev ? { ...prev, seoKeywords: val } : null))}
-                  defaultTitle={`${editingJob.title || "Career Opening"} | Careers at Matii Digitals`}
+                  defaultTitle={`${editingJob.title || "Career Opening"} | Careers at MATII TECHNOLOGIES`}
                   defaultDescription={editingJob.shortDescription || "Join our team of senior software engineers and designers."}
                   slug={editingJob.slug || "role"}
                   sectionPath="careers"

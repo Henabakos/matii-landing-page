@@ -553,7 +553,7 @@ export function InternshipsView() {
                 {/* Motivation / Why Matii */}
                 <div className="space-y-1.5">
                   <label className="font-space text-xs uppercase font-bold text-zinc-700 dark:text-zinc-300 block">
-                    Why Matii Digitals? (Optional)
+                    Why MATII TECHNOLOGIES? (Optional)
                   </label>
                   <textarea
                     rows={3}

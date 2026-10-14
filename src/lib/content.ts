@@ -141,6 +141,8 @@ export function sanitizeContent(html: string): string {
       a: ["http", "https", "mailto"],
     },
     transformTags: {
+      // The page title owns h1; editor headings belong below it.
+      h1: "h2",
       a: (tagName, attribs) => {
         const href = attribs.href || "";
         const isExternal = /^https?:\/\//i.test(href);

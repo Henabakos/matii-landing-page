@@ -21,38 +21,14 @@ import {
 import { normalizeToHtml, sanitizeContent } from "@/lib/content";
 import { submitJobApplicationAction } from "@/lib/actions/career.actions";
 import type { FormattedJobPosition } from "@/lib/services/career.service";
-import { jobPositions } from "@/data/careers-data";
+
 
 interface CareerDetailViewProps {
-  job?: FormattedJobPosition;
+  job: FormattedJobPosition;
   slug?: string;
 }
 
-export function CareerDetailView({ job: propJob, slug }: CareerDetailViewProps) {
-  // Find job from prop or fallback
-  const fallbackJob = jobPositions.find((j) => j.slug === slug) || jobPositions[0];
-
-  const job = propJob || {
-    id: fallbackJob.id,
-    slug: fallbackJob.slug,
-    title: fallbackJob.title,
-    department: fallbackJob.department,
-    location: fallbackJob.location,
-    type: fallbackJob.type,
-    experience: fallbackJob.experience,
-    salary: fallbackJob.salary,
-    shortDescription: fallbackJob.shortDescription,
-    content: `<h2>About the Role</h2><p>${fallbackJob.aboutRole}</p><h3>Responsibilities</h3><ul>${fallbackJob.responsibilities.map((r) => `<li>${r}</li>`).join("")}</ul><h3>Requirements</h3><ul>${fallbackJob.requirements.map((r) => `<li>${r}</li>`).join("")}</ul><h3>Benefits</h3><ul>${fallbackJob.benefits.map((b) => `<li>${b}</li>`).join("")}</ul>`,
-    order: 1,
-    isActive: true,
-    isFeatured: false,
-    seoTitle: null,
-    seoDescription: null,
-    seoKeywords: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
+export function CareerDetailView({ job }: CareerDetailViewProps) {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [uploadingResume, setUploadingResume] = useState(false);
@@ -417,7 +393,7 @@ export function CareerDetailView({ job: propJob, slug }: CareerDetailViewProps) 
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Briefly tell us why you are excited to join Matii Digitals and what you bring to the table..."
+                    placeholder="Briefly tell us why you are excited to join MATII TECHNOLOGIES and what you bring to the table..."
                     value={formData.coverNote}
                     onChange={(e) => setFormData({ ...formData, coverNote: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-[#f3f4f6] dark:bg-white/5 border border-zinc-200 dark:border-white/10 font-inter text-sm text-[#292c2e] dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-[#292c2e] dark:focus:border-[#98ff03]"

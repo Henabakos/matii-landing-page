@@ -1,12 +1,11 @@
 "use client";
 
+import { siteConfig } from "@/lib/site-config";
 import svgPaths from "@/lib/svgPaths";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import ContactForm from "../sections/contact/ContactForm";
 import { useTranslations } from "next-intl";
-
-import FooterLogo from "./FooterLogo";
 
 export function Footer() {
   const tNav = useTranslations("nav");
@@ -97,11 +96,18 @@ export function Footer() {
             }}
           >
             <Image
-              src="/images/matii-footer-logo.svg"
-              alt="footer-logo"
+              src="/images/matii-footer-logo-light.svg"
+              alt="MATII TECHNOLOGIES"
               width={1300}
               height={425}
-              className="object-contain"
+              className="object-contain dark:hidden"
+            />
+            <Image
+              src="/images/matii-footer-logo.svg"
+              alt="MATII TECHNOLOGIES"
+              width={1300}
+              height={425}
+              className="hidden object-contain dark:block"
             />
           </div>
         </div>
@@ -112,38 +118,7 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-8 md:gap-12 text-[#292c2e] dark:text-zinc-300">
             {/* Social Channels */}
             <div className="flex items-center gap-6 font-inter font-medium text-base capitalize">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black/60 dark:hover:text-white transition-colors"
-              >
-                instagram
-              </a>
-              <a
-                href="https://t.me"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black/60 dark:hover:text-white transition-colors"
-              >
-                Telegram
-              </a>
-              <a
-                href="https://tiktok.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black/60 dark:hover:text-white transition-colors"
-              >
-                tiktok
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-black/60 dark:hover:text-white transition-colors"
-              >
-                youtube
-              </a>
+              {siteConfig.socialProfiles.map(url => <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="hover:text-black/60 dark:hover:text-white transition-colors">{new URL(url).hostname.replace("www.", "")}</a>)}
             </div>
 
             {/* Copyright */}
@@ -162,7 +137,7 @@ export function Footer() {
                   />
                 </svg>
               </div>
-              <span>2026 Matii Technologies. {tCommon("allRightsReserved")}</span>
+              <span>2026 MATII TECHNOLOGIES. {tCommon("allRightsReserved")}</span>
             </div>
           </div>
 

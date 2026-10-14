@@ -1,5 +1,7 @@
 "use client";
 
+import ContentEmptyState from "@/components/common/ContentEmptyState";
+
 import React from "react";
 import Image from "next/image";
 
@@ -13,34 +15,13 @@ export interface ProjectGalleryProps {
   items?: GalleryItem[];
 }
 
-const defaultGalleryItems: GalleryItem[] = [
-  {
-    id: "1",
-    title: "AI Workflow & Node Dashboard Design",
-    imageUrl: "/images/ai-automation.png",
-  },
-  {
-    id: "2",
-    title: "Brand Architecture & Swiss Style System",
-    imageUrl: "/images/solutions-1.png",
-  },
-  {
-    id: "3",
-    title: "Mobile Application & Real-time Logs UI",
-    imageUrl: "/images/faq-illustration.png",
-  },
-  {
-    id: "4",
-    title: "High Conversion Landing Page Architecture",
-    imageUrl: "/images/about-illustration.png",
-  },
-];
-
 export function ProjectGallery({
   items,
 }: ProjectGalleryProps) {
   const validItems = (items || []).filter((item) => Boolean(item?.imageUrl && item.imageUrl.trim()));
-  const displayItems = validItems.length > 0 ? validItems : defaultGalleryItems;
+  const displayItems = validItems;
+
+  if (!displayItems.length) return <ContentEmptyState kind="gallery" compact />;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 py-14 border-b border-zinc-200 dark:border-white/10">

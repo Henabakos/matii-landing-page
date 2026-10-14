@@ -6,7 +6,7 @@ export interface TestimonialCardProps {
   authorName: string;
   authorRole: string;
   avatarUrl: string;
-  rating?: number;
+  rating: number;
 }
 
 export function TestimonialCard({
@@ -14,7 +14,7 @@ export function TestimonialCard({
   authorName,
   authorRole,
   avatarUrl,
-  rating = 5,
+  rating,
 }: TestimonialCardProps) {
   return (
     <div className="relative bg-[#f3f4f6] dark:bg-white/5 border border-[rgba(174,174,174,0.3)] dark:border-white/10 p-6 md:p-10 flex flex-col justify-between h-full min-h-80 w-full transition-colors">
@@ -57,14 +57,14 @@ export function TestimonialCard({
       {/* Author Info */}
       <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(174,174,174,0.2)] dark:border-white/10">
         <div className="relative size-12 rounded-full overflow-hidden border border-white dark:border-white/20 shrink-0 shadow-sm">
-          <Image
+          {avatarUrl && <Image
             src={avatarUrl}
             alt={authorName}
             fill
             unoptimized={true}
             sizes="48px"
             className="object-cover"
-          />
+          />}
         </div>
         <div className="flex flex-col">
           <span className="font-urbanist font-medium text-base md:text-lg text-[#292c2e] dark:text-white transition-colors">

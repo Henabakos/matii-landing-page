@@ -1,6 +1,7 @@
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -212,4 +213,14 @@ model ProjectCategory {
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Structured pillar documents; drafts never appear on public pages.
+model ServicePillar {
+  id String @id
+  draft String
+  published String?
+  revision Int @default(0)
+  publishedAt DateTime?
+  updatedAt DateTime @updatedAt
 }

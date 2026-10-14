@@ -61,9 +61,9 @@ export function NewsClientManager({ initialNews }: NewsClientManagerProps) {
       title: "",
       category: "Company News",
       excerpt: "",
-      content: `<h2>Official Announcement</h2><p>Matii Digitals announces...</p><h3>Strategic Milestones</h3><p>Key highlights and architectural benefits include:</p><ul><li>Enterprise deployment speed increase</li><li>Next-generation real-time telemetry</li></ul>`,
+      content: `<h2>Official Announcement</h2><p>MATII TECHNOLOGIES announces...</p><h3>Strategic Milestones</h3><p>Key highlights and architectural benefits include:</p><ul><li>Enterprise deployment speed increase</li><li>Next-generation real-time telemetry</li></ul>`,
       source: "Matii Press",
-      sourceUrl: "https://Matiidigitals.com",
+      sourceUrl: "https://matiitechnologies.com",
       coverImage: "/images/solutions-1.png",
       readTime: "3 min read",
       isFeatured: false,
@@ -313,7 +313,7 @@ export function NewsClientManager({ initialNews }: NewsClientManagerProps) {
                   {isNew ? "Create News Dispatch" : `Edit Dispatch: ${editingNews.title}`}
                 </h3>
                 <p className="font-inter text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
-                  Publish to the official Matii Digitals Press Room.
+                  Publish to the official MATII TECHNOLOGIES Press Room.
                 </p>
               </div>
               <button
@@ -370,7 +370,7 @@ export function NewsClientManager({ initialNews }: NewsClientManagerProps) {
                     required={activeLocale === "en"}
                     value={getNewsTranslatedField("title", activeLocale)}
                     onChange={(e) => setNewsTranslatedField("title", e.target.value, activeLocale)}
-                    placeholder={activeLocale === "en" ? "e.g. Matii Digitals Secures Series A Funding" : `Headline in ${activeLocale.toUpperCase()}...`}
+                    placeholder={activeLocale === "en" ? "e.g. MATII TECHNOLOGIES Secures Series A Funding" : `Headline in ${activeLocale.toUpperCase()}...`}
                     className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] font-space text-sm font-bold text-[#292c2e] dark:text-white focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
                   />
                 </div>

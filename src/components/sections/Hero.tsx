@@ -27,7 +27,7 @@ export function Hero({ partners }: HeroProps) {
         {/* <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48" style={{ position: "absolute" }}>
           <Image
             src="/shapes/hero-shape.svg"
-            alt="hero-shape"
+            alt=""
             className="object-contain"
             fill
           />
@@ -36,7 +36,8 @@ export function Hero({ partners }: HeroProps) {
         <div className="hidden md:block absolute -bottom-10 lg:-bottom-14 right-0 w-28 h-24 lg:w-44 lg:h-36 pointer-events-none z-0 opacity-75" style={{ position: "absolute" }}>
           <Image
             src="/shapes/hero-shape.svg"
-            alt="hero-shape"
+            alt=""
+            sizes="(max-width: 1024px) 112px, 176px"
             className="rotate-180 object-contain"
             fill
           />

@@ -1,94 +1,39 @@
-import { MetadataRoute } from "next";
-import { db } from "@/lib/db";
+import type { MetadataRoute } from "next";
+import { staticSeoPaths, staticPageLocales } from "@/lib/seo-pages";
+import { languageAlternates, localizedUrl, publishedLocales } from "@/lib/seo";
+import { pillarLocales } from "@/lib/seo-cms";
+import { getAllProjects } from "@/lib/services/project.service";
+import { getAllBlogPosts } from "@/lib/services/blog.service";
+import { getAllNewsArticles } from "@/lib/services/news.service";
+import { getAllJobPositions } from "@/lib/services/career.service";
+import { getPublishedPillar } from "@/lib/services/pillar.service";
+import { isFallbackContent } from "@/lib/services/cms-fallback";
+import { PILLARS_LIST } from "@/data/pillars-data";
+import { isProductionIndexable } from "@/lib/site-config";
 
+// Cache the published queries, not a partially generated sitemap after an outage.
+export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Matiidigitals.com";
-
-  // 1. Static Pages
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: `${siteUrl}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${siteUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/projects`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/news`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-  ];
-
-  try {
-    // 2. Dynamic Projects
-    const projects = await db.project.findMany({
-      select: { slug: true, updatedAt: true },
+  if (!isProductionIndexable()) return [];
+  const entries: MetadataRoute.Sitemap = [];
+  function add(path: string, locales: readonly string[], updatedAt?: Date) {
+    const date = updatedAt ? new Date(updatedAt) : undefined;
+    for (const locale of locales) entries.push({
+      url: localizedUrl(path, locale),
+      alternates: { languages: languageAlternates(path, locales) },
+      ...(date && !Number.isNaN(date.getTime()) ? { lastModified: date } : {}),
     });
-    const projectRoutes: MetadataRoute.Sitemap = projects.map((proj) => ({
-      url: `${siteUrl}/projects/${proj.slug}`,
-      lastModified: proj.updatedAt,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    }));
-
-    // 3. Dynamic Blog Posts
-    const blogPosts = await db.blogPost.findMany({
-      where: { isPublished: true },
-      select: { slug: true, updatedAt: true },
-    });
-    const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-      url: `${siteUrl}/blog/${post.slug}`,
-      lastModified: post.updatedAt,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    }));
-
-    // 4. Dynamic News Articles
-    const newsArticles = await db.newsArticle.findMany({
-      where: { isPublished: true },
-      select: { slug: true, updatedAt: true },
-    });
-    const newsRoutes: MetadataRoute.Sitemap = newsArticles.map((item) => ({
-      url: `${siteUrl}/news/${item.slug}`,
-      lastModified: item.updatedAt,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    }));
-
-    return [...staticRoutes, ...projectRoutes, ...blogRoutes, ...newsRoutes];
-  } catch (e) {
-    console.error("Error generating sitemap:", e);
-    return staticRoutes;
   }
+  for (const path of staticSeoPaths) add(path, staticPageLocales(path));
+  const [projects, blogs, news, jobs, pillars] = await Promise.all([
+    getAllProjects(), getAllBlogPosts(), getAllNewsArticles(), getAllJobPositions(),
+    Promise.all(PILLARS_LIST.map(async pillar => ({ pillar, content: await getPublishedPillar(pillar.id) }))),
+  ]);
+  for (const row of projects) if (!isFallbackContent(row)) add(`/projects/${row.slug}`, publishedLocales(row.translations, ["title", "subtitle", "challengeParagraphs", "solutionParagraphs"]), row.updatedAt);
+  for (const row of blogs) if (!isFallbackContent(row)) add(`/blog/${row.slug}`, publishedLocales(row.translations, ["title", "excerpt", "content"]), row.updatedAt);
+  for (const row of news) if (!isFallbackContent(row)) add(`/news/${row.slug}`, publishedLocales(row.translations, ["title", "excerpt", "content"]), row.updatedAt);
+  for (const row of jobs) if (!isFallbackContent(row)) add(`/careers/${row.slug}`, publishedLocales(row.translations, ["title", "shortDescription", "content"]), row.updatedAt);
+  // Draft updates do not supply a service page lastmod. Aliases are not canonical URLs.
+  for (const { pillar, content } of pillars) if (content && !content.seo.noindex && !isFallbackContent(content)) add(`/services/${pillar.slug}`, pillarLocales(content));
+  return entries;
 }
