@@ -4,6 +4,8 @@ Prepared 14 October 2026 for the owner-confirmed website **https://matiitechnolo
 
 ## Before submitting the site
 
+For the day-to-day CMS workflow, image selection, publishing checklist and Google submission steps, start with [Blog SEO and Google indexing](BLOG-SEO-AND-GOOGLE-INDEXING-GUIDE.md).
+
 Ask your developer or hosting administrator to complete these checks:
 
 1. Connect the confirmed domain to the production deployment and enable HTTPS. Decide whether `www` is used; the implementation uses the non-www domain. Redirect HTTP and www traffic to the HTTPS non-www equivalent, preserving the path and query. Do not redirect arbitrary third-party domains. If you own the former domain, arrange a path-preserving permanent redirect there after checking old-to-new page mappings.

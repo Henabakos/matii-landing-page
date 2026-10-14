@@ -7,6 +7,20 @@ async function main() {
     "matii-default": "Enterprise Software & AI Solutions",
     "matii-home": "Engineering Core Systems. Powering Progress.",
     "matii-services": "Enterprise Software. AI. BPO. Cloud.",
+    "matii-contact": "Contact MATII TECHNOLOGIES",
+    "matii-careers": "Join Our Team. Shape the Future.",
+    "matii-about": "Engineering Core Systems. Powering Progress.",
+    "matii-privacy": "Privacy Policy - MATII TECHNOLOGIES",
+    "matii-terms": "Terms of Service - MATII TECHNOLOGIES",
+    "matii-faq": "Frequently Asked Questions - MATII TECHNOLOGIES",
+    "matii-products": "Explore Our Products - MATII TECHNOLOGIES",
+    "matii-solutions": "Discover Our Solutions - MATII TECHNOLOGIES",
+    "matii-bpo": "Business Process Outsourcing - MATII TECHNOLOGIES",
+    "matii-ai": "Data & AI Solutions - MATII TECHNOLOGIES",
+    "matii-cloud": "Cloud Services - MATII TECHNOLOGIES",
+    "matii-news": "News & Insights - MATII TECHNOLOGIES",
+    "matii-projects": "Our Projects - MATII TECHNOLOGIES",
+    "matii-blog": "Blog - MATII TECHNOLOGIES"
   };
   for (const [name, title] of Object.entries(cards)) {
     const response = await renderSocialImage(title);

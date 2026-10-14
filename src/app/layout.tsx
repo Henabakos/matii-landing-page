@@ -43,7 +43,10 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  icons: { icon: [{ url: "/icons/matii-32.png", sizes: "32x32", type: "image/png" }], apple: [{ url: "/icons/matii-180.png", sizes: "180x180", type: "image/png" }] },
+  icons: {
+    icon: [{ url: "/icons/matii-32.png", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/icons/matii-180.png", sizes: "180x180", type: "image/png" }],
+  },
   robots: { index: isProductionIndexable(), follow: true },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION || undefined,

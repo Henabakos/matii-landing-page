@@ -24,6 +24,8 @@ With Node.js 22.13+ and the original `prisma/dev.db` available, run `pnpm db:see
 
 ## SEO and public launch
 
+For article editors: [Blog SEO, social images and Google indexing workflow](docs/BLOG-SEO-AND-GOOGLE-INDEXING-GUIDE.md).
+
 The owner-confirmed production origin is `https://matiitechnologies.com`. Set `NEXT_PUBLIC_SITE_URL` to that origin and `SEO_INDEXING_ENABLED=true` only for the production build. Preview/staging must remain false; Vercel/Netlify preview contexts are also excluded automatically. Rebuild after changing these settings. Local development origins never appear in canonical metadata.
 
 See [SEO implementation and validation](docs/SEO-IMPLEMENTATION-REPORT.md), [owner setup and 90-day roadmap](docs/SEO-SETUP-AND-GROWTH-GUIDE.md), [content strategy](docs/SEO-CONTENT-STRATEGY.md), and [social asset guide](docs/SOCIAL-MEDIA-ASSET-GUIDE.md). The site does not install analytics or claim search-account verification automatically.
