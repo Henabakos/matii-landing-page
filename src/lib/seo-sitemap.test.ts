@@ -9,7 +9,7 @@ import { fallbackRows } from "./services/cms-fallback-content";
 import { siteConfig } from "./site-config";
 
 test("production sitemap uses only current public records, real dates and canonical locales", async t => {
-  for (const [key, value] of Object.entries({ NODE_ENV: "production", SEO_INDEXING_ENABLED: "true", VERCEL_ENV: "production", CONTEXT: "production" })) {
+  for (const [key, value] of Object.entries({ NODE_ENV: "production", SEO_INDEXING_ENABLED: "", VERCEL_ENV: "production", VERCEL_TARGET_ENV: "production", CONTEXT: "production" })) {
     const original = process.env[key]; process.env[key] = value;
     t.after(() => { if (original === undefined) delete process.env[key]; else process.env[key] = original; });
   }

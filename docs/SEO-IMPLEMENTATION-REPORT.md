@@ -44,7 +44,7 @@ Service aliases remain working URLs but canonicalize to the pillar slug; aliases
 
 Published queries retain their normal cache/revalidation behavior. A temporary failure can use existing cached CMS data; newly returned bundled fallback records are excluded from sitemap discovery and have noindex detail metadata. The sitemap itself is generated dynamically, so a partial outage response is not persisted as an hour-long complete sitemap. A valid empty CMS result remains empty. Successful cached CMS data may remain available during its normal cache window; publication actions invalidate the existing tags/paths.
 
-Production requires `NODE_ENV=production` and `SEO_INDEXING_ENABLED=true`. Preview contexts override that flag to remain nonindexable. Admin/API responses have X-Robots-Tag headers, and the admin layout has noindex metadata. Preview responses carry a global noindex header, robots disallow all, and sitemap output is empty. Robots is not an authentication mechanism. Existing authentication/actions were not redesigned.
+Production requires `NODE_ENV=production`; confirmed Vercel/Netlify production now defaults to indexing unless explicitly disabled. Other hosts require `SEO_INDEXING_ENABLED=true`. Preview contexts override that flag to remain nonindexable. Admin/API responses have X-Robots-Tag headers, and the admin layout has noindex metadata. Preview responses carry a global noindex header, robots disallow all, and sitemap output is empty. Robots is not an authentication mechanism. Existing authentication/actions were not redesigned. See [the subsequent production indexing fix](PRODUCTION-INDEXING-FIX.md) for the live incident and required redeployment steps.
 
 ### Structured data coverage
 

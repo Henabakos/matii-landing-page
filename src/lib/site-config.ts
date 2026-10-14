@@ -32,9 +32,15 @@ export const siteConfig = {
 };
 
 export function isProductionIndexable(env: NodeJS.ProcessEnv = process.env): boolean {
+  if (env.NODE_ENV !== "production") return false;
   if (env.VERCEL_ENV && env.VERCEL_ENV !== "production") return false;
+  if (env.VERCEL_TARGET_ENV && env.VERCEL_TARGET_ENV !== "production") return false;
   if (env.CONTEXT && env.CONTEXT !== "production") return false;
-  return env.NODE_ENV === "production" && env.SEO_INDEXING_ENABLED === "true";
+  const override = env.SEO_INDEXING_ENABLED?.trim().toLowerCase();
+  if (override && override !== "auto") return override === "true";
+  // Known hosting production environments are public by default. Unknown hosts
+  // still require an explicit opt-in; NODE_ENV alone also describes staging.
+  return env.VERCEL_ENV === "production" || env.CONTEXT === "production";
 }
 
 export function normalizeBrandName(value: string): string {
