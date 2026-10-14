@@ -1,98 +1,201 @@
+
 "use client";
 
-import { siteConfig } from "@/lib/site-config";
-import svgPaths from "@/lib/svgPaths";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import ContactForm from "../sections/contact/ContactForm";
+import { siteConfig } from "@/lib/site-config";
 import { useTranslations } from "next-intl";
+import {
+  ArrowUpRight,
+  ArrowUp,
+  Globe,
+} from "lucide-react";
+import {
+  FaFacebookF,
+  FaGithub,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa6";
+
+const footerGroups = [
+  {
+    title: "Company",
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Our projects", href: "/projects" },
+      { label: "Careers", href: "/careers" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Services",
+    links: [
+      { label: "Our services", href: "/services" },
+      // Add your actual service routes here.
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "News & insights", href: "/news" },
+    ],
+  },
+  
+  {
+    title: "Legal",
+    links: [
+      // Add legal links once their pages exist.
+    ],
+  },
+];
+
+function SocialIcon({ url }: { url: string }) {
+  const hostname = new URL(url).hostname.toLowerCase();
+
+  if (hostname.includes("linkedin")) {
+    return <FaLinkedinIn className="size-4" aria-hidden="true" />;
+  }
+  if (hostname.includes("instagram")) {
+    return <FaInstagram className="size-4" aria-hidden="true" />;
+  }
+  if (hostname.includes("facebook")) {
+    return <FaFacebookF className="size-4" aria-hidden="true" />;
+  }
+  if (hostname.includes("github")) {
+    return <FaGithub className="size-4" aria-hidden="true" />;
+  }
+  return <Globe className="size-4" aria-hidden="true" />;
+}
 
 export function Footer() {
-  const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <footer className="relative w-full">
-      <div className="max-w-[1380px] mx-auto relative border border-[rgba(174,174,174,0.4)] dark:border-white/10 bg-white/40 dark:bg-[#161819]/60 flex flex-col justify-between min-h-[300px] md:min-h-[400px] transition-colors duration-200">
-        {/* Top Nav Links Row */}
-        <div className="border-b border-[rgba(174,174,174,0.3)] dark:border-white/10">
-          <nav className="flex flex-wrap justify-between items-center w-full gap-6 md:gap-8 p-8 md:p-14">
-            <Link
-              href="/services"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>{tNav("services")}</span>
-            </Link>
-            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
-            <Link
-              href="/projects"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>{tNav("projects")}</span>
-            </Link>
-            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
-            <Link
-              href="/about"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>{tNav("about")}</span>
-            </Link>
-            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
-            <Link
-              href="/news"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>{tNav("news")}</span>
-            </Link>
-            <div className="hidden sm:block bg-[#292c2e] dark:bg-white/40 size-1.5 rounded-full" />
-            <Link
-              href="/careers"
-              className="text-[#292c2e] hover:text-black dark:text-zinc-300 dark:hover:text-white font-space font-medium text-base md:text-lg tracking-widest uppercase transition-colors"
-            >
-              <span>{tNav("careers")}</span>
-            </Link>
+      <div className="relative mx-auto flex w-full max-w-[1380px] flex-col overflow-hidden border border-[rgba(174,174,174,0.4)] bg-white/40 transition-colors duration-200 dark:border-white/10 dark:bg-[#161819]/60">
+
+        {/* NAVIGATION COLUMNS */}
+        <div className="px-6 pb-12 pt-14 sm:px-10 md:px-14 md:pb-16 md:pt-20">
+          <nav
+            aria-label="Footer navigation"
+            className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-5 lg:gap-10"
+          >
+            {footerGroups.map((group) => (
+              <div key={group.title} className="min-w-0">
+                <h3 className="mb-6 font-space text-sm font-semibold tracking-tight text-[#292c2e] dark:text-white">
+                  {group.title}
+                </h3>
+
+                <ul className="flex flex-col gap-4">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="group inline-flex items-center gap-1.5 font-inter text-sm text-[#444445]/75 transition-colors hover:text-[#292c2e] dark:text-zinc-400 dark:hover:text-[#98ff03]"
+                      >
+                        {link.label}
+                        <ArrowUpRight className="size-3 opacity-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* CONTACT COLUMN */}
+            <div className="min-w-0">
+              <h3 className="mb-6 font-space text-sm font-semibold text-[#292c2e] dark:text-white">
+                Contact
+              </h3>
+
+              <div className="flex flex-col gap-4 font-inter text-sm text-[#444445]/75 dark:text-zinc-400">
+                <a
+                  href="mailto:contact@matii.tech"
+                  className="break-all transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
+                >
+                  contact@matii.tech
+                </a>
+
+                {/* Add verified phone and address here. */}
+
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-1.5 transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
+                >
+                  Get in touch
+                  <ArrowUpRight className="size-3.5" />
+                </Link>
+              </div>
+            </div>
           </nav>
         </div>
 
-        {/* Middle Brand Showcase - Full Width Logo Fading Out to Bottom */}
-        <div className="w-full relative h-[280px] sm:h-[360px] md:h-[460px] flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-12 select-none">
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 bottom-0 left-0 z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 right-0 z-10" />
-          <div className="absolute bg-[#292c2e] dark:bg-white size-1.5 top-0 left-0 z-10" />
+        {/* DIVIDER */}
+        <div className="mx-6 border-t border-[rgba(174,174,174,0.3)] sm:mx-10 md:mx-14 dark:border-white/10" />
 
-          {/* <div className="hidden md:block absolute top-0 left-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80 z-10 pointer-events-none">
+        {/* COMPANY DETAILS AND SOCIALS */}
+        <div className="flex flex-col justify-between gap-8 px-6 py-8 sm:px-10 md:flex-row md:items-start md:px-14 md:py-10">
+          <div className="max-w-md">
             <Image
-              src="/shapes/footer-shape.svg"
-              alt="footer-shape"
-              className="object-contain"
-              fill
+              src="/header-logo.svg"
+              alt="MATII TECHNOLOGIES"
+              width={180}
+              height={48}
+              className="h-auto w-44 invert dark:invert-0"
             />
+           
+
+            <p className="mt-2 font-inter text-sm leading-relaxed text-[#444445]/75 dark:text-zinc-400">
+              Engineering Core Systems, Powering Progress.
+            </p>
+
+            <p className="mt-5 font-inter text-xs text-[#444445]/65 dark:text-zinc-500">
+              © {new Date().getFullYear()} MATII TECHNOLOGIES.{" "}
+              {tCommon("allRightsReserved")}
+            </p>
           </div>
 
-          <div className="hidden md:block absolute bottom-0 right-0 w-32 h-24 lg:w-56 lg:h-48 dark:opacity-80 z-10 pointer-events-none">
-            <Image
-              src="/shapes/footer-shape.svg"
-              alt="footer-shape"
-              className="rotate-180 object-contain"
-              fill
-            />
-          </div> */}
+          <div className="flex flex-col items-start gap-6 md:items-end">
+            {/* SOCIAL LINKS */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {siteConfig.socialProfiles.map((url) => (
+                <a
+                  key={url}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${new URL(url).hostname}`}
+                  className="flex size-9 items-center justify-center rounded-full border border-[#292c2e]/15 text-[#292c2e] transition-all duration-200 hover:border-[#292c2e] hover:bg-[#292c2e] hover:text-white dark:border-white/20 dark:text-zinc-300 dark:hover:border-[#98ff03] dark:hover:bg-[#98ff03] dark:hover:text-[#161819]"
+                >
+                  <SocialIcon url={url} />
+                </a>
+              ))}
+            </div>
 
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="group inline-flex cursor-pointer items-center gap-2 font-inter text-xs font-medium text-[#292c2e] transition-colors hover:text-black dark:text-zinc-300 dark:hover:text-[#98ff03]"
+            >
+              Back to top
+              <ArrowUp className="size-3.5 transition-transform duration-200 group-hover:-translate-y-1" />
+            </button>
+          </div>
+        </div>
+
+        {/* OVERSIZED BRAND WORDMARK */}
+        <div className="relative flex h-[115px] w-full items-end justify-center overflow-hidden px-4 sm:h-[170px] sm:px-8 md:h-[230px] lg:h-[285px] lg:px-10">
           <div
-            className="w-full max-w-[1100px] flex items-center justify-center pointer-events-none transition-opacity duration-300"
+            className="pointer-events-none relative flex w-full max-w-[1300px] translate-y-[8%] items-end justify-center select-none"
             style={{
               maskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%)",
+                "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
               WebkitMaskImage:
-                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0) 100%)",
+                "linear-gradient(to bottom, black 0%, black 45%, transparent 100%)",
             }}
           >
             <Image
@@ -100,61 +203,19 @@ export function Footer() {
               alt="MATII TECHNOLOGIES"
               width={1300}
               height={425}
-              className="object-contain dark:hidden"
+              sizes="(max-width: 768px) 100vw, 1300px"
+              className="block h-auto w-full object-contain opacity-25 dark:hidden"
             />
+
             <Image
               src="/images/matii-footer-logo.svg"
               alt="MATII TECHNOLOGIES"
               width={1300}
               height={425}
-              className="hidden object-contain dark:block"
+              sizes="(max-width: 768px) 100vw, 1300px"
+              className="hidden h-auto w-full object-contain opacity-20 dark:block"
             />
           </div>
-        </div>
-
-        {/* Bottom Bar (Socials, Copyright, Back to Top) */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 p-8 border-t border-[rgba(174,174,174,0.3)] dark:border-white/10">
-          {/* Social Channels & Copyright */}
-          <div className="flex flex-wrap items-center gap-8 md:gap-12 text-[#292c2e] dark:text-zinc-300">
-            {/* Social Channels */}
-            <div className="flex items-center gap-6 font-inter font-medium text-base capitalize">
-              {siteConfig.socialProfiles.map(url => <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="hover:text-black/60 dark:hover:text-white transition-colors">{new URL(url).hostname.replace("www.", "")}</a>)}
-            </div>
-
-            {/* Copyright */}
-            <div className="flex items-center gap-2 font-inter font-medium text-sm md:text-base text-[#444445]/70 dark:text-zinc-400">
-              <div className="size-4 relative shrink-0">
-                <svg
-                  className="block size-full"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d={svgPaths.pbaf2440}
-                    fill="currentColor"
-                    className="text-[#444445] dark:text-zinc-400"
-                    fillOpacity="0.7"
-                  />
-                </svg>
-              </div>
-              <span>2026 MATII TECHNOLOGIES. {tCommon("allRightsReserved")}</span>
-            </div>
-          </div>
-
-          {/* Back To Top Button */}
-          <button
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-3 font-inter font-medium text-base md:text-lg text-[#292c2e] dark:text-zinc-200 hover:text-[#98ff03] dark:hover:text-[#98ff03] transition-colors group cursor-pointer"
-          >
-            <span>
-              Back <span className="lowercase">to top</span>
-            </span>
-            <div className="size-4 relative transform -rotate-90 group-hover:-translate-y-1 transition-transform">
-              <svg className="block size-full" fill="none" viewBox="0 0 9 17">
-                <path d={svgPaths.p39cfb400} fill="currentColor" />
-              </svg>
-            </div>
-          </button>
         </div>
       </div>
     </footer>

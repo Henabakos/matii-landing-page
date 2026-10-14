@@ -22,8 +22,13 @@ export const siteConfig = {
   url: productionOrigin(),
   logo: "/header-logo.svg",
   colors: { background: "#292c2e", accent: "#98ff03", foreground: "#ffffff" },
-  // Add only owner-verified company profiles; platform homepages are not profiles.
-  socialProfiles: [] as string[],
+  // Replace these placeholders with the official company profile URLs.
+  socialProfiles: [
+    "https://www.linkedin.com/company/matii-technologies-placeholder",
+    "https://www.instagram.com/matii-technologies-placeholder",
+    "https://www.facebook.com/matii-technologies-placeholder",
+    "https://github.com/matii-technologies-placeholder",
+  ],
 };
 
 export function isProductionIndexable(env: NodeJS.ProcessEnv = process.env): boolean {

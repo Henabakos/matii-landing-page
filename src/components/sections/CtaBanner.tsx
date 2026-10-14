@@ -143,6 +143,7 @@ const bars = [
 ];
 
 import { useTranslations } from "next-intl";
+import GlobalOfficeCards from "./contact/GlobalOfficeCards";
 
 export function CtaBanner() {
   const tCta = useTranslations("ctaBanner");
@@ -180,50 +181,12 @@ export function CtaBanner() {
           })}
         </div> */}
 
+
+
+      <GlobalOfficeCards />
+ 
         {/* CTA Content with auto-adjusting height, optical spacing, and accessible Link */}
-        <div className="relative z-10 flex flex-col items-center text-center max-w-[850px] mx-auto px-4 py-10 sm:py-14 md:py-16">
-          <h2 suppressHydrationWarning className="group relative font-space font-semibold text-[2rem] sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.08] tracking-tight mb-6">
-            <span suppressHydrationWarning className="relative z-10 bg-gradient-to-r from-[#292c2e] via-[#484c4f] to-[#848e94] dark:from-white dark:via-zinc-200 dark:to-zinc-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_6s_ease-in-out_infinite]">
-              {tCta("titlePrefix")}{" "}
-              <span className="relative inline-block">
-                <span className="bg-gradient-to-r from-[#98ff03] via-[#c4ff5c] to-[#98ff03] bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_4s_ease-in-out_infinite]">
-                  {tCta("titleHighlight")}
-                </span>
-                {/* Underline flourish */}
-                <svg
-                  className="absolute -bottom-1 left-0 w-full h-3 text-[#98ff03]/70"
-                  viewBox="0 0 200 12"
-                  fill="none"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M2 8 C 50 2, 150 2, 198 8"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>{" "}
-              {tCta("titleSuffix")}
-            </span>
-          </h2>
-
-          {/* Description with refined typography */}
-          <p className="relative font-urbanist text-base md:text-[18px] leading-[1.7] text-[#555] dark:text-zinc-300 max-w-[640px] mb-8 md:mb-10">
-            {tCta("description")}
-          </p>
-
-          <div className="flex flex-col gap-2 pt-5 mt-2 font-inter normal-case tracking-normal">
-            <Link
-              target="_blank"
-              href="https://calendly.com/Matiidigitals/30min"
-              className="font-inter text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] px-10 py-4 flex items-center justify-center gap-2 shadow-sm transition-colors border border-[#292c2e] dark:border-white"
-            >
-              <LineiconsGoogleMeet />
-              <span>{tCta("scheduleMeeting")}</span>
-            </Link>
-          </div>
-        </div>
+       
       </div>
     </section>
   );
