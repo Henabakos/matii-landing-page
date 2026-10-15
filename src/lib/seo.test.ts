@@ -8,14 +8,43 @@ import { staticSeoPaths, staticPageMetadata } from "./seo-pages";
 import { getDefaultPillarContent } from "./pillars/defaults";
 import { pillarLocales } from "./seo-cms";
 import { withCmsFallback, isFallbackContent } from "./services/cms-fallback";
+import { getPillarTextFields } from "./pillars/translations";
+import nextConfig from "../../next.config";
 
 test("canonical URLs follow as-needed prefixes and never use localhost", () => {
   assert.equal(productionOrigin("http://localhost:3000"), "https://matiitechnologies.com");
   assert.equal(localizedUrl("/services/ai", "en"), `${siteConfig.url}/services/ai`);
   assert.equal(localizedUrl("/services/ai", "de"), `${siteConfig.url}/de/services/ai`);
   assert.equal(localizedUrl("/", "am"), `${siteConfig.url}/am`);
+  assert.equal(localizedUrl("/", "unsupported"), `${siteConfig.url}/`);
   assert.throws(() => productionOrigin("https://example.com/path"));
   assert.equal(Object.keys(languageAlternates("/about")).length, 6);
+});
+
+test("service aliases permanently redirect in every supported language", async () => {
+  const redirects = await nextConfig.redirects!();
+  assert.ok(redirects.some(rule => rule.source === "/services/ai-data" && rule.destination === "/services/ai" && rule.permanent));
+  assert.ok(redirects.some(rule => rule.source === "/:locale(en|om|am|de|pl)/services/ai-data" && rule.destination === "/:locale/services/ai" && rule.permanent));
+});
+
+test("hreflang requires translated body content, not only service headings", () => {
+  const content = getDefaultPillarContent("cloud");
+  const fields = getPillarTextFields(content).filter(field => field.section !== "SEO");
+  const translation = { source: {} as Record<string, string>, fields: {} as Record<string, string> };
+  for (const field of fields.filter(field => ["name", "headline", "description"].includes(field.key))) {
+    translation.source[field.key] = field.source;
+    translation.fields[field.key] = `Translated ${field.source}`;
+  }
+  content.translations = { de: translation };
+  assert.deepEqual(pillarLocales(content), ["en"]);
+  for (const field of fields) {
+    translation.source[field.key] = field.source;
+    translation.fields[field.key] = `Translated ${field.source}`;
+  }
+  assert.deepEqual(pillarLocales(content), ["en", "de"]);
+  content.description += " updated";
+  assert.deepEqual(pillarLocales(content), ["en"]);
+  assert.deepEqual(publishedLocales({ de: { paragraphs: [" "] } }, ["paragraphs"]), ["en"]);
 });
 test("indexing requires explicit production approval and excludes host previews", () => {
   assert.equal(isProductionIndexable({ NODE_ENV: "production", SEO_INDEXING_ENABLED: "true" }), true);

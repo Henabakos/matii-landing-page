@@ -24,6 +24,8 @@ const footerGroups = [
       { label: "About us", href: "/about" },
       { label: "Our projects", href: "/projects" },
       { label: "Careers", href: "/careers" },
+      { label: "Internships", href: "/careers/internships" },
+      { label: "Talent pool", href: "/careers/talent-pool" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -31,12 +33,12 @@ const footerGroups = [
     title: "Services",
     links: [
       { label: "Our services", href: "/services" },
-      // Add your actual service routes here.
     ],
   },
   {
     title: "Resources",
     links: [
+      { label: "Blog", href: "/blog" },
       { label: "News & insights", href: "/news" },
     ],
   },
@@ -84,7 +86,7 @@ export function Footer() {
             aria-label="Footer navigation"
             className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-5 lg:gap-10"
           >
-            {footerGroups.map((group) => (
+            {footerGroups.filter(group => group.links.length > 0).map((group) => (
               <div key={group.title} className="min-w-0">
                 <h3 className="mb-6 font-space text-sm font-semibold tracking-tight text-[#292c2e] dark:text-white">
                   {group.title}

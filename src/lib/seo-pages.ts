@@ -20,10 +20,12 @@ export async function staticPageCopy(path: StaticSeoPath, requestedLocale: strin
   };
   if (special[path]) return special[path]!;
   if (path === "/") return locale === "en"
-    ? { title: `${siteConfig.name} | Enterprise Software & AI Solutions`, description: "MATII TECHNOLOGIES builds enterprise software, AI and data platforms, BPO solutions, and managed cloud services from Addis Ababa, Ethiopia." }
+    ? { title: `${siteConfig.name} | Software & Digital Solutions`, description: "MATII TECHNOLOGIES develops enterprise software, modern digital platforms, and innovative technology solutions for businesses." }
     : { title: messages.hero.headline, description: messages.hero.subtitle };
   const key = path.slice(1);
-  if (locale === "en" && path === "/services") return { title: "Enterprise Software, AI, BPO & Cloud Services", description: "Explore enterprise systems and fintech engineering, business process outsourcing, AI and data platforms, and managed cloud services from MATII TECHNOLOGIES." };
+  if (locale === "en" && path === "/services") return { title: "Our Services", description: "Explore enterprise systems and fintech engineering, business process outsourcing, AI and data platforms, and managed cloud services from MATII TECHNOLOGIES." };
+  const englishTitles: Partial<Record<StaticSeoPath, string>> = { "/projects": "Our Projects", "/about": "About Us", "/contact": "Contact Us" };
+  if (locale === "en" && englishTitles[path]) return { title: englishTitles[path]!, description: messages.pages[key].description };
   return { title: messages.nav[key], description: messages.pages[key].description };
 }
 export async function staticPageMetadata(path: StaticSeoPath, { params }: LocalePageProps) {

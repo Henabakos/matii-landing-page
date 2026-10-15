@@ -10,7 +10,7 @@ export default async function ContactPage({ params }: LocalePageProps) {
     <PageStructuredData path="/contact" locale={(await params).locale} />
     <div className="w-full min-h-screen">
       {/* White Theme Contact Section */}
-      <ContactSectionWhite />
+      <ContactSectionWhite headingLevel="h1" />
 
       {/* FAQs Section */}
       <Faq />

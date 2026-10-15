@@ -377,7 +377,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href=""
+                  href="https://calendly.com/Matiidigitals/30min"
                   className="font-inter text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm transition-colors border border-[#292c2e] dark:border-white"
                   onClick={() => setIsOpen(false)}
                 >

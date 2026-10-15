@@ -75,8 +75,6 @@ export function SolutionCard({
         src={bgImage}
         alt={title}
         fill
-        priority
-        loading="eager"
         sizes="(max-width: 1380px) 100vw, 1380px"
         className="object-cover size-full group-hover:scale-105 transition-transform duration-700 pointer-events-none"
       />}

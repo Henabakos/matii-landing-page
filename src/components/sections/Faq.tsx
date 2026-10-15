@@ -68,7 +68,6 @@ export function Faq() {
               width={800}
               height={600}
               className="w-full h-auto object-contain"
-              priority
             />
           </div>
         </div>

@@ -1,10 +1,17 @@
 import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
 import { isProductionIndexable } from "./src/lib/site-config";
+import { PILLARS_LIST } from "./src/data/pillars-data";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return PILLARS_LIST.flatMap(pillar => pillar.aliases.flatMap(alias => [
+      { source: `/services/${alias}`, destination: `/services/${pillar.slug}`, permanent: true },
+      { source: `/:locale(en|om|am|de|pl)/services/${alias}`, destination: `/:locale/services/${pillar.slug}`, permanent: true },
+    ]));
+  },
   async headers() {
     return [
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },

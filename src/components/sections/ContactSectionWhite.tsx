@@ -33,8 +33,8 @@ function LineiconsGoogleMeet({ className }: { className?: string } = {}) {
   );
 }
 
-export function ContactSectionWhite() {
-  const t = useTranslations("contactSection");
+export function ContactSectionWhite({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
+  const Heading = headingLevel;
   const tCta = useTranslations("ctaBanner");
 
   return (
@@ -71,11 +71,11 @@ export function ContactSectionWhite() {
                   className="h-14 w-14 object-contain sm:h-16 sm:w-16"
                 />
 
-                <h2 className="max-w-[400px] font-urbanist text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
+                <Heading className="max-w-[400px] font-urbanist text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
                   {tCta("titlePrefix")}{" "}
                   <span className="text-[#90dd25]">{tCta("titleHighlight")}</span>{" "}
                   {tCta("titleSuffix")}
-                </h2>
+                </Heading>
 
                 <p className="max-w-[340px] font-urbanist text-sm leading-[1.7] text-white/70 sm:text-base">
                   {tCta("description")}

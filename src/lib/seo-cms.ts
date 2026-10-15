@@ -1,14 +1,15 @@
 import type { PillarContent, PillarLocale } from "./pillars/schema";
-import { currentTranslation } from "./pillars/translations";
+import { currentTranslation, getPillarTextFields } from "./pillars/translations";
 import { routing } from "@/i18n/routing";
 import { buildMetadata, publishedLocales } from "./seo";
 import { getLocalizedField } from "./i18n-helpers";
 import { isFallbackContent } from "./services/cms-fallback";
 
 export function pillarLocales(content: PillarContent) {
-  return routing.locales.filter(locale => locale === "en" || ["name", "description", "headline"].every(key => {
+  const visibleFields = getPillarTextFields(content).filter(field => field.section !== "SEO");
+  return routing.locales.filter(locale => locale === "en" || visibleFields.every(field => {
     const translation = content.translations?.[locale as PillarLocale];
-    return translation && currentTranslation(translation, key, content[key as "name" | "description" | "headline"]);
+    return translation && currentTranslation(translation, field.key, field.source);
   }));
 }
 

@@ -7,8 +7,9 @@ export function asLocale(locale: string): Locale {
   return routing.locales.includes(locale as Locale) ? locale as Locale : routing.defaultLocale;
 }
 export function localizedUrl(path = "/", locale: string = "en"): string {
+  const language = asLocale(locale);
   const clean = path === "/" ? "" : `/${path.replace(/^\/+|\/+$/g, "")}`;
-  return `${siteConfig.url}${asLocale(locale) === "en" ? "" : `/${asLocale(locale)}`}${clean || (locale === "en" ? "/" : "")}`;
+  return `${siteConfig.url}${language === "en" ? "" : `/${language}`}${clean || (language === "en" ? "/" : "")}`;
 }
 export function languageAlternates(path: string, locales: readonly string[] = routing.locales) {
   return Object.fromEntries([...locales.map(locale => [locale, localizedUrl(path, locale)]), ["x-default", localizedUrl(path)]]);
@@ -66,7 +67,7 @@ export function publishedLocales(translations: unknown, requiredFields: string[]
   const values = translations as Record<string, Record<string, unknown>>;
   return routing.locales.filter(locale => locale === "en" || requiredFields.every(field => {
     const value = values[locale]?.[field];
-    return typeof value === "string" ? value.trim().length > 0 : Array.isArray(value) && value.length > 0;
+    return typeof value === "string" ? value.trim().length > 0 : Array.isArray(value) && value.length > 0 && value.every(item => typeof item === "string" && item.trim().length > 0);
   }));
 }
 
