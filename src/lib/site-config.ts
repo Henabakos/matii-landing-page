@@ -18,7 +18,8 @@ export function productionOrigin(value = process.env.NEXT_PUBLIC_SITE_URL): stri
 export const siteConfig = {
   name: "MATII TECHNOLOGIES",
   shortName: "MATII",
-  description: "MATII TECHNOLOGIES builds enterprise software, AI and data platforms, BPO solutions, and managed cloud services.",
+  description: "MATII TECHNOLOGIES is an Ethiopian technology company building enterprise software, AI and data platforms, BPO solutions, and managed cloud services.",
+  alternateNames: ["Mati Technologies", "Mati Technology", "Matti Solutions", "Mati Digitals"],
   url: productionOrigin(),
   logo: "/header-logo.svg",
   colors: { background: "#292c2e", accent: "#98ff03", foreground: "#ffffff" },

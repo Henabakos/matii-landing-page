@@ -26,6 +26,7 @@ export function generateOrganizationSchema(siteUrl: string) {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     name: siteConfig.name,
+    alternateName: siteConfig.alternateNames,
     url: siteUrl,
     logo: `${siteUrl}${siteConfig.logo}`,
     description: siteConfig.description,
@@ -174,6 +175,6 @@ export function generateServiceSchema(content: PillarContent, url: string, local
 }
 export function generateWebsiteSchema() {
   return { "@context": "https://schema.org", "@type": "WebSite", "@id": `${siteConfig.url}/#website`,
-    url: `${siteConfig.url}/`, name: siteConfig.name, alternateName: siteConfig.shortName,
+    url: `${siteConfig.url}/`, name: siteConfig.name, alternateName: [siteConfig.shortName, ...siteConfig.alternateNames],
     publisher: { "@id": `${siteConfig.url}/#organization` } };
 }
