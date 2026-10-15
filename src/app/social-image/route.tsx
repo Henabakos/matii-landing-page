@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   // This avoids a runtime dependency on a remote font service; metadata stays localized.
   const locale = asLocale(params.get("locale") || "en");
   const artworkLocale = locale === "am" ? "en" : locale;
-  let title = "Enterprise Software & AI Solutions";
+  let title = "Software Development & Outsourcing Comapny";
   let outage = false;
   try {
     if ((staticSeoPaths as readonly string[]).includes(path)) {

@@ -4,7 +4,7 @@ import { renderSocialImage } from "../src/lib/social-image";
 async function main() {
   await mkdir("public/social", { recursive: true });
   const cards = {
-    "matii-default": "Enterprise Software & AI Solutions",
+    "matii-default": "Software Development & Outsourcing Comapny",
     "matii-home": "Engineering Core Systems. Powering Progress.",
     "matii-services": "Enterprise Software. AI. BPO. Cloud.",
     "matii-contact": "Contact MATII TECHNOLOGIES",
