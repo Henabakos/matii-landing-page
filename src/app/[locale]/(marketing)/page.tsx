@@ -1,4 +1,7 @@
 import PageStructuredData from "@/components/common/PageStructuredData";
+import { JsonLd, generateFaqSchema } from "@/components/common/JsonLd";
+import { faqItems } from "@/data/faq-data";
+import { localizedUrl } from "@/lib/seo";
 import { staticPageMetadata, type LocalePageProps } from "@/lib/seo-pages";
 import Hero from "@/components/sections/Hero";
 import OfficeShowcase from "@/components/sections/OfficeShowcase";
@@ -23,8 +26,11 @@ export default async function HomePage({ params }: LocalePageProps) {
   ]);
 
 
+  const { locale } = await params;
+
   return (<>
-    <PageStructuredData path="/" locale={(await params).locale} />
+    <PageStructuredData path="/" locale={locale} />
+    <JsonLd data={generateFaqSchema(faqItems, localizedUrl("/", locale))} />
     <>
       <div className="w-full px-4 md:px-8 space-y-16">
         <Hero partners={partners} />

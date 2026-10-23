@@ -1,0 +1,28 @@
+.git
+.gitignore
+node_modules
+.next
+out
+coverage
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets and local environments never enter the image.
+.env*
+
+# Tooling and local data
+.agents
+.aider-desk
+.jazz
+.tmp
+.vercel
+.vibe
+.vscode
+artifacts
+docs
+prisma/dev.db
+*.log
+
+Dockerfile
+docker-compose*.yml
+Caddyfile

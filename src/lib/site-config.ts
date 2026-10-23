@@ -19,7 +19,7 @@ export const siteConfig = {
   name: "MATII TECHNOLOGIES",
   shortName: "MATII",
   description: "MATII TECHNOLOGIES is an Ethiopian technology company building enterprise software, AI and data platforms, BPO solutions, and managed cloud services.",
-  alternateNames: ["Mati Technologies", "Mati Technology", "Matti Solutions", "Mati Digitals"],
+  alternateNames: ["Mati Technologies", "Mati Technology", "Matti Solutions", "Mati Digitals", "Matii Technologies"],
   url: productionOrigin(),
   logo: "/header-logo.svg",
   colors: { background: "#292c2e", accent: "#98ff03", foreground: "#ffffff" },

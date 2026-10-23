@@ -2,6 +2,7 @@ import React from "react";
 import { siteConfig } from "@/lib/site-config";
 import { absoluteImage } from "@/lib/seo";
 import type { PillarContent } from "@/lib/pillars/schema";
+import { routing } from "@/i18n/routing";
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -31,6 +32,8 @@ export function generateOrganizationSchema(siteUrl: string) {
     logo: `${siteUrl}${siteConfig.logo}`,
     description: siteConfig.description,
     ...(siteConfig.socialProfiles.length ? { sameAs: siteConfig.socialProfiles } : {}),
+    address: { "@type": "PostalAddress", addressCountry: "ET" },
+    knowsAbout: ["Enterprise software", "Fintech engineering", "Artificial intelligence", "Data platforms", "Business process outsourcing", "Managed cloud services"],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Support",
@@ -176,5 +179,10 @@ export function generateServiceSchema(content: PillarContent, url: string, local
 export function generateWebsiteSchema() {
   return { "@context": "https://schema.org", "@type": "WebSite", "@id": `${siteConfig.url}/#website`,
     url: `${siteConfig.url}/`, name: siteConfig.name, alternateName: [siteConfig.shortName, ...siteConfig.alternateNames],
-    publisher: { "@id": `${siteConfig.url}/#organization` } };
+    inLanguage: routing.locales, publisher: { "@id": `${siteConfig.url}/#organization` } };
+}
+// The FAQ section renders this same English copy on every locale.
+export function generateFaqSchema(items: { question: string; answer: string }[], url: string) {
+  return { "@context": "https://schema.org", "@type": "FAQPage", "@id": `${url}#faq`, inLanguage: "en",
+    mainEntity: items.map(item => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) };
 }

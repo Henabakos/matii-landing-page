@@ -10,6 +10,8 @@ Next.js with Prisma 6 and PostgreSQL, configured for Neon.
 4. In your deployment host's environment settings, add `DATABASE_URL`, `DIRECT_URL`, a strong `ADMIN_PASSWORD`, and your production `NEXT_PUBLIC_SITE_URL`. Copy the Cloudinary and AI provider settings you use from your local environment. Keep database URLs and API secrets server-only.
 5. Set the deployment build command to `pnpm build:deploy`. It applies committed migrations, generates Prisma Client, and builds Next.js. For a Node server, start with `pnpm start`; Vercel uses its Next.js runtime automatically. Ensure the build environment installs dev dependencies because the Prisma CLI is needed.
 
+To self-host everything on a VPS with Docker (Next.js, PostgreSQL and automatic HTTPS via Caddy, no Neon needed), follow [Docker deployment](docs/DOCKER-DEPLOYMENT.md): `docker compose --env-file .env.production up -d --build`. Pushes to `main` deploy automatically through GitHub Actions; see [CI/CD](docs/CI-CD.md).
+
 Use a separate Neon database or branch for preview deployments. If your pipeline runs migrations in a dedicated release step, use `pnpm db:deploy` there and `pnpm build` for the build instead.
 
 On Windows, stop the running development server before `pnpm db:generate` if Prisma reports an `EPERM` error replacing `query_engine-windows.dll.node`.
