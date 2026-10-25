@@ -30,7 +30,9 @@ export function plainDescription(value: string): string {
 }
 export function brandedTitle(value: string): string {
   const title = normalizeBrandName(value).trim();
-  return title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`;
+  // Google already shows the full site name above each result, so inner pages
+  // carry only the short brand and keep the title for page-specific keywords.
+  return new RegExp(`\\b${siteConfig.shortName}\\b`, "i").test(title) ? title : `${title} | ${siteConfig.shortName}`;
 }
 type SeoInput = {
   title: string; description: string; path: string; locale: string;

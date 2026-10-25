@@ -15,6 +15,9 @@ import {
   FaGithub,
   FaInstagram,
   FaLinkedinIn,
+  FaTiktok,
+  FaXTwitter,
+  FaYoutube,
 } from "react-icons/fa6";
 
 const footerGroups = [
@@ -65,6 +68,15 @@ function SocialIcon({ url }: { url: string }) {
   }
   if (hostname.includes("github")) {
     return <FaGithub className="size-4" aria-hidden="true" />;
+  }
+  if (hostname === "x.com" || hostname.includes("twitter")) {
+    return <FaXTwitter className="size-4" aria-hidden="true" />;
+  }
+  if (hostname.includes("youtube")) {
+    return <FaYoutube className="size-4" aria-hidden="true" />;
+  }
+  if (hostname.includes("tiktok")) {
+    return <FaTiktok className="size-4" aria-hidden="true" />;
   }
   return <Globe className="size-4" aria-hidden="true" />;
 }
@@ -170,7 +182,7 @@ export function Footer() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Visit ${new URL(url).hostname}`}
+                  aria-label={`Visit ${siteConfig.name} on ${new URL(url).hostname.replace(/^www\./, "")}`}
                   className="flex size-9 items-center justify-center rounded-full border border-[#292c2e]/15 text-[#292c2e] transition-all duration-200 hover:border-[#292c2e] hover:bg-[#292c2e] hover:text-white dark:border-white/20 dark:text-zinc-300 dark:hover:border-[#98ff03] dark:hover:bg-[#98ff03] dark:hover:text-[#161819]"
                 >
                   <SocialIcon url={url} />

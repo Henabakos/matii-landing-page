@@ -69,7 +69,7 @@ test("all static routes and supported locales have complete, unique metadata", a
     for (const path of staticSeoPaths) {
       const metadata = await staticPageMetadata(path, { params: Promise.resolve({ locale }) });
       const title = (metadata.title as { absolute: string }).absolute;
-      assert.ok(title.includes(siteConfig.name));
+      assert.ok(title.includes(siteConfig.shortName));
       assert.ok(metadata.description && metadata.description.length > 30);
       assert.ok(metadata.openGraph?.images);
       assert.ok(metadata.twitter);
@@ -79,14 +79,14 @@ test("all static routes and supported locales have complete, unique metadata", a
     assert.equal(descriptions.size, staticSeoPaths.length, locale);
   }
 });
-test("JSON-LD escapes CMS script injection and excludes unverified profiles", () => {
+test("JSON-LD escapes CMS script injection and lists verified profiles", () => {
   const malicious = { name: '</script><script>alert("x")</script>' };
   const serialized = serializeJsonLd(malicious);
   assert.ok(!serialized.includes("<"));
   assert.deepEqual(JSON.parse(serialized), malicious);
   const organization = generateOrganizationSchema(siteConfig.url);
   assert.equal(organization.name, siteConfig.name);
-  assert.ok(!("sameAs" in organization));
+  assert.deepEqual(organization.sameAs, siteConfig.socialProfiles);
   assert.equal(organization.logo, `${siteConfig.url}/header-logo.svg`);
   assert.equal(normalizeBrandName("Matii Digitals at https://Matiidigitals.com"), "MATII TECHNOLOGIES at https://Matiidigitals.com");
   assert.equal(normalizeBrandName("Guide | Motion Blog"), "Guide | MATII TECHNOLOGIES Blog");

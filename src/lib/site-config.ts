@@ -19,12 +19,20 @@ export const siteConfig = {
   name: "MATII TECHNOLOGIES",
   shortName: "MATII",
   description: "MATII TECHNOLOGIES is an Ethiopian technology company building enterprise software, AI and data platforms, BPO solutions, and managed cloud services.",
-  alternateNames: ["Mati Technologies", "Mati Technology", "Matti Solutions", "Mati Digitals", "Matii Technologies"],
+  // Only spellings the company actually uses. Misspellings such as "Mati
+  // Technologies" belong to unrelated companies and blur the brand entity.
+  alternateNames: ["Matii Technologies", "Matii Tech", "Matii Digitals"],
   url: productionOrigin(),
   logo: "/header-logo.svg",
   colors: { background: "#292c2e", accent: "#98ff03", foreground: "#ffffff" },
   // Add only verified company profiles: this also supplies Organization.sameAs.
-  socialProfiles: [] as string[],
+  socialProfiles: [
+    "https://www.linkedin.com/company/matii-technologies",
+    "https://www.facebook.com/people/Matii-Technologies/61594521985176/",
+    "https://x.com/matiitechnology",
+    "https://www.youtube.com/@matiitechnologies",
+    "https://www.tiktok.com/@matii.technologies",
+  ],
 };
 
 export function isProductionIndexable(env: NodeJS.ProcessEnv = process.env): boolean {

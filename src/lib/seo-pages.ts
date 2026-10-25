@@ -14,18 +14,25 @@ export async function staticPageCopy(path: StaticSeoPath, requestedLocale: strin
   const locale = staticPageLocales(path).includes(requestedLocale) ? asLocale(requestedLocale) : "en";
   const messages = (await import(`../messages/${locale}.json`)).default;
   const special: Partial<Record<StaticSeoPath, { title: string; description: string }>> = {
-    "/news": { title: "Company News & Updates", description: "Read published company announcements, product releases, and engineering updates from MATII TECHNOLOGIES." },
-    "/careers/internships": { title: "Engineering Internships & Fellowships", description: "Explore the MATII TECHNOLOGIES fellowship for aspiring engineers, researchers, and designers building production systems with experienced architects." },
-    "/careers/talent-pool": { title: "Join Our Talent Pool", description: "Share your engineering, design, or research experience with MATII TECHNOLOGIES for consideration as future project teams and roles open." },
+    "/news": { title: "Company News & Product Announcements", description: "Company announcements, product releases, partnerships, and engineering milestones from our team in Addis Ababa." },
+    "/careers/internships": { title: "Software Engineering Internships & Fellowships", description: "A hands-on fellowship for aspiring engineers, researchers, and designers who want to build production software alongside experienced architects." },
+    "/careers/talent-pool": { title: "Join Our Talent Pool for Future Tech Roles", description: "Share your engineering, design, or research experience and be considered first when new project teams and roles open." },
   };
   if (special[path]) return special[path]!;
   if (path === "/") return locale === "en"
-    ? { title: `${siteConfig.name} | Software & Digital Solutions`, description: "MATII TECHNOLOGIES develops enterprise software, modern digital platforms, and innovative technology solutions for businesses." }
+    ? { title: `${siteConfig.name} | Software, AI & BPO Company in Ethiopia`, description: "Ethiopian technology company building enterprise and core banking software, AI and data platforms, BPO operations, and managed cloud services for banks, government, and growing businesses." }
     : { title: messages.hero.headline, description: messages.hero.subtitle };
   const key = path.slice(1);
-  if (locale === "en" && path === "/services") return { title: "Our Services", description: "Explore enterprise systems and fintech engineering, business process outsourcing, AI and data platforms, and managed cloud services from MATII TECHNOLOGIES." };
-  const englishTitles: Partial<Record<StaticSeoPath, string>> = { "/projects": "Our Projects", "/about": "About Us", "/contact": "Contact Us" };
-  if (locale === "en" && englishTitles[path]) return { title: englishTitles[path]!, description: messages.pages[key].description };
+  // English titles lead with the search terms each page should rank for.
+  const english: Partial<Record<StaticSeoPath, { title: string; description?: string }>> = {
+    "/about": { title: `About ${siteConfig.name} – Ethiopian Software Company` },
+    "/services": { title: "Enterprise Software, AI, BPO & Cloud Services", description: "Four service lines under one team: enterprise and fintech software engineering, business process outsourcing, AI and data platforms, and managed cloud infrastructure." },
+    "/projects": { title: "Case Studies: Enterprise, Fintech & AI Projects" },
+    "/blog": { title: "Software Engineering & AI Insights Blog" },
+    "/contact": { title: "Contact Our Engineering Team" },
+    "/careers": { title: "Careers – Tech Jobs in Addis Ababa" },
+  };
+  if (locale === "en" && english[path]) return { title: english[path]!.title, description: english[path]!.description ?? messages.pages[key].description };
   return { title: messages.nav[key], description: messages.pages[key].description };
 }
 export async function staticPageMetadata(path: StaticSeoPath, { params }: LocalePageProps) {

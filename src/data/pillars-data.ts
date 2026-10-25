@@ -34,6 +34,9 @@ export interface PillarData {
   systemCode: string;
   title: string;
   shortTitle: string;
+  /** English search title and description, used when the CMS SEO fields are empty. */
+  seoTitle: string;
+  seoDescription: string;
   headline: string;
   subtitle: string;
   tag: string;
@@ -58,6 +61,8 @@ export const PILLARS_LIST: PillarData[] = [
     systemCode: "SYS.01 // CORE ARCHITECTURE",
     title: "Enterprise Software Engineering",
     shortTitle: "Enterprise Software",
+    seoTitle: "Enterprise Software & Core Banking Development",
+    seoDescription: "Custom enterprise software, core banking and fintech platforms, ERP systems, secure APIs, and legacy modernization, engineered in Ethiopia for zero downtime.",
     headline: "Mission-Critical Core Platforms Built For Zero Downtime & Maximum Scale",
     subtitle:
       "We design, build, and modernize robust banking systems, transactional backbones, and custom enterprise platforms capable of processing millions of concurrent events with provable resilience.",
@@ -173,6 +178,8 @@ export const PILLARS_LIST: PillarData[] = [
     systemCode: "SYS.02 // GLOBAL BPO MESH",
     title: "BPO Solutions & Intelligent Operations",
     shortTitle: "BPO Solutions",
+    seoTitle: "BPO Services: Customer Support & Back-Office",
+    seoDescription: "Outsource omnichannel customer support, back-office operations, financial reconciliation, and AI data annotation to dedicated multilingual teams in Ethiopia.",
     headline: "Tech-Enabled Business Process Outsourcing & 24/7 Global Specialist Pods",
     subtitle:
       "We combine AI triage turnstiles with highly trained human-in-the-loop operational squads, delivering frictionless customer experiences, accurate data processing, and 24/7 technical back-office execution.",
@@ -288,6 +295,8 @@ export const PILLARS_LIST: PillarData[] = [
     systemCode: "SYS.03 // CLOUD FABRIC & SRE",
     title: "Managed Cloud Services & SRE",
     shortTitle: "Managed Cloud",
+    seoTitle: "Managed Cloud Services, DevOps & Cloud Migration",
+    seoDescription: "Cloud migration, Kubernetes, CI/CD automation, cost optimization, disaster recovery, and 24/7 site reliability engineering for business-critical systems.",
     headline: "High-Availability Multi-Cloud Infrastructure & 24/7 Automated SRE Watch",
     subtitle:
       "We design, automate, and manage hybrid and multi-cloud environments with 99.995% uptime SLAs, self-healing Kubernetes clusters, GitOps deployment rails, and continuous cost optimization.",
@@ -403,6 +412,8 @@ export const PILLARS_LIST: PillarData[] = [
     systemCode: "SYS.04 // NEURAL PIPELINES",
     title: "AI & Data Platform Engineering",
     shortTitle: "AI & Data Platform",
+    seoTitle: "AI & Data Platform: Analytics, RAG & AI Agents",
+    seoDescription: "Connect and govern your data, then build analytics, AI assistants, RAG search, predictive models, and AI agents on one secure platform for banks and enterprises.",
     headline: "Centralized Streaming Lakehouses, Production RAG & Autonomous AI Agents",
     subtitle:
       "We build enterprise-grade data intelligence backbones, high-performance vector retrieval architectures, and autonomous AI pipelines that turn massive telemetry into decisive, automated business momentum.",

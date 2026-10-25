@@ -26,8 +26,9 @@ export async function generateMetadata({ params }: ServiceDetailPageProps): Prom
   if (!pillar) return missingMetadata();
   const [source, content] = await Promise.all([getPublishedPillar(pillar.id), getPublishedPillar(pillar.id, locale)]);
   if (!source || !content) return missingMetadata();
-  return buildMetadata({ title: content.seo.title || content.name,
-    description: content.seo.description || content.description,
+  const english = locale === "en";
+  return buildMetadata({ title: content.seo.title || (english ? pillar.seoTitle : content.name),
+    description: content.seo.description || (english ? pillar.seoDescription : content.description),
     path: `/services/${pillar.slug}`, locale, locales: pillarLocales(source),
     noindex: isFallbackContent(content) || content.seo.noindex,
     image: content.seo.image !== pillar.bgImage ? content.seo.image : undefined,
