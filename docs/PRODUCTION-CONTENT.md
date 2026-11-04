@@ -12,6 +12,7 @@ Files live in `prisma/production-content/`.
 | `core/` | `nav-menus.json` | NavMenu | Published as written |
 | `core/` | `project-categories.json` | ProjectCategory | Published as written |
 | `core/` | `kpis.json` | Kpi | Published as written |
+| `core/` | `footer.json` | FooterContent | Published as written (edit later in `/admin/footer`) |
 | `templates/` | `job-positions.json` | JobPosition | Inserted with `isActive: false` |
 | `templates/` | `blog-posts.json` | BlogPost | Inserted with `isPublished: false` |
 | `templates/` | `news-articles.json` | NewsArticle | Inserted with `isPublished: false` |
@@ -35,7 +36,7 @@ To refresh the `core/` files after editing content locally in `/admin` against `
 npm run content:export
 ```
 
-This overwrites only the `core/` files. Templates are hand-written and never exported.
+This overwrites only the `core/` files that exist in `dev.db`. `footer.json` is not in `dev.db`, so it's kept as written. Templates are hand-written and never exported.
 
 ## 2. Automatic seed on deploy
 

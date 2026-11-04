@@ -34,7 +34,13 @@ const { DatabaseSync } = require("node:sqlite") as {
 };
 const sqlite = new DatabaseSync(sourcePath, { readOnly: true });
 try {
+  const available = new Set(sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all().map(row => row.name));
   for (const config of tableConfigs.filter(config => config.group === "core")) {
+    // Tables added after the SQLite era (such as the footer) keep their hand-written file.
+    if (!available.has(config.table)) {
+      console.log(`${config.table}: not in ${sourcePath}, kept the existing file`);
+      continue;
+    }
     const order = config.table === "ServicePillar" ? "id" : '"order"';
     const rows = sqlite.prepare(`SELECT * FROM "${config.table}" ORDER BY ${order}`).all().map(row => toFileRow(config.table, row));
     const dir = join("prisma/production-content", config.group);

@@ -18,6 +18,7 @@ import {
   Layers,
   Users,
   UserCheck,
+  PanelBottom,
 } from "lucide-react";
 import { logoutAdminAction } from "@/lib/actions/auth.actions";
 
@@ -84,6 +85,11 @@ const navItems = [
         name: "Mega Menus & Nav",
         href: "/admin/navigation",
         icon: Layers,
+      },
+      {
+        name: "Footer",
+        href: "/admin/footer",
+        icon: PanelBottom,
       },
     ],
   },

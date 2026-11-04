@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { footerContentSchema } from "../src/lib/footer/schema";
 import { pillarContentSchema } from "../src/lib/pillars/schema";
 import { tableConfigs } from "./production-content/tables";
 
@@ -58,6 +59,7 @@ async function main() {
   for (const row of source.find(item => item.table === "ServicePillar")?.rows ?? []) {
     for (const field of ["draft", "published"]) if (row[field]) pillarContentSchema.parse(row[field]);
   }
+  for (const row of source.find(item => item.table === "FooterContent")?.rows ?? []) footerContentSchema.parse(row.content);
 
   const prisma = new PrismaClient({ datasourceUrl: connectionString, log: [] });
   const report: { table: string; inserted: string[]; skipped: number }[] = [];

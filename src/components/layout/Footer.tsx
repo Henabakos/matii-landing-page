@@ -2,9 +2,11 @@
 "use client";
 
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { Link } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site-config";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { isExternalHref, localizeFooter, type FooterContent } from "@/lib/footer/schema";
 import {
   ArrowUpRight,
   ArrowUp,
@@ -20,39 +22,11 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 
-const footerGroups = [
-  {
-    title: "Company",
-    links: [
-      { label: "About us", href: "/about" },
-      { label: "Our projects", href: "/projects" },
-      { label: "Careers", href: "/careers" },
-      { label: "Internships", href: "/careers/internships" },
-      { label: "Talent pool", href: "/careers/talent-pool" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "Services",
-    links: [
-      { label: "Our services", href: "/services" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Blog", href: "/blog" },
-      { label: "News & insights", href: "/news" },
-    ],
-  },
-  
-  {
-    title: "Legal",
-    links: [
-      // Add legal links once their pages exist.
-    ],
-  },
-];
+function FooterLink({ href, className, children }: { href: string; className: string; children: ReactNode }) {
+  if (!isExternalHref(href)) return <Link href={href} className={className}>{children}</Link>;
+  const web = /^https?:/.test(href);
+  return <a href={href} className={className} {...(web ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{children}</a>;
+}
 
 function SocialIcon({ url }: { url: string }) {
   const hostname = new URL(url).hostname.toLowerCase();
@@ -81,8 +55,10 @@ function SocialIcon({ url }: { url: string }) {
   return <Globe className="size-4" aria-hidden="true" />;
 }
 
-export function Footer() {
+export function Footer({ content }: { content: FooterContent }) {
   const tCommon = useTranslations("common");
+  const footer = localizeFooter(content, useLocale());
+  const { contact } = footer;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -98,22 +74,22 @@ export function Footer() {
             aria-label="Footer navigation"
             className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-5 lg:gap-10"
           >
-            {footerGroups.filter(group => group.links.length > 0).map((group) => (
-              <div key={group.title} className="min-w-0">
+            {footer.groups.filter(group => group.links.length > 0).map((group) => (
+              <div key={group.id} className="min-w-0">
                 <h3 className="mb-6 font-space text-sm font-semibold tracking-tight text-[#292c2e] dark:text-white">
                   {group.title}
                 </h3>
 
                 <ul className="flex flex-col gap-4">
                   {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
+                    <li key={link.id}>
+                      <FooterLink
                         href={link.href}
                         className="group inline-flex items-center gap-1.5 font-inter text-sm text-[#444445]/75 transition-colors hover:text-[#292c2e] dark:text-zinc-400 dark:hover:text-[#98ff03]"
                       >
                         {link.label}
                         <ArrowUpRight className="size-3 opacity-0 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100" />
-                      </Link>
+                      </FooterLink>
                     </li>
                   ))}
                 </ul>
@@ -121,30 +97,49 @@ export function Footer() {
             ))}
 
             {/* CONTACT COLUMN */}
-            <div className="min-w-0">
-              <h3 className="mb-6 font-space text-sm font-semibold text-[#292c2e] dark:text-white">
-                Contact
-              </h3>
+            {(contact.email || contact.phone || contact.address || contact.ctaLabel) && (
+              <div className="min-w-0">
+                {contact.title && (
+                  <h3 className="mb-6 font-space text-sm font-semibold text-[#292c2e] dark:text-white">
+                    {contact.title}
+                  </h3>
+                )}
 
-              <div className="flex flex-col gap-4 font-inter text-sm text-[#444445]/75 dark:text-zinc-400">
-                <a
-                  href="mailto:contact@matii.tech"
-                  className="break-all transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
-                >
-                  contact@matii.tech
-                </a>
+                <div className="flex flex-col gap-4 font-inter text-sm text-[#444445]/75 dark:text-zinc-400">
+                  {contact.email && (
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="break-all transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
+                    >
+                      {contact.email}
+                    </a>
+                  )}
 
-                {/* Add verified phone and address here. */}
+                  {contact.phone && (
+                    <a
+                      href={`tel:${contact.phone.replace(/[^+0-9]/g, "")}`}
+                      className="transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
+                    >
+                      {contact.phone}
+                    </a>
+                  )}
 
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-1.5 transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
-                >
-                  Get in touch
-                  <ArrowUpRight className="size-3.5" />
-                </Link>
+                  {contact.address && (
+                    <address className="whitespace-pre-line not-italic leading-relaxed">{contact.address}</address>
+                  )}
+
+                  {contact.ctaLabel && contact.ctaHref && (
+                    <FooterLink
+                      href={contact.ctaHref}
+                      className="inline-flex items-center gap-1.5 transition-colors hover:text-[#292c2e] dark:hover:text-[#98ff03]"
+                    >
+                      {contact.ctaLabel}
+                      <ArrowUpRight className="size-3.5" />
+                    </FooterLink>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </nav>
         </div>
 
@@ -163,12 +158,14 @@ export function Footer() {
             />
            
 
-            <p className="mt-2 font-inter text-sm leading-relaxed text-[#444445]/75 dark:text-zinc-400">
-              Engineering Core Systems, Powering Progress.
-            </p>
+            {footer.tagline && (
+              <p className="mt-2 font-inter text-sm leading-relaxed text-[#444445]/75 dark:text-zinc-400">
+                {footer.tagline}
+              </p>
+            )}
 
             <p className="mt-5 font-inter text-xs text-[#444445]/65 dark:text-zinc-500">
-              © {new Date().getFullYear()} MATII TECHNOLOGIES.{" "}
+              © {new Date().getFullYear()} {footer.copyrightName || siteConfig.name}.{" "}
               {tCommon("allRightsReserved")}
             </p>
           </div>
@@ -176,7 +173,7 @@ export function Footer() {
           <div className="flex flex-col items-start gap-6 md:items-end">
             {/* SOCIAL LINKS */}
             <div className="flex flex-wrap items-center gap-2.5">
-              {siteConfig.socialProfiles.map((url) => (
+              {footer.socialLinks.map((url) => (
                 <a
                   key={url}
                   href={url}
@@ -195,7 +192,7 @@ export function Footer() {
               onClick={scrollToTop}
               className="group inline-flex cursor-pointer items-center gap-2 font-inter text-xs font-medium text-[#292c2e] transition-colors hover:text-black dark:text-zinc-300 dark:hover:text-[#98ff03]"
             >
-              Back to top
+              {footer.backToTopLabel || "Back to top"}
               <ArrowUp className="size-3.5 transition-transform duration-200 group-hover:-translate-y-1" />
             </button>
           </div>

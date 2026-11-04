@@ -224,3 +224,11 @@ model ServicePillar {
   publishedAt DateTime?
   updatedAt DateTime @updatedAt
 }
+
+// Site footer: one validated JSON document (see src/lib/footer/schema.ts).
+model FooterContent {
+  id        String   @id @default("main")
+  content   String
+  revision  Int      @default(0)
+  updatedAt DateTime @updatedAt
+}

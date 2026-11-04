@@ -4,12 +4,13 @@ import type { ReactNode } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getAllNavMenus } from "@/lib/services/navigation.service";
+import { getFooterContent } from "@/lib/services/footer.service";
 import MarketingSharedSections from "@/components/layout/MarketingSharedSections";
 
 
 
 export default async function MarketingLayout({ children }: { children: ReactNode }) {
-  const navMenus = await getAllNavMenus();
+  const [navMenus, footer] = await Promise.all([getAllNavMenus(), getFooterContent()]);
 
   return (
     <div className="min-h-screen text-[#292c2e] dark:text-[#ededed]">
@@ -19,7 +20,7 @@ export default async function MarketingLayout({ children }: { children: ReactNod
       <main id="main-content">{children}</main>
       <MarketingSharedSections />
       <div className="mt-12">
-        <Footer />
+        <Footer content={footer} />
       </div>
     </div>
   );

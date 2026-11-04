@@ -20,6 +20,7 @@ export const tableConfigs: TableConfig[] = [
   { group: "core", file: "nav-menus.json", table: "NavMenu", delegate: "navMenu", keys: ["key"] },
   { group: "core", file: "project-categories.json", table: "ProjectCategory", delegate: "projectCategory", keys: ["slug"] },
   { group: "core", file: "kpis.json", table: "Kpi", delegate: "kpi", keys: ["key"] },
+  { group: "core", file: "footer.json", table: "FooterContent", delegate: "footerContent", keys: ["id"] },
   { group: "templates", file: "job-positions.json", table: "JobPosition", delegate: "jobPosition", keys: ["slug"], hiddenFlag: "isActive" },
   { group: "templates", file: "blog-posts.json", table: "BlogPost", delegate: "blogPost", keys: ["slug"], hiddenFlag: "isPublished" },
   { group: "templates", file: "news-articles.json", table: "NewsArticle", delegate: "newsArticle", keys: ["slug"], hiddenFlag: "isPublished" },
