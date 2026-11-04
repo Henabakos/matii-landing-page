@@ -1,0 +1,30 @@
+[
+  {
+    "name": "AI Automation",
+    "slug": "ai-automation",
+    "description": "Autonomous LLM agents, intelligent workflow orchestration, and custom machine learning pipelines.",
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "name": "Healthcare SaaS",
+    "slug": "healthcare-saas",
+    "description": "Clinical patient portals, HIPAA-compliant communication tools, and medical data platforms.",
+    "order": 2,
+    "isActive": true
+  },
+  {
+    "name": "Cloud Operations",
+    "slug": "cloud-operations",
+    "description": "Multi-cloud infrastructure, DevOps reliability, Kubernetes clusters, and automated enterprise workspaces.",
+    "order": 3,
+    "isActive": true
+  },
+  {
+    "name": "Fintech & Mobile",
+    "slug": "fintech-mobile",
+    "description": "High-performance digital wallets, asset exchange portals, and cross-platform mobile apps.",
+    "order": 4,
+    "isActive": true
+  }
+]

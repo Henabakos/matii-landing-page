@@ -32,9 +32,11 @@ ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
 # Pages read the CMS at request time, so the build needs no database access.
 RUN pnpm exec prisma generate && pnpm exec next build
 
-# One-shot job that applies committed migrations (needs DATABASE_URL/DIRECT_URL).
+# One-shot job that applies committed migrations (needs DATABASE_URL/DIRECT_URL),
+# then seeds prisma/production-content into an empty database. The seed skips
+# itself once content exists; set SEED_ON_DEPLOY=false to turn it off.
 FROM builder AS migrator
-CMD ["pnpm", "exec", "prisma", "migrate", "deploy"]
+CMD ["sh", "-c", "pnpm exec prisma migrate deploy && if [ \"$SEED_ON_DEPLOY\" != false ]; then pnpm exec tsx prisma/seed-production.ts --if-empty; fi"]
 
 FROM os AS runner
 ENV NODE_ENV=production \

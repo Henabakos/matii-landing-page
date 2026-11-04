@@ -1,0 +1,34 @@
+[
+  {
+    "_note": "Projects have no hidden flag: this shows publicly once seeded. Only seeded with --with-project-template. category must match a project category name.",
+    "slug": "template-project",
+    "title": "Project title",
+    "subtitle": "One-sentence summary of the outcome.",
+    "category": "AI Automation",
+    "year": "2026",
+    "clientName": "Client Name",
+    "clientLogoText": "C",
+    "liveUrl": null,
+    "timeline": "3 Months",
+    "services": "Service One • Service Two",
+    "coverImage": "/images/ai-automation.png",
+    "challenge": ["Paragraph describing the client's problem."],
+    "solution": ["Paragraph describing what was built."],
+    "gallery": [
+      { "id": "1", "title": "Screen title", "imageUrl": "/images/ai-automation.png" }
+    ],
+    "metrics": {
+      "demoClickGrowth": "9.4", "higherEngagement": "58", "pipelineInfluence": "$120K", "qualifiedLeads": "89",
+      "stat1Value": "40%", "stat1Label": "faster completion",
+      "stat2Value": "25%", "stat2Label": "more engagement",
+      "stat3Value": "4.8", "stat3Label": "star rating"
+    },
+    "isFeatured": false,
+    "isSolutionsBuilt": false,
+    "order": 99,
+    "seoTitle": "Project title | Case Study",
+    "seoDescription": "Search result description, around 150 characters.",
+    "seoKeywords": null,
+    "translations": null
+  }
+]

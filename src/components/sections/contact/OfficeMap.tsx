@@ -73,7 +73,7 @@ export default function OfficeMap({ light }: { light: boolean }) {
         />
         <div className={`flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t px-5 py-4 sm:px-6 ${border}`}>
           <div className={`min-w-0 max-w-sm font-inter text-xs leading-relaxed ${muted}`} aria-live="polite">
-            {office ? <address className="whitespace-pre-line not-italic">{office.address}</address> : <p>{t("mapCityOnly", { city })}</p>}
+            {office ? <address className="whitespace-pre-line not-italic">{office.address}{"\n"}<a href={`tel:${office.phone.replace(/\s/g, "")}`} className="hover:underline">{office.phone}</a></address> : <p>{t("mapCityOnly", { city })}</p>}
           </div>
           <a href={office ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${latitude},${longitude}`)}` : mapUrl}
             target="_blank" rel="noopener noreferrer"

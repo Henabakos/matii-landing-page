@@ -1,0 +1,13 @@
+[
+  {
+    "_note": "Hidden. Replace with a real client quote (with their permission), then activate.",
+    "quote": "Client quote goes here.",
+    "authorName": "Client Name",
+    "authorRole": "Role at Company",
+    "avatarUrl": "/avatars/avatar-1.png",
+    "rating": 5,
+    "order": 1,
+    "isActive": false,
+    "translations": null
+  }
+]

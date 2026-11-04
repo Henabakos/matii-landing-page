@@ -1,5 +1,5 @@
 
-import { Clock3, MapPin, ArrowUpRight } from "lucide-react";
+import { Clock3, MapPin, ArrowUpRight, Phone } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import {
   FlagEthiopia,
@@ -7,6 +7,7 @@ import {
   FlagUK,
   FlagUSA,
 } from "@/components/common/CountryFlags";
+import { officeAddresses } from "@/data/office-addresses";
 
 type Office = {
   country: string;
@@ -14,6 +15,7 @@ type Office = {
   type: string;
   city: string;
   address: string;
+  phone?: string;
   timezone: string;
   image: string;
   headquarters?: boolean;
@@ -24,8 +26,9 @@ const offices: Office[] = [
     country: "United States",
     flag: <FlagUSA className="h-4 w-6" />,
     type: "Americas Hub",
-    city: "New York, NY",
-    address: "New York, United States",
+    city: "Atlanta, GA",
+    address: officeAddresses.us!.address,
+    phone: officeAddresses.us!.phone,
     timezone: "EST · UTC-5",
     image: "/images/offices/us.jpg",
   },
@@ -33,8 +36,9 @@ const offices: Office[] = [
     country: "United Kingdom",
     flag: <FlagUK className="h-4 w-6" />,
     type: "EMEA Hub",
-    city: "London",
-    address: "London, United Kingdom",
+    city: "Leeds",
+    address: officeAddresses.uk!.address,
+    phone: officeAddresses.uk!.phone,
     timezone: "GMT · UTC+0",
     image: "/images/offices/uk.jpg",
   },
@@ -42,8 +46,9 @@ const offices: Office[] = [
     country: "Poland",
     flag: <FlagPoland className="h-4 w-6" />,
     type: "European Engineering",
-    city: "Warsaw",
-    address: "Warsaw, Poland",
+    city: "Białystok",
+    address: officeAddresses.pl!.address,
+    phone: officeAddresses.pl!.phone,
     timezone: "CET · UTC+1",
     image: "/images/offices/eu.jpg",
   },
@@ -140,11 +145,21 @@ function OfficeCard({ office }: { office: Office }) {
             <p className="text-sm font-medium text-slate-200">
               {office.city}
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-400">
+            <address className="mt-1 whitespace-pre-line text-xs not-italic leading-relaxed text-slate-400">
               {office.address}
-            </p>
+            </address>
           </div>
         </div>
+
+        {office.phone && (
+          <a
+            href={`tel:${office.phone.replace(/\s/g, "")}`}
+            className="mt-4 flex min-h-6 items-center gap-2 text-xs text-slate-400 transition-colors hover:text-[#98FF03]"
+          >
+            <Phone size={14} aria-hidden="true" />
+            <span>{office.phone}</span>
+          </a>
+        )}
 
         {/* Timezone */}
         <div className="mt-4 flex items-center gap-2 text-xs text-slate-400">

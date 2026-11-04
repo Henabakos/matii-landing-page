@@ -1,0 +1,57 @@
+[
+  {
+    "key": "products_designed_built",
+    "label": "Digital Products",
+    "value": "50+",
+    "unit": "+",
+    "description": "Digital products designed and built across diverse industries.",
+    "category": "HERO_ABOUT",
+    "order": 1,
+    "isActive": true,
+    "translations": null
+  },
+  {
+    "key": "industries_transformed",
+    "label": "Industries Transformed",
+    "value": "10+",
+    "unit": "+",
+    "description": "Industries transformed through thoughtful design and technology.",
+    "category": "HERO_ABOUT",
+    "order": 2,
+    "isActive": true,
+    "translations": null
+  },
+  {
+    "key": "possibilities_created",
+    "label": "Digital Possibilities",
+    "value": "∞",
+    "unit": "",
+    "description": "Possibilities created by turning ambitious ideas into digital reality.",
+    "category": "HERO_ABOUT",
+    "order": 3,
+    "isActive": true,
+    "translations": null
+  },
+  {
+    "key": "client_retention_rate",
+    "label": "Client Retention",
+    "value": "98.4%",
+    "unit": "%",
+    "description": "Average multi-year client retention rate across all enterprise partnerships.",
+    "category": "GENERAL",
+    "order": 4,
+    "isActive": true,
+    "translations": null
+  },
+  {
+    "key": "average_conversion_lift",
+    "label": "Demo Clicks Lift",
+    "value": "+13.2x",
+    "unit": "x",
+    "description": "Average customer demo growth lift following our digital product revamp.",
+    "category": "GENERAL",
+    "order": 5,
+    "isActive": true,
+    "translations": null
+  }
+]

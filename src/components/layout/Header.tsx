@@ -228,7 +228,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://calendly.com/Matiidigitals/30min"
+              href="https://calendly.com/matiitechnologies-info/30min"
               className="font-inter text-xs xl:text-[13px] 2xl:text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] h-[36px] xl:h-[38px] px-2.5 xl:px-3.5 2xl:px-4 inline-flex items-center gap-1.5 xl:gap-2 shadow-sm transition-all border border-[#292c2e] dark:border-white cursor-pointer active:scale-[0.96] whitespace-nowrap shrink-0"
             >
               <LineiconsGoogleMeet className="size-4 shrink-0" />
@@ -377,7 +377,7 @@ export function Header({ initialMenus }: HeaderProps = {}) {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://calendly.com/Matiidigitals/30min"
+                  href="https://calendly.com/matiitechnologies-info/30min"
                   className="font-inter text-[14px] font-medium bg-[#292c2e] text-white hover:bg-[#1a1c1d] dark:bg-white dark:text-[#161819] dark:hover:bg-zinc-200 rounded-[4px] px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm transition-colors border border-[#292c2e] dark:border-white"
                   onClick={() => setIsOpen(false)}
                 >

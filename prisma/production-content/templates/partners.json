@@ -1,0 +1,11 @@
+[
+  {
+    "_note": "Hidden. Upload the logo in /admin (or use a /public path), then activate.",
+    "name": "Partner Name",
+    "logoUrl": null,
+    "svgContent": null,
+    "websiteUrl": "https://example.com",
+    "order": 1,
+    "isActive": false
+  }
+]

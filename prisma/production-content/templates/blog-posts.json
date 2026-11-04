@@ -1,0 +1,22 @@
+[
+  {
+    "_note": "Hidden draft. Edit it in /admin, then tick Published. Content is Markdown.",
+    "slug": "template-blog-post",
+    "title": "Blog post title",
+    "category": "Engineering",
+    "excerpt": "One or two sentences that summarise the post for cards and search results.",
+    "content": "### Section heading\n\nOpening paragraph.\n\n### Another section\n\n- Point one\n- Point two\n\nClosing paragraph.",
+    "authorName": "Matii Engineering Team",
+    "authorAvatar": "/images/about-illustration.png",
+    "authorRole": "Core Architect",
+    "coverImage": "/images/about-illustration.png",
+    "readTime": "5 min read",
+    "isMainHero": false,
+    "isSideFeatured": false,
+    "isPublished": false,
+    "seoTitle": "Blog post title | MATII TECHNOLOGIES Blog",
+    "seoDescription": "Search result description, around 150 characters.",
+    "seoKeywords": "keyword one, keyword two",
+    "translations": null
+  }
+]

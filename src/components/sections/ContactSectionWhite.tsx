@@ -83,7 +83,7 @@ export function ContactSectionWhite({ headingLevel = "h2" }: { headingLevel?: "h
 
                 <Link
                   target="_blank"
-                  href="https://calendly.com/Matiidigitals/30min"
+                  href="https://calendly.com/matiitechnologies-info/30min"
                   className="inline-flex h-[42px] w-fit self-start items-center justify-start gap-2 rounded-[4px] border border-[#292c2e] bg-white px-5 font-inter text-xs font-medium text-[#292c2e] shadow-sm transition-all hover:bg-zinc-100 active:scale-[0.98] sm:text-[13px]"
                 >
                   <LineiconsGoogleMeet className="size-4" />

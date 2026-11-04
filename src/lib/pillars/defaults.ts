@@ -48,14 +48,14 @@ export function getDefaultPillarContent(id: PillarId): PillarContent {
   ...product, ...treatments[product.id as keyof typeof treatments],
   tags: [...treatments[product.id as keyof typeof treatments].tags],
   imageSrc: '/images/products/matii-' + product.id + '.svg',
-  demoUrl: 'https://calendly.com/Matiidigitals/30min?utm_source=matii&utm_medium=product-demo&utm_content=' + product.id,
+  demoUrl: 'https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=' + product.id,
   group: index < 3 ? 'foundation' : index < 6 ? 'insights' : 'development',
  })) : detail.capabilities.map((capability,index) => {
   const sources = config!.groups[index].map(i => pillar.capabilities[i]);
   return {id: id + '-' + (index + 1), name: capability.title, category: pillar.shortTitle, description: capability.description,
    tags: [...new Set(sources.flatMap(s => s.tags ?? []))].slice(0,3), capabilities: sources.map(s => s.title + ': ' + s.description),
    imageSrc: '/images/products/' + id + '-' + (index + 1) + '.svg', icon: config!.icons[index], wide: index === 0 || index === 3,
-   demoUrl: 'https://calendly.com/Matiidigitals/30min?utm_source=matii&utm_medium=product-demo&utm_content=' + id + '-' + (index + 1)};
+   demoUrl: 'https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=' + id + '-' + (index + 1)};
  });
  return {
   name: id === 'ai' ? MATII_AI_PLATFORM.name : pillar.shortTitle,

@@ -1,0 +1,1498 @@
+[
+  {
+    "id": "ai",
+    "draft": {
+      "name": "MATII Data & AI Platform",
+      "listing": {
+        "title": "AI & data platform",
+        "description": "Practical AI and connected data that turn information into informed action.",
+        "items": [
+          "Data Warehousing & ETL",
+          "Predictive Analytics & BI",
+          "Custom LLM & AI Agents",
+          "Intelligent Automation"
+        ]
+      },
+      "headline": "Put your data to work.",
+      "description": "MATII Data & AI enables organizations to connect their data, understand it, analyze it, build AI applications on top of it, and put those applications into production under enterprise security and governance.",
+      "outcome": "From information to informed action.",
+      "portfolioHeading": "Nine products.\nOne connected platform.",
+      "portfolioDescription": "Explore every layer: data integration and governance, analytics and machine learning, model serving and AI applications, all brought together in MATII Studio.",
+      "products": [
+        {
+          "id": "connect",
+          "name": "MATII Connect",
+          "category": "Data Integration",
+          "description": "Connect data from databases, APIs, files, applications, and streaming systems.",
+          "tags": [
+            "Database connectors",
+            "Live pipelines",
+            "CDC"
+          ],
+          "capabilities": [
+            "PostgreSQL, MySQL, SQL Server, and other database connectors",
+            "REST APIs and webhooks",
+            "CSV, Excel, JSON, Parquet, and document ingestion",
+            "Batch and incremental synchronization",
+            "Change data capture (CDC)",
+            "Streaming ingestion",
+            "Scheduled pipelines and retry handling"
+          ],
+          "imageSrc": "/images/products/matii-connect.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=connect",
+          "icon": "Cable",
+          "wide": true,
+          "group": "foundation"
+        },
+        {
+          "id": "lakehouse",
+          "name": "MATII Lakehouse",
+          "category": "Data Storage & Processing",
+          "description": "Store and process large volumes of structured and unstructured data.",
+          "tags": [
+            "Open storage",
+            "SQL",
+            "Iceberg"
+          ],
+          "capabilities": [
+            "Data lake and lakehouse storage",
+            "Object storage integration",
+            "Open table formats such as Apache Iceberg",
+            "SQL query engines",
+            "Batch transformation and distributed processing",
+            "Data retention and lifecycle policies",
+            "Separate raw, cleaned, and curated data zones"
+          ],
+          "imageSrc": "/images/products/matii-lakehouse.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=lakehouse",
+          "icon": "Database",
+          "wide": false,
+          "group": "foundation"
+        },
+        {
+          "id": "catalog",
+          "name": "MATII Catalog",
+          "category": "Metadata & Governance",
+          "description": "Help organizations discover, understand, trust, and govern their data.",
+          "tags": [
+            "Discovery",
+            "Lineage",
+            "Access policies"
+          ],
+          "capabilities": [
+            "Searchable data catalog",
+            "Business glossary and technical metadata",
+            "Dataset ownership and classification",
+            "Data lineage and dependency tracking",
+            "Data quality rules and profiling",
+            "Sensitive-data discovery",
+            "Access policies, retention, and audit trails"
+          ],
+          "imageSrc": "/images/products/matii-catalog.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=catalog",
+          "icon": "Search",
+          "wide": false,
+          "group": "foundation"
+        },
+        {
+          "id": "analytics",
+          "name": "MATII Analytics",
+          "category": "BI & Decision Intelligence",
+          "description": "Turn governed data into useful business information.",
+          "tags": [
+            "Dashboards",
+            "Natural-language SQL",
+            "Forecasting"
+          ],
+          "capabilities": [
+            "SQL workspace and query editor",
+            "Interactive dashboards and reports",
+            "KPIs and scheduled reporting",
+            "Business metrics and semantic models",
+            "Natural-language-to-SQL assistance",
+            "Forecasting and anomaly detection",
+            "Report sharing with permission controls"
+          ],
+          "imageSrc": "/images/products/matii-analytics.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=analytics",
+          "icon": "ChartNoAxesCombined",
+          "wide": true,
+          "group": "insights"
+        },
+        {
+          "id": "knowledge",
+          "name": "MATII Knowledge",
+          "category": "Knowledge Graph & Search",
+          "description": "Organize relationships across enterprise data and documents.",
+          "tags": [
+            "Knowledge graphs",
+            "Hybrid search",
+            "RAG"
+          ],
+          "capabilities": [
+            "Entity and relationship modeling",
+            "Knowledge graph construction",
+            "Full-text and semantic search",
+            "Vector search and hybrid retrieval",
+            "Document chunking and metadata enrichment",
+            "Entity resolution and deduplication",
+            "Retrieval augmented generation (RAG)"
+          ],
+          "imageSrc": "/images/products/matii-knowledge.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=knowledge",
+          "icon": "Network",
+          "wide": true,
+          "group": "insights"
+        },
+        {
+          "id": "ml",
+          "name": "MATII ML",
+          "category": "Machine Learning Platform",
+          "description": "Build, train, evaluate, and deploy predictive models.",
+          "tags": [
+            "Experiments",
+            "Model registry",
+            "Drift detection"
+          ],
+          "capabilities": [
+            "Experiment tracking",
+            "Dataset and model versioning",
+            "Model registry",
+            "Training job orchestration",
+            "Feature engineering and reusable feature stores",
+            "Batch and real-time inference",
+            "Model evaluation, drift detection, and monitoring"
+          ],
+          "imageSrc": "/images/products/matii-ml.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=ml",
+          "icon": "FlaskConical",
+          "wide": false,
+          "group": "insights"
+        },
+        {
+          "id": "models",
+          "name": "MATII Models",
+          "category": "Model Serving & AI Gateway",
+          "description": "Make AI models accessible through consistent, secure APIs.",
+          "tags": [
+            "AI gateway",
+            "Model routing",
+            "Usage metering"
+          ],
+          "capabilities": [
+            "Hosted open-weight model inference",
+            "External model-provider integrations",
+            "Unified model gateway",
+            "Embedding and reranking APIs",
+            "Model routing and fallback policies",
+            "Rate limits, quotas, and usage metering",
+            "Latency, token usage, and cost tracking"
+          ],
+          "imageSrc": "/images/products/matii-models.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=models",
+          "icon": "Cpu",
+          "wide": false,
+          "group": "development"
+        },
+        {
+          "id": "agents",
+          "name": "MATII Agents",
+          "category": "AI Applications & Automation",
+          "description": "Build AI assistants and agents that perform useful, permission-controlled work.",
+          "tags": [
+            "AI assistants",
+            "Tool calling",
+            "Human approval"
+          ],
+          "capabilities": [
+            "Visual agent and workflow builder",
+            "Knowledge-base assistants",
+            "Tool and API integrations",
+            "Multi-step workflow execution",
+            "Human approval checkpoints",
+            "Conversation and execution tracing",
+            "Evaluation, versioning, and deployment"
+          ],
+          "imageSrc": "/images/products/matii-agents.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=agents",
+          "icon": "Workflow",
+          "wide": false,
+          "group": "development"
+        },
+        {
+          "id": "studio",
+          "name": "MATII Studio",
+          "category": "Unified Workspace",
+          "description": "Bring data engineers, analysts, data scientists, and AI developers together.",
+          "tags": [
+            "Notebooks",
+            "Collaboration",
+            "Deployments"
+          ],
+          "capabilities": [
+            "Projects and collaborative workspaces",
+            "Visual pipeline builder",
+            "SQL and notebook environments",
+            "Dataset exploration",
+            "Model and agent deployment",
+            "Shared permissions and secrets integration",
+            "Central monitoring and usage dashboards"
+          ],
+          "imageSrc": "/images/products/matii-studio.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=studio",
+          "icon": "PanelsTopLeft",
+          "wide": false,
+          "group": "development"
+        }
+      ],
+      "process": [
+        {
+          "title": "Find the use case",
+          "description": "Review your data and choose a problem where AI can make a useful difference."
+        },
+        {
+          "title": "Prove the approach",
+          "description": "Test a focused prototype for accuracy, usefulness, and safety."
+        },
+        {
+          "title": "Build for production",
+          "description": "Connect data pipelines, deploy models, and validate the complete workflow."
+        },
+        {
+          "title": "Evaluate & improve",
+          "description": "Monitor output quality and refine the system as your data and needs evolve."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is our proprietary company data used to train public AI models?",
+          "answer": "Never. All AI pipelines, RAG systems, and fine-tuned models run inside your private, isolated virtual private cloud (VPC) with strict zero-retention API contracts."
+        },
+        {
+          "question": "Can your AI agents safely interact with our existing internal APIs?",
+          "answer": "Yes. Our autonomous agent frameworks execute tool calls inside sandboxed environments with strict schema validation, deterministic fallback logic, and human approval gates."
+        },
+        {
+          "question": "How do you evaluate and prevent hallucinations in production RAG systems?",
+          "answer": "We deploy multi-stage verification pipelines including citation attribution checks, ground-truth hallucination scoring, and cross-encoder re-ranking before delivering answers to users."
+        }
+      ],
+      "techStack": [
+        "Python",
+        "PyTorch",
+        "vLLM",
+        "Hugging Face",
+        "LangChain",
+        "Qdrant",
+        "Apache Spark",
+        "Delta Lake",
+        "Snowflake",
+        "Docker",
+        "FastAPI"
+      ],
+      "overview": {
+        "positioning": "A strategic product of MATII Technologies, designed for banks, government institutions, telecoms, large enterprises, and developers.",
+        "example": "Imagine a bank with customer records in PostgreSQL, transactions in another system, documents stored as PDFs, reports in Excel, and internal policies spread across files. MATII Data & AI brings these sources into a connected, governed environment.",
+        "applications": "The same platform can support a government institution analyzing census data, a telecom company forecasting demand, or a corporation automating document-heavy processes.",
+        "workflow": [
+          "Connect all your data sources.",
+          "Ingest and clean the data.",
+          "Build a searchable, governed view of your information.",
+          "Analyze operations through dashboards and natural-language queries.",
+          "Build AI assistants that answer questions using authorized information.",
+          "Develop predictive models and deploy AI services.",
+          "Monitor accuracy, cost, access, and performance in production."
+        ]
+      },
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/ai-data-platform.jpg"
+      }
+    },
+    "published": {
+      "name": "MATII Data & AI Platform",
+      "listing": {
+        "title": "AI & data platform",
+        "description": "Practical AI and connected data that turn information into informed action.",
+        "items": [
+          "Data Warehousing & ETL",
+          "Predictive Analytics & BI",
+          "Custom LLM & AI Agents",
+          "Intelligent Automation"
+        ]
+      },
+      "headline": "Put your data to work.",
+      "description": "MATII Data & AI enables organizations to connect their data, understand it, analyze it, build AI applications on top of it, and put those applications into production under enterprise security and governance.",
+      "outcome": "From information to informed action.",
+      "portfolioHeading": "Nine products.\nOne connected platform.",
+      "portfolioDescription": "Explore every layer: data integration and governance, analytics and machine learning, model serving and AI applications, all brought together in MATII Studio.",
+      "products": [
+        {
+          "id": "connect",
+          "name": "MATII Connect",
+          "category": "Data Integration",
+          "description": "Connect data from databases, APIs, files, applications, and streaming systems.",
+          "tags": [
+            "Database connectors",
+            "Live pipelines",
+            "CDC"
+          ],
+          "capabilities": [
+            "PostgreSQL, MySQL, SQL Server, and other database connectors",
+            "REST APIs and webhooks",
+            "CSV, Excel, JSON, Parquet, and document ingestion",
+            "Batch and incremental synchronization",
+            "Change data capture (CDC)",
+            "Streaming ingestion",
+            "Scheduled pipelines and retry handling"
+          ],
+          "imageSrc": "/images/products/matii-connect.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=connect",
+          "icon": "Cable",
+          "wide": true,
+          "group": "foundation"
+        },
+        {
+          "id": "lakehouse",
+          "name": "MATII Lakehouse",
+          "category": "Data Storage & Processing",
+          "description": "Store and process large volumes of structured and unstructured data.",
+          "tags": [
+            "Open storage",
+            "SQL",
+            "Iceberg"
+          ],
+          "capabilities": [
+            "Data lake and lakehouse storage",
+            "Object storage integration",
+            "Open table formats such as Apache Iceberg",
+            "SQL query engines",
+            "Batch transformation and distributed processing",
+            "Data retention and lifecycle policies",
+            "Separate raw, cleaned, and curated data zones"
+          ],
+          "imageSrc": "/images/products/matii-lakehouse.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=lakehouse",
+          "icon": "Database",
+          "wide": false,
+          "group": "foundation"
+        },
+        {
+          "id": "catalog",
+          "name": "MATII Catalog",
+          "category": "Metadata & Governance",
+          "description": "Help organizations discover, understand, trust, and govern their data.",
+          "tags": [
+            "Discovery",
+            "Lineage",
+            "Access policies"
+          ],
+          "capabilities": [
+            "Searchable data catalog",
+            "Business glossary and technical metadata",
+            "Dataset ownership and classification",
+            "Data lineage and dependency tracking",
+            "Data quality rules and profiling",
+            "Sensitive-data discovery",
+            "Access policies, retention, and audit trails"
+          ],
+          "imageSrc": "/images/products/matii-catalog.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=catalog",
+          "icon": "Search",
+          "wide": false,
+          "group": "foundation"
+        },
+        {
+          "id": "analytics",
+          "name": "MATII Analytics",
+          "category": "BI & Decision Intelligence",
+          "description": "Turn governed data into useful business information.",
+          "tags": [
+            "Dashboards",
+            "Natural-language SQL",
+            "Forecasting"
+          ],
+          "capabilities": [
+            "SQL workspace and query editor",
+            "Interactive dashboards and reports",
+            "KPIs and scheduled reporting",
+            "Business metrics and semantic models",
+            "Natural-language-to-SQL assistance",
+            "Forecasting and anomaly detection",
+            "Report sharing with permission controls"
+          ],
+          "imageSrc": "/images/products/matii-analytics.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=analytics",
+          "icon": "ChartNoAxesCombined",
+          "wide": true,
+          "group": "insights"
+        },
+        {
+          "id": "knowledge",
+          "name": "MATII Knowledge",
+          "category": "Knowledge Graph & Search",
+          "description": "Organize relationships across enterprise data and documents.",
+          "tags": [
+            "Knowledge graphs",
+            "Hybrid search",
+            "RAG"
+          ],
+          "capabilities": [
+            "Entity and relationship modeling",
+            "Knowledge graph construction",
+            "Full-text and semantic search",
+            "Vector search and hybrid retrieval",
+            "Document chunking and metadata enrichment",
+            "Entity resolution and deduplication",
+            "Retrieval augmented generation (RAG)"
+          ],
+          "imageSrc": "/images/products/matii-knowledge.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=knowledge",
+          "icon": "Network",
+          "wide": true,
+          "group": "insights"
+        },
+        {
+          "id": "ml",
+          "name": "MATII ML",
+          "category": "Machine Learning Platform",
+          "description": "Build, train, evaluate, and deploy predictive models.",
+          "tags": [
+            "Experiments",
+            "Model registry",
+            "Drift detection"
+          ],
+          "capabilities": [
+            "Experiment tracking",
+            "Dataset and model versioning",
+            "Model registry",
+            "Training job orchestration",
+            "Feature engineering and reusable feature stores",
+            "Batch and real-time inference",
+            "Model evaluation, drift detection, and monitoring"
+          ],
+          "imageSrc": "/images/products/matii-ml.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=ml",
+          "icon": "FlaskConical",
+          "wide": false,
+          "group": "insights"
+        },
+        {
+          "id": "models",
+          "name": "MATII Models",
+          "category": "Model Serving & AI Gateway",
+          "description": "Make AI models accessible through consistent, secure APIs.",
+          "tags": [
+            "AI gateway",
+            "Model routing",
+            "Usage metering"
+          ],
+          "capabilities": [
+            "Hosted open-weight model inference",
+            "External model-provider integrations",
+            "Unified model gateway",
+            "Embedding and reranking APIs",
+            "Model routing and fallback policies",
+            "Rate limits, quotas, and usage metering",
+            "Latency, token usage, and cost tracking"
+          ],
+          "imageSrc": "/images/products/matii-models.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=models",
+          "icon": "Cpu",
+          "wide": false,
+          "group": "development"
+        },
+        {
+          "id": "agents",
+          "name": "MATII Agents",
+          "category": "AI Applications & Automation",
+          "description": "Build AI assistants and agents that perform useful, permission-controlled work.",
+          "tags": [
+            "AI assistants",
+            "Tool calling",
+            "Human approval"
+          ],
+          "capabilities": [
+            "Visual agent and workflow builder",
+            "Knowledge-base assistants",
+            "Tool and API integrations",
+            "Multi-step workflow execution",
+            "Human approval checkpoints",
+            "Conversation and execution tracing",
+            "Evaluation, versioning, and deployment"
+          ],
+          "imageSrc": "/images/products/matii-agents.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=agents",
+          "icon": "Workflow",
+          "wide": false,
+          "group": "development"
+        },
+        {
+          "id": "studio",
+          "name": "MATII Studio",
+          "category": "Unified Workspace",
+          "description": "Bring data engineers, analysts, data scientists, and AI developers together.",
+          "tags": [
+            "Notebooks",
+            "Collaboration",
+            "Deployments"
+          ],
+          "capabilities": [
+            "Projects and collaborative workspaces",
+            "Visual pipeline builder",
+            "SQL and notebook environments",
+            "Dataset exploration",
+            "Model and agent deployment",
+            "Shared permissions and secrets integration",
+            "Central monitoring and usage dashboards"
+          ],
+          "imageSrc": "/images/products/matii-studio.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=studio",
+          "icon": "PanelsTopLeft",
+          "wide": false,
+          "group": "development"
+        }
+      ],
+      "process": [
+        {
+          "title": "Find the use case",
+          "description": "Review your data and choose a problem where AI can make a useful difference."
+        },
+        {
+          "title": "Prove the approach",
+          "description": "Test a focused prototype for accuracy, usefulness, and safety."
+        },
+        {
+          "title": "Build for production",
+          "description": "Connect data pipelines, deploy models, and validate the complete workflow."
+        },
+        {
+          "title": "Evaluate & improve",
+          "description": "Monitor output quality and refine the system as your data and needs evolve."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is our proprietary company data used to train public AI models?",
+          "answer": "Never. All AI pipelines, RAG systems, and fine-tuned models run inside your private, isolated virtual private cloud (VPC) with strict zero-retention API contracts."
+        },
+        {
+          "question": "Can your AI agents safely interact with our existing internal APIs?",
+          "answer": "Yes. Our autonomous agent frameworks execute tool calls inside sandboxed environments with strict schema validation, deterministic fallback logic, and human approval gates."
+        },
+        {
+          "question": "How do you evaluate and prevent hallucinations in production RAG systems?",
+          "answer": "We deploy multi-stage verification pipelines including citation attribution checks, ground-truth hallucination scoring, and cross-encoder re-ranking before delivering answers to users."
+        }
+      ],
+      "techStack": [
+        "Python",
+        "PyTorch",
+        "vLLM",
+        "Hugging Face",
+        "LangChain",
+        "Qdrant",
+        "Apache Spark",
+        "Delta Lake",
+        "Snowflake",
+        "Docker",
+        "FastAPI"
+      ],
+      "overview": {
+        "positioning": "A strategic product of MATII Technologies, designed for banks, government institutions, telecoms, large enterprises, and developers.",
+        "example": "Imagine a bank with customer records in PostgreSQL, transactions in another system, documents stored as PDFs, reports in Excel, and internal policies spread across files. MATII Data & AI brings these sources into a connected, governed environment.",
+        "applications": "The same platform can support a government institution analyzing census data, a telecom company forecasting demand, or a corporation automating document-heavy processes.",
+        "workflow": [
+          "Connect all your data sources.",
+          "Ingest and clean the data.",
+          "Build a searchable, governed view of your information.",
+          "Analyze operations through dashboards and natural-language queries.",
+          "Build AI assistants that answer questions using authorized information.",
+          "Develop predictive models and deploy AI services.",
+          "Monitor accuracy, cost, access, and performance in production."
+        ]
+      },
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/ai-data-platform.jpg"
+      }
+    },
+    "revision": 0
+  },
+  {
+    "id": "bpo",
+    "draft": {
+      "name": "BPO Solutions",
+      "listing": {
+        "title": "BPO solutions",
+        "description": "Dedicated people and dependable processes that give your team room to grow.",
+        "items": [
+          "Customer Experience & CX",
+          "Back-Office Operations",
+          "Data Processing & Annotation",
+          "Dedicated Talent Teams"
+        ]
+      },
+      "headline": "Give your team room to grow.",
+      "description": "Keep your business moving with dedicated support teams, dependable back-office operations, and technology that makes everyday work easier.",
+      "outcome": "The right people. A smoother operation.",
+      "portfolioHeading": "Dedicated people.\nConnected operations.",
+      "portfolioDescription": "Explore customer support, back-office operations, data services, and dedicated teams. Choose the expertise you need to keep work moving and give your team room to grow.",
+      "products": [
+        {
+          "id": "bpo-1",
+          "name": "Customer & technical support",
+          "category": "BPO Solutions",
+          "description": "Support your customers across channels and languages, with coverage shaped around their needs.",
+          "tags": [
+            "Live Voice",
+            "Chat",
+            "Omnichannel"
+          ],
+          "capabilities": [
+            "Omnichannel Customer Experience (CX): 24/7 live chat, voice, email, and social customer support managed by dedicated, brand-trained customer success specialists delivering empathetic and rapid resolutions.",
+            "Multilingual 24/7 Technical Support: Around-the-clock software troubleshooting, hardware ticketing, developer API support, and bug triage in English, Polish, German, and major global languages."
+          ],
+          "imageSrc": "/images/products/bpo-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-1",
+          "icon": "Network",
+          "wide": true
+        },
+        {
+          "id": "bpo-2",
+          "name": "Back-office operations",
+          "category": "BPO Solutions",
+          "description": "Keep essential administration, reconciliation, and reporting running consistently.",
+          "tags": [
+            "Back-Office",
+            "KYC / AML",
+            "Data Validation"
+          ],
+          "capabilities": [
+            "Technical Back-Office Operations: Complex workflow execution, tier-2 account verifications, KYC/AML identity checks, exception handling, and enterprise claims processing.",
+            "Financial Reconciliation & Auditing Pods: Meticulous invoice matching, payment disputes handling, ledger balancing, and merchant settlement investigations executing with zero margin for error."
+          ],
+          "imageSrc": "/images/products/bpo-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-2",
+          "icon": "Workflow",
+          "wide": false
+        },
+        {
+          "id": "bpo-3",
+          "name": "Data processing & annotation",
+          "category": "BPO Solutions",
+          "description": "Turn raw information into structured, quality-checked data for your business and AI teams.",
+          "tags": [
+            "RLHF",
+            "Data Annotation",
+            "Model QA"
+          ],
+          "capabilities": [
+            "AI Training Data Processing & Annotation: High-precision human-in-the-loop data labeling, RLHF prompt evaluation, multilingual translation QA, and visual object segmentation for AI engineering teams."
+          ],
+          "imageSrc": "/images/products/bpo-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-3",
+          "icon": "Database",
+          "wide": false
+        },
+        {
+          "id": "bpo-4",
+          "name": "Dedicated talent teams",
+          "category": "BPO Solutions",
+          "description": "Extend your team with people trained in your tools, workflows, and standards.",
+          "tags": [
+            "Dedicated Squads",
+            "Staff Augmentation",
+            "SLA Guardrails"
+          ],
+          "capabilities": [
+            "Dedicated Talent & Team Augmentation: Exclusive, full-time specialist squads aligned with your timezone, culture, and toolchain—seamlessly managed with daily telemetry and KPI dashboards."
+          ],
+          "imageSrc": "/images/products/bpo-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-4",
+          "icon": "PanelsTopLeft",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Map the work",
+          "description": "Understand your workflows and agree on service and quality expectations."
+        },
+        {
+          "title": "Build your team",
+          "description": "Select and train people around your systems and customer experience."
+        },
+        {
+          "title": "Start together",
+          "description": "Shadow your team and transition work gradually with quality checks."
+        },
+        {
+          "title": "Keep improving",
+          "description": "Review performance together and refine the operation as needs change."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do you ensure data security and customer privacy?",
+          "answer": "All operations are conducted on secure, access-controlled virtual desktop infrastructures with strict DLP (Data Loss Prevention) rules, zero local storage, and full SOC 2 / GDPR compliance."
+        },
+        {
+          "question": "How quickly can a dedicated BPO pod be deployed?",
+          "answer": "Standard pods can be fully onboarded, trained on your custom SOPs, and operating in production within 14 business days."
+        },
+        {
+          "question": "Can we scale pod headcount up or down based on seasonal demand?",
+          "answer": "Yes. Our agile operational contracts provide dynamic elasticity, allowing you to scale up for peak seasons and scale down during normalized periods."
+        }
+      ],
+      "techStack": [
+        "Zendesk",
+        "Salesforce Service Cloud",
+        "Intercom",
+        "Jira Service Management",
+        "Genesys",
+        "Label Studio",
+        "Looker",
+        "Python Automation",
+        "Slack / Teams"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/bpo-solutions.jpg"
+      }
+    },
+    "published": {
+      "name": "BPO Solutions",
+      "listing": {
+        "title": "BPO solutions",
+        "description": "Dedicated people and dependable processes that give your team room to grow.",
+        "items": [
+          "Customer Experience & CX",
+          "Back-Office Operations",
+          "Data Processing & Annotation",
+          "Dedicated Talent Teams"
+        ]
+      },
+      "headline": "Give your team room to grow.",
+      "description": "Keep your business moving with dedicated support teams, dependable back-office operations, and technology that makes everyday work easier.",
+      "outcome": "The right people. A smoother operation.",
+      "portfolioHeading": "Dedicated people.\nConnected operations.",
+      "portfolioDescription": "Explore customer support, back-office operations, data services, and dedicated teams. Choose the expertise you need to keep work moving and give your team room to grow.",
+      "products": [
+        {
+          "id": "bpo-1",
+          "name": "Customer & technical support",
+          "category": "BPO Solutions",
+          "description": "Support your customers across channels and languages, with coverage shaped around their needs.",
+          "tags": [
+            "Live Voice",
+            "Chat",
+            "Omnichannel"
+          ],
+          "capabilities": [
+            "Omnichannel Customer Experience (CX): 24/7 live chat, voice, email, and social customer support managed by dedicated, brand-trained customer success specialists delivering empathetic and rapid resolutions.",
+            "Multilingual 24/7 Technical Support: Around-the-clock software troubleshooting, hardware ticketing, developer API support, and bug triage in English, Polish, German, and major global languages."
+          ],
+          "imageSrc": "/images/products/bpo-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-1",
+          "icon": "Network",
+          "wide": true
+        },
+        {
+          "id": "bpo-2",
+          "name": "Back-office operations",
+          "category": "BPO Solutions",
+          "description": "Keep essential administration, reconciliation, and reporting running consistently.",
+          "tags": [
+            "Back-Office",
+            "KYC / AML",
+            "Data Validation"
+          ],
+          "capabilities": [
+            "Technical Back-Office Operations: Complex workflow execution, tier-2 account verifications, KYC/AML identity checks, exception handling, and enterprise claims processing.",
+            "Financial Reconciliation & Auditing Pods: Meticulous invoice matching, payment disputes handling, ledger balancing, and merchant settlement investigations executing with zero margin for error."
+          ],
+          "imageSrc": "/images/products/bpo-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-2",
+          "icon": "Workflow",
+          "wide": false
+        },
+        {
+          "id": "bpo-3",
+          "name": "Data processing & annotation",
+          "category": "BPO Solutions",
+          "description": "Turn raw information into structured, quality-checked data for your business and AI teams.",
+          "tags": [
+            "RLHF",
+            "Data Annotation",
+            "Model QA"
+          ],
+          "capabilities": [
+            "AI Training Data Processing & Annotation: High-precision human-in-the-loop data labeling, RLHF prompt evaluation, multilingual translation QA, and visual object segmentation for AI engineering teams."
+          ],
+          "imageSrc": "/images/products/bpo-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-3",
+          "icon": "Database",
+          "wide": false
+        },
+        {
+          "id": "bpo-4",
+          "name": "Dedicated talent teams",
+          "category": "BPO Solutions",
+          "description": "Extend your team with people trained in your tools, workflows, and standards.",
+          "tags": [
+            "Dedicated Squads",
+            "Staff Augmentation",
+            "SLA Guardrails"
+          ],
+          "capabilities": [
+            "Dedicated Talent & Team Augmentation: Exclusive, full-time specialist squads aligned with your timezone, culture, and toolchain—seamlessly managed with daily telemetry and KPI dashboards."
+          ],
+          "imageSrc": "/images/products/bpo-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=bpo-4",
+          "icon": "PanelsTopLeft",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Map the work",
+          "description": "Understand your workflows and agree on service and quality expectations."
+        },
+        {
+          "title": "Build your team",
+          "description": "Select and train people around your systems and customer experience."
+        },
+        {
+          "title": "Start together",
+          "description": "Shadow your team and transition work gradually with quality checks."
+        },
+        {
+          "title": "Keep improving",
+          "description": "Review performance together and refine the operation as needs change."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do you ensure data security and customer privacy?",
+          "answer": "All operations are conducted on secure, access-controlled virtual desktop infrastructures with strict DLP (Data Loss Prevention) rules, zero local storage, and full SOC 2 / GDPR compliance."
+        },
+        {
+          "question": "How quickly can a dedicated BPO pod be deployed?",
+          "answer": "Standard pods can be fully onboarded, trained on your custom SOPs, and operating in production within 14 business days."
+        },
+        {
+          "question": "Can we scale pod headcount up or down based on seasonal demand?",
+          "answer": "Yes. Our agile operational contracts provide dynamic elasticity, allowing you to scale up for peak seasons and scale down during normalized periods."
+        }
+      ],
+      "techStack": [
+        "Zendesk",
+        "Salesforce Service Cloud",
+        "Intercom",
+        "Jira Service Management",
+        "Genesys",
+        "Label Studio",
+        "Looker",
+        "Python Automation",
+        "Slack / Teams"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/bpo-solutions.jpg"
+      }
+    },
+    "revision": 0
+  },
+  {
+    "id": "cloud",
+    "draft": {
+      "name": "Managed Cloud",
+      "listing": {
+        "title": "Managed cloud services",
+        "description": "Reliable infrastructure, smoother releases, and support for what comes next.",
+        "items": [
+          "Cloud Migration & Architecture",
+          "24/7 SRE & Monitoring",
+          "DevOps & CI/CD Pipelines",
+          "Security & Compliance Audits"
+        ]
+      },
+      "headline": "A stronger foundation for what comes next.",
+      "description": "Move, manage, and improve your cloud infrastructure with a team focused on reliability, security, and keeping your business running.",
+      "outcome": "Less infrastructure friction. More momentum.",
+      "portfolioHeading": "Reliable infrastructure.\nRoom to grow.",
+      "portfolioDescription": "Explore cloud migration, managed operations, delivery automation, and resilience. Build a connected foundation for your applications, with security and cost visibility throughout.",
+      "products": [
+        {
+          "id": "cloud-1",
+          "name": "Cloud architecture & migration",
+          "category": "Managed Cloud",
+          "description": "Plan your cloud environment and move workloads in manageable, carefully tested stages.",
+          "tags": [
+            "AWS",
+            "Google Cloud",
+            "Azure"
+          ],
+          "capabilities": [
+            "Multi-Cloud Architecture & Migration: Seamless architectural design and zero-downtime workload migration across AWS, Google Cloud, and Microsoft Azure tailored for regulatory and sovereignty requirements."
+          ],
+          "imageSrc": "/images/products/cloud-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-1",
+          "icon": "Network",
+          "wide": true
+        },
+        {
+          "id": "cloud-2",
+          "name": "Managed operations",
+          "category": "Managed Cloud",
+          "description": "Monitor services, manage incidents, and keep infrastructure maintained with dedicated support.",
+          "tags": [
+            "SRE",
+            "Observability",
+            "Prometheus"
+          ],
+          "capabilities": [
+            "24/7/365 Site Reliability Engineering (SRE): Continuous telemetry monitoring, automated anomaly detection, synthetic user health checks, and rapid remediation protocols preventing production outages before they impact users."
+          ],
+          "imageSrc": "/images/products/cloud-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-2",
+          "icon": "ChartNoAxesCombined",
+          "wide": false
+        },
+        {
+          "id": "cloud-3",
+          "name": "DevOps & delivery automation",
+          "category": "Managed Cloud",
+          "description": "Make releases repeatable with automated pipelines, containers, and infrastructure as code.",
+          "tags": [
+            "Kubernetes",
+            "EKS / GKE",
+            "Istio"
+          ],
+          "capabilities": [
+            "Kubernetes & Container Orchestration: Production-grade EKS, GKE, and bare-metal Kubernetes topologies configured with Istio service mesh, auto-scaling horizontal pods, and zero-trust mTLS network policies.",
+            "GitOps & Automated CI/CD Rails: Declarative Infrastructure as Code (IaC) with Terraform, automated canary deployment validation, automated rollback triggers, and comprehensive security vulnerability scanning."
+          ],
+          "imageSrc": "/images/products/cloud-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-3",
+          "icon": "Workflow",
+          "wide": false
+        },
+        {
+          "id": "cloud-4",
+          "name": "Cost, security & resilience",
+          "category": "Managed Cloud",
+          "description": "Review spending, strengthen access controls, and prepare backup and recovery plans.",
+          "tags": [
+            "FinOps",
+            "Cost Reduction",
+            "Spot Fleets"
+          ],
+          "capabilities": [
+            "FinOps & Cloud Cost Optimization: Deep architectural auditing, spot instance optimization, resource right-sizing, and reservation commitments reducing unnecessary cloud expenditures by 30% to 50%.",
+            "Disaster Recovery & Data Resilience: Active-active and active-passive multi-region database replication, immutable off-site backups, and automated failover tests delivering near-zero RPO and RTO."
+          ],
+          "imageSrc": "/images/products/cloud-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-4",
+          "icon": "Database",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Assess",
+          "description": "Review your infrastructure, costs, performance, and security needs."
+        },
+        {
+          "title": "Plan",
+          "description": "Design the target environment and agree on the migration approach."
+        },
+        {
+          "title": "Migrate & validate",
+          "description": "Move workloads progressively and test reliability before switching over."
+        },
+        {
+          "title": "Manage & improve",
+          "description": "Monitor operations and regularly review costs, patches, and performance."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do we retain full ownership of our cloud accounts?",
+          "answer": "Absolutely. All infrastructure is deployed directly into your own AWS, GCP, or Azure organizational accounts. You retain 100% root ownership and access keys."
+        },
+        {
+          "question": "How does your team handle 2am critical production incidents?",
+          "answer": "Our global SRE team operates follow-the-sun 24/7/365 monitoring. Automated alert triggers page dedicated tier-3 engineers with a guaranteed 5-minute response SLA."
+        },
+        {
+          "question": "Can Matii assist with compliance audits like SOC 2 or HIPAA on cloud environments?",
+          "answer": "Yes. We configure automated compliance policies, IAM least-privilege roles, audit logs, and encryption at rest/transit to pass SOC 2, ISO 27001, and HIPAA audits."
+        }
+      ],
+      "techStack": [
+        "AWS",
+        "Google Cloud",
+        "Terraform",
+        "Kubernetes",
+        "ArgoCD",
+        "Docker",
+        "Prometheus",
+        "Grafana",
+        "Datadog",
+        "Cloudflare",
+        "OpenTelemetry",
+        "Ansible"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/ai-automation.png"
+      }
+    },
+    "published": {
+      "name": "Managed Cloud",
+      "listing": {
+        "title": "Managed cloud services",
+        "description": "Reliable infrastructure, smoother releases, and support for what comes next.",
+        "items": [
+          "Cloud Migration & Architecture",
+          "24/7 SRE & Monitoring",
+          "DevOps & CI/CD Pipelines",
+          "Security & Compliance Audits"
+        ]
+      },
+      "headline": "A stronger foundation for what comes next.",
+      "description": "Move, manage, and improve your cloud infrastructure with a team focused on reliability, security, and keeping your business running.",
+      "outcome": "Less infrastructure friction. More momentum.",
+      "portfolioHeading": "Reliable infrastructure.\nRoom to grow.",
+      "portfolioDescription": "Explore cloud migration, managed operations, delivery automation, and resilience. Build a connected foundation for your applications, with security and cost visibility throughout.",
+      "products": [
+        {
+          "id": "cloud-1",
+          "name": "Cloud architecture & migration",
+          "category": "Managed Cloud",
+          "description": "Plan your cloud environment and move workloads in manageable, carefully tested stages.",
+          "tags": [
+            "AWS",
+            "Google Cloud",
+            "Azure"
+          ],
+          "capabilities": [
+            "Multi-Cloud Architecture & Migration: Seamless architectural design and zero-downtime workload migration across AWS, Google Cloud, and Microsoft Azure tailored for regulatory and sovereignty requirements."
+          ],
+          "imageSrc": "/images/products/cloud-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-1",
+          "icon": "Network",
+          "wide": true
+        },
+        {
+          "id": "cloud-2",
+          "name": "Managed operations",
+          "category": "Managed Cloud",
+          "description": "Monitor services, manage incidents, and keep infrastructure maintained with dedicated support.",
+          "tags": [
+            "SRE",
+            "Observability",
+            "Prometheus"
+          ],
+          "capabilities": [
+            "24/7/365 Site Reliability Engineering (SRE): Continuous telemetry monitoring, automated anomaly detection, synthetic user health checks, and rapid remediation protocols preventing production outages before they impact users."
+          ],
+          "imageSrc": "/images/products/cloud-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-2",
+          "icon": "ChartNoAxesCombined",
+          "wide": false
+        },
+        {
+          "id": "cloud-3",
+          "name": "DevOps & delivery automation",
+          "category": "Managed Cloud",
+          "description": "Make releases repeatable with automated pipelines, containers, and infrastructure as code.",
+          "tags": [
+            "Kubernetes",
+            "EKS / GKE",
+            "Istio"
+          ],
+          "capabilities": [
+            "Kubernetes & Container Orchestration: Production-grade EKS, GKE, and bare-metal Kubernetes topologies configured with Istio service mesh, auto-scaling horizontal pods, and zero-trust mTLS network policies.",
+            "GitOps & Automated CI/CD Rails: Declarative Infrastructure as Code (IaC) with Terraform, automated canary deployment validation, automated rollback triggers, and comprehensive security vulnerability scanning."
+          ],
+          "imageSrc": "/images/products/cloud-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-3",
+          "icon": "Workflow",
+          "wide": false
+        },
+        {
+          "id": "cloud-4",
+          "name": "Cost, security & resilience",
+          "category": "Managed Cloud",
+          "description": "Review spending, strengthen access controls, and prepare backup and recovery plans.",
+          "tags": [
+            "FinOps",
+            "Cost Reduction",
+            "Spot Fleets"
+          ],
+          "capabilities": [
+            "FinOps & Cloud Cost Optimization: Deep architectural auditing, spot instance optimization, resource right-sizing, and reservation commitments reducing unnecessary cloud expenditures by 30% to 50%.",
+            "Disaster Recovery & Data Resilience: Active-active and active-passive multi-region database replication, immutable off-site backups, and automated failover tests delivering near-zero RPO and RTO."
+          ],
+          "imageSrc": "/images/products/cloud-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=cloud-4",
+          "icon": "Database",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Assess",
+          "description": "Review your infrastructure, costs, performance, and security needs."
+        },
+        {
+          "title": "Plan",
+          "description": "Design the target environment and agree on the migration approach."
+        },
+        {
+          "title": "Migrate & validate",
+          "description": "Move workloads progressively and test reliability before switching over."
+        },
+        {
+          "title": "Manage & improve",
+          "description": "Monitor operations and regularly review costs, patches, and performance."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do we retain full ownership of our cloud accounts?",
+          "answer": "Absolutely. All infrastructure is deployed directly into your own AWS, GCP, or Azure organizational accounts. You retain 100% root ownership and access keys."
+        },
+        {
+          "question": "How does your team handle 2am critical production incidents?",
+          "answer": "Our global SRE team operates follow-the-sun 24/7/365 monitoring. Automated alert triggers page dedicated tier-3 engineers with a guaranteed 5-minute response SLA."
+        },
+        {
+          "question": "Can Matii assist with compliance audits like SOC 2 or HIPAA on cloud environments?",
+          "answer": "Yes. We configure automated compliance policies, IAM least-privilege roles, audit logs, and encryption at rest/transit to pass SOC 2, ISO 27001, and HIPAA audits."
+        }
+      ],
+      "techStack": [
+        "AWS",
+        "Google Cloud",
+        "Terraform",
+        "Kubernetes",
+        "ArgoCD",
+        "Docker",
+        "Prometheus",
+        "Grafana",
+        "Datadog",
+        "Cloudflare",
+        "OpenTelemetry",
+        "Ansible"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/ai-automation.png"
+      }
+    },
+    "revision": 0
+  },
+  {
+    "id": "enterprise",
+    "draft": {
+      "name": "Enterprise Software",
+      "listing": {
+        "title": "Enterprise software",
+        "description": "Connected platforms and business-critical systems, built around your operations.",
+        "items": [
+          "Core Banking & Fintech",
+          "Enterprise ERP Systems",
+          "Custom System Architecture",
+          "Secure API & Integrations"
+        ]
+      },
+      "headline": "Software built around your business.",
+      "description": "From core banking to everyday operations, we design and build reliable platforms that connect your systems and grow with your business.",
+      "outcome": "Complex operations. One connected platform.",
+      "portfolioHeading": "Connected systems.\nBuilt around your business.",
+      "portfolioDescription": "Explore the foundations of your enterprise software: financial platforms, business operations, secure integrations, and modernization, shaped around your existing systems.",
+      "products": [
+        {
+          "id": "enterprise-1",
+          "name": "Banking & financial platforms",
+          "category": "Enterprise Software",
+          "description": "Connect payments, accounts, settlement, and reporting in systems built for your financial workflows.",
+          "tags": [
+            "Fintech",
+            "Settlement",
+            "Ledgers"
+          ],
+          "capabilities": [
+            "Core Banking & Financial Settlement: High-throughput transactional ledgers, real-time settlement rails, multi-currency wallets, and regulatory reporting systems engineered for tier-1 financial institutions."
+          ],
+          "imageSrc": "/images/products/enterprise-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-1",
+          "icon": "Database",
+          "wide": true
+        },
+        {
+          "id": "enterprise-2",
+          "name": "Custom business software",
+          "category": "Enterprise Software",
+          "description": "Bring inventory, logistics, billing, and resource planning together around the way your team works.",
+          "tags": [
+            "ERP",
+            "Logistics",
+            "Billing"
+          ],
+          "capabilities": [
+            "Enterprise ERP & Operations Backbones: Bespoke resource management engines that unify supply chains, cross-border logistics, inventory forecasting, and corporate billing into cohesive microservices."
+          ],
+          "imageSrc": "/images/products/enterprise-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-2",
+          "icon": "PanelsTopLeft",
+          "wide": false
+        },
+        {
+          "id": "enterprise-3",
+          "name": "APIs & system integration",
+          "category": "Enterprise Software",
+          "description": "Connect applications and data through secure APIs and services that work together.",
+          "tags": [
+            "Kafka",
+            "gRPC",
+            "NATS"
+          ],
+          "capabilities": [
+            "Distributed Microservices & Event Meshes: Zero-downtime, independently scalable service clusters orchestrated across event-driven message backbones with Kafka, NATS, and gRPC contracts.",
+            "Zero-Trust API Ingress & Gateways: Cryptographically verified API perimeter security, automated token validation, mTLS inter-service encryption, and dynamic threat mitigation."
+          ],
+          "imageSrc": "/images/products/enterprise-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-3",
+          "icon": "Cable",
+          "wide": false
+        },
+        {
+          "id": "enterprise-4",
+          "name": "Legacy modernization",
+          "category": "Enterprise Software",
+          "description": "Upgrade existing software in stages, with security, audit trails, and continuity built into the plan.",
+          "tags": [
+            "Refactoring",
+            "Database Sharding",
+            "Strangler Pattern"
+          ],
+          "capabilities": [
+            "Legacy Monolith Modernization: Strangler-fig pattern system rewrites and transactional database migrations ensuring continuous operations with zero user-facing service interruptions.",
+            "Auditability & Immutable Cryptographic Trails: Tamper-proof chronological state history logging, append-only verification trees, and automated compliance reporting ready for institutional audits."
+          ],
+          "imageSrc": "/images/products/enterprise-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-4",
+          "icon": "Workflow",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Understand",
+          "description": "Map your workflows, existing systems, and business requirements."
+        },
+        {
+          "title": "Design",
+          "description": "Define the architecture, integrations, and a practical delivery roadmap."
+        },
+        {
+          "title": "Build & test",
+          "description": "Deliver in focused sprints, with testing and feedback at every stage."
+        },
+        {
+          "title": "Launch & support",
+          "description": "Prepare for production, monitor performance, and improve as you grow."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do you guarantee zero downtime during core platform upgrades?",
+          "answer": "We utilize blue/green deployments, automated canary routing, and the strangler-fig pattern with backward-compatible database schemas to ensure migrations happen without service disruption."
+        },
+        {
+          "question": "Can Matii's enterprise software integrate with our existing legacy databases?",
+          "answer": "Yes. We regularly build high-performance change-data-capture (CDC) pipelines and abstraction layers that connect modern microservices with legacy systems like AS/400, Oracle, and mainframes."
+        },
+        {
+          "question": "What compliance standards do your systems adhere to?",
+          "answer": "Our software engineering standards comply with PCI-DSS Level 1, SOC 2 Type II, ISO 27001, GDPR, and HIPAA data privacy mandates."
+        }
+      ],
+      "techStack": [
+        "Go",
+        "Rust",
+        "Java / Spring Boot",
+        "TypeScript",
+        "PostgreSQL",
+        "Kafka",
+        "Redis",
+        "Kubernetes",
+        "gRPC",
+        "Docker",
+        "OpenTelemetry"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/enterprise-software.jpg"
+      }
+    },
+    "published": {
+      "name": "Enterprise Software",
+      "listing": {
+        "title": "Enterprise software",
+        "description": "Connected platforms and business-critical systems, built around your operations.",
+        "items": [
+          "Core Banking & Fintech",
+          "Enterprise ERP Systems",
+          "Custom System Architecture",
+          "Secure API & Integrations"
+        ]
+      },
+      "headline": "Software built around your business.",
+      "description": "From core banking to everyday operations, we design and build reliable platforms that connect your systems and grow with your business.",
+      "outcome": "Complex operations. One connected platform.",
+      "portfolioHeading": "Connected systems.\nBuilt around your business.",
+      "portfolioDescription": "Explore the foundations of your enterprise software: financial platforms, business operations, secure integrations, and modernization, shaped around your existing systems.",
+      "products": [
+        {
+          "id": "enterprise-1",
+          "name": "Banking & financial platforms",
+          "category": "Enterprise Software",
+          "description": "Connect payments, accounts, settlement, and reporting in systems built for your financial workflows.",
+          "tags": [
+            "Fintech",
+            "Settlement",
+            "Ledgers"
+          ],
+          "capabilities": [
+            "Core Banking & Financial Settlement: High-throughput transactional ledgers, real-time settlement rails, multi-currency wallets, and regulatory reporting systems engineered for tier-1 financial institutions."
+          ],
+          "imageSrc": "/images/products/enterprise-1.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-1",
+          "icon": "Database",
+          "wide": true
+        },
+        {
+          "id": "enterprise-2",
+          "name": "Custom business software",
+          "category": "Enterprise Software",
+          "description": "Bring inventory, logistics, billing, and resource planning together around the way your team works.",
+          "tags": [
+            "ERP",
+            "Logistics",
+            "Billing"
+          ],
+          "capabilities": [
+            "Enterprise ERP & Operations Backbones: Bespoke resource management engines that unify supply chains, cross-border logistics, inventory forecasting, and corporate billing into cohesive microservices."
+          ],
+          "imageSrc": "/images/products/enterprise-2.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-2",
+          "icon": "PanelsTopLeft",
+          "wide": false
+        },
+        {
+          "id": "enterprise-3",
+          "name": "APIs & system integration",
+          "category": "Enterprise Software",
+          "description": "Connect applications and data through secure APIs and services that work together.",
+          "tags": [
+            "Kafka",
+            "gRPC",
+            "NATS"
+          ],
+          "capabilities": [
+            "Distributed Microservices & Event Meshes: Zero-downtime, independently scalable service clusters orchestrated across event-driven message backbones with Kafka, NATS, and gRPC contracts.",
+            "Zero-Trust API Ingress & Gateways: Cryptographically verified API perimeter security, automated token validation, mTLS inter-service encryption, and dynamic threat mitigation."
+          ],
+          "imageSrc": "/images/products/enterprise-3.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-3",
+          "icon": "Cable",
+          "wide": false
+        },
+        {
+          "id": "enterprise-4",
+          "name": "Legacy modernization",
+          "category": "Enterprise Software",
+          "description": "Upgrade existing software in stages, with security, audit trails, and continuity built into the plan.",
+          "tags": [
+            "Refactoring",
+            "Database Sharding",
+            "Strangler Pattern"
+          ],
+          "capabilities": [
+            "Legacy Monolith Modernization: Strangler-fig pattern system rewrites and transactional database migrations ensuring continuous operations with zero user-facing service interruptions.",
+            "Auditability & Immutable Cryptographic Trails: Tamper-proof chronological state history logging, append-only verification trees, and automated compliance reporting ready for institutional audits."
+          ],
+          "imageSrc": "/images/products/enterprise-4.svg",
+          "demoUrl": "https://calendly.com/matiitechnologies-info/30min?utm_source=matii&utm_medium=product-demo&utm_content=enterprise-4",
+          "icon": "Workflow",
+          "wide": true
+        }
+      ],
+      "process": [
+        {
+          "title": "Understand",
+          "description": "Map your workflows, existing systems, and business requirements."
+        },
+        {
+          "title": "Design",
+          "description": "Define the architecture, integrations, and a practical delivery roadmap."
+        },
+        {
+          "title": "Build & test",
+          "description": "Deliver in focused sprints, with testing and feedback at every stage."
+        },
+        {
+          "title": "Launch & support",
+          "description": "Prepare for production, monitor performance, and improve as you grow."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do you guarantee zero downtime during core platform upgrades?",
+          "answer": "We utilize blue/green deployments, automated canary routing, and the strangler-fig pattern with backward-compatible database schemas to ensure migrations happen without service disruption."
+        },
+        {
+          "question": "Can Matii's enterprise software integrate with our existing legacy databases?",
+          "answer": "Yes. We regularly build high-performance change-data-capture (CDC) pipelines and abstraction layers that connect modern microservices with legacy systems like AS/400, Oracle, and mainframes."
+        },
+        {
+          "question": "What compliance standards do your systems adhere to?",
+          "answer": "Our software engineering standards comply with PCI-DSS Level 1, SOC 2 Type II, ISO 27001, GDPR, and HIPAA data privacy mandates."
+        }
+      ],
+      "techStack": [
+        "Go",
+        "Rust",
+        "Java / Spring Boot",
+        "TypeScript",
+        "PostgreSQL",
+        "Kafka",
+        "Redis",
+        "Kubernetes",
+        "gRPC",
+        "Docker",
+        "OpenTelemetry"
+      ],
+      "seo": {
+        "title": "",
+        "description": "",
+        "image": "/images/enterprise-software.jpg"
+      }
+    },
+    "revision": 2
+  }
+]

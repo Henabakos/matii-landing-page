@@ -42,6 +42,7 @@ services:
     restart: "no"
     environment:
       <<: *database-env
+      SEED_ON_DEPLOY: ${SEED_ON_DEPLOY:-true}
     depends_on:
       db:
         condition: service_healthy
