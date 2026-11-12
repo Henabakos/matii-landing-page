@@ -193,3 +193,51 @@ export function getWordAndCharStats(content: string) {
     readTime: `${minutes} min read`,
   };
 }
+
+/** True when HTML contains readable text or media (an empty editor emits `<p></p>`). */
+export function hasVisibleHtml(html: string): boolean {
+  if (!html || typeof html !== "string") return false;
+  if (/<(img|table|hr)\b/i.test(html)) return true;
+  return html.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").trim().length > 0;
+}
+
+/**
+ * Case-study sections are stored as a JSON string array. Legacy rows hold plain-text paragraphs
+ * (one per item); rich-text rows hold a single HTML document. Both become one HTML string here.
+ */
+export function paragraphsToHtml(paragraphs: string[] | string | null | undefined): string {
+  const list = Array.isArray(paragraphs) ? paragraphs : paragraphs ? [paragraphs] : [];
+  return list
+    .filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    .map((item) => normalizeToHtml(item))
+    .join("");
+}
+
+/** Inverse of paragraphsToHtml for storage: one HTML document, or nothing when the editor is empty. */
+export function htmlToParagraphList(html: string | null | undefined): string[] {
+  const trimmed = (html || "").trim();
+  return hasVisibleHtml(trimmed) ? [trimmed] : [];
+}
+
+export interface HtmlHeading {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
+
+/** Adds stable ids to h2/h3 so long sections can render an in-page outline. Run after sanitizing. */
+export function addHeadingAnchors(html: string, idPrefix: string): { html: string; headings: HtmlHeading[] } {
+  const headings: HtmlHeading[] = [];
+  const used = new Set<string>();
+  const output = (html || "").replace(/<(h[23])((?:\s[^>]*)?)>([\s\S]*?)<\/\1>/gi, (match, tag: string, attrs: string, inner: string) => {
+    const text = inner.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+    if (!text) return match;
+    const base = `${idPrefix}-${text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "section"}`;
+    let id = base;
+    for (let n = 2; used.has(id); n++) id = `${base}-${n}`;
+    used.add(id);
+    headings.push({ id, text, level: tag.toLowerCase() === "h2" ? 2 : 3 });
+    return `<${tag} id="${id}"${attrs.replace(/\sid="[^"]*"/i, "")}>${inner}</${tag}>`;
+  });
+  return { html: output, headings };
+}

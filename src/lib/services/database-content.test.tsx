@@ -14,6 +14,7 @@ import SolutionsWeBuilt from "@/components/sections/SolutionsWeBuilt";
 import PartnerLogos from "@/components/sections/hero/PartnerLogos";
 import ProjectGallery from "@/components/sections/project/ProjectGallery";
 import ProjectResults from "@/components/sections/project/ProjectResults";
+import { getProjectResults } from "./project-results";
 import ProjectMeta from "@/components/sections/project/ProjectMeta";
 import ProjectExploreMore from "@/components/sections/project/ProjectExploreMore";
 import AboutUs from "@/components/common/AboutUs";
@@ -48,8 +49,8 @@ test("empty database collections render empty states without sample records", ()
 });
 
 test("partial project records never invent metrics, clients or related projects", () => {
-  assert.match(render(<ProjectResults />), /No results published yet/);
-  const results = render(<ProjectResults higherEngagement="0" />);
+  assert.equal(render(<ProjectResults />), "");
+  const results = render(<ProjectResults results={getProjectResults({ higherEngagement: "0" })} />);
   assert.match(results, /Higher Engagement/);
   assert.doesNotMatch(results, /Demo Click Growth|Pipeline Influence|Qualified Leads|13\.2|80K/);
   assert.equal(render(<ProjectMeta />), "");

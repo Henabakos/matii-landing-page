@@ -52,13 +52,11 @@ export async function uploadImageToCloudinary(
       uploadStream.end(buffer);
     });
   } catch (err: any) {
-    console.warn("Cloudinary upload failed (using resilient fallback):", err?.message || err);
-    const base64 = buffer.toString("base64");
-    const dataUri = `data:${mimeType};base64,${base64}`;
-    return {
-      url: dataUri,
-      public_id: `fallback_${Date.now()}`,
-    };
+    // Do not fall back to an inline data URI here: multi-MB base64 strings get stored in the DB,
+    // overflow Next's 2MB data-cache limit and leave public pages serving stale content.
+    const reason = err?.error?.message || err?.message || String(err);
+    console.error("Cloudinary upload failed:", reason);
+    throw new Error(`Image upload to Cloudinary failed: ${reason}`);
   }
 }
 

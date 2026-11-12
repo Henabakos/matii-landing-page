@@ -197,7 +197,7 @@ export function RichTextEditor({
   const stats = getWordAndCharStats(editor.getHTML());
 
   return (
-    <div className="border border-zinc-300 dark:border-white/10 rounded-[4px] overflow-hidden bg-white dark:bg-[#121417] focus-within:border-[#292c2e] dark:focus-within:border-[#98ff03] focus-within:ring-1 focus-within:ring-[#292c2e]/20 dark:focus-within:ring-[#98ff03]/20 transition-all shadow-xs">
+    <div className="border border-zinc-300 dark:border-white/10 rounded-[4px] overflow-clip bg-white dark:bg-[#121417] focus-within:border-[#292c2e] dark:focus-within:border-[#98ff03] focus-within:ring-1 focus-within:ring-[#292c2e]/20 dark:focus-within:ring-[#98ff03]/20 transition-all shadow-xs">
       {/* Hidden file input for Cloudinary image upload */}
       <input
         ref={fileInputRef}
@@ -207,6 +207,9 @@ export function RichTextEditor({
         className="hidden"
       />
 
+      {/* Toolbars stay pinned to the top of the scrolling form while editing long content.
+          overflow-clip (not overflow-hidden) on ancestors keeps position: sticky working. */}
+      <div className="sticky top-0 z-20 shadow-sm">
       {/* Primary Toolbar */}
       <div className="bg-[#292c2e] px-3 py-2 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-1 select-none text-white">
         <div className="flex flex-wrap items-center gap-1">
@@ -579,6 +582,7 @@ export function RichTextEditor({
           </button>
         </div>
       )}
+      </div>
 
       {/* Editor Content Area */}
       <div className="min-h-[320px] bg-white dark:bg-[#121417] cursor-text text-zinc-800 dark:text-zinc-100" onClick={() => editor.commands.focus()}>

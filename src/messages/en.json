@@ -124,7 +124,7 @@
     "serviceNeeded": "Service Needed",
     "projectDescription": "Project Description",
     "projectPlaceholder": "Tell us about your project, timeline, and goals...",
-    "attachFile": "Attach Brief / Document (Optional)",
+    "errorMessage": "We couldn't send your message. Please try again, or email us directly.",
     "submitMessage": "Send Message",
     "submitting": "Sending...",
     "successMessage": "Thank you for reaching out. Your project inquiry has been received, and a member of our engineering team will be in touch shortly.",

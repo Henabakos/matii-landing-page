@@ -1,11 +1,22 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import svgPaths from "@/lib/svgPaths";
 import { useTranslations } from "next-intl";
+import { AlertCircle, Check } from "lucide-react";
+import { submitContactInquiryAction } from "@/lib/actions/inquiry.actions";
+import ServiceSelect, { type ServiceOption } from "./ServiceSelect";
+
+const serviceOptions: ServiceOption[] = [
+  { value: "Digital Products", label: "Digital Products" },
+  { value: "Full-Stack Development", label: "Full-Stack Development" },
+  { value: "AI Automation", label: "AI Automation" },
+  { value: "Mobile Development", label: "Mobile Development" },
+  { value: "Other", label: "Other Inquiry" },
+];
 
 const contactFormSchema = z.object({
   name: z
@@ -25,17 +36,18 @@ const contactFormSchema = z.object({
     .trim()
     .min(1, { message: "Project description is required" })
     .min(10, { message: "Project description must be at least 10 characters" }),
+  hpTrap: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export function ContactFormWhite() {
   const t = useTranslations("contactSection");
-  const [file, setFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -47,23 +59,23 @@ export function ContactFormWhite() {
       phone: "",
       service: "Digital Products",
       message: "",
+      hpTrap: "",
     },
   });
 
-  const handleAttachmentClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+  const onSubmit = async (data: ContactFormValues) => {
+    setStatus("idle");
+    try {
+      const result = await submitContactInquiryAction(data);
+      if ("error" in result) {
+        setStatus("error");
+        return;
+      }
+      setStatus("success");
+      reset();
+    } catch {
+      setStatus("error");
     }
-  };
-
-  const onSubmit = (data: ContactFormValues) => {
-    alert(t("successMessage"));
-    reset();
-    setFile(null);
   };
 
   return (
@@ -74,6 +86,25 @@ export function ContactFormWhite() {
       <h3 className="font-space font-bold text-xl md:text-2xl text-black dark:text-white uppercase tracking-tight">
         {t("sendUsMessage")}
       </h3>
+
+      <div aria-live="polite">
+        {status === "success" && (
+          <p className="flex items-start gap-2.5 rounded-[8px] border border-lime-700/30 bg-lime-50 px-4 py-3 font-inter text-sm text-lime-900 dark:border-[#98ff03]/40 dark:bg-[#98ff03]/10 dark:text-[#98ff03]">
+            <Check className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            {t("successMessage")}
+          </p>
+        )}
+        {status === "error" && (
+          <p role="alert" className="flex items-start gap-2.5 rounded-[8px] border border-red-300 bg-red-50 px-4 py-3 font-inter text-sm text-red-800 dark:border-red-500/40 dark:bg-red-950/40 dark:text-red-300">
+            <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+            {t("errorMessage")}
+          </p>
+        )}
+      </div>
+
+      {/* Honeypot: hidden from people and assistive tech; bots that fill it are ignored. */}
+      {/* Named "hpTrap" (not "website") so browser autofill never fills it for real visitors. */}
+      <input type="text" tabIndex={-1} autoComplete="new-password" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" {...register("hpTrap")} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Field 1: Name */}
@@ -149,28 +180,31 @@ export function ContactFormWhite() {
 
         {/* Field 4: Service Interested In */}
         <div className="flex flex-col gap-2">
-          <label className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
+          <label htmlFor="contact-service" className="font-inter font-medium text-xs md:text-sm text-[#292c2e] dark:text-zinc-300 uppercase tracking-wide">
             {t("serviceNeeded")}
           </label>
           <div
             className={`border-b pb-2 transition-colors ${errors.service ? "border-red-500" : "border-[#AEAEAE] dark:border-white/20"
               }`}
           >
-            <select
-              {...register("service")}
-              className="w-full bg-transparent font-inter text-sm md:text-base text-black dark:text-white focus:outline-none cursor-pointer"
-            >
-              <option value="Digital Products" className="dark:bg-[#161819] dark:text-white">Digital Products</option>
-              <option value="Full-Stack Development" className="dark:bg-[#161819] dark:text-white">
-                Full-Stack Development
-              </option>
-              <option value="AI Automation" className="dark:bg-[#161819] dark:text-white">AI Automation</option>
-              <option value="Mobile Development" className="dark:bg-[#161819] dark:text-white">Mobile Development</option>
-              <option value="Other" className="dark:bg-[#161819] dark:text-white">Other Inquiry</option>
-            </select>
+            <Controller
+              name="service"
+              control={control}
+              render={({ field }) => (
+                <ServiceSelect
+                  id="contact-service"
+                  options={serviceOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  invalid={Boolean(errors.service)}
+                  aria-describedby={errors.service ? "contact-service-error" : undefined}
+                />
+              )}
+            />
           </div>
           {errors.service && (
-            <span className="text-xs text-red-500 font-inter">
+            <span id="contact-service-error" className="text-xs text-red-500 font-inter">
               {errors.service.message}
             </span>
           )}
@@ -200,33 +234,8 @@ export function ContactFormWhite() {
         )}
       </div>
 
-      {/* File Attachment & Submit Button Row */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 pt-2">
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          className="hidden"
-        />
-        <button
-          type="button"
-          onClick={handleAttachmentClick}
-          className="inline-flex items-center gap-2.5 text-[#292c2e] dark:text-zinc-300 hover:text-[#98ff03] dark:hover:text-[#98ff03] transition-colors cursor-pointer group"
-        >
-          <div className="size-6 relative shrink-0 p-1 bg-[#292c2e] dark:bg-white/10 group-hover:bg-[#98ff03] dark:group-hover:bg-[#98ff03] rounded-xs transition-colors">
-            <svg className="block size-full" fill="none" viewBox="0 0 24 24">
-              <path
-                d={svgPaths.p8e11300}
-                fill="#98FF03"
-                className="group-hover:fill-[#292c2e]"
-              />
-            </svg>
-          </div>
-          <span className="font-inter font-medium text-sm text-[#292c2e] dark:text-zinc-300">
-            {file ? `Attached: ${file.name}` : t("attachFile")}
-          </span>
-        </button>
-
+      {/* Submit Button Row */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-6 pt-2">
         <button
           type="submit"
           disabled={isSubmitting}

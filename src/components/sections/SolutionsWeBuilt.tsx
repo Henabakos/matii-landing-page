@@ -17,6 +17,7 @@ import {
 import SolutionCard, { SolutionCardProps } from "./solutions/SolutionCard";
 import Image from "next/image";
 import type { ParsedProject } from "@/lib/services/project.service";
+import { getProjectResults } from "@/lib/services/project-results";
 
 interface SolutionsWeBuiltProps {
   projects?: ParsedProject[];
@@ -30,18 +31,19 @@ export function SolutionsWeBuilt({ projects }: SolutionsWeBuiltProps) {
     Autoplay({ delay: 6000, stopOnInteraction: true }),
   );
 
-  const displayProjects: SolutionCardProps[] = (projects ?? []).map((p) => ({
-    title: p.title, description: p.subtitle, bgImage: p.coverImage,
-    projectUrl: `/projects/${p.slug}`,
-    metrics: {
-      stat1Value: p.metrics.stat1Value || (p.metrics.demoClickGrowth ? `${p.metrics.demoClickGrowth}x` : ""),
-      stat1Label: p.metrics.stat1Label || (p.metrics.demoClickGrowth ? "demo click growth" : ""),
-      stat2Value: p.metrics.stat2Value || (p.metrics.higherEngagement ? `${p.metrics.higherEngagement}%` : ""),
-      stat2Label: p.metrics.stat2Label || (p.metrics.higherEngagement ? "higher engagement" : ""),
-      stat3Value: p.metrics.stat3Value || (p.metrics.qualifiedLeads ? `${p.metrics.qualifiedLeads}%` : ""),
-      stat3Label: p.metrics.stat3Label || (p.metrics.qualifiedLeads ? "qualified leads" : ""),
-    },
-  }));
+  const displayProjects: SolutionCardProps[] = (projects ?? []).map((p) => {
+    // Covers both the editable results list and the legacy fixed metric keys.
+    const [first, second, third] = getProjectResults(p.metrics);
+    return {
+      title: p.title, description: p.subtitle, bgImage: p.coverImage,
+      projectUrl: `/projects/${p.slug}`,
+      metrics: {
+        stat1Value: first?.value || "", stat1Label: first?.label || "",
+        stat2Value: second?.value || "", stat2Label: second?.label || "",
+        stat3Value: third?.value || "", stat3Label: third?.label || "",
+      },
+    };
+  });
   if (!displayProjects.length) return <ContentEmptyState kind="projects" />;
 
   return (

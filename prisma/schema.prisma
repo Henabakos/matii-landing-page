@@ -120,6 +120,7 @@ model ContactInquiry {
   name        String
   email       String
   company     String?
+  phone       String?
   service     String?
   budget      String?
   message     String

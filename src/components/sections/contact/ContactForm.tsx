@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useTransition } from "react";
-import svgPaths from "@/lib/svgPaths";
+import React, { useState, useTransition } from "react";
 import { submitContactInquiryAction } from "@/lib/actions/inquiry.actions";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -12,20 +11,8 @@ export function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleAttachmentClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,16 +20,16 @@ export function ContactForm() {
 
     startTransition(async () => {
       try {
-        await submitContactInquiryAction({
+        const result = await submitContactInquiryAction({
           name,
           email,
           message,
         });
+        if ("error" in result) return;
         setIsSubmitted(true);
         setName("");
         setEmail("");
         setMessage("");
-        setFile(null);
       } catch (err) {
         console.error("Failed to submit inquiry:", err);
       }
@@ -110,27 +97,6 @@ export function ContactForm() {
             required
           />
         </div>
-      </div>
-
-      {/* Hidden File Input & Attachment Trigger */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        className="hidden"
-      />
-      <div
-        onClick={handleAttachmentClick}
-        className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity pt-2"
-      >
-        <div className="size-6 relative shrink-0">
-          <svg className="block size-full" fill="none" viewBox="0 0 24 24">
-            <path d={svgPaths.p8e11300} fill="#98FF03" />
-          </svg>
-        </div>
-        <span className="font-inter font-normal text-sm md:text-base text-white">
-          {file ? `Attached: ${file.name}` : t("attachFile")}
-        </span>
       </div>
 
       {/* Submit Button */}

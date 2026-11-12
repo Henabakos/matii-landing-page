@@ -106,7 +106,7 @@ export async function saveNewsAction(data: {
     }
   }
 
-  revalidateTag("news", "default");
+  revalidateTag("news", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/news");
   revalidatePath(`/news/${data.slug}`);
@@ -127,7 +127,7 @@ export async function deleteNewsAction(id: string) {
 
   await db.newsArticle.delete({ where: { id } });
 
-  revalidateTag("news", "default");
+  revalidateTag("news", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/news");
   if (existing?.slug) {

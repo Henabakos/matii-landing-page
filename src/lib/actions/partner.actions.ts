@@ -42,7 +42,7 @@ export async function savePartnerAction(data: {
     });
   }
 
-  revalidateTag("partners", "default");
+  revalidateTag("partners", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/admin/partners");
   return { success: true, partner };
@@ -53,7 +53,7 @@ export async function deletePartnerAction(id: string) {
   if (!isAuth) throw new Error("Unauthorized");
 
   await db.partner.delete({ where: { id } });
-  revalidateTag("partners", "default");
+  revalidateTag("partners", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/admin/partners");
   return { success: true };

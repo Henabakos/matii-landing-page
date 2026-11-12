@@ -1,0 +1,18 @@
+# Local overrides for running the production stack on your own machine.
+# docker compose --env-file .env.production -f docker-compose.yml -f docker-compose.local.yml up -d --build --wait
+# Then open http://localhost:3000. Not used by Coolify or the VPS deploy.
+
+services:
+  migrate:
+    build:
+      args:
+        SEO_INDEXING_ENABLED: "false"
+
+  web:
+    build:
+      args:
+        SEO_INDEXING_ENABLED: "false"
+    environment:
+      SEO_INDEXING_ENABLED: "false"
+    ports:
+      - "3000:3000"

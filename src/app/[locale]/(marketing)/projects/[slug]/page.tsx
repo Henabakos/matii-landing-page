@@ -4,7 +4,8 @@ import { siteConfig } from "@/lib/site-config";
 import React from "react";
 import { notFound } from "next/navigation";
 import ProjectDetailPage from "@/components/pages/ProjectDetailPage";
-import { getProjectBySlug, getAllProjects } from "@/lib/services/project.service";
+import { getProjectBySlug, getAllProjects, getProjectResults } from "@/lib/services/project.service";
+import { addHeadingAnchors, paragraphsToHtml, sanitizeContent } from "@/lib/content";
 import { JsonLd, generateProjectSchema, generateBreadcrumbSchema } from "@/components/common/JsonLd";
 import { getLocalizedField } from "@/lib/i18n-helpers";
 import type { Metadata } from "next";
@@ -57,12 +58,9 @@ export default async function ProjectSlugPage({ params }: PageProps) {
     statLabel: p.metrics.stat1Value && p.metrics.stat1Label ? `${p.metrics.stat1Label}: ${p.metrics.stat1Value}` : "",
   }));
 
-  const resultsProps = {
-    demoClickGrowth: project.metrics.demoClickGrowth,
-    higherEngagement: project.metrics.higherEngagement,
-    pipelineInfluence: project.metrics.pipelineInfluence,
-    qualifiedLeads: project.metrics.qualifiedLeads,
-  };
+  // Legacy rows hold plain-text paragraphs, newer rows rich-text HTML; both render through the same sanitizer.
+  const challenge = addHeadingAnchors(sanitizeContent(paragraphsToHtml(localizedChallenge)), "challenge");
+  const solution = addHeadingAnchors(sanitizeContent(paragraphsToHtml(localizedSolution)), "solution");
 
   return (
     <>
@@ -78,10 +76,12 @@ export default async function ProjectSlugPage({ params }: PageProps) {
         liveUrl={project.liveUrl || undefined}
         timeline={project.timeline || undefined}
         services={project.services || undefined}
-        challengeParagraphs={Array.isArray(localizedChallenge) ? localizedChallenge : [localizedChallenge]}
-        solutionParagraphs={Array.isArray(localizedSolution) ? localizedSolution : [localizedSolution]}
+        category={getLocalizedField(project, "category", locale) || project.category}
+        year={project.year}
+        challenge={challenge}
+        solution={solution}
         galleryItems={project.galleryItems}
-        resultsProps={resultsProps}
+        results={getProjectResults(project.metrics)}
         relatedProjects={relatedProjects}
       />
     </>

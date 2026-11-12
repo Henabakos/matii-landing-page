@@ -148,6 +148,14 @@ export function InquiriesClientManager({
                   >
                     {selectedInquiry.email}
                   </a>
+                  {selectedInquiry.phone && (
+                    <a
+                      href={`tel:${selectedInquiry.phone.replace(/[^+0-9]/g, "")}`}
+                      className="block mt-0.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white font-mono"
+                    >
+                      {selectedInquiry.phone}
+                    </a>
+                  )}
                 </div>
 
                 <button

@@ -2,6 +2,9 @@ import { db } from "@/lib/db";
 import { cachedCmsRead } from "./cms-fallback";
 import { fallbackRows } from "./cms-fallback-content";
 
+import type { ProjectMetrics } from "./project-results";
+export { getProjectResults, type ProjectMetrics, type ProjectResultItem } from "./project-results";
+
 export interface ParsedProject {
   id: string;
   slug: string;
@@ -18,7 +21,7 @@ export interface ParsedProject {
   challengeParagraphs: string[];
   solutionParagraphs: string[];
   galleryItems: { id: string; title: string; imageUrl: string }[];
-  metrics: Record<string, string>;
+  metrics: ProjectMetrics;
   isFeatured: boolean;
   isSolutionsBuilt: boolean;
   order: number;
@@ -40,7 +43,7 @@ function parseProjectFields(project: any): ParsedProject {
   let challengeParagraphs: string[] = [];
   let solutionParagraphs: string[] = [];
   let galleryItems: { id: string; title: string; imageUrl: string }[] = [];
-  let metrics: Record<string, string> = {};
+  let metrics: ProjectMetrics = {};
   let translations: Record<string, any> = {};
 
   try {

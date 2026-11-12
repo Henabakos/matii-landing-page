@@ -4,6 +4,34 @@ import { db } from "@/lib/db";
 import { revalidateTag, revalidatePath } from "next/cache";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { addLinkToNavbar, removeLinkFromNavbar } from "@/lib/services/navigation.service";
+import { htmlToParagraphList, paragraphsToHtml, sanitizeContent } from "@/lib/content";
+import type { ProjectMetrics } from "@/lib/services/project.service";
+
+/** Normalizes legacy paragraphs or editor HTML into one sanitized HTML document. */
+function sanitizeSection(paragraphs: unknown): string[] {
+  const list = Array.isArray(paragraphs) ? paragraphs.filter((p): p is string => typeof p === "string") : [];
+  return htmlToParagraphList(sanitizeContent(paragraphsToHtml(list)));
+}
+
+function sanitizeTranslations(translations: Record<string, unknown> | undefined) {
+  if (!translations) return translations;
+  const result: Record<string, Record<string, unknown>> = {};
+  for (const [locale, value] of Object.entries(translations)) {
+    if (!value || typeof value !== "object") continue;
+    const fields = value as Record<string, unknown>;
+    const next: Record<string, unknown> = { ...fields };
+    for (const key of ["challenge", "solution"] as const) {
+      const paragraphs = fields[`${key}Paragraphs`];
+      const text = fields[key];
+      const source = Array.isArray(paragraphs) && paragraphs.length ? paragraphs : typeof text === "string" ? [text] : [];
+      const clean = sanitizeSection(source);
+      next[`${key}Paragraphs`] = clean;
+      next[key] = clean[0] || "";
+    }
+    result[locale] = next;
+  }
+  return result;
+}
 
 export async function saveProjectAction(data: {
   id?: string;
@@ -21,7 +49,7 @@ export async function saveProjectAction(data: {
   challengeParagraphs: string[];
   solutionParagraphs: string[];
   galleryItems: { id: string; title: string; imageUrl: string }[];
-  metrics: Record<string, string>;
+  metrics: ProjectMetrics;
   isFeatured: boolean;
   isSolutionsBuilt: boolean;
   order: number;
@@ -54,8 +82,8 @@ export async function saveProjectAction(data: {
     timeline: data.timeline || null,
     services: data.services || null,
     coverImage: data.coverImage || "/images/ai-automation.png",
-    challenge: JSON.stringify(data.challengeParagraphs || []),
-    solution: JSON.stringify(data.solutionParagraphs || []),
+    challenge: JSON.stringify(sanitizeSection(data.challengeParagraphs)),
+    solution: JSON.stringify(sanitizeSection(data.solutionParagraphs)),
     gallery: JSON.stringify(data.galleryItems || []),
     metrics: JSON.stringify(data.metrics || {}),
     isFeatured: data.isFeatured,
@@ -63,7 +91,7 @@ export async function saveProjectAction(data: {
     order: Number(data.order || 0),
     seoTitle: data.seoTitle || null,
     seoDescription: data.seoDescription || null,
-    translations: data.translations ? JSON.stringify(data.translations) : null,
+    translations: data.translations ? JSON.stringify(sanitizeTranslations(data.translations)) : null,
   };
 
   if (data.seoKeywords && data.seoKeywords.trim()) {
@@ -119,7 +147,7 @@ export async function saveProjectAction(data: {
     }
   }
 
-  revalidateTag("projects", "default");
+  revalidateTag("projects", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/projects");
   revalidatePath(`/projects/${data.slug}`);
@@ -140,7 +168,7 @@ export async function deleteProjectAction(id: string) {
 
   await db.project.delete({ where: { id } });
 
-  revalidateTag("projects", "default");
+  revalidateTag("projects", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/projects");
   if (existing?.slug) {
@@ -210,8 +238,8 @@ export async function saveProjectCategoryAction(data: SaveProjectCategoryInput) 
   }
 
   try {
-    revalidateTag("projects", "default");
-    revalidateTag("project-categories", "default");
+    revalidateTag("projects", { expire: 0 });
+    revalidateTag("project-categories", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/projects");
     revalidatePath("/admin/projects");
@@ -237,8 +265,8 @@ export async function deleteProjectCategoryAction(id: string) {
   await db.projectCategory.delete({ where: { id } });
 
   try {
-    revalidateTag("projects", "default");
-    revalidateTag("project-categories", "default");
+    revalidateTag("projects", { expire: 0 });
+    revalidateTag("project-categories", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/projects");
     revalidatePath("/admin/projects");
@@ -261,8 +289,8 @@ export async function reorderProjectCategoriesAction(items: { id: string; order:
   );
 
   try {
-    revalidateTag("projects", "default");
-    revalidateTag("project-categories", "default");
+    revalidateTag("projects", { expire: 0 });
+    revalidateTag("project-categories", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/projects");
     revalidatePath("/admin/projects");

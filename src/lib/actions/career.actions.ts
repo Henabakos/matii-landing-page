@@ -6,8 +6,8 @@ import { isAdminAuthenticated } from "@/lib/auth";
 
 function safeRevalidate(slug?: string) {
   try {
-    revalidateTag("careers", "default");
-    revalidateTag("career-by-slug", "default");
+    revalidateTag("careers", { expire: 0 });
+    revalidateTag("career-by-slug", { expire: 0 });
     revalidatePath("/careers");
     if (slug) revalidatePath(`/careers/${slug}`);
     revalidatePath("/admin/careers");

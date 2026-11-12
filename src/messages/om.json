@@ -124,7 +124,7 @@
     "serviceNeeded": "Tajaajila Barbaadan",
     "projectDescription": "Ibsa Pirojektii",
     "projectPlaceholder": "Waa'ee pirojektii keessanii, yeroo fi galma keessan nuuf ibsaa...",
-    "attachFile": "Sanada / Qajeelfama Maxxansaa (Filannoo)",
+    "errorMessage": "Ergaa keessan erguu hin dandeenye. Maaloo irra deebi'aa yaalaa, ykn kallattiin imeelii nuuf ergaa.",
     "submitMessage": "Ergaa Ergaa",
     "submitting": "Ergamaa jira...",
     "successMessage": "Galatoomaa! Gaaffiin keessan garee injinaroota keenyaaf dhiyaateera.",

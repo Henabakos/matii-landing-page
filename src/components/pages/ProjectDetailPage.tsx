@@ -3,9 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import ProjectMeta from "@/components/sections/project/ProjectMeta";
-import ProjectChallengeSolution from "@/components/sections/project/ProjectChallengeSolution";
+import ProjectChallengeSolution, { type ProjectRichSection } from "@/components/sections/project/ProjectChallengeSolution";
 import ProjectGallery, { GalleryItem } from "@/components/sections/project/ProjectGallery";
-import ProjectResults, { ProjectResultsProps } from "@/components/sections/project/ProjectResults";
+import ProjectResults from "@/components/sections/project/ProjectResults";
+import type { ProjectResultItem } from "@/lib/services/project-results";
 import ProjectExploreMore from "@/components/sections/project/ProjectExploreMore";
 
 export interface ProjectDetailPageProps {
@@ -18,10 +19,12 @@ export interface ProjectDetailPageProps {
   liveUrl?: string;
   timeline?: string;
   services?: string;
-  challengeParagraphs?: string[];
-  solutionParagraphs?: string[];
+  category?: string;
+  year?: string;
+  challenge?: ProjectRichSection;
+  solution?: ProjectRichSection;
   galleryItems?: GalleryItem[];
-  resultsProps?: ProjectResultsProps;
+  results?: ProjectResultItem[];
   relatedProjects?: import("@/components/sections/project/ProjectCard").ProjectCardProps[];
 }
 
@@ -35,10 +38,12 @@ export function ProjectDetailPage({
   liveUrl,
   timeline,
   services,
-  challengeParagraphs,
-  solutionParagraphs,
+  category,
+  year,
+  challenge,
+  solution,
   galleryItems,
-  resultsProps,
+  results,
   relatedProjects,
 }: ProjectDetailPageProps) {
   const formattedSlugTag = slug
@@ -46,8 +51,8 @@ export function ProjectDetailPage({
     : "PROJECT DETAIL";
 
   return (
-    <div className="w-full px-4 md:px-8 py-8 md:py-12 overflow-hidden">
-      <div className="max-w-[1380px] mx-auto relative overflow-hidden text-[#292c2e] dark:text-zinc-100">
+    <div className="w-full px-4 md:px-8 py-8 md:py-12 overflow-x-clip">
+      <div className="max-w-[1380px] mx-auto relative overflow-x-clip text-[#292c2e] dark:text-zinc-100">
         {/* 1. TOP SECTION TAG & HERO HEADER */}
         <div className="mb-6">
           <div className="inline-flex gap-2.5 items-center bg-white dark:bg-[#161819] px-2.5 py-1 border border-zinc-200 dark:border-white/10">
@@ -101,19 +106,21 @@ export function ProjectDetailPage({
           liveUrl={liveUrl}
           timeline={timeline}
           services={services}
+          category={category}
+          year={year}
         />
 
         {/* 2. THE CHALLENGE & THE SOLUTION SECTIONS */}
         <ProjectChallengeSolution
-          challengeParagraphs={challengeParagraphs}
-          solutionParagraphs={solutionParagraphs}
+          challenge={challenge}
+          solution={solution}
         />
 
-        {/* 3. BRAND IDENTITY & PROJECT GALLERY GRID */}
-        <ProjectGallery items={galleryItems} />
+        {/* 3. RESULTS / IMPACT METRICS */}
+        <ProjectResults results={results} />
 
-        {/* 4. RESULTS METRICS SECTION */}
-        <ProjectResults {...resultsProps} />
+        {/* 4. PROJECT GALLERY GRID */}
+        <ProjectGallery items={galleryItems} />
 
         {/* 5. EXPLORE MORE WORK SECTION */}
         <ProjectExploreMore projects={relatedProjects} />

@@ -914,7 +914,7 @@ export default function CareerClientManager({
                     Detailed Role Description &amp; Requirements (Rich Text) {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} *
                   </span>
                 </label>
-                <div className="border border-zinc-200 dark:border-white/10 rounded-[4px] overflow-hidden">
+                <div className="border border-zinc-200 dark:border-white/10 rounded-[4px] overflow-clip">
                   <RichTextEditor
                     key={`career-editor-${activeLocale}`}
                     content={getCareerTranslatedField("content", activeLocale)}

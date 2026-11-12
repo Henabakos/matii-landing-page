@@ -28,6 +28,10 @@ import { SeoMetaFields } from "@/components/admin/SeoMetaFields";
 import { CaseStudyGalleryManager } from "@/components/admin/CaseStudyGalleryManager";
 import { AddToNavbarSelector, AddToNavbarConfig } from "@/components/admin/AddToNavbarSelector";
 import { LanguageTabSelector } from "@/components/admin/LanguageTabSelector";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ProjectResultsEditor } from "@/components/admin/ProjectResultsEditor";
+import { htmlToParagraphList, paragraphsToHtml } from "@/lib/content";
+import { getProjectResults } from "@/lib/services/project-results";
 
 interface ProjectClientManagerProps {
   initialProjects: ParsedProject[];
@@ -71,9 +75,11 @@ export function ProjectClientManager({
     setEditingProject({
       ...project,
       galleryItems: project.galleryItems || [],
+      // Legacy fixed metrics are converted to the editable results list on open.
+      metrics: { ...project.metrics, results: getProjectResults(project.metrics) },
     });
-    setChallengeText(project.challengeParagraphs.join("\n\n"));
-    setSolutionText(project.solutionParagraphs.join("\n\n"));
+    setChallengeText(paragraphsToHtml(project.challengeParagraphs));
+    setSolutionText(paragraphsToHtml(project.solutionParagraphs));
     setOriginalSlug(project.slug);
     setNavbarConfig({
       enabled: false,
@@ -115,14 +121,7 @@ export function ProjectClientManager({
           imageUrl: "/images/solutions-1.png",
         },
       ],
-      metrics: {
-        demoClickGrowth: "12.0",
-        higherEngagement: "45",
-        pipelineInfluence: "$90K",
-        qualifiedLeads: "80",
-        stat1Value: "+12x",
-        stat1Label: "demo clicks",
-      },
+      metrics: { results: [] },
       isFeatured: true,
       isSolutionsBuilt: true,
       order: projects.length + 1,
@@ -130,8 +129,8 @@ export function ProjectClientManager({
       seoDescription: "",
       seoKeywords: "",
     });
-    setChallengeText("Describe the user and client challenge here.");
-    setSolutionText("Describe the architectural and design solution here.");
+    setChallengeText("");
+    setSolutionText("");
     setNavbarConfig({
       enabled: false,
       menuKey: "projects",
@@ -159,10 +158,10 @@ export function ProjectClientManager({
     const trans = (editingProject?.translations as Record<string, any> | undefined)?.[locale];
     if (!trans) return "";
     if (field === "challenge") {
-      return trans.challenge || (Array.isArray(trans.challengeParagraphs) ? trans.challengeParagraphs.join("\n\n") : "") || "";
+      return trans.challenge || paragraphsToHtml(trans.challengeParagraphs) || "";
     }
     if (field === "solution") {
-      return trans.solution || (Array.isArray(trans.solutionParagraphs) ? trans.solutionParagraphs.join("\n\n") : "") || "";
+      return trans.solution || paragraphsToHtml(trans.solutionParagraphs) || "";
     }
     return trans[field] || "";
   };
@@ -184,13 +183,13 @@ export function ProjectClientManager({
         ...(field === "challenge"
           ? {
               challenge: value,
-              challengeParagraphs: value.split("\n\n").map((p: string) => p.trim()).filter(Boolean),
+              challengeParagraphs: htmlToParagraphList(value),
             }
           : {}),
         ...(field === "solution"
           ? {
               solution: value,
-              solutionParagraphs: value.split("\n\n").map((p: string) => p.trim()).filter(Boolean),
+              solutionParagraphs: htmlToParagraphList(value),
             }
           : {}),
       };
@@ -216,9 +215,9 @@ export function ProjectClientManager({
             title: prev.title || "",
             subtitle: prev.subtitle || "",
             challenge: challengeText || "",
-            challengeParagraphs: challengeText.split("\n\n").map((p) => p.trim()).filter(Boolean),
+            challengeParagraphs: htmlToParagraphList(challengeText),
             solution: solutionText || "",
-            solutionParagraphs: solutionText.split("\n\n").map((p) => p.trim()).filter(Boolean),
+            solutionParagraphs: htmlToParagraphList(solutionText),
           },
         },
       };
@@ -231,14 +230,16 @@ export function ProjectClientManager({
 
     startTransition(async () => {
       try {
-        const challengeParagraphs = challengeText
-          .split("\n\n")
-          .map((p) => p.trim())
-          .filter(Boolean);
-        const solutionParagraphs = solutionText
-          .split("\n\n")
-          .map((p) => p.trim())
-          .filter(Boolean);
+        const challengeParagraphs = htmlToParagraphList(challengeText);
+        const solutionParagraphs = htmlToParagraphList(solutionText);
+        const results = getProjectResults(editingProject.metrics);
+        // The first result doubles as the headline stat on project cards.
+        const metrics = {
+          ...(editingProject.metrics || {}),
+          results,
+          stat1Value: results[0]?.value || "",
+          stat1Label: results[0]?.label || "",
+        };
 
         const projectCategory = editingProject.category || categories[0]?.name || "AI Automation";
 
@@ -258,7 +259,7 @@ export function ProjectClientManager({
           challengeParagraphs,
           solutionParagraphs,
           galleryItems: editingProject.galleryItems || [],
-          metrics: editingProject.metrics || {},
+          metrics,
           isFeatured: Boolean(editingProject.isFeatured),
           isSolutionsBuilt: Boolean(editingProject.isSolutionsBuilt),
           order: Number(editingProject.order || 0),
@@ -773,12 +774,8 @@ export function ProjectClientManager({
                       subtitle: obj.subtitle || "",
                       challenge: obj.challenge || "",
                       solution: obj.solution || "",
-                      challengeParagraphs: obj.challenge
-                        ? obj.challenge.split("\n\n").map((p) => p.trim()).filter(Boolean)
-                        : [],
-                      solutionParagraphs: obj.solution
-                        ? obj.solution.split("\n\n").map((p) => p.trim()).filter(Boolean)
-                        : [],
+                      challengeParagraphs: htmlToParagraphList(obj.challenge),
+                      solutionParagraphs: htmlToParagraphList(obj.solution),
                     };
                   }
                   setEditingProject((prev) =>
@@ -1022,15 +1019,15 @@ export function ProjectClientManager({
               <div className="space-y-1">
                 <label className="font-space text-[11px] uppercase font-bold text-zinc-600 dark:text-zinc-300 flex items-center justify-between">
                   <span>
-                    The Challenge {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} (Double enter / separate paragraphs)
+                    The Challenge {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`}
                   </span>
                 </label>
-                <textarea
-                  rows={4}
-                  value={getProjectTranslatedField("challenge", activeLocale)}
-                  onChange={(e) => setProjectTranslatedField("challenge", e.target.value, activeLocale)}
-                  placeholder={activeLocale === "en" ? "Describe challenge..." : `Challenge in ${activeLocale.toUpperCase()}...`}
-                  className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
+                <RichTextEditor
+                  key={`project-challenge-${editingProject.id || "new"}-${activeLocale}`}
+                  content={getProjectTranslatedField("challenge", activeLocale)}
+                  onChange={(html) => setProjectTranslatedField("challenge", html, activeLocale)}
+                  placeholder={activeLocale === "en" ? "Describe the business context, pain points and constraints..." : `Challenge in ${activeLocale.toUpperCase()}...`}
+                  minHeight="260px"
                 />
               </div>
 
@@ -1038,17 +1035,25 @@ export function ProjectClientManager({
               <div className="space-y-1">
                 <label className="font-space text-[11px] uppercase font-bold text-zinc-600 dark:text-zinc-300 flex items-center justify-between">
                   <span>
-                    The Solution &amp; Engineering Strategy {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`} (Double enter / separate paragraphs)
+                    The Solution &amp; Engineering Strategy {activeLocale !== "en" && `(${activeLocale.toUpperCase()})`}
                   </span>
                 </label>
-                <textarea
-                  rows={4}
-                  value={getProjectTranslatedField("solution", activeLocale)}
-                  onChange={(e) => setProjectTranslatedField("solution", e.target.value, activeLocale)}
-                  placeholder={activeLocale === "en" ? "Describe solution..." : `Solution in ${activeLocale.toUpperCase()}...`}
-                  className="w-full bg-white dark:bg-[#121417] border border-zinc-300 dark:border-white/10 px-3 py-2 rounded-[3px] text-xs text-zinc-800 dark:text-zinc-100 focus:border-[#292c2e] dark:focus:border-[#98ff03] outline-none"
+                <RichTextEditor
+                  key={`project-solution-${editingProject.id || "new"}-${activeLocale}`}
+                  content={getProjectTranslatedField("solution", activeLocale)}
+                  onChange={(html) => setProjectTranslatedField("solution", html, activeLocale)}
+                  placeholder={activeLocale === "en" ? "Describe the architecture, delivery approach and outcomes..." : `Solution in ${activeLocale.toUpperCase()}...`}
+                  minHeight="260px"
                 />
               </div>
+
+              {/* Results / impact metrics shown on the case study page */}
+              <ProjectResultsEditor
+                items={editingProject.metrics?.results || []}
+                onChange={(results) =>
+                  setEditingProject((prev) => (prev ? { ...prev, metrics: { ...(prev.metrics || {}), results } } : prev))
+                }
+              />
 
               {/* Interactive Multi-Image Gallery Manager */}
               <div className="pt-2 border-t border-zinc-100 dark:border-white/10">

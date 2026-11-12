@@ -1,0 +1,96 @@
+[
+  {
+    "id": "main",
+    "content": {
+      "groups": [
+        {
+          "id": "company",
+          "title": "Company",
+          "links": [
+            {
+              "id": "about",
+              "label": "About us",
+              "href": "/about"
+            },
+            {
+              "id": "projects",
+              "label": "Our projects",
+              "href": "/projects"
+            },
+            {
+              "id": "careers",
+              "label": "Careers",
+              "href": "/careers"
+            },
+            {
+              "id": "internships",
+              "label": "Internships",
+              "href": "/careers/internships"
+            },
+            {
+              "id": "talent-pool",
+              "label": "Talent pool",
+              "href": "/careers/talent-pool"
+            },
+            {
+              "id": "contact",
+              "label": "Contact",
+              "href": "/contact"
+            }
+          ]
+        },
+        {
+          "id": "services",
+          "title": "Services",
+          "links": [
+            {
+              "id": "our-services",
+              "label": "Our services",
+              "href": "/services"
+            }
+          ]
+        },
+        {
+          "id": "resources",
+          "title": "Resources",
+          "links": [
+            {
+              "id": "blog",
+              "label": "Blog",
+              "href": "/blog"
+            },
+            {
+              "id": "news",
+              "label": "News & insights",
+              "href": "/news"
+            }
+          ]
+        },
+        {
+          "id": "legal",
+          "title": "Legal",
+          "links": []
+        }
+      ],
+      "contact": {
+        "title": "Contact",
+        "email": "contact@matii.tech",
+        "phone": "",
+        "address": "",
+        "ctaLabel": "Get in touch",
+        "ctaHref": "/contact"
+      },
+      "tagline": "Engineering Core Systems, Powering Progress.",
+      "copyrightName": "MATII TECHNOLOGIES",
+      "backToTopLabel": "Back to top",
+      "socialLinks": [
+        "https://www.linkedin.com/company/matii-technologies",
+        "https://www.facebook.com/people/Matii-Technologies/61594521985176/",
+        "https://x.com/matiitechnology",
+        "https://www.youtube.com/@matiitechnologies",
+        "https://www.tiktok.com/@matii.technologies"
+      ],
+      "translations": {}
+    }
+  }
+]

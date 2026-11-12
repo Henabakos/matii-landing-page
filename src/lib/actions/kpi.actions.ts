@@ -56,7 +56,7 @@ export async function saveKpiAction(data: {
     });
   }
 
-  revalidateTag("kpis", "default");
+  revalidateTag("kpis", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/about");
   revalidatePath("/admin/kpis");
@@ -68,7 +68,7 @@ export async function deleteKpiAction(id: string) {
   if (!isAuth) throw new Error("Unauthorized");
 
   await db.kpi.delete({ where: { id } });
-  revalidateTag("kpis", "default");
+  revalidateTag("kpis", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/about");
   revalidatePath("/admin/kpis");

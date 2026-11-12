@@ -54,7 +54,7 @@ export async function saveTestimonialAction(data: {
     });
   }
 
-  revalidateTag("testimonials", "default");
+  revalidateTag("testimonials", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/admin/testimonials");
   return { success: true, testimonial };
@@ -65,7 +65,7 @@ export async function deleteTestimonialAction(id: string) {
   if (!isAuth) throw new Error("Unauthorized");
 
   await db.testimonial.delete({ where: { id } });
-  revalidateTag("testimonials", "default");
+  revalidateTag("testimonials", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/admin/testimonials");
   return { success: true };
@@ -79,7 +79,7 @@ export async function toggleTestimonialActiveAction(id: string, currentState: bo
     where: { id },
     data: { isActive: !currentState },
   });
-  revalidateTag("testimonials", "default");
+  revalidateTag("testimonials", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/admin/testimonials");
   return { success: true };

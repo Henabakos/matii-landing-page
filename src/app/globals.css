@@ -432,6 +432,28 @@ table.Matii-table {
   color: #d1d5db;
 }
 
+.dark .Matii-prose,
+.dark .tiptap {
+  color: #d1d5db;
+}
+
+.dark .Matii-prose strong,
+.dark .tiptap strong,
+.dark .Matii-prose b,
+.dark .tiptap b {
+  color: #ffffff;
+}
+
+.dark .Matii-prose em,
+.dark .tiptap em {
+  color: inherit;
+}
+
+.dark .Matii-prose li::marker,
+.dark .tiptap li::marker {
+  color: #a1a1aa;
+}
+
 .dark .Matii-prose blockquote,
 .dark .tiptap blockquote {
   border-left-color: #98ff03;
@@ -489,6 +511,75 @@ table.Matii-table {
 .dark .Matii-prose img,
 .dark .tiptap img {
   border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Case study narrative (projects/[slug]): rich text from the CMS editor */
+.case-study-prose {
+  font-size: 1.0625rem;
+}
+
+.case-study-prose > :first-child {
+  margin-top: 0;
+}
+
+.case-study-prose h2,
+.case-study-prose h3 {
+  scroll-margin-top: 2rem;
+}
+
+.case-study-prose h2 {
+  font-size: 1.625rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e4e4e7;
+}
+
+.case-study-prose > h2:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.case-study-prose h3 {
+  position: relative;
+  font-size: 1.1875rem;
+  margin-top: 2.25rem;
+  padding-left: 1.125rem;
+}
+
+.case-study-prose h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #98ff03;
+}
+
+.case-study-prose li::marker {
+  color: #65a30d;
+}
+
+.case-study-prose strong {
+  color: #18181b;
+  font-weight: 600;
+}
+
+.case-study-prose blockquote {
+  font-style: normal;
+  font-size: 1.125rem;
+}
+
+.dark .case-study-prose h2 {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .case-study-prose li::marker {
+  color: #98ff03;
+}
+
+.dark .case-study-prose strong {
+  color: #ffffff;
 }
 
 /* TipTap Editor Canvas Specifics */

@@ -124,7 +124,7 @@
     "serviceNeeded": "Benötigte Dienstleistung",
     "projectDescription": "Projektbeschreibung",
     "projectPlaceholder": "Erzählen Sie uns von Ihrem Projekt, Zeitplan und Zielen...",
-    "attachFile": "Briefing / Dokument anhängen (Optional)",
+    "errorMessage": "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt eine E-Mail.",
     "submitMessage": "Nachricht senden",
     "submitting": "Wird gesendet...",
     "successMessage": "Vielen Dank für Ihre Nachricht. Ihre Projektanfrage ist bei uns eingegangen, und ein Mitglied unseres Engineering-Teams wird sich in Kürze bei Ihnen melden.",

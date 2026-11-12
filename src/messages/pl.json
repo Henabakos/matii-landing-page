@@ -124,7 +124,7 @@
     "serviceNeeded": "Wymagana usługa",
     "projectDescription": "Opis projektu",
     "projectPlaceholder": "Opowiedz nam o swoim projekcie, harmonogramie i celach...",
-    "attachFile": "Załącz brief / dokument (Opcjonalnie)",
+    "errorMessage": "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz do nas bezpośrednio.",
     "submitMessage": "Wyślij wiadomość",
     "successMessage": "Dziękujemy za kontakt. Państwa zapytanie projektowe zostało przyjęte, a przedstawiciel naszego zespołu inżynierów skontaktuje się z Państwem w najbliższym czasie.",
     "mapChooseCity": "Wybierz miasto",

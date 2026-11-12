@@ -89,7 +89,7 @@ export async function saveBlogPostAction(data: {
     }
   }
 
-  revalidateTag("blogs", "default");
+  revalidateTag("blogs", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/blog");
   revalidatePath(`/blog/${data.slug}`);
@@ -110,7 +110,7 @@ export async function deleteBlogPostAction(id: string) {
 
   await db.blogPost.delete({ where: { id } });
 
-  revalidateTag("blogs", "default");
+  revalidateTag("blogs", { expire: 0 });
   revalidatePath("/");
   revalidatePath("/blog");
   if (existing?.slug) {

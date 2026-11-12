@@ -142,7 +142,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
           <div className="bg-white dark:bg-[#161819] border border-zinc-200/80 dark:border-white/10 p-6 md:p-12 relative">
             <div
-              className="max-w-3xl mx-auto Matii-prose prose prose-zinc prose-lg max-w-none"
+              className="max-w-3xl mx-auto Matii-prose prose prose-zinc dark:prose-invert prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             />
           </div>

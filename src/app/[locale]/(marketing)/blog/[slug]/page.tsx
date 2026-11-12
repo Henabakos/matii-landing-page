@@ -159,7 +159,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
           {/* Main Article Content Body */}
           <div className="bg-white dark:bg-[#161819] border border-zinc-200/80 dark:border-white/10 p-6 md:p-14 relative">
             <div
-              className="max-w-3xl mx-auto Matii-prose prose prose-zinc prose-lg max-w-none"
+              className="max-w-3xl mx-auto Matii-prose prose prose-zinc dark:prose-invert prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             />
           </div>
